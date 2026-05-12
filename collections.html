@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collections  Morse dCMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'><rect width='34' height='34' rx='8' fill='%230c1022' stroke='rgba(68,76,231,0.3)' stroke-width='1'/><path d='M5 26V10L12 19L17 12L22 19L29 10V26' stroke='%23444CE7' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='17' cy='21' r='2' fill='%23dbff4b'/><rect x='11' y='27' width='4' height='1.5' rx='0.75' fill='%23444CE7' opacity='0.7'/><rect x='16.5' y='27' width='7' height='1.5' rx='0.75' fill='%23444CE7' opacity='0.7'/></svg>">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <button class="hamburger" id="hamburger" aria-label="Toggle sidebar">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <a href="index.html" class="logo">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon">
+      <rect width="34" height="34" rx="8" fill="#0c1022" stroke="rgba(68,76,231,0.3)" stroke-width="1"/>
+      <path d="M5 26V10L12 19L17 12L22 19L29 10V26" stroke="#444CE7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <circle cx="17" cy="21" r="2" fill="#dbff4b"/>
+      <rect x="11" y="27" width="4" height="1.5" rx="0.75" fill="#444CE7" opacity="0.7"/>
+      <rect x="16.5" y="27" width="7" height="1.5" rx="0.75" fill="#444CE7" opacity="0.7"/>
+    </svg>
+    <span class="logo-wordmark">MORSE</span>
+    </a>
+    <div class="header-search">
+      <div class="search-box">
+        <span class="search-icon">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </span>
+        <span class="search-placeholder">Search documentation…</span>
+        <kbd class="search-kbd">⌘K</kbd>
+      </div>
+    </div>
+    <nav class="header-links">
+      <a href="https://github.com/TheDivic/morse-dcms" target="_blank" rel="noopener" class="header-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+        </svg>
+        GitHub
+      </a>
+      <a href="https://walrus.xyz" target="_blank" rel="noopener" class="header-link header-link-primary">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+        Walrus
+      </a>
+    </nav>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+<aside class="sidebar" id="sidebar">
+  <nav>
+    <div class="nav-section">
+      <div class="nav-section-title">Getting Started</div>
+      <ul class="nav-list">
+        <li><a href="index.html" class="nav-link" data-page="index.html"><span class="nav-icon">🏠</span> Introduction</a></li>
+        <li><a href="quick-start.html" class="nav-link" data-page="quick-start.html"><span class="nav-icon">⚡</span> Quick Start</a></li>
+        <li><a href="core-concepts.html" class="nav-link" data-page="core-concepts.html"><span class="nav-icon">📐</span> Core Concepts</a></li>
+      </ul>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-section">
+      <div class="nav-section-title">Protocol</div>
+      <ul class="nav-list">
+        <li><a href="publications.html" class="nav-link" data-page="publications.html"><span class="nav-icon">📰</span> Publications</a></li>
+        <li><a href="collections.html" class="nav-link" data-page="collections.html"><span class="nav-icon">🗂</span> Collections</a></li>
+        <li><a href="entries.html" class="nav-link" data-page="entries.html"><span class="nav-icon">📝</span> Entries &amp; Revisions</a></li>
+        <li><a href="access-control.html" class="nav-link" data-page="access-control.html"><span class="nav-icon">🔐</span> Access Control</a></li>
+      </ul>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-section">
+      <div class="nav-section-title">Smart Contracts</div>
+      <ul class="nav-list">
+        <li><a href="contracts.html" class="nav-link" data-page="contracts.html"><span class="nav-icon">⛓</span> Reference</a></li>
+      </ul>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-section">
+      <div class="nav-section-title">SDK <span class="nav-badge-soon">Soon</span></div>
+      <ul class="nav-list">
+        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">📦</span> Overview</a></li>
+        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">🔧</span> Client Setup</a></li>
+        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">📤</span> Publishing</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-title">CLI <span class="nav-badge-soon">Soon</span></div>
+      <ul class="nav-list">
+        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">💻</span> Overview</a></li>
+        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">📋</span> Commands</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-title">Indexer <span class="nav-badge-soon">Soon</span></div>
+      <ul class="nav-list">
+        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">🔍</span> Overview</a></li>
+      </ul>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-section">
+      <div class="nav-section-title">Reference</div>
+      <ul class="nav-list">
+        <li><a href="glossary.html" class="nav-link" data-page="glossary.html"><span class="nav-icon">📖</span> Glossary</a></li>
+      </ul>
+    </div>
+  </nav>
+</aside>
+
+<div class="layout">
+  <main class="main">
+    <div class="content">
+    <div class="breadcrumb">
+      <a href="index.html" class="breadcrumb-item">Morse dCMS</a>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-item">Protocol</span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-item breadcrumb-current">Collections</span>
+    </div>
+
+    <article class="article">
+      <h1>Collections</h1>
+      <p class="article-lead">A collection is a named content lane inside a publication. It groups related entries together and determines how their Walrus payload references are stored.</p>
+
+      <h2>What is a Collection?</h2>
+      <p>Collections organize entries into predictable buckets for editorial workflows and API consumers. A publication holds collections in a <code>VecMap&lt;String, Collection&gt;</code> keyed by name. The choice of <code>VecMap</code> reflects the expectation that a publication will have only a small number of named collections.</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Move</span>
+          <button class="code-copy">Copy</button>
+        </div>
+        <pre><span class="kw">public struct</span> <span class="ty">Collection</span> <span class="kw">has</span> <span class="ty">store</span> {
+  name: <span class="ty">String</span>,
+  storage_mode: <span class="ty">u8</span>,        <span class="cm">// 0 = blob, 1 = quilt  immutable after creation</span>
+  next_entry_id: <span class="ty">u64</span>,      <span class="cm">// monotonic counter</span>
+  entries: <span class="ty">Table</span>&lt;<span class="ty">u64</span>, <span class="ty">Entry</span>&gt;,
+}</pre>
+      </div>
+
+      <p>Entries inside a collection are keyed by a stable monotonic <code>entry_id</code> (<code>u64</code>). IDs are never reused  deletions leave holes in the sequence. This ensures stable external references to individual entries.</p>
+
+      <h2>Storage Modes</h2>
+      <p>Every collection has an immutable <code>storage_mode</code> chosen at creation. This controls how entry revisions reference Walrus content.</p>
+
+      <div class="feature-grid" style="grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0;">
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.75rem;">
+            <div style="background:rgba(0,212,180,0.1);border:1px solid rgba(0,212,180,0.2);border-radius:6px;padding:0.35rem 0.6rem;font-family:var(--mono);font-size:0.75rem;color:var(--accent);">mode 0</div>
+            <span style="font-weight:600;color:var(--text-primary);">Blob Mode</span>
+          </div>
+          <p style="margin:0;font-size:0.875rem;color:var(--text-secondary);">Each entry revision references a standalone Walrus <code>Blob</code> object by its Sui object ID. Clean, independent blobs per revision.</p>
+        </div>
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.75rem;">
+            <div style="background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.2);border-radius:6px;padding:0.35rem 0.6rem;font-family:var(--mono);font-size:0.75rem;color:#a78bfa;">mode 1</div>
+            <span style="font-weight:600;color:var(--text-primary);">Quilt Mode</span>
+          </div>
+          <p style="margin:0;font-size:0.875rem;color:var(--text-secondary);">Each entry revision stores a 37-byte <code>QuiltPatchId</code> pointing to a patch within a shared Walrus Quilt blob.</p>
+        </div>
+      </div>
+
+      <h3>Blob Mode (STORAGE_MODE_BLOB = 0)</h3>
+      <p>In blob mode, every revision stores a <code>BlobRef::Blob(ID)</code>  the Sui object ID of a standalone Walrus <code>Blob</code>. Each entry revision is fully independent: uploading new content creates a new blob, and the old blobs remain accessible by their IDs.</p>
+
+      <p><strong>Best for:</strong></p>
+      <ul>
+        <li>Articles, blog posts, documentation pages</li>
+        <li>Media libraries (images, videos, audio)</li>
+        <li>Any collection where entries change independently and frequently</li>
+        <li>Situations where you want maximum operational simplicity</li>
+      </ul>
+
+      <h3>Quilt Mode (STORAGE_MODE_QUILT = 1)</h3>
+      <p>In quilt mode, every revision stores a <code>BlobRef::QuiltPatch(vector&lt;u8&gt;)</code>  a 37-byte identifier that locates a patch within a shared Walrus Quilt blob. This is more compact and efficient when updating small parts of a grouped content set.</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">QuiltPatchId layout  37 bytes</span>
+          <button class="code-copy">Copy</button>
+        </div>
+        <pre><span class="cm">// Byte layout of a QuiltPatchId:</span>
+┌─────────────────────────────────┬─────────┬───────────────┬─────────────┐
+│  quilt_blob_id (32 bytes)       │ ver (1) │ start_idx (2) │ end_idx (2) │
+└─────────────────────────────────┴─────────┴───────────────┴─────────────┘
+  Walrus blob ID of the quilt       version   start index     end index
+  (this is the Walrus blob_id,                (u16 LE)        (u16 LE)
+   not the Sui object ID)</pre>
+      </div>
+
+      <p>The contract validates that every <code>QuiltPatchId</code> is exactly 37 bytes. Shorter or longer byte vectors are rejected with <code>EInvalidQuiltPatchId</code>.</p>
+
+      <p><strong>Best for:</strong></p>
+      <ul>
+        <li>Website navigation sections or config-like structured documents</li>
+        <li>Compact content sets updated in place (e.g. featured banners, site metadata)</li>
+        <li>Stable grouped content with targeted patch updates</li>
+      </ul>
+
+      <h3>Choosing a Storage Mode</h3>
+      <table>
+        <thead>
+          <tr><th>Scenario</th><th>Recommended mode</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Growing blog / article feed</td><td>Blob (0)</td></tr>
+          <tr><td>Frequently updated individual documents</td><td>Blob (0)</td></tr>
+          <tr><td>Media / asset library</td><td>Blob (0)</td></tr>
+          <tr><td>Static site sections (header, footer, nav)</td><td>Quilt (1)</td></tr>
+          <tr><td>Config JSONs updated as a group</td><td>Quilt (1)</td></tr>
+          <tr><td>Small, bounded content sets</td><td>Quilt (1)</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-warning">
+        <div class="callout-icon">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div>
+          <strong>Storage mode is immutable.</strong> Once a collection is created with a given <code>storage_mode</code>, it cannot be changed. All entries in the collection must use references that match the mode  the contract enforces this on every write. Choose carefully before creating a collection.
+        </div>
+      </div>
+
+      <h2>Creating a Collection</h2>
+      <p>Collections are created through the publication module's <code>create_collection</code> function, which requires a valid <code>PublisherCap</code>. The constructor is package-private  external callers always go through the publication API.</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Move</span>
+          <button class="code-copy">Copy</button>
+        </div>
+        <pre><span class="kw">public fun</span> <span class="fn">create_collection</span>(
+  publication: &<span class="kw">mut</span> <span class="ty">Publication</span>,
+  cap: &<span class="ty">PublisherCap</span>,
+  name: <span class="ty">String</span>,
+  storage_mode: <span class="ty">u8</span>,    <span class="cm">// 0 = blob, 1 = quilt</span>
+  ctx: &<span class="kw">mut</span> <span class="ty">TxContext</span>,
+)</pre>
+      </div>
+
+      <p>Collection names must be unique within a publication. Creating a collection with a name that already exists aborts with <code>ECollectionAlreadyExists</code>.</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Example  creating two collections</span>
+          <button class="code-copy">Copy</button>
+        </div>
+        <pre><span class="cm">// Create a blob-mode collection for articles</span>
+publication::<span class="fn">create_collection</span>(
+  &<span class="kw">mut</span> publication,
+  &publisher_cap,
+  <span class="st">"articles"</span>.<span class="fn">to_string</span>(),
+  <span class="nu">0</span>, <span class="cm">// STORAGE_MODE_BLOB</span>
+  ctx,
+);
+
+<span class="cm">// Create a quilt-mode collection for site sections</span>
+publication::<span class="fn">create_collection</span>(
+  &<span class="kw">mut</span> publication,
+  &publisher_cap,
+  <span class="st">"site-pages"</span>.<span class="fn">to_string</span>(),
+  <span class="nu">1</span>, <span class="cm">// STORAGE_MODE_QUILT</span>
+  ctx,
+);</pre>
+      </div>
+
+      <h2>Deleting a Collection</h2>
+      <p>A collection can be removed from a publication using <code>delete_collection</code>. The collection's entries table must be empty  all entries must be deleted first.</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Move</span>
+          <button class="code-copy">Copy</button>
+        </div>
+        <pre><span class="kw">public fun</span> <span class="fn">delete_collection</span>(
+  publication: &<span class="kw">mut</span> <span class="ty">Publication</span>,
+  cap: &<span class="ty">PublisherCap</span>,
+  name: <span class="ty">String</span>,
+  ctx: &<span class="kw">mut</span> <span class="ty">TxContext</span>,
+)</pre>
+      </div>
+
+      <div class="callout callout-note">
+        <div class="callout-icon">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div>
+          <strong>Why entries must be removed first.</strong> The <code>Table&lt;u64, Entry&gt;</code> that holds entries requires an explicit <code>destroy_empty</code>  Sui's type system does not allow dropping a non-empty table. Delete entries individually with <code>delete_entry_from_collection</code> before removing the collection.
+        </div>
+      </div>
+
+      <h2>Entry IDs</h2>
+      <p>When an entry is added to a collection, it is assigned a stable, monotonically increasing <code>entry_id: u64</code>. The counter starts at <code>0</code> and increments with each insertion.</p>
+
+      <ul>
+        <li>Entry IDs are <strong>never reused</strong> after deletion</li>
+        <li>IDs are <strong>stable</strong>  external systems can safely hold references by ID</li>
+        <li>Gaps in the ID sequence are expected and normal after deletions</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Example ID sequence</span>
+          <button class="code-copy">Copy</button>
+        </div>
+        <pre><span class="cm">// Add entries: IDs assigned sequentially</span>
+entry_id = <span class="fn">add_entry_to_collection</span>(...) <span class="cm">// → 0</span>
+entry_id = <span class="fn">add_entry_to_collection</span>(...) <span class="cm">// → 1</span>
+entry_id = <span class="fn">add_entry_to_collection</span>(...) <span class="cm">// → 2</span>
+
+<span class="cm">// Delete entry 1</span>
+<span class="fn">delete_entry_from_collection</span>(..., entry_id: <span class="nu">1</span>, ...)
+
+<span class="cm">// Next add gets ID 3  ID 1 is never reused</span>
+entry_id = <span class="fn">add_entry_to_collection</span>(...) <span class="cm">// → 3</span></pre>
+      </div>
+
+      <h2>Error Codes</h2>
+      <table>
+        <thead><tr><th>Code</th><th>Constant</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>0</code></td><td><code>EEntryNotFound</code></td><td>No entry exists for the requested <code>entry_id</code></td></tr>
+          <tr><td><code>1</code></td><td><code>EInvalidStorageMode</code></td><td>Storage mode must be <code>0</code> or <code>1</code></td></tr>
+        </tbody>
+      </table>
+    </article>
+
+    <div class="page-nav">
+      <a href="publications.html" class="pnav">
+        <span class="pnav-dir">Previous</span>
+        <span class="pnav-title">← Publications</span>
+      </a>
+      <a href="entries.html" class="pnav pnav-right">
+        <span class="pnav-dir">Next</span>
+        <span class="pnav-title">Entries &amp; Revisions →</span>
+      </a>
+    </div>
+    </div>
+  </main>
+
+  <aside class="toc">
+    <div class="toc-title">On this page</div>
+    <ul class="toc-list"></ul>
+  </aside>
+</div>
+
+<script src="assets/search-index.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

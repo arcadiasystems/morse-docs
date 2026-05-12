@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Access Control  Morse dCMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'><rect width='34' height='34' rx='8' fill='%230c1022' stroke='rgba(68,76,231,0.3)' stroke-width='1'/><path d='M5 26V10L12 19L17 12L22 19L29 10V26' stroke='%23444CE7' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='17' cy='21' r='2' fill='%23dbff4b'/><rect x='11' y='27' width='4' height='1.5' rx='0.75' fill='%23444CE7' opacity='0.7'/><rect x='16.5' y='27' width='7' height='1.5' rx='0.75' fill='%23444CE7' opacity='0.7'/></svg>">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <button class="hamburger" id="hamburger" aria-label="Toggle sidebar">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <a href="index.html" class="logo">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon">
+      <rect width="34" height="34" rx="8" fill="#0c1022" stroke="rgba(68,76,231,0.3)" stroke-width="1"/>
+      <path d="M5 26V10L12 19L17 12L22 19L29 10V26" stroke="#444CE7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <circle cx="17" cy="21" r="2" fill="#dbff4b"/>
+      <rect x="11" y="27" width="4" height="1.5" rx="0.75" fill="#444CE7" opacity="0.7"/>
+      <rect x="16.5" y="27" width="7" height="1.5" rx="0.75" fill="#444CE7" opacity="0.7"/>
+    </svg>
+    <span class="logo-wordmark">MORSE</span>
+    </a>
+    <div class="header-search">
+      <div class="search-box">
+        <span class="search-icon">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </span>
+        <span class="search-placeholder">Search documentation…</span>
+        <kbd class="search-kbd">⌘K</kbd>
+      </div>
+    </div>
+    <nav class="header-links">
+      <a href="https://github.com/TheDivic/morse-dcms" target="_blank" rel="noopener" class="header-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+        </svg>
+        GitHub
+      </a>
+      <a href="https://walrus.xyz" target="_blank" rel="noopener" class="header-link header-link-primary">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+        Walrus
+      </a>
+    </nav>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+<aside class="sidebar" id="sidebar">
+  <nav>
+    <div class="nav-section">
+      <div class="nav-section-title">Getting Started</div>
+      <ul class="nav-list">
+        <li><a href="index.html" class="nav-link" data-page="index.html"><span class="nav-icon">🏠</span> Introduction</a></li>
+        <li><a href="quick-start.html" class="nav-link" data-page="quick-start.html"><span class="nav-icon">⚡</span> Quick Start</a></li>
+        <li><a href="core-concepts.html" class="nav-link" data-page="core-concepts.html"><span class="nav-icon">📐</span> Core Concepts</a></li>
+      </ul>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-section">
+      <div class="nav-section-title">Protocol</div>
+      <ul class="nav-list">
+        <li><a href="publications.html" class="nav-link" data-page="publications.html"><span class="nav-icon">📰</span> Publications</a></li>
+        <li><a href="collections.html" class="nav-link" data-page="collections.html"><span class="nav-icon">🗂</span> Collections</a></li>
+        <li><a href="entries.html" class="nav-link" data-page="entries.html"><span class="nav-icon">📝</span> Entries &amp; Revisions</a></li>
+        <li><a href="access-control.html" class="nav-link" data-page="access-control.html"><span class="nav-icon">🔐</span> Access Control</a></li>
+      </ul>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-section">
+      <div class="nav-section-title">Smart Contracts</div>
+      <ul class="nav-list">
+        <li><a href="contracts.html" class="nav-link" data-page="contracts.html"><span class="nav-icon">⛓</span> Reference</a></li>
+      </ul>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-section">
+      <div class="nav-section-title">SDK <span class="nav-badge-soon">Soon</span></div>
+      <ul class="nav-list">
+        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">📦</span> Overview</a></li>
+        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">🔧</span> Client Setup</a></li>
+        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">📤</span> Publishing</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-title">CLI <span class="nav-badge-soon">Soon</span></div>
+      <ul class="nav-list">
+        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">💻</span> Overview</a></li>
+        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">📋</span> Commands</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-title">Indexer <span class="nav-badge-soon">Soon</span></div>
+      <ul class="nav-list">
+        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">🔍</span> Overview</a></li>
+      </ul>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-section">
+      <div class="nav-section-title">Reference</div>
+      <ul class="nav-list">
+        <li><a href="glossary.html" class="nav-link" data-page="glossary.html"><span class="nav-icon">📖</span> Glossary</a></li>
+      </ul>
+    </div>
+  </nav>
+</aside>
+
+<div class="layout">
+  <main class="main">
+    <div class="content">
+    <div class="breadcrumb">
+      <a href="index.html" class="breadcrumb-item">Morse dCMS</a>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-item">Protocol</span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-item breadcrumb-current">Access Control</span>
+    </div>
+
+    <article class="article">
+      <h1>Access Control</h1>
+      <p class="article-lead">Morse uses a capability-based permission model. Two types of capabilities control who can administer a publication and who can write content  enforced on-chain by the Sui type system, with no off-chain authorization service.</p>
+
+      <h2>Overview</h2>
+      <p>Every write operation in Morse requires presenting a valid capability object. Capabilities cannot be fabricated  they can only be created by the protocol through designated functions. The type system itself is the enforcement mechanism.</p>
+
+      <div class="feature-grid" style="grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0;">
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem;">
+            <div style="width:8px;height:8px;border-radius:50%;background:#fbbf24;"></div>
+            <span style="font-weight:600;color:var(--text-primary);">OwnerCap</span>
+          </div>
+          <p style="margin:0 0 0.75rem;font-size:0.875rem;color:var(--text-secondary);">Admin authority. One per publication. Required to issue and revoke publisher caps, delete the publication, and transfer ownership.</p>
+          <div style="font-size:0.75rem;font-family:var(--mono);color:var(--text-muted);">has key</div>
+        </div>
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.75rem;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--accent);"></div>
+            <span style="font-weight:600;color:var(--text-primary);">PublisherCap</span>
+          </div>
+          <p style="margin:0 0 0.75rem;font-size:0.875rem;color:var(--text-secondary);">Write authority. Many per publication. Required for all content operations: create/delete collections and entries. Bound to a specific holder address.</p>
+          <div style="font-size:0.75rem;font-family:var(--mono);color:var(--text-muted);">has key</div>
+        </div>
+      </div>
+
+      <h2>OwnerCap</h2>
+      <p>The <code>OwnerCap</code> is the highest-authority object in a publication. Exactly one exists per publication  it is created alongside the publication and transferred to the creator.</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Move</span>
+          <button class="code-copy">Copy</button>
+        </div>
+        <pre><span class="kw">public struct</span> <span class="ty">OwnerCap</span> <span class="kw">has</span> <span class="ty">key</span> {
+  id: <span class="ty">UID</span>,
+  publication_id: <span class="ty">ID</span>,   <span class="cm">// which publication this cap administers</span>
+}</pre>
+      </div>
+
+      <p>Operations that require <code>OwnerCap</code>:</p>
+      <ul>
+        <li><strong><code>issue_publisher_cap</code></strong>  mint a new publisher cap for an address</li>
+        <li><strong><code>revoke_publisher_cap</code></strong>  add a cap ID to the revocation denylist</li>
+        <li><strong><code>delete_publication</code></strong>  delete the publication entirely</li>
+        <li><strong><code>transfer_owner_cap</code></strong>  transfer ownership to a new address</li>
+      </ul>
+
+      <div class="callout callout-info">
+        <div class="callout-icon">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div>
+          <strong>OwnerCap is transferable by design.</strong> Ownership can be sold, transferred to a multisig wallet, or handed to a DAO treasury. This is a protocol-level feature, not a limitation  publication identity lives in the contract, not in a centralized identity system.
+        </div>
+      </div>
+
+      <h2>PublisherCap</h2>
+      <p>Publisher caps grant write access for daily content operations. Many can exist per publication, issued to different addresses for different editors or automation agents.</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Move</span>
+          <button class="code-copy">Copy</button>
+        </div>
+        <pre><span class="kw">public struct</span> <span class="ty">PublisherCap</span> <span class="kw">has</span> <span class="ty">key</span> {
+  id: <span class="ty">UID</span>,
+  publication_id: <span class="ty">ID</span>,   <span class="cm">// scoped to this publication</span>
+  holder: <span class="ty">address</span>,      <span class="cm">// only this address may use this cap</span>
+}</pre>
+      </div>
+
+      <p>Every write operation that uses a <code>PublisherCap</code> runs three checks internally:</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Move  internal validation</span>
+          <button class="code-copy">Copy</button>
+        </div>
+        <pre><span class="cm">// assert_active_publisher_cap checks all three conditions:</span>
+assert!(cap.publication_id == object::id(publication), <span class="ty">EUnauthorized</span>);
+assert!(cap.holder == ctx.sender(), <span class="ty">EPublisherCapWrongHolder</span>);
+assert!(!revoked_publisher_caps.contains(object::id(cap)), <span class="ty">EPublisherCapRevoked</span>);</pre>
+      </div>
+
+      <p>The <code>holder</code> field is critical: it binds the capability to a specific address. If someone holds the <code>PublisherCap</code> object but the transaction is not signed by <code>holder</code>, the write is rejected. You cannot share a publisher cap between wallets.</p>
+
+      <h2>Issuing Publisher Caps</h2>
+      <p>Only the owner can issue publisher caps. The owner calls <code>issue_publisher_cap</code> with the target <code>holder</code> address:</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Move</span>
+          <button class="code-copy">Copy</button>
+        </div>
+        <pre><span class="kw">public fun</span> <span class="fn">issue_publisher_cap</span>(
+  publication: &<span class="kw">mut</span> <span class="ty">Publication</span>,
+  owner_cap: &<span class="ty">OwnerCap</span>,
+  holder: <span class="ty">address</span>,
+  ctx: &<span class="kw">mut</span> <span class="ty">TxContext</span>,
+): <span class="ty">PublisherCap</span></pre>
+      </div>
+
+      <p>The returned <code>PublisherCap</code> must then be transferred to <code>holder</code> in the same PTB. <strong>No table write occurs during issuance</strong>  only revocations write to the denylist. This makes issuing caps essentially free beyond the gas cost of object creation.</p>
+
+      <h2>Revoking Publisher Caps</h2>
+      <p>When a publisher needs to be removed, the owner calls <code>revoke_publisher_cap</code> with the cap's object ID:</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Move</span>
+          <button class="code-copy">Copy</button>
+        </div>
+        <pre><span class="kw">public fun</span> <span class="fn">revoke_publisher_cap</span>(
+  publication: &<span class="kw">mut</span> <span class="ty">Publication</span>,
+  owner_cap: &<span class="ty">OwnerCap</span>,
+  cap_id: <span class="ty">ID</span>,     <span class="cm">// object ID of the PublisherCap to revoke</span>
+)</pre>
+      </div>
+
+      <p>This adds the cap ID to the <code>revoked_publisher_caps: Table&lt;ID, bool&gt;</code> denylist on the publication. All subsequent writes using that cap will be rejected  the revocation is immediate and requires no cooperation from the cap holder.</p>
+
+      <div class="callout callout-warning">
+        <div class="callout-icon">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div>
+          <strong>Double-revoke aborts.</strong> Calling <code>revoke_publisher_cap</code> on an already-revoked cap ID aborts with <code>EPublisherCapRevoked</code>. Check the denylist state before revoking if unsure.
+        </div>
+      </div>
+
+      <h3>The Denylist Model</h3>
+      <p>Morse uses a <strong>denylist</strong> (blocklist), not an allowlist, for publisher cap tracking. This is a deliberate design choice:</p>
+
+      <table>
+        <thead><tr><th></th><th>Denylist (Morse)</th><th>Allowlist (alternative)</th></tr></thead>
+        <tbody>
+          <tr><td>Issue cap</td><td>Zero table writes</td><td>One table write per issuance</td></tr>
+          <tr><td>Revoke cap</td><td>One table write</td><td>One table delete</td></tr>
+          <tr><td>Write validation</td><td>One table lookup</td><td>One table lookup</td></tr>
+          <tr><td>Optimized for</td><td>Common case (no revocations)</td><td>Frequent churn</td></tr>
+        </tbody>
+      </table>
+
+      <p>This is safe because <code>PublisherCap</code> has no <code>store</code> ability and no external constructor  caps cannot be forged outside the module. An attacker cannot create a valid-looking cap; they must obtain a real one from the owner.</p>
+
+      <h2>Destroying Publisher Caps</h2>
+      <p>A publisher can voluntarily surrender their write access by calling <code>destroy_publisher_cap</code>:</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Move</span>
+          <button class="code-copy">Copy</button>
+        </div>
+        <pre><span class="kw">public fun</span> <span class="fn">destroy_publisher_cap</span>(
+  publication: &<span class="kw">mut</span> <span class="ty">Publication</span>,
+  cap: <span class="ty">PublisherCap</span>,    <span class="cm">// consumed</span>
+  ctx: &<span class="kw">mut</span> <span class="ty">TxContext</span>,
+)</pre>
+      </div>
+
+      <p>Only the <code>holder</code> can call this. If the cap was previously revoked, <code>destroy_publisher_cap</code> also removes it from the denylist  cleaning up on-chain storage.</p>
+
+      <h2>Seal Integration</h2>
+      <p>Morse integrates with <strong>Seal</strong>  Mysten's on-chain access control layer  to gate decryption of encrypted entry payloads. The integration is implemented via an <code>entry fun</code> that Seal calls during the decryption approval flow.</p>
+
+      <h3>How It Works</h3>
+      <p>When a client wants to decrypt an encrypted Walrus blob, they present a Seal identity to the on-chain approval function:</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Move</span>
+          <button class="code-copy">Copy</button>
+        </div>
+        <pre><span class="cm">// Called by Seal during decryption approval</span>
+<span class="kw">entry fun</span> <span class="fn">seal_approve_publisher</span>(
+  id: <span class="ty">vector</span>&lt;<span class="ty">u8</span>&gt;,         <span class="cm">// Seal identity being approved</span>
+  publication: &<span class="ty">Publication</span>,
+  cap: &<span class="ty">PublisherCap</span>,
+  ctx: &<span class="ty">TxContext</span>,
+)</pre>
+      </div>
+
+      <p>The function runs two checks:</p>
+      <ol>
+        <li><code>assert_active_publisher_cap</code>  verifies the cap is valid, not revoked, and the sender is the holder</li>
+        <li><code>assert_valid_publisher_seal_id</code>  verifies the Seal identity is scoped to this publication and policy</li>
+      </ol>
+
+      <h3>Seal Identity Format</h3>
+      <p>Seal identities for Morse follow a structured namespace format to prevent cross-publication identity reuse:</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Seal ID layout</span>
+          <button class="code-copy">Copy</button>
+        </div>
+        <pre>┌─────────────────────────────────┬────────────────┬──────────────────┐
+│  publication_id bytes (32)      │ policy_tag (1) │ nonce (variable) │
+└─────────────────────────────────┴────────────────┴──────────────────┘
+  Scopes identity to one           Must be 0x01      Differentiates
+  specific publication             for publisher      multiple identities
+                                   policy             under same namespace</pre>
+      </div>
+
+      <p>The <code>policy_tag = 0x01</code> is the publisher policy tag. This namespacing ensures:</p>
+      <ul>
+        <li>A cap for Publication A cannot approve decryption of Publication B content</li>
+        <li>The same publication can host multiple policy types with different tags in the future (e.g. subscription tag)</li>
+        <li>Many unique Seal identities can exist within one publication namespace (via different nonces)</li>
+      </ul>
+
+      <h3>Error Codes for Seal</h3>
+      <table>
+        <thead><tr><th>Code</th><th>Constant</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>12</code></td><td><code>ESealInvalidId</code></td><td>Seal identity does not match this publication's namespace</td></tr>
+          <tr><td><code>13</code></td><td><code>ESealWrongPolicyTag</code></td><td>Seal identity has an unsupported policy tag byte</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Full Authorization Error Codes</h2>
+      <table>
+        <thead><tr><th>Code</th><th>Constant</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>2</code></td><td><code>EUnauthorized</code></td><td>Capability does not belong to this publication</td></tr>
+          <tr><td><code>4</code></td><td><code>EPublisherCapWrongHolder</code></td><td>Transaction sender is not the cap's bound holder address</td></tr>
+          <tr><td><code>5</code></td><td><code>EPublisherCapRevoked</code></td><td>The cap ID is on the revocation denylist</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Real-World Usage Pattern</h2>
+      <p>A concrete example of how a team uses the access control model:</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-body">
+            <div class="step-title">Publication created</div>
+            <p>Owner wallet creates the publication. Receives <code>OwnerCap</code> (kept in owner wallet) and an initial <code>PublisherCap</code> (also kept or immediately transferred).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-body">
+            <div class="step-title">Onboard editors</div>
+            <p>For each editor or automation agent, the owner calls <code>issue_publisher_cap(holder: editor_address)</code> and transfers the returned cap to that address. Each cap is independent  revoking one does not affect others.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-body">
+            <div class="step-title">Editors publish content</div>
+            <p>Editors present their <code>PublisherCap</code> in PTBs to create collections, add entries, append drafts, and publish. The contract verifies sender matches <code>holder</code> on every call.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <div class="step-body">
+            <div class="step-title">Offboard editors</div>
+            <p>When an editor leaves, the owner calls <code>revoke_publisher_cap(cap_id)</code>. The revocation is immediate  the next write attempt using that cap aborts. Historical content is unaffected.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">5</div>
+          <div class="step-body">
+            <div class="step-title">Transfer ownership (optional)</div>
+            <p>The owner calls <code>transfer_owner_cap(owner_cap, new_owner_address)</code>. The new owner gains full admin authority immediately. The old owner retains only their <code>PublisherCap</code> (if any) unless it is revoked by the new owner.</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <div class="page-nav">
+      <a href="entries.html" class="pnav">
+        <span class="pnav-dir">Previous</span>
+        <span class="pnav-title">← Entries &amp; Revisions</span>
+      </a>
+      <a href="contracts.html" class="pnav pnav-right">
+        <span class="pnav-dir">Next</span>
+        <span class="pnav-title">Contract Reference →</span>
+      </a>
+    </div>
+    </div>
+  </main>
+
+  <aside class="toc">
+    <div class="toc-title">On this page</div>
+    <ul class="toc-list"></ul>
+  </aside>
+</div>
+
+<script src="assets/search-index.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

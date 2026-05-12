@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contract Reference  Morse dCMS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'><rect width='34' height='34' rx='8' fill='%230c1022' stroke='rgba(68,76,231,0.3)' stroke-width='1'/><path d='M5 26V10L12 19L17 12L22 19L29 10V26' stroke='%23444CE7' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='17' cy='21' r='2' fill='%23dbff4b'/><rect x='11' y='27' width='4' height='1.5' rx='0.75' fill='%23444CE7' opacity='0.7'/><rect x='16.5' y='27' width='7' height='1.5' rx='0.75' fill='%23444CE7' opacity='0.7'/></svg>">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <button class="hamburger" id="hamburger" aria-label="Toggle sidebar">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <a href="index.html" class="logo">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon">
+      <rect width="34" height="34" rx="8" fill="#0c1022" stroke="rgba(68,76,231,0.3)" stroke-width="1"/>
+      <path d="M5 26V10L12 19L17 12L22 19L29 10V26" stroke="#444CE7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <circle cx="17" cy="21" r="2" fill="#dbff4b"/>
+      <rect x="11" y="27" width="4" height="1.5" rx="0.75" fill="#444CE7" opacity="0.7"/>
+      <rect x="16.5" y="27" width="7" height="1.5" rx="0.75" fill="#444CE7" opacity="0.7"/>
+    </svg>
+    <span class="logo-wordmark">MORSE</span>
+    </a>
+    <div class="header-search">
+      <div class="search-box">
+        <span class="search-icon">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </span>
+        <span class="search-placeholder">Search documentation…</span>
+        <kbd class="search-kbd">⌘K</kbd>
+      </div>
+    </div>
+    <nav class="header-links">
+      <a href="https://github.com/TheDivic/morse-dcms" target="_blank" rel="noopener" class="header-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+        </svg>
+        GitHub
+      </a>
+      <a href="https://walrus.xyz" target="_blank" rel="noopener" class="header-link header-link-primary">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+        Walrus
+      </a>
+    </nav>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+<aside class="sidebar" id="sidebar">
+  <nav>
+    <div class="nav-section">
+      <div class="nav-section-title">Getting Started</div>
+      <ul class="nav-list">
+        <li><a href="index.html" class="nav-link" data-page="index.html"><span class="nav-icon">🏠</span> Introduction</a></li>
+        <li><a href="quick-start.html" class="nav-link" data-page="quick-start.html"><span class="nav-icon">⚡</span> Quick Start</a></li>
+        <li><a href="core-concepts.html" class="nav-link" data-page="core-concepts.html"><span class="nav-icon">📐</span> Core Concepts</a></li>
+      </ul>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-section">
+      <div class="nav-section-title">Protocol</div>
+      <ul class="nav-list">
+        <li><a href="publications.html" class="nav-link" data-page="publications.html"><span class="nav-icon">📰</span> Publications</a></li>
+        <li><a href="collections.html" class="nav-link" data-page="collections.html"><span class="nav-icon">🗂</span> Collections</a></li>
+        <li><a href="entries.html" class="nav-link" data-page="entries.html"><span class="nav-icon">📝</span> Entries &amp; Revisions</a></li>
+        <li><a href="access-control.html" class="nav-link" data-page="access-control.html"><span class="nav-icon">🔐</span> Access Control</a></li>
+      </ul>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-section">
+      <div class="nav-section-title">Smart Contracts</div>
+      <ul class="nav-list">
+        <li><a href="contracts.html" class="nav-link" data-page="contracts.html"><span class="nav-icon">⛓</span> Reference</a></li>
+      </ul>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-section">
+      <div class="nav-section-title">SDK <span class="nav-badge-soon">Soon</span></div>
+      <ul class="nav-list">
+        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">📦</span> Overview</a></li>
+        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">🔧</span> Client Setup</a></li>
+        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">📤</span> Publishing</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-title">CLI <span class="nav-badge-soon">Soon</span></div>
+      <ul class="nav-list">
+        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">💻</span> Overview</a></li>
+        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">📋</span> Commands</a></li>
+      </ul>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-title">Indexer <span class="nav-badge-soon">Soon</span></div>
+      <ul class="nav-list">
+        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">🔍</span> Overview</a></li>
+      </ul>
+    </div>
+    <div class="nav-divider"></div>
+    <div class="nav-section">
+      <div class="nav-section-title">Reference</div>
+      <ul class="nav-list">
+        <li><a href="glossary.html" class="nav-link" data-page="glossary.html"><span class="nav-icon">📖</span> Glossary</a></li>
+      </ul>
+    </div>
+  </nav>
+</aside>
+
+<div class="layout">
+  <main class="main">
+    <div class="content">
+    <div class="breadcrumb">
+      <a href="index.html" class="breadcrumb-item">Morse dCMS</a>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-item">Smart Contracts</span>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-item breadcrumb-current">Reference</span>
+    </div>
+
+    <article class="article">
+      <h1>Contract Reference</h1>
+      <p class="article-lead">Complete reference for the Morse Move package  modules, public functions, events, error codes, and deployment information.</p>
+
+      <h2>Package</h2>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Move.toml</span>
+          <button class="code-copy">Copy</button>
+        </div>
+        <pre>name = <span class="st">"publication"</span>
+edition = <span class="st">"2024"</span>
+
+[dependencies]
+Sui = { git = <span class="st">"https://github.com/MystenLabs/sui"</span>, ... }
+Walrus = { git = <span class="st">"https://github.com/MystenLabs/walrus"</span>, ... }</pre>
+      </div>
+
+      <p>The package name is <code>publication</code>. All three modules live within it:</p>
+
+      <table>
+        <thead><tr><th>Module</th><th>Path</th><th>Responsibility</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><code>publication::publication</code></td>
+            <td><code>sources/publication.move</code></td>
+            <td>Top-level API: publications, capabilities, collection and entry operations, Seal integration</td>
+          </tr>
+          <tr>
+            <td><code>publication::collection</code></td>
+            <td><code>sources/collection.move</code></td>
+            <td>Collection struct, storage modes, entry table management</td>
+          </tr>
+          <tr>
+            <td><code>publication::entry</code></td>
+            <td><code>sources/entry.move</code></td>
+            <td>Entry and revision structs, BlobRef enum, validation logic</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-info">
+        <div class="callout-icon">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div>
+          <strong>Deployment addresses.</strong> Testnet deployment addresses are stored in <code>morse-contracts/Published.toml</code> (committed). Ephemeral localnet addresses go to <code>Pub.local.toml</code> (gitignored). Check the repository for the latest published addresses.
+        </div>
+      </div>
+
+      <h2>Shared Objects</h2>
+      <p>Two objects are shared at the protocol level  they must be passed as arguments to relevant transactions:</p>
+
+      <table>
+        <thead><tr><th>Object</th><th>Created by</th><th>Required for</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><code>PublicationRegistry</code></td>
+            <td><code>init()</code> at publish time</td>
+            <td><code>new_publication</code>, <code>delete_publication</code></td>
+          </tr>
+          <tr>
+            <td><code>Publication</code></td>
+            <td><code>new_publication</code> + <code>share_publication</code></td>
+            <td>All collection and entry operations, cap management, Seal</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Public Functions</h2>
+
+      <h3>publication::publication</h3>
+
+      <table>
+        <thead>
+          <tr><th>Function</th><th>Required cap</th><th>Returns</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>new_publication(registry, ctx, name, slug)</code></td>
+            <td></td>
+            <td><code>(Publication, OwnerCap, PublisherCap)</code></td>
+            <td>Create a new publication. Register slug in registry.</td>
+          </tr>
+          <tr>
+            <td><code>share_publication(publication)</code></td>
+            <td></td>
+            <td></td>
+            <td>Share the publication object so others can interact with it.</td>
+          </tr>
+          <tr>
+            <td><code>delete_publication(registry, publication, owner_cap)</code></td>
+            <td>OwnerCap</td>
+            <td></td>
+            <td>Delete publication and release slug. Collections must be empty.</td>
+          </tr>
+          <tr>
+            <td><code>transfer_owner_cap(owner_cap, recipient)</code></td>
+            <td></td>
+            <td></td>
+            <td>Transfer ownership to another address.</td>
+          </tr>
+          <tr>
+            <td><code>issue_publisher_cap(publication, owner_cap, holder, ctx)</code></td>
+            <td>OwnerCap</td>
+            <td><code>PublisherCap</code></td>
+            <td>Mint a new publisher cap bound to <code>holder</code>.</td>
+          </tr>
+          <tr>
+            <td><code>revoke_publisher_cap(publication, owner_cap, cap_id)</code></td>
+            <td>OwnerCap</td>
+            <td></td>
+            <td>Add cap ID to the revocation denylist.</td>
+          </tr>
+          <tr>
+            <td><code>destroy_publisher_cap(publication, cap, ctx)</code></td>
+            <td>PublisherCap (holder)</td>
+            <td></td>
+            <td>Voluntarily surrender write access. Cleans up denylist entry if revoked.</td>
+          </tr>
+          <tr>
+            <td><code>create_collection(publication, cap, name, storage_mode, ctx)</code></td>
+            <td>PublisherCap</td>
+            <td></td>
+            <td>Add a new named collection to the publication.</td>
+          </tr>
+          <tr>
+            <td><code>delete_collection(publication, cap, name, ctx)</code></td>
+            <td>PublisherCap</td>
+            <td></td>
+            <td>Remove and destroy a collection. Entries must be empty first.</td>
+          </tr>
+          <tr>
+            <td><code>add_entry_to_collection(publication, cap, collection_name, name, blob, quilt_patch_id, content_type, encrypted, access_policy, seal_id, ctx)</code></td>
+            <td>PublisherCap</td>
+            <td><code>u64</code> (entry_id)</td>
+            <td>Create a new entry in a named collection.</td>
+          </tr>
+          <tr>
+            <td><code>delete_entry_from_collection(publication, cap, collection_name, entry_id, ctx)</code></td>
+            <td>PublisherCap</td>
+            <td></td>
+            <td>Remove an entry by ID.</td>
+          </tr>
+          <tr>
+            <td><code>append_collection_entry_draft_revision(publication, cap, collection_name, entry_id, blob, quilt_patch_id, content_type, encrypted, access_policy, seal_id, ctx)</code></td>
+            <td>PublisherCap</td>
+            <td><code>u64</code> (revision_id)</td>
+            <td>Append a draft revision and advance draft_head.</td>
+          </tr>
+          <tr>
+            <td><code>publish_collection_entry_from_draft(publication, cap, collection_name, entry_id, draft_revision_id, blob, quilt_patch_id, content_type, ctx)</code></td>
+            <td>PublisherCap</td>
+            <td><code>u64</code> (revision_id)</td>
+            <td>Publish from a draft  appends public revision, advances public_head.</td>
+          </tr>
+          <tr>
+            <td><code>publish_collection_entry_direct(publication, cap, collection_name, entry_id, blob, quilt_patch_id, content_type, ctx)</code></td>
+            <td>PublisherCap</td>
+            <td><code>u64</code> (revision_id)</td>
+            <td>Publish directly without a draft step.</td>
+          </tr>
+          <tr>
+            <td><code>contains_slug(registry, slug)</code></td>
+            <td></td>
+            <td><code>bool</code></td>
+            <td>Check if a slug is currently registered.</td>
+          </tr>
+          <tr>
+            <td><code>get_publication_id_by_slug(registry, slug)</code></td>
+            <td></td>
+            <td><code>&amp;ID</code></td>
+            <td>Resolve a slug to its publication's object ID.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>entry fun  Seal</h3>
+      <table>
+        <thead>
+          <tr><th>Function</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>seal_approve_publisher(id, publication, cap, ctx)</code></td>
+            <td>Called by Seal during decryption approval. Validates active publisher cap and correct Seal identity namespace.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>publication::collection (public)</h3>
+      <table>
+        <thead><tr><th>Function</th><th>Returns</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>get_name(collection)</code></td><td><code>String</code></td><td>Return the collection's display name.</td></tr>
+          <tr><td><code>get_storage_mode(collection)</code></td><td><code>u8</code></td><td>Return the storage mode constant (0 or 1).</td></tr>
+          <tr><td><code>entries_length(collection)</code></td><td><code>u64</code></td><td>Return the number of entries currently in the collection.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>publication::entry (public)</h3>
+      <table>
+        <thead><tr><th>Function</th><th>Returns</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>get_name(entry)</code></td><td><code>String</code></td><td>Entry display name.</td></tr>
+          <tr><td><code>get_draft_head(entry)</code></td><td><code>Option&lt;u64&gt;</code></td><td>Current draft revision index.</td></tr>
+          <tr><td><code>get_public_head(entry)</code></td><td><code>Option&lt;u64&gt;</code></td><td>Current public revision index.</td></tr>
+          <tr><td><code>get_blob_ref(entry)</code></td><td><code>BlobRef</code></td><td>BlobRef from the latest revision.</td></tr>
+          <tr><td><code>get_content_type(entry)</code></td><td><code>String</code></td><td>MIME content type from latest revision.</td></tr>
+          <tr><td><code>get_encrypted(entry)</code></td><td><code>bool</code></td><td>Whether the latest revision is encrypted.</td></tr>
+          <tr><td><code>get_access_policy(entry)</code></td><td><code>u8</code></td><td>Access policy from the latest revision.</td></tr>
+          <tr><td><code>get_seal_id(entry)</code></td><td><code>Option&lt;vector&lt;u8&gt;&gt;</code></td><td>Seal identity from the latest revision.</td></tr>
+          <tr><td><code>get_author(entry)</code></td><td><code>address</code></td><td>Author address from the latest revision.</td></tr>
+          <tr><td><code>get_revision(entry, revision_id)</code></td><td><code>&amp;EntryRevision</code></td><td>Access a specific revision by index.</td></tr>
+          <tr><td><code>access_policy_public()</code></td><td><code>u8</code> (0)</td><td>The ACCESS_PUBLIC constant.</td></tr>
+          <tr><td><code>access_policy_publisher()</code></td><td><code>u8</code> (1)</td><td>The ACCESS_PUBLISHER constant.</td></tr>
+          <tr><td><code>access_policy_subscription()</code></td><td><code>u8</code> (2)</td><td>The ACCESS_SUBSCRIPTION constant.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Events</h2>
+      <p>All events have <code>copy, drop</code> abilities and are emitted from <code>publication::publication</code>.</p>
+
+      <table>
+        <thead>
+          <tr><th>Event</th><th>Fields</th><th>Trigger</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>PublicationCreated</code></td>
+            <td><code>publication: ID</code>, <code>name: String</code>, <code>slug: String</code></td>
+            <td><code>new_publication</code></td>
+          </tr>
+          <tr>
+            <td><code>PublicationDeleted</code></td>
+            <td><code>publication: ID</code>, <code>name: String</code></td>
+            <td><code>delete_publication</code></td>
+          </tr>
+          <tr>
+            <td><code>SlugRegistered</code></td>
+            <td><code>slug: String</code>, <code>publication: ID</code></td>
+            <td>Slug claimed in registry (always emitted with <code>PublicationCreated</code>)</td>
+          </tr>
+          <tr>
+            <td><code>SlugReleased</code></td>
+            <td><code>slug: String</code>, <code>publication: ID</code></td>
+            <td>Slug freed from registry (always emitted with <code>PublicationDeleted</code>)</td>
+          </tr>
+          <tr>
+            <td><code>PublisherCapIssued</code></td>
+            <td><code>publication: ID</code>, <code>cap: ID</code></td>
+            <td><code>issue_publisher_cap</code></td>
+          </tr>
+          <tr>
+            <td><code>PublisherCapRevoked</code></td>
+            <td><code>publication: ID</code>, <code>cap: ID</code></td>
+            <td><code>revoke_publisher_cap</code></td>
+          </tr>
+          <tr>
+            <td><code>CollectionAdded</code></td>
+            <td><code>publication: ID</code>, <code>name: String</code></td>
+            <td><code>create_collection</code></td>
+          </tr>
+          <tr>
+            <td><code>CollectionRemoved</code></td>
+            <td><code>publication: ID</code>, <code>name: String</code></td>
+            <td><code>delete_collection</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Complete Error Code Reference</h2>
+
+      <h3>publication::publication</h3>
+      <table>
+        <thead><tr><th>Code</th><th>Constant</th><th>Module section</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>0</code></td><td><code>ECollectionAlreadyExists</code></td><td>Collections</td><td>Collection with this name already exists</td></tr>
+          <tr><td><code>2</code></td><td><code>EUnauthorized</code></td><td>Authorization</td><td>Capability does not belong to this publication</td></tr>
+          <tr><td><code>4</code></td><td><code>EPublisherCapWrongHolder</code></td><td>Authorization</td><td>Sender is not the cap's bound holder</td></tr>
+          <tr><td><code>5</code></td><td><code>EPublisherCapRevoked</code></td><td>Authorization</td><td>Cap ID is on the revocation denylist</td></tr>
+          <tr><td><code>6</code></td><td><code>ESlugAlreadyExists</code></td><td>Registry</td><td>Slug is already registered</td></tr>
+          <tr><td><code>7</code></td><td><code>ESlugEmpty</code></td><td>Registry</td><td>Slug is empty</td></tr>
+          <tr><td><code>8</code></td><td><code>ESlugTooLong</code></td><td>Registry</td><td>Slug exceeds 64 characters</td></tr>
+          <tr><td><code>9</code></td><td><code>ESlugInvalidChar</code></td><td>Registry</td><td>Slug contains invalid characters</td></tr>
+          <tr><td><code>10</code></td><td><code>ESlugInvalidEdgeHyphen</code></td><td>Registry</td><td>Slug starts or ends with hyphen</td></tr>
+          <tr><td><code>12</code></td><td><code>ESealInvalidId</code></td><td>Seal</td><td>Seal identity doesn't match publication namespace</td></tr>
+          <tr><td><code>13</code></td><td><code>ESealWrongPolicyTag</code></td><td>Seal</td><td>Seal identity has unsupported policy tag</td></tr>
+        </tbody>
+      </table>
+
+      <h3>publication::collection</h3>
+      <table>
+        <thead><tr><th>Code</th><th>Constant</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>0</code></td><td><code>EEntryNotFound</code></td><td>No entry exists for the requested entry_id</td></tr>
+          <tr><td><code>1</code></td><td><code>EInvalidStorageMode</code></td><td>Storage mode must be 0 or 1</td></tr>
+        </tbody>
+      </table>
+
+      <h3>publication::entry</h3>
+      <table>
+        <thead><tr><th>Code</th><th>Constant</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>0</code></td><td><code>ENameEmpty</code></td><td>Entry name is empty</td></tr>
+          <tr><td><code>1</code></td><td><code>EContentTypeEmpty</code></td><td>Content type is empty</td></tr>
+          <tr><td><code>2</code></td><td><code>ENameTooLong</code></td><td>Entry name exceeds 256 characters</td></tr>
+          <tr><td><code>3</code></td><td><code>EContentTypeTooLong</code></td><td>Content type exceeds 255 characters</td></tr>
+          <tr><td><code>4</code></td><td><code>ERevisionNotFound</code></td><td>Requested revision index out of bounds</td></tr>
+          <tr><td><code>5</code></td><td><code>EInvalidAccessPolicy</code></td><td>Encryption/access_policy mismatch</td></tr>
+          <tr><td><code>6</code></td><td><code>ESealIdRequired</code></td><td>Encrypted revisions require a Seal identity</td></tr>
+          <tr><td><code>7</code></td><td><code>ESealIdNotAllowed</code></td><td>Unencrypted revisions must not include a Seal identity</td></tr>
+          <tr><td><code>8</code></td><td><code>EBlobNotDeletable</code></td><td>Walrus blob must be deletable</td></tr>
+          <tr><td><code>9</code></td><td><code>EQuiltPatchIdRequired</code></td><td>Quilt mode collection requires a QuiltPatchId</td></tr>
+          <tr><td><code>10</code></td><td><code>EQuiltPatchIdNotAllowed</code></td><td>Blob mode collection must not include a QuiltPatchId</td></tr>
+          <tr><td><code>11</code></td><td><code>EInvalidQuiltPatchId</code></td><td>QuiltPatchId must be exactly 37 bytes</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Constants</h2>
+      <table>
+        <thead><tr><th>Module</th><th>Constant</th><th>Value</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td>publication</td><td><code>MAX_SLUG_LENGTH</code></td><td><code>64</code></td><td>Maximum slug length in bytes</td></tr>
+          <tr><td>entry</td><td><code>MAX_ENTRY_NAME_LENGTH</code></td><td><code>256</code></td><td>Maximum entry name length in bytes</td></tr>
+          <tr><td>entry</td><td><code>MAX_CONTENT_TYPE_LENGTH</code></td><td><code>255</code></td><td>Maximum content_type length in bytes</td></tr>
+          <tr><td>entry</td><td><code>QUILT_PATCH_ID_LENGTH</code></td><td><code>37</code></td><td>Required exact byte length of QuiltPatchId</td></tr>
+          <tr><td>entry</td><td><code>ACCESS_PUBLIC</code></td><td><code>0</code></td><td>Unencrypted public access policy</td></tr>
+          <tr><td>entry</td><td><code>ACCESS_PUBLISHER</code></td><td><code>1</code></td><td>Publisher-gated encrypted access policy</td></tr>
+          <tr><td>entry</td><td><code>ACCESS_SUBSCRIPTION</code></td><td><code>2</code></td><td>Subscription-gated access policy (reserved)</td></tr>
+          <tr><td>publication</td><td><code>SEAL_POLICY_TAG_PUBLISHER</code></td><td><code>0x01</code></td><td>Seal identity policy tag for publisher gating</td></tr>
+          <tr><td>collection</td><td><code>STORAGE_MODE_BLOB</code></td><td><code>0</code></td><td>Standalone Walrus Blob storage mode</td></tr>
+          <tr><td>collection</td><td><code>STORAGE_MODE_QUILT</code></td><td><code>1</code></td><td>QuiltPatch-addressed storage mode</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Object Abilities</h2>
+      <table>
+        <thead><tr><th>Type</th><th>Abilities</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>Publication</code></td><td><code>key</code></td><td>Shared object. No <code>store</code>  prevents wrapping.</td></tr>
+          <tr><td><code>PublicationRegistry</code></td><td><code>key</code></td><td>Shared singleton. Created in <code>init()</code>.</td></tr>
+          <tr><td><code>OwnerCap</code></td><td><code>key</code></td><td>Owned object. Transferable. One per publication.</td></tr>
+          <tr><td><code>PublisherCap</code></td><td><code>key</code></td><td>Owned object. Holder-bound. Many per publication.</td></tr>
+          <tr><td><code>Collection</code></td><td><code>store</code></td><td>Wrapped value inside <code>Publication.collections</code>.</td></tr>
+          <tr><td><code>Entry</code></td><td><code>store, drop</code></td><td>Wrapped value inside <code>Collection.entries</code>.</td></tr>
+          <tr><td><code>EntryRevision</code></td><td><code>store, drop</code></td><td>Value in <code>Entry.revisions</code> vector.</td></tr>
+          <tr><td><code>BlobRef</code></td><td><code>copy, drop, store</code></td><td>Enum  either <code>Blob(ID)</code> or <code>QuiltPatch(vector&lt;u8&gt;)</code>.</td></tr>
+        </tbody>
+      </table>
+    </article>
+
+    <div class="page-nav">
+      <a href="access-control.html" class="pnav">
+        <span class="pnav-dir">Previous</span>
+        <span class="pnav-title">← Access Control</span>
+      </a>
+      <a href="glossary.html" class="pnav pnav-right">
+        <span class="pnav-dir">Next</span>
+        <span class="pnav-title">Glossary →</span>
+      </a>
+    </div>
+    </div>
+  </main>
+
+  <aside class="toc">
+    <div class="toc-title">On this page</div>
+    <ul class="toc-list"></ul>
+  </aside>
+</div>
+
+<script src="assets/search-index.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

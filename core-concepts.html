@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Core Concepts  Morse dCMS Documentation</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'><rect width='34' height='34' rx='8' fill='%230c1022' stroke='rgba(68,76,231,0.3)' stroke-width='1'/><path d='M5 26V10L12 19L17 12L22 19L29 10V26' stroke='%23444CE7' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='17' cy='21' r='2' fill='%23dbff4b'/><rect x='11' y='27' width='4' height='1.5' rx='0.75' fill='%23444CE7' opacity='0.7'/><rect x='16.5' y='27' width='7' height='1.5' rx='0.75' fill='%23444CE7' opacity='0.7'/></svg>">
+</head>
+<body>
+<header class="header">
+  <div class="header-inner">
+    <button class="hamburger" id="hamburger" aria-label="Toggle sidebar"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <a href="index.html" class="logo"><svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon">
+      <rect width="34" height="34" rx="8" fill="#0c1022" stroke="rgba(68,76,231,0.3)" stroke-width="1"/>
+      <path d="M5 26V10L12 19L17 12L22 19L29 10V26" stroke="#444CE7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <circle cx="17" cy="21" r="2" fill="#dbff4b"/>
+      <rect x="11" y="27" width="4" height="1.5" rx="0.75" fill="#444CE7" opacity="0.7"/>
+      <rect x="16.5" y="27" width="7" height="1.5" rx="0.75" fill="#444CE7" opacity="0.7"/>
+    </svg>
+    <span class="logo-wordmark">MORSE</span></a>
+    <div class="header-search"><div class="search-box"><span class="search-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span><span class="search-placeholder">Search documentation…</span><kbd class="search-kbd">⌘K</kbd></div></div>
+    <nav class="header-links">
+      <a href="https://github.com/TheDivic/morse-dcms" target="_blank" rel="noopener" class="header-link"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>GitHub</a>
+      <a href="https://walrus.xyz" target="_blank" rel="noopener" class="header-link header-link-primary">Walrus ↗</a>
+    </nav>
+  </div>
+</header>
+<div class="sidebar-overlay" id="overlay"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <nav>
+      <div class="nav-section"><div class="nav-section-title">Getting Started</div><ul class="nav-list"><li><a href="index.html" class="nav-link" data-page="index.html"><span class="nav-icon">🏠</span> Introduction</a></li><li><a href="quick-start.html" class="nav-link" data-page="quick-start.html"><span class="nav-icon">⚡</span> Quick Start</a></li><li><a href="core-concepts.html" class="nav-link" data-page="core-concepts.html"><span class="nav-icon">📐</span> Core Concepts</a></li></ul></div>
+      <div class="nav-divider"></div>
+      <div class="nav-section"><div class="nav-section-title">Protocol</div><ul class="nav-list"><li><a href="publications.html" class="nav-link" data-page="publications.html"><span class="nav-icon">📰</span> Publications</a></li><li><a href="collections.html" class="nav-link" data-page="collections.html"><span class="nav-icon">🗂</span> Collections</a></li><li><a href="entries.html" class="nav-link" data-page="entries.html"><span class="nav-icon">📝</span> Entries &amp; Revisions</a></li><li><a href="access-control.html" class="nav-link" data-page="access-control.html"><span class="nav-icon">🔐</span> Access Control</a></li></ul></div>
+      <div class="nav-divider"></div>
+      <div class="nav-section"><div class="nav-section-title">Smart Contracts</div><ul class="nav-list"><li><a href="contracts.html" class="nav-link" data-page="contracts.html"><span class="nav-icon">⛓</span> Reference</a></li></ul></div>
+      <div class="nav-divider"></div>
+      <div class="nav-section"><div class="nav-section-title">SDK <span class="nav-badge-soon">Soon</span></div><ul class="nav-list"><li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">📦</span> Overview</a></li><li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">🔧</span> Client Setup</a></li><li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">📤</span> Publishing</a></li></ul></div>
+      <div class="nav-section"><div class="nav-section-title">CLI <span class="nav-badge-soon">Soon</span></div><ul class="nav-list"><li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">💻</span> Overview</a></li><li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">📋</span> Commands</a></li></ul></div>
+      <div class="nav-section"><div class="nav-section-title">Indexer <span class="nav-badge-soon">Soon</span></div><ul class="nav-list"><li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">🔍</span> Overview</a></li></ul></div>
+      <div class="nav-divider"></div>
+      <div class="nav-section"><div class="nav-section-title">Reference</div><ul class="nav-list"><li><a href="glossary.html" class="nav-link" data-page="glossary.html"><span class="nav-icon">📖</span> Glossary</a></li></ul></div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+      <nav class="breadcrumbs">
+        <span class="breadcrumb-link">Getting Started</span>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-current">Core Concepts</span>
+      </nav>
+      <article class="article">
+        <h1>Core Concepts</h1>
+        <p class="article-lead">Understand the fundamental building blocks of the Morse protocol  the data model, authorization system, storage strategy, and how on-chain and off-chain components interact.</p>
+
+        <h2 id="data-model">The Data Model</h2>
+        <p>Morse organizes content in a four-level hierarchy. Each level is stored on-chain and has a clear responsibility:</p>
+
+        <div class="arch" style="margin-top:20px">
+          <div class="arch-row">
+            <div class="arch-label">Level 1</div>
+            <div class="arch-items">
+              <div class="arch-chip arch-chip-teal" style="font-size:14px;padding:10px 18px">📰 Publication</div>
+              <div class="arch-arrow">→</div>
+              <span style="color:var(--text-secondary);font-size:13px">e.g. <code>my-blog</code>  a brand-level content domain</span>
+            </div>
+          </div>
+          <div class="arch-connector">↓</div>
+          <div class="arch-row">
+            <div class="arch-label">Level 2</div>
+            <div class="arch-items">
+              <div class="arch-chip arch-chip-blue" style="font-size:14px;padding:10px 18px">🗂 Collection</div>
+              <div class="arch-arrow">→</div>
+              <span style="color:var(--text-secondary);font-size:13px">e.g. <code>articles</code>, <code>site-pages</code>  content lanes</span>
+            </div>
+          </div>
+          <div class="arch-connector">↓</div>
+          <div class="arch-row">
+            <div class="arch-label">Level 3</div>
+            <div class="arch-items">
+              <div class="arch-chip arch-chip-dim" style="font-size:14px;padding:10px 18px">📝 Entry</div>
+              <div class="arch-arrow">→</div>
+              <span style="color:var(--text-secondary);font-size:13px">e.g. <code>welcome-post</code>  a single content unit</span>
+            </div>
+          </div>
+          <div class="arch-connector">↓</div>
+          <div class="arch-row">
+            <div class="arch-label">Level 4</div>
+            <div class="arch-items">
+              <div class="arch-chip arch-chip-warn" style="font-size:14px;padding:10px 18px">📜 Revision</div>
+              <div class="arch-arrow">→</div>
+              <span style="color:var(--text-secondary);font-size:13px">immutable snapshot  blob reference + metadata</span>
+            </div>
+          </div>
+        </div>
+
+        <p>Editors operate mostly at the <strong>Entry / Revision</strong> level. Owners operate mostly at the <strong>Publication / Authorization</strong> level.</p>
+
+        <h2 id="publications">Publications</h2>
+        <p>A <strong>Publication</strong> is the top-level shared object in Morse. It is the permission management boundary for all content under a brand or domain.</p>
+        <ul>
+          <li>Identified by an immutable <strong>slug</strong> (e.g. <code>my-blog</code>) registered in the global <code>PublicationRegistry</code>.</li>
+          <li>Slug uniqueness is enforced globally  no two active publications can share a slug.</li>
+          <li>Contains a map of named collections.</li>
+          <li>Tracks a denylist of revoked publisher caps.</li>
+        </ul>
+        <p>Publications use <code>key</code> ability only (no <code>store</code>)  sharing and transfer are gated through module functions, not arbitrary object movement.</p>
+
+        <h2 id="collections">Collections</h2>
+        <p>A <strong>Collection</strong> is a named content lane inside a publication. Its <strong>storage mode is immutable after creation</strong> and determines how content references are stored:</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Mode</th><th>Value</th><th>Best for</th><th>Blob reference type</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Blob</strong></td><td><code>0</code></td><td>Growing collections  articles, posts, media libraries. Content changes independently.</td><td><code>Blob(ID)</code>  Sui object ID of a standalone Walrus Blob</td></tr>
+              <tr><td><strong>Quilt</strong></td><td><code>1</code></td><td>Small, stable collections  site pages, config-like structured documents.</td><td><code>QuiltPatch(vector&lt;u8&gt;)</code>  37-byte patch identifier within a shared quilt</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Entries inside a collection are keyed by a monotonic <code>entry_id</code> (<code>u64</code>). IDs are stable  they never get renumbered after deletions (gaps are expected).</p>
+
+        <h2 id="entries-and-revisions">Entries &amp; Revisions</h2>
+        <p>An <strong>Entry</strong> is a single content unit in a collection. It holds an immutable, append-only <strong>revision vector</strong>.</p>
+
+        <h3 id="dual-head-model">The Dual-Head Model</h3>
+        <p>Each entry maintains two head pointers:</p>
+        <ul>
+          <li><strong><code>draft_head</code></strong>  points to the latest draft revision. Editors can iterate here without affecting what readers see.</li>
+          <li><strong><code>public_head</code></strong>  points to the currently published revision. Readers and indexers use this.</li>
+        </ul>
+
+        <p>This dual-head model enables real editorial workflows: drafts can evolve privately while production clients serve stable published content.</p>
+
+        <h3 id="revision-contents">What a Revision Contains</h3>
+        <p>Each <code>EntryRevision</code> is immutable once appended. It stores:</p>
+        <ul>
+          <li><strong><code>blob_ref</code></strong>  either a <code>Blob(ID)</code> or <code>QuiltPatch(bytes)</code> pointing to the Walrus payload.</li>
+          <li><strong><code>content_type</code></strong>  MIME type string (e.g. <code>application/json</code>, <code>text/markdown</code>).</li>
+          <li><strong><code>encrypted</code></strong>  whether the Walrus payload is Seal-encrypted.</li>
+          <li><strong><code>access_policy</code></strong>  <code>0</code> (public), <code>1</code> (publisher), or <code>2</code> (subscription).</li>
+          <li><strong><code>seal_id</code></strong>  Seal identity for encrypted revisions (required when <code>encrypted = true</code>).</li>
+          <li><strong><code>author</code></strong>  address of the transaction sender who created this revision.</li>
+        </ul>
+
+        <h2 id="capability-based-auth">Capability-Based Authorization</h2>
+        <p>Morse uses two capabilities to separate publication permission management from day-to-day publishing:</p>
+
+        <div class="feature-grid">
+          <div class="feature-item">
+            <div class="feature-icon">👑</div>
+            <div class="feature-title">OwnerCap</div>
+            <div class="feature-desc"><strong>One per publication.</strong> Required to issue or revoke PublisherCaps, delete the publication, and transfer ownership. Transferable by design  ownership can be sold or delegated.</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">✍️</div>
+            <div class="feature-title">PublisherCap</div>
+            <div class="feature-desc"><strong>Many per publication.</strong> Required for all write operations. Bound to a specific <code>holder</code> address  a moved or shared cap object cannot be used by unapproved addresses.</div>
+          </div>
+        </div>
+
+        <h3 id="revocation">Revocation Denylist</h3>
+        <p>Revocation is <strong>denylist-based</strong>, not allowlist-based. This is an important design choice:</p>
+        <ul>
+          <li>Issuing a cap has <strong>zero table writes</strong>  caps are valid by construction.</li>
+          <li>Only revocations write to the <code>revoked_publisher_caps</code> table.</li>
+          <li>This optimizes for the common case (no revocations) and makes issuing caps cheap.</li>
+          <li>Safe because <code>PublisherCap</code> has no <code>store</code> ability and no external constructor  caps cannot be fabricated outside the module.</li>
+        </ul>
+
+        <div class="callout callout-info">
+          <span class="callout-icon">💡</span>
+          <div class="callout-body">
+            <div class="callout-title">Revocation is immediate</div>
+            <div class="callout-text">Once a <code>PublisherCap</code> ID is added to the denylist, all future writes using that cap will be rejected  without modifying historical content state.</div>
+          </div>
+        </div>
+
+        <h2 id="walrus-storage">Walrus Storage</h2>
+        <p>Walrus is a decentralized blob storage protocol. Morse uses it to store the actual content payloads and assets, keeping large bytes off-chain while preserving on-chain verifiable references.</p>
+        <ul>
+          <li>Walrus is <strong>format-agnostic</strong>  it stores binary blobs. Morse can support JSON, Markdown, images, video, or any custom schema.</li>
+          <li>Contracts store <strong>references</strong> to blobs (<code>blob_id</code> or <code>QuiltPatchId</code>), not the payload bytes themselves.</li>
+          <li>Blobs must be <strong>deletable</strong>  Morse enforces this by requiring the actual <code>&Blob</code> object (not just an ID) in production write paths.</li>
+        </ul>
+
+        <h3 id="quilt-patch-id">QuiltPatchId Format</h3>
+        <p>For Quilt mode collections, each revision stores a 37-byte compact identifier:</p>
+        <div class="code-block code-block-simple">
+          <pre>QuiltPatchId = quilt_blob_id (32 bytes)
+             + version     ( 1 byte )
+             + start_index ( 2 bytes)
+             + end_index   ( 2 bytes)</pre>
+        </div>
+
+        <h2 id="seal-encryption">Access Control &amp; Seal</h2>
+        <p>Morse supports three access policies on content revisions:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Policy</th><th>Constant</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Public</strong></td><td><code>0</code></td><td>Unencrypted. Anyone can read the Walrus payload directly.</td></tr>
+              <tr><td><strong>Publisher</strong></td><td><code>1</code></td><td>Encrypted via Seal. Only active publishers of this publication can decrypt.</td></tr>
+              <tr><td><strong>Subscription</strong></td><td><code>2</code></td><td>Reserved. Planned for subscription-gated content with Seal policies.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Seal is MystenLabs' access control system for encrypted Walrus content. The <code>seal_approve_publisher</code> entry function in the contracts validates that a caller holds an active, non-revoked <code>PublisherCap</code> before approving decryption.</p>
+
+        <h2 id="off-chain-services">Off-Chain Services</h2>
+        <p>The blockchain is the canonical source of truth, but off-chain services improve the developer experience:</p>
+        <ul>
+          <li><strong>Indexer</strong>  listens to on-chain events and builds a read-optimized state database.</li>
+          <li><strong>Content API</strong>  serves fast queries for listings, slug resolution, and payload references.</li>
+          <li><strong>SDK</strong>  TypeScript package that wraps Sui/Walrus/Seal interactions for app developers.</li>
+          <li><strong>CLI</strong>  command-line tool for scripted automation, CI, and agent-native workflows.</li>
+        </ul>
+        <div class="callout callout-tip">
+          <span class="callout-icon">🔌</span>
+          <div class="callout-body">
+            <div class="callout-title">Open protocol guarantee</div>
+            <div class="callout-text">Off-chain services are <strong>replaceable</strong>. Any team can run their own indexer, API, or integrate directly with the contracts via the SDK. Protocol access is never gated by a single service provider.</div>
+          </div>
+        </div>
+      </article>
+
+      <div class="page-nav">
+        <a href="quick-start.html" class="pnav"><span class="pnav-dir">Previous</span><span class="pnav-title">← Quick Start</span></a>
+        <a href="publications.html" class="pnav pnav-right"><span class="pnav-dir">Next</span><span class="pnav-title">Publications →</span></a>
+      </div>
+    </div>
+  </main>
+
+  <aside class="toc">
+    <div class="toc-title">On this page</div>
+    <ul class="toc-list"></ul>
+  </aside>
+</div>
+<script src="assets/search-index.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>
