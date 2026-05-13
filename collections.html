@@ -88,11 +88,11 @@
     </div>
     <div class="nav-divider"></div>
     <div class="nav-section">
-      <div class="nav-section-title">SDK <span class="nav-badge-soon">Soon</span></div>
+      <div class="nav-section-title">SDK</div>
       <ul class="nav-list">
-        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">📦</span> Overview</a></li>
-        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">🔧</span> Client Setup</a></li>
-        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">📤</span> Publishing</a></li>
+        <li><a href="sdk-overview.html" class="nav-link" data-page="sdk-overview.html"><span class="nav-icon">📦</span> Overview</a></li>
+        <li><a href="sdk-client-setup.html" class="nav-link" data-page="sdk-client-setup.html"><span class="nav-icon">🔧</span> Client Setup</a></li>
+        <li><a href="sdk-publishing.html" class="nav-link" data-page="sdk-publishing.html"><span class="nav-icon">📤</span> Publishing</a></li>
       </ul>
     </div>
     <div class="nav-section">
@@ -132,6 +132,14 @@
     <article class="article">
       <h1>Collections</h1>
       <p class="article-lead">A collection is a named content lane inside a publication. It groups related entries together and determines how their Walrus payload references are stored.</p>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">📦</span>
+        <div class="callout-body">
+          <div class="callout-title">Building this from TypeScript?</div>
+          <div class="callout-text">The SDK exposes <code>createCollection</code> and <code>deleteCollection</code> with the <code>StorageMode</code> enum. See <a href="sdk-publishing.html#create-collection">SDK Publishing → Add a collection</a>.</div>
+        </div>
+      </div>
 
       <h2>What is a Collection?</h2>
       <p>Collections organize entries into predictable buckets for editorial workflows and API consumers. A publication holds collections in a <code>VecMap&lt;String, Collection&gt;</code> keyed by name. The choice of <code>VecMap</code> reflects the expectation that a publication will have only a small number of named collections.</p>

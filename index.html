@@ -76,11 +76,11 @@
       </div>
       <div class="nav-divider"></div>
       <div class="nav-section">
-        <div class="nav-section-title">SDK <span class="nav-badge-soon">Soon</span></div>
+        <div class="nav-section-title">SDK</div>
         <ul class="nav-list">
-          <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">📦</span> Overview</a></li>
-          <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">🔧</span> Client Setup</a></li>
-          <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">📤</span> Publishing</a></li>
+          <li><a href="sdk-overview.html" class="nav-link" data-page="sdk-overview.html"><span class="nav-icon">📦</span> Overview</a></li>
+          <li><a href="sdk-client-setup.html" class="nav-link" data-page="sdk-client-setup.html"><span class="nav-icon">🔧</span> Client Setup</a></li>
+          <li><a href="sdk-publishing.html" class="nav-link" data-page="sdk-publishing.html"><span class="nav-icon">📤</span> Publishing</a></li>
         </ul>
       </div>
       <div class="nav-section">
@@ -263,8 +263,8 @@
               </tr>
               <tr>
                 <td><strong>TypeScript SDK</strong></td>
-                <td><span class="status-dot status-wip">In Progress</span></td>
-                <td>Wraps Sui and Walrus interactions for application developers.</td>
+                <td><span class="status-dot status-done">Active</span></td>
+                <td>Wraps Sui, Walrus, and Seal behind a small adapter pattern. Published as <code>morse-sdk</code> on npm at v0.1.0 (testnet).</td>
               </tr>
               <tr>
                 <td><strong>CLI</strong></td>
@@ -316,6 +316,11 @@
             <span class="card-icon">⛓</span>
             <div class="card-title">Contract Reference</div>
             <div class="card-desc">Events, error codes, and full Move module reference.</div>
+          </a>
+          <a href="sdk-overview.html" class="card">
+            <span class="card-icon">📦</span>
+            <div class="card-title">TypeScript SDK</div>
+            <div class="card-desc">Build on Morse from Node or the browser. Adapter pattern, branded IDs, structured errors.</div>
           </a>
         </div>
 

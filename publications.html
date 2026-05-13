@@ -88,11 +88,11 @@
     </div>
     <div class="nav-divider"></div>
     <div class="nav-section">
-      <div class="nav-section-title">SDK <span class="nav-badge-soon">Soon</span></div>
+      <div class="nav-section-title">SDK</div>
       <ul class="nav-list">
-        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">📦</span> Overview</a></li>
-        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">🔧</span> Client Setup</a></li>
-        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">📤</span> Publishing</a></li>
+        <li><a href="sdk-overview.html" class="nav-link" data-page="sdk-overview.html"><span class="nav-icon">📦</span> Overview</a></li>
+        <li><a href="sdk-client-setup.html" class="nav-link" data-page="sdk-client-setup.html"><span class="nav-icon">🔧</span> Client Setup</a></li>
+        <li><a href="sdk-publishing.html" class="nav-link" data-page="sdk-publishing.html"><span class="nav-icon">📤</span> Publishing</a></li>
       </ul>
     </div>
     <div class="nav-section">
@@ -132,6 +132,14 @@
     <article class="article">
       <h1>Publications</h1>
       <p class="article-lead">A publication is the top-level permission management and identity boundary for a content domain in Morse. Everything  collections, entries, permissions  lives inside a publication.</p>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">📦</span>
+        <div class="callout-body">
+          <div class="callout-title">Building this from TypeScript?</div>
+          <div class="callout-text">The SDK exposes <code>createPublication</code>, <code>transferOwnership</code>, and <code>deletePublication</code>. See <a href="sdk-publishing.html#create-publication">SDK Publishing → Create a publication</a> for the typed call site.</div>
+        </div>
+      </div>
 
       <h2>What is a Publication?</h2>
       <p>A <code>Publication</code> is a shared Sui object that acts as the root container for one content brand or site. It bundles:</p>

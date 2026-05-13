@@ -88,11 +88,11 @@
     </div>
     <div class="nav-divider"></div>
     <div class="nav-section">
-      <div class="nav-section-title">SDK <span class="nav-badge-soon">Soon</span></div>
+      <div class="nav-section-title">SDK</div>
       <ul class="nav-list">
-        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">📦</span> Overview</a></li>
-        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">🔧</span> Client Setup</a></li>
-        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">📤</span> Publishing</a></li>
+        <li><a href="sdk-overview.html" class="nav-link" data-page="sdk-overview.html"><span class="nav-icon">📦</span> Overview</a></li>
+        <li><a href="sdk-client-setup.html" class="nav-link" data-page="sdk-client-setup.html"><span class="nav-icon">🔧</span> Client Setup</a></li>
+        <li><a href="sdk-publishing.html" class="nav-link" data-page="sdk-publishing.html"><span class="nav-icon">📤</span> Publishing</a></li>
       </ul>
     </div>
     <div class="nav-section">
@@ -132,6 +132,14 @@
     <article class="article">
       <h1>Entries &amp; Revisions</h1>
       <p class="article-lead">An entry is a single content unit within a collection. Revisions are its immutable history. The dual-head model lets drafts evolve freely while production readers always see a stable published state.</p>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">📦</span>
+        <div class="callout-body">
+          <div class="callout-title">Building this from TypeScript?</div>
+          <div class="callout-text">The SDK exposes <code>addEntryFromBytes</code> (upload + add in 2 wallet popups), <code>appendDraftRevision</code>, <code>publishFromDraft</code>, and the encrypted variants. See <a href="sdk-publishing.html#add-entry">SDK Publishing → Add an entry</a>.</div>
+        </div>
+      </div>
 
       <h2>Entry Structure</h2>
       <p>Entries live inside collections, stored in a <code>Table&lt;u64, Entry&gt;</code>. They have <code>store</code> and <code>drop</code> abilities  they are values owned by their collection, not independent Sui objects.</p>

@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SDK Client Setup  Morse dCMS Documentation</title>
+  <meta name="description" content="Install morse-sdk, wire a wallet adapter (server or browser), and pick a Walrus access pattern.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'><rect width='34' height='34' rx='8' fill='%230c1022' stroke='rgba(68,76,231,0.3)' stroke-width='1'/><path d='M5 26V10L12 19L17 12L22 19L29 10V26' stroke='%23444CE7' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='17' cy='21' r='2' fill='%23dbff4b'/><rect x='11' y='27' width='4' height='1.5' rx='0.75' fill='%23444CE7' opacity='0.7'/><rect x='16.5' y='27' width='7' height='1.5' rx='0.75' fill='%23444CE7' opacity='0.7'/></svg>">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <button class="hamburger" id="hamburger" aria-label="Toggle sidebar">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <a href="index.html" class="logo">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon">
+      <rect width="34" height="34" rx="8" fill="#0c1022" stroke="rgba(68,76,231,0.3)" stroke-width="1"/>
+      <path d="M5 26V10L12 19L17 12L22 19L29 10V26" stroke="#444CE7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <circle cx="17" cy="21" r="2" fill="#dbff4b"/>
+      <rect x="11" y="27" width="4" height="1.5" rx="0.75" fill="#444CE7" opacity="0.7"/>
+      <rect x="16.5" y="27" width="7" height="1.5" rx="0.75" fill="#444CE7" opacity="0.7"/>
+    </svg>
+    <span class="logo-wordmark">MORSE</span>
+    </a>
+    <div class="header-search">
+      <div class="search-box">
+        <span class="search-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <span class="search-placeholder">Search documentation…</span>
+        <kbd class="search-kbd">⌘K</kbd>
+      </div>
+    </div>
+    <nav class="header-links">
+      <a href="https://github.com/TheDivic/morse-dcms" target="_blank" rel="noopener" class="header-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="https://walrus.xyz" target="_blank" rel="noopener" class="header-link header-link-primary">Walrus ↗</a>
+    </nav>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <nav>
+      <div class="nav-section">
+        <div class="nav-section-title">Getting Started</div>
+        <ul class="nav-list">
+          <li><a href="index.html" class="nav-link" data-page="index.html"><span class="nav-icon">🏠</span> Introduction</a></li>
+          <li><a href="quick-start.html" class="nav-link" data-page="quick-start.html"><span class="nav-icon">⚡</span> Quick Start</a></li>
+          <li><a href="core-concepts.html" class="nav-link" data-page="core-concepts.html"><span class="nav-icon">📐</span> Core Concepts</a></li>
+        </ul>
+      </div>
+      <div class="nav-divider"></div>
+      <div class="nav-section">
+        <div class="nav-section-title">Protocol</div>
+        <ul class="nav-list">
+          <li><a href="publications.html" class="nav-link" data-page="publications.html"><span class="nav-icon">📰</span> Publications</a></li>
+          <li><a href="collections.html" class="nav-link" data-page="collections.html"><span class="nav-icon">🗂</span> Collections</a></li>
+          <li><a href="entries.html" class="nav-link" data-page="entries.html"><span class="nav-icon">📝</span> Entries &amp; Revisions</a></li>
+          <li><a href="access-control.html" class="nav-link" data-page="access-control.html"><span class="nav-icon">🔐</span> Access Control</a></li>
+        </ul>
+      </div>
+      <div class="nav-divider"></div>
+      <div class="nav-section">
+        <div class="nav-section-title">Smart Contracts</div>
+        <ul class="nav-list">
+          <li><a href="contracts.html" class="nav-link" data-page="contracts.html"><span class="nav-icon">⛓</span> Reference</a></li>
+        </ul>
+      </div>
+      <div class="nav-divider"></div>
+      <div class="nav-section">
+        <div class="nav-section-title">SDK</div>
+        <ul class="nav-list">
+          <li><a href="sdk-overview.html" class="nav-link" data-page="sdk-overview.html"><span class="nav-icon">📦</span> Overview</a></li>
+          <li><a href="sdk-client-setup.html" class="nav-link" data-page="sdk-client-setup.html"><span class="nav-icon">🔧</span> Client Setup</a></li>
+          <li><a href="sdk-publishing.html" class="nav-link" data-page="sdk-publishing.html"><span class="nav-icon">📤</span> Publishing</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">CLI <span class="nav-badge-soon">Soon</span></div>
+        <ul class="nav-list">
+          <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">💻</span> Overview</a></li>
+          <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">📋</span> Commands</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-title">Indexer <span class="nav-badge-soon">Soon</span></div>
+        <ul class="nav-list">
+          <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">🔍</span> Overview</a></li>
+        </ul>
+      </div>
+      <div class="nav-divider"></div>
+      <div class="nav-section">
+        <div class="nav-section-title">Reference</div>
+        <ul class="nav-list">
+          <li><a href="glossary.html" class="nav-link" data-page="glossary.html"><span class="nav-icon">📖</span> Glossary</a></li>
+        </ul>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+      <nav class="breadcrumbs">
+        <span class="breadcrumb-link">SDK</span>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-current">Client Setup</span>
+      </nav>
+
+      <article class="article">
+        <h1>Client Setup</h1>
+        <p class="article-lead">
+          Install <code>morse-sdk</code>, wire a wallet adapter (server or browser), pick a Walrus access pattern, and learn how to narrow errors. Copy-pasteable from top to bottom.
+        </p>
+
+        <h2 id="install">1. Install</h2>
+        <p><code>@mysten/sui</code> is required: the SDK takes types from it (<code>Transaction</code>, <code>Signer</code>) and you construct the gRPC client and keypairs directly. <code>@mysten/walrus</code> and <code>@mysten/seal</code> are optional peer dependencies; you only pay the install cost for the surface you actually import.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre>bun add morse-sdk @mysten/sui
+
+<span class="cm"># Optional - install only what you use:</span>
+bun add @mysten/walrus     <span class="cm"># for DefaultWalrusWriteAdapter / DefaultWalrusReadAdapter</span>
+bun add @mysten/seal       <span class="cm"># for DefaultSealAdapter and encrypted entries</span></pre>
+        </div>
+
+        <h2 id="server-setup">2. Server / CLI setup</h2>
+        <p>One context bound to testnet: <code>morseConfig</code>, a gRPC client, a <code>KeypairAdapter</code> wrapping an Ed25519 keypair, and an <code>RpcPublicationReader</code> threaded with the canonical original package id.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">typescript</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre><span class="kw">import</span> { SuiGrpcClient } <span class="kw">from</span> <span class="st">"@mysten/sui/grpc"</span>;
+<span class="kw">import</span> { Ed25519Keypair } <span class="kw">from</span> <span class="st">"@mysten/sui/keypairs/ed25519"</span>;
+<span class="kw">import</span> {
+  KeypairAdapter,
+  morseConfig,
+  RpcPublicationReader,
+} <span class="kw">from</span> <span class="st">"morse-sdk"</span>;
+
+<span class="kw">const</span> privateKey = process.env.PRIVATE_KEY!;  <span class="cm">// Bech32: "suiprivkey1..."</span>
+
+<span class="kw">const</span> config = <span class="fn">morseConfig</span>({ network: <span class="st">"testnet"</span> });
+<span class="kw">const</span> client = <span class="kw">new</span> <span class="fn">SuiGrpcClient</span>({
+  network: <span class="st">"testnet"</span>,
+  baseUrl: config.rpcUrl,
+});
+<span class="kw">const</span> keypair = Ed25519Keypair.<span class="fn">fromSecretKey</span>(privateKey);
+<span class="kw">const</span> adapter = <span class="kw">new</span> <span class="fn">KeypairAdapter</span>(keypair, client);
+<span class="kw">const</span> reader = RpcPublicationReader.<span class="fn">fromMorseConfig</span>(config, client);</pre>
+        </div>
+
+        <div class="callout callout-info">
+          <span class="callout-icon">🔑</span>
+          <div class="callout-body">
+            <div class="callout-title">Bech32 private key format</div>
+            <div class="callout-text"><code>PRIVATE_KEY</code> must be a Bech32 <code>suiprivkey1...</code> string. Export it from the Sui CLI with <code>sui keytool export</code>, or from Slush / Suiet's "export private key" flow. Hex keys are not supported by <code>Ed25519Keypair.fromSecretKey</code>.</div>
+          </div>
+        </div>
+
+        <h2 id="browser-setup">3. Browser setup (React + dapp-kit)</h2>
+        <p>Same SDK, different wallet wiring. Browser apps swap <code>KeypairAdapter</code> for an adapter built against a wallet-standard wallet  the SDK never holds the user's key.</p>
+
+        <h3 id="providers">Providers</h3>
+        <p>Wrap your tree in <code>SuiClientProvider</code> and <code>WalletProvider</code>. <code>@mysten/dapp-kit</code> requires <code>@tanstack/react-query</code> as a peer.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">tsx</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre><span class="kw">import</span> { QueryClient, QueryClientProvider } <span class="kw">from</span> <span class="st">"@tanstack/react-query"</span>;
+<span class="kw">import</span> { SuiClientProvider, WalletProvider } <span class="kw">from</span> <span class="st">"@mysten/dapp-kit"</span>;
+<span class="kw">import</span> { getFullnodeUrl } <span class="kw">from</span> <span class="st">"@mysten/sui/client"</span>;
+<span class="kw">import</span> <span class="st">"@mysten/dapp-kit/dist/index.css"</span>;
+
+<span class="kw">const</span> queryClient = <span class="kw">new</span> <span class="fn">QueryClient</span>();
+<span class="kw">const</span> networks = { testnet: { url: <span class="fn">getFullnodeUrl</span>(<span class="st">"testnet"</span>) } };
+
+&lt;<span class="ty">QueryClientProvider</span> client={queryClient}&gt;
+  &lt;<span class="ty">SuiClientProvider</span> networks={networks} defaultNetwork=<span class="st">"testnet"</span>&gt;
+    &lt;<span class="ty">WalletProvider</span> autoConnect&gt;
+      &lt;<span class="ty">App</span> /&gt;
+    &lt;/<span class="ty">WalletProvider</span>&gt;
+  &lt;/<span class="ty">SuiClientProvider</span>&gt;
+&lt;/<span class="ty">QueryClientProvider</span>&gt;</pre>
+        </div>
+
+        <h3 id="hook">useMorse hook</h3>
+        <p>Build the SDK context once per connected account. <code>WalletStandardSigner.fromAccount</code> wraps the account's public key + sign callbacks so libraries that expect a Sui <code>Signer</code> (<code>@mysten/walrus</code>, <code>@mysten/seal</code>) work without the SDK ever touching the user's key.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">typescript</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre><span class="kw">import</span> {
+  useCurrentAccount,
+  useSignAndExecuteTransaction,
+  useSignPersonalMessage,
+  useSignTransaction,
+} <span class="kw">from</span> <span class="st">"@mysten/dapp-kit"</span>;
+<span class="kw">import</span> { SuiGrpcClient } <span class="kw">from</span> <span class="st">"@mysten/sui/grpc"</span>;
+<span class="kw">import</span> {
+  morseConfig,
+  RpcPublicationReader,
+  WalletStandardSigner,
+} <span class="kw">from</span> <span class="st">"morse-sdk"</span>;
+<span class="kw">import</span> { useMemo } <span class="kw">from</span> <span class="st">"react"</span>;
+
+<span class="kw">import</span> { WalletStandardAdapter } <span class="kw">from</span> <span class="st">"./WalletStandardAdapter"</span>;
+<span class="cm">// ^ class defined in examples/wallet-standard.ts; copy into your app.</span>
+
+<span class="kw">export function</span> <span class="fn">useMorse</span>() {
+  <span class="kw">const</span> account = <span class="fn">useCurrentAccount</span>();
+  <span class="kw">const</span> { mutateAsync: signAndExecute } = <span class="fn">useSignAndExecuteTransaction</span>();
+  <span class="kw">const</span> { mutateAsync: signTransaction } = <span class="fn">useSignTransaction</span>();
+  <span class="kw">const</span> { mutateAsync: signPersonalMessage } = <span class="fn">useSignPersonalMessage</span>();
+
+  <span class="kw">return</span> <span class="fn">useMemo</span>(() =&gt; {
+    <span class="kw">if</span> (!account) <span class="kw">return null</span>;
+    <span class="kw">const</span> config = <span class="fn">morseConfig</span>({ network: <span class="st">"testnet"</span> });
+    <span class="kw">const</span> client = <span class="kw">new</span> <span class="fn">SuiGrpcClient</span>({
+      network: <span class="st">"testnet"</span>,
+      baseUrl: config.rpcUrl,
+    });
+
+    <span class="cm">// For morse-sdk ops (createPublication, addEntry, ...).</span>
+    <span class="kw">const</span> adapter = <span class="kw">new</span> <span class="fn">WalletStandardAdapter</span>(
+      account.address,
+      ({ transaction }) =&gt; <span class="fn">signAndExecute</span>({ transaction }),
+      client,
+    );
+
+    <span class="cm">// For Walrus uploads and Seal SessionKey - both want a Sui `Signer`.</span>
+    <span class="kw">const</span> signer = WalletStandardSigner.<span class="fn">fromAccount</span>(account, {
+      signTransaction: ({ transaction }) =&gt; <span class="fn">signTransaction</span>({ transaction }),
+      signPersonalMessage: ({ message }) =&gt; <span class="fn">signPersonalMessage</span>({ message }),
+    });
+
+    <span class="kw">const</span> reader = RpcPublicationReader.<span class="fn">fromMorseConfig</span>(config, client);
+    <span class="kw">return</span> { adapter, signer, reader, config, client };
+  }, [account, signAndExecute, signTransaction, signPersonalMessage]);
+}</pre>
+        </div>
+
+        <div class="callout callout-tip">
+          <span class="callout-icon">💡</span>
+          <div class="callout-body">
+            <div class="callout-title">Wallet scheme support</div>
+            <div class="callout-text">Slush, Suiet, Sui Wallet (Ed25519) are verified. Secp256k1, Secp256r1, and Passkey decoders ship but Walrus + Seal end-to-end behavior is unverified  fall back to Ed25519 if you see scheme-specific errors. ZkLogin is decoded but unverified; MultiSig is refused with <code>ConfigurationError</code> at <code>fromAccount</code> time. Wrap the call in try/catch and render unsupported accounts as product copy. The full table lives in the <a href="https://github.com/TheDivic/morse-dcms/blob/main/morse-sdk/README.md#wallet-scheme-support" target="_blank" rel="noopener">SDK README compatibility section</a>.</div>
+          </div>
+        </div>
+
+        <h2 id="walrus-pick">4. Pick a Walrus adapter</h2>
+        <p>The SDK ships two pairs of Walrus adapters. They implement the same interfaces (<code>WalrusReadAdapter</code>, <code>WalrusWriteAdapter</code>) and the rest of the SDK is unchanged whichever pair you pick.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Pair</th>
+                <th>Trust</th>
+                <th>Popups (upload + addEntry)</th>
+                <th>Storage paid by</th>
+                <th>Browser CORS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>DefaultWalrusReadAdapter</code> + <code>DefaultWalrusWriteAdapter</code></td>
+                <td>Trustless (direct fanout to ~30 storage nodes)</td>
+                <td><strong>2</strong> with <code>addEntryFromBytes</code>, 3 split</td>
+                <td>Consumer wallet (WAL + gas)</td>
+                <td>Spotty on testnet</td>
+              </tr>
+              <tr>
+                <td><code>HttpAggregatorReadAdapter</code> + <code>HttpPublisherWriteAdapter</code></td>
+                <td>Operator-trusted</td>
+                <td><strong>1</strong> (publisher uploads server-side; consumer only signs <code>addEntry</code>)</td>
+                <td>Publisher operator (WAL); consumer pays Sui gas only</td>
+                <td>Reliable (one endpoint)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="walrus-default">Default direct-protocol (trustless, 2 popups)</h3>
+        <p>Best for CLI smokes, server-side dapps, and browser dapps that don't hit testnet CORS gaps. The flow-aware optimization (<code>addEntryFromBytes</code>) cuts popups from 3 to 2.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">typescript</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre><span class="kw">import</span> {
+  DefaultWalrusReadAdapter,
+  DefaultWalrusWriteAdapter,
+} <span class="kw">from</span> <span class="st">"morse-sdk"</span>;
+
+<span class="kw">const</span> reader = DefaultWalrusReadAdapter.<span class="fn">fromConfig</span>({
+  network: <span class="st">"testnet"</span>,
+  suiClient: client,
+});
+<span class="kw">const</span> writer = DefaultWalrusWriteAdapter.<span class="fn">fromConfig</span>(
+  { network: <span class="st">"testnet"</span>, suiClient: client },
+  signer,  <span class="cm">// or `keypair` server-side</span>
+);</pre>
+        </div>
+
+        <h3 id="walrus-http">HTTP publisher (operator-trusted, 1 popup)</h3>
+        <p>Reliable browser reads (one CORS-friendly endpoint instead of ~30 nodes), and a "publisher pays storage" UX where the user signs only the on-chain <code>addEntry</code>. Trade trustless reads for operator trust; use <code>verifyBlobIntegrity</code> on the read adapter for a trust-but-verify path.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">typescript</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre><span class="kw">import</span> {
+  HttpAggregatorReadAdapter,
+  HttpPublisherWriteAdapter,
+} <span class="kw">from</span> <span class="st">"morse-sdk"</span>;
+
+<span class="kw">const</span> reader = HttpAggregatorReadAdapter.<span class="fn">fromMorseConfig</span>(config, client);
+<span class="kw">const</span> writer = HttpPublisherWriteAdapter.<span class="fn">fromConfig</span>({
+  publisherUrl: <span class="st">"https://walrus-testnet-publisher.nami.cloud"</span>,
+  ownerAddress: account.address,
+});</pre>
+        </div>
+
+        <div class="callout callout-warning">
+          <span class="callout-icon">⚠️</span>
+          <div class="callout-body">
+            <div class="callout-title">HTTP adapters skip the 2-popup optimization</div>
+            <div class="callout-text">The HTTP pair is NOT compatible with <code>addEntryFromBytes</code> / <code>addEncryptedEntryFromBytes</code>. Those functions require <code>WalrusFlowCapable</code> for the combined PTB; the publisher-paid path is naturally 1-popup through <code>uploadBlob</code> + <code>addEntry</code>. Pick the path that matches your wallet-popup budget.</div>
+          </div>
+        </div>
+
+        <h2 id="errors">5. Error handling primer</h2>
+        <p>Every SDK throw extends <code>MorseError</code>. Narrow by class and inspect carried properties (no string parsing). The four classes a new consumer is most likely to hit:</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Class</th><th>Carries</th><th>Thrown when</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>ValidationError</code></td><td><code>field</code></td><td>Client-side input failed a precondition.</td></tr>
+              <tr><td><code>ContractAbortError</code></td><td><code>module</code>, <code>abortCode</code>, <code>reason</code></td><td>Move VM aborted (e.g. <code>ESlugAlreadyExists</code>, <code>EPublisherCapRevoked</code>).</td></tr>
+              <tr><td><code>TransportError</code></td><td>no extra fields</td><td>RPC, network, or response-parsing failure. Usually retryable.</td></tr>
+              <tr><td><code>UncertifiedBlobError</code></td><td><code>blobObjectId</code>, <code>blobId</code></td><td><code>addEntryFromBytes</code> upload succeeded but the second popup failed; blob is on Walrus but unattached.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">typescript</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre><span class="kw">import</span> {
+  ContractAbortError,
+  TransportError,
+  UncertifiedBlobError,
+  ValidationError,
+} <span class="kw">from</span> <span class="st">"morse-sdk"</span>;
+
+<span class="kw">try</span> {
+  <span class="kw">await</span> <span class="fn">quickstart</span>(privateKey);
+} <span class="kw">catch</span> (err) {
+  <span class="kw">if</span> (err <span class="kw">instanceof</span> UncertifiedBlobError) {
+    console.<span class="fn">error</span>(
+      <span class="st">`uncertified blob </span>${err.blobObjectId}<span class="st"> (id </span>${err.blobId}<span class="st">); upload succeeded but the entry was not created`</span>,
+    );
+  } <span class="kw">else if</span> (err <span class="kw">instanceof</span> ContractAbortError) {
+    console.<span class="fn">error</span>(<span class="st">`move abort: </span>${err.module}::${err.reason}<span class="st">`</span>);
+  } <span class="kw">else if</span> (err <span class="kw">instanceof</span> ValidationError) {
+    console.<span class="fn">error</span>(<span class="st">`bad input on </span>${err.field}<span class="st">: </span>${err.message}<span class="st">`</span>);
+  } <span class="kw">else if</span> (err <span class="kw">instanceof</span> TransportError) {
+    console.<span class="fn">error</span>(<span class="st">`transport: </span>${err.message}<span class="st">`</span>);
+  } <span class="kw">else</span> {
+    <span class="kw">throw</span> err;
+  }
+}</pre>
+        </div>
+
+        <p>Less common but worth knowing: <code>NotFoundError</code> (resource missing on-chain or on Walrus), <code>UnauthorizedError</code> (client-side auth check failed before submit), <code>SealError</code> (<code>no-access</code> / <code>decrypt-failed</code> / <code>session-expired</code> / <code>rate-limited</code>), and <code>ConfigurationError</code> (SDK config gap, e.g. unsupported network). The full taxonomy is documented in the <a href="https://github.com/TheDivic/morse-dcms/blob/main/morse-sdk/README.md#error-taxonomy" target="_blank" rel="noopener">SDK README error taxonomy</a>.</p>
+
+        <h2 id="next-steps">Next Steps</h2>
+        <div class="card-grid">
+          <a href="sdk-publishing.html" class="card">
+            <span class="card-icon">📤</span>
+            <div class="card-title">Publishing</div>
+            <div class="card-desc">Create publications, add entries (plain + encrypted), read them back.</div>
+          </a>
+          <a href="sdk-overview.html" class="card">
+            <span class="card-icon">📦</span>
+            <div class="card-title">SDK Overview</div>
+            <div class="card-desc">Compatibility matrix, runtime requirements, and adapter architecture.</div>
+          </a>
+          <a href="access-control.html" class="card">
+            <span class="card-icon">🔐</span>
+            <div class="card-title">Access Control</div>
+            <div class="card-desc">Owner caps, publisher caps, and the capability checks the SDK runs server-side.</div>
+          </a>
+        </div>
+      </article>
+
+      <div class="page-nav">
+        <a href="sdk-overview.html" class="pnav">
+          <span class="pnav-dir">Previous</span>
+          <span class="pnav-title">← SDK Overview</span>
+        </a>
+        <a href="sdk-publishing.html" class="pnav pnav-right">
+          <span class="pnav-dir">Next</span>
+          <span class="pnav-title">Publishing →</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <aside class="toc">
+    <div class="toc-title">On this page</div>
+    <ul class="toc-list"></ul>
+  </aside>
+</div>
+
+<script src="assets/search-index.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

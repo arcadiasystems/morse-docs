@@ -88,11 +88,11 @@
     </div>
     <div class="nav-divider"></div>
     <div class="nav-section">
-      <div class="nav-section-title">SDK <span class="nav-badge-soon">Soon</span></div>
+      <div class="nav-section-title">SDK</div>
       <ul class="nav-list">
-        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">📦</span> Overview</a></li>
-        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">🔧</span> Client Setup</a></li>
-        <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">📤</span> Publishing</a></li>
+        <li><a href="sdk-overview.html" class="nav-link" data-page="sdk-overview.html"><span class="nav-icon">📦</span> Overview</a></li>
+        <li><a href="sdk-client-setup.html" class="nav-link" data-page="sdk-client-setup.html"><span class="nav-icon">🔧</span> Client Setup</a></li>
+        <li><a href="sdk-publishing.html" class="nav-link" data-page="sdk-publishing.html"><span class="nav-icon">📤</span> Publishing</a></li>
       </ul>
     </div>
     <div class="nav-section">
@@ -132,6 +132,14 @@
     <article class="article">
       <h1>Access Control</h1>
       <p class="article-lead">Morse uses a capability-based permission model. Two types of capabilities control who can administer a publication and who can write content  enforced on-chain by the Sui type system, with no off-chain authorization service.</p>
+
+      <div class="callout callout-info">
+        <span class="callout-icon">📦</span>
+        <div class="callout-body">
+          <div class="callout-title">Building this from TypeScript?</div>
+          <div class="callout-text">The SDK exposes <code>issuePublisherCap</code>, <code>revokePublisherCap</code>, <code>destroyPublisherCap</code>, and <code>transferPublisherCap</code>. <code>ContractAbortError</code> narrows by <code>reason</code> for cap-specific failures like <code>EPublisherCapRevoked</code>. See <a href="sdk-client-setup.html#errors">SDK Client Setup → Error handling</a>.</div>
+        </div>
+      </div>
 
       <h2>Overview</h2>
       <p>Every write operation in Morse requires presenting a valid capability object. Capabilities cannot be fabricated  they can only be created by the protocol through designated functions. The type system itself is the enforcement mechanism.</p>
