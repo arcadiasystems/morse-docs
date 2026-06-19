@@ -12,6 +12,13 @@ function setActiveNav() {
       (filename === '' && page === 'index.html') ||
       (filename === 'index.html' && page === 'index.html');
     link.classList.toggle('active', matches);
+    if (matches) {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        window.history.replaceState(null, '', window.location.pathname);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
   });
 }
 
@@ -61,13 +68,19 @@ function initTOC() {
   const headings = [...article.querySelectorAll('h2, h3')];
   if (!headings.length) return;
 
+  const usedIds = new Set();
   headings.forEach(h => {
     if (!h.id) {
-      h.id = h.textContent
+      let base = h.textContent
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/^-|-$/g, '');
+      let id = base;
+      let n = 2;
+      while (usedIds.has(id)) { id = base + '-' + n++; }
+      h.id = id;
     }
+    usedIds.add(h.id);
 
     const li = document.createElement('li');
     li.className = 'toc-item';
@@ -279,11 +292,35 @@ function initSearch() {
   });
 }
 
+// ── Code tabs (Move / CLI / SDK) ────────────────────────────────
+function initCodeTabs() {
+  document.querySelectorAll('.code-tabs').forEach(group => {
+    group.querySelectorAll('.code-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.tab;
+        // Sync all tab groups on the page to the same selection
+        document.querySelectorAll('.code-tabs').forEach(g => {
+          const hasTarget = g.querySelector(`.code-tab[data-tab="${target}"]`);
+          if (!hasTarget) return;
+          g.querySelectorAll('.code-tab').forEach(t =>
+            t.classList.toggle('active', t.dataset.tab === target)
+          );
+          g.querySelectorAll('.code-tab-panel').forEach(p =>
+            p.classList.toggle('active', p.dataset.tab === target)
+          );
+        });
+      });
+    });
+  });
+}
+
 // ── Init ────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
+  if (typeof initSidebarNav === 'function') initSidebarNav();
   setActiveNav();
   initSidebar();
   initCopyButtons();
+  initCodeTabs();
   initTOC();
   initHeadingAnchors();
   scrollToHash();

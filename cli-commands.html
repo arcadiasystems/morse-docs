@@ -6,7 +6,7 @@
   <title>CLI Command Reference · Morse dCMS Documentation</title>
   <meta name="description" content="Full command reference for morse-cli: global options, context, config, account, publication, collection, entry, revision, and cap commands.">
   <link rel="stylesheet" href="assets/styles.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'><rect width='34' height='34' rx='8' fill='%230c1022' stroke='rgba(68,76,231,0.3)' stroke-width='1'/><path d='M5 26V10L12 19L17 12L22 19L29 10V26' stroke='%23444CE7' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='17' cy='21' r='2' fill='%23dbff4b'/><rect x='11' y='27' width='4' height='1.5' rx='0.75' fill='%23444CE7' opacity='0.7'/><rect x='16.5' y='27' width='7' height='1.5' rx='0.75' fill='%23444CE7' opacity='0.7'/></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'><rect width='34' height='34' rx='8' fill='%23141414' stroke='rgba(0,210,210,0.3)' stroke-width='1'/><path d='M5 26V10L12 19L17 12L22 19L29 10V26' stroke='%2300d2d2' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='17' cy='21' r='2' fill='%2300d2d2'/><rect x='11' y='27' width='4' height='1.5' rx='0.75' fill='%2300d2d2' opacity='0.7'/><rect x='16.5' y='27' width='7' height='1.5' rx='0.75' fill='%2300d2d2' opacity='0.7'/></svg>">
 </head>
 <body>
 
@@ -17,11 +17,11 @@
     </button>
     <a href="index.html" class="logo">
       <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon">
-      <rect width="34" height="34" rx="8" fill="#0c1022" stroke="rgba(68,76,231,0.3)" stroke-width="1"/>
-      <path d="M5 26V10L12 19L17 12L22 19L29 10V26" stroke="#444CE7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      <circle cx="17" cy="21" r="2" fill="#dbff4b"/>
-      <rect x="11" y="27" width="4" height="1.5" rx="0.75" fill="#444CE7" opacity="0.7"/>
-      <rect x="16.5" y="27" width="7" height="1.5" rx="0.75" fill="#444CE7" opacity="0.7"/>
+      <rect width="34" height="34" rx="8" fill="#141414" stroke="rgba(0,210,210,0.3)" stroke-width="1"/>
+      <path d="M5 26V10L12 19L17 12L22 19L29 10V26" stroke="#00d2d2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <circle cx="17" cy="21" r="2" fill="#00d2d2"/>
+      <rect x="11" y="27" width="4" height="1.5" rx="0.75" fill="#00d2d2" opacity="0.7"/>
+      <rect x="16.5" y="27" width="7" height="1.5" rx="0.75" fill="#00d2d2" opacity="0.7"/>
     </svg>
     <span class="logo-wordmark">MORSE</span>
     </a>
@@ -33,7 +33,7 @@
       </div>
     </div>
     <nav class="header-links">
-      <a href="https://github.com/TheDivic/morse-dcms" target="_blank" rel="noopener" class="header-link">
+      <a href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener" class="header-link">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
         GitHub
       </a>
@@ -46,63 +46,7 @@
 
 <div class="layout">
   <aside class="sidebar" id="sidebar">
-    <nav>
-      <div class="nav-section">
-        <div class="nav-section-title">Getting Started</div>
-        <ul class="nav-list">
-          <li><a href="index.html" class="nav-link" data-page="index.html"><span class="nav-icon">🏠</span> Introduction</a></li>
-          <li><a href="quick-start.html" class="nav-link" data-page="quick-start.html"><span class="nav-icon">⚡</span> Quick Start</a></li>
-          <li><a href="core-concepts.html" class="nav-link" data-page="core-concepts.html"><span class="nav-icon">📐</span> Core Concepts</a></li>
-        </ul>
-      </div>
-      <div class="nav-divider"></div>
-      <div class="nav-section">
-        <div class="nav-section-title">Protocol</div>
-        <ul class="nav-list">
-          <li><a href="publications.html" class="nav-link" data-page="publications.html"><span class="nav-icon">📰</span> Publications</a></li>
-          <li><a href="collections.html" class="nav-link" data-page="collections.html"><span class="nav-icon">🗂</span> Collections</a></li>
-          <li><a href="entries.html" class="nav-link" data-page="entries.html"><span class="nav-icon">📝</span> Entries &amp; Revisions</a></li>
-          <li><a href="access-control.html" class="nav-link" data-page="access-control.html"><span class="nav-icon">🔐</span> Access Control</a></li>
-        </ul>
-      </div>
-      <div class="nav-divider"></div>
-      <div class="nav-section">
-        <div class="nav-section-title">Smart Contracts</div>
-        <ul class="nav-list">
-          <li><a href="contracts.html" class="nav-link" data-page="contracts.html"><span class="nav-icon">⛓</span> Reference</a></li>
-        </ul>
-      </div>
-      <div class="nav-divider"></div>
-      <div class="nav-section">
-        <div class="nav-section-title">SDK</div>
-        <ul class="nav-list">
-          <li><a href="sdk-overview.html" class="nav-link" data-page="sdk-overview.html"><span class="nav-icon">📦</span> Overview</a></li>
-          <li><a href="sdk-client-setup.html" class="nav-link" data-page="sdk-client-setup.html"><span class="nav-icon">🔧</span> Client Setup</a></li>
-          <li><a href="sdk-publishing.html" class="nav-link" data-page="sdk-publishing.html"><span class="nav-icon">📤</span> Publishing</a></li>
-        </ul>
-      </div>
-      <div class="nav-section">
-        <div class="nav-section-title">CLI</div>
-        <ul class="nav-list">
-          <li><a href="cli-overview.html" class="nav-link" data-page="cli-overview.html"><span class="nav-icon">💻</span> Overview</a></li>
-          <li><a href="cli-commands.html" class="nav-link" data-page="cli-commands.html"><span class="nav-icon">📋</span> Commands</a></li>
-          <li><a href="cli-workflows.html" class="nav-link" data-page="cli-workflows.html"><span class="nav-icon">🛠</span> Workflows</a></li>
-        </ul>
-      </div>
-      <div class="nav-section">
-        <div class="nav-section-title">Indexer <span class="nav-badge-soon">Soon</span></div>
-        <ul class="nav-list">
-          <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">🔍</span> Overview</a></li>
-        </ul>
-      </div>
-      <div class="nav-divider"></div>
-      <div class="nav-section">
-        <div class="nav-section-title">Reference</div>
-        <ul class="nav-list">
-          <li><a href="glossary.html" class="nav-link" data-page="glossary.html"><span class="nav-icon">📖</span> Glossary</a></li>
-        </ul>
-      </div>
-    </nav>
+    <nav></nav>
   </aside>
 
   <main class="main">
@@ -114,12 +58,12 @@
       </nav>
 
       <article class="article">
-        <h1>Command Reference</h1>
+        <h1>CLI Command Reference</h1>
         <p class="article-lead">
-          Every <code>morse</code> command and flag. Commands that act on a publication or collection take it from the active context or from <code>-P, --publication &lt;slug|id&gt;</code> and <code>-C, --collection &lt;name&gt;</code>; action-specific values (name, entry id, holder, recipient) stay positional. Destructive operations confirm interactively unless <code>--yes</code>.
+          Complete reference for every <code>morse-cli</code> command, organized by resource: context, config, account, publication, collection, entry, revision, and cap.
         </p>
 
-        <h2 id="global">Global options</h2>
+        <h2 id="global-options">Global Options</h2>
         <p>Global options apply to every command and must appear before the subcommand (e.g. <code>morse --json publication list</code>).</p>
         <div class="table-wrap">
           <table>
@@ -138,52 +82,85 @@
           </table>
         </div>
 
-        <h2 id="workflow">Typical workflow</h2>
-        <div class="code-block">
-          <div class="code-header">
-            <span class="code-lang">bash</span>
-            <button class="code-copy">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-              Copy
-            </button>
-          </div>
-          <pre>morse config add testnet --network testnet
-morse account import
-morse publication create --name "My Blog" --slug my-blog   <span class="cm"># auto-selected</span>
-morse collection create posts --mode blob                  <span class="cm"># auto-selected</span>
-morse entry add first-post --file post.md                  <span class="cm"># uses active context</span>
-morse entry read 0
-morse revision publish-direct 0 --file post-v2.md
-morse use my-blog posts                                     <span class="cm"># switch context later</span></pre>
-        </div>
-
-        <h2 id="context">Context</h2>
+        <h2 id="shared-command-flags">Shared Command Flags</h2>
+        <p>These flags appear across multiple command groups. Command-specific flags are shown inline in each category below.</p>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Command</th><th>Purpose</th></tr></thead>
+            <thead><tr><th>Short</th><th>Long</th><th>Purpose</th></tr></thead>
             <tbody>
-              <tr><td><code>use &lt;publication&gt; [collection]</code></td><td>Set the active publication (slug or id) and optional collection. Omitting the collection clears it.</td></tr>
-              <tr><td><code>use --clear</code></td><td>Clear the active publication and collection.</td></tr>
-              <tr><td><code>status</code></td><td>Show the active profile, network, account, publication, and collection.</td></tr>
+              <tr><td><code>-P</code></td><td><code>--publication &lt;slug|id&gt;</code></td><td>Target publication (default: active context).</td></tr>
+              <tr><td><code>-C</code></td><td><code>--collection &lt;name&gt;</code></td><td>Target collection (default: active context).</td></tr>
+              <tr><td><code>-f</code></td><td><code>--file &lt;path&gt;</code></td><td>Input file (<code>-</code> for stdin). Used by content commands.</td></tr>
+              <tr><td><code>-n</code></td><td><code>--name &lt;name&gt;</code></td><td>Publication name (used by <code>publication create</code>).</td></tr>
+              <tr><td><code>-s</code></td><td><code>--slug &lt;slug&gt;</code></td><td>URL slug (used by <code>publication create</code>).</td></tr>
             </tbody>
           </table>
         </div>
 
-        <h2 id="config">config</h2>
+        <h2 id="argument-notation">Argument Notation</h2>
+        <p>Values in <code>&lt;angle brackets&gt;</code> are required; values in <code>[square brackets]</code> are optional; <code>(a | b)</code> means one of the two is required.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Argument</th><th>Format</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td><code>&lt;entryId&gt;</code></td><td>Zero-based integer index within the collection.</td><td><code>0</code></td></tr>
+              <tr><td><code>[revisionIndex]</code></td><td>Zero-based integer index within the entry. Latest when omitted.</td><td><code>0</code></td></tr>
+              <tr><td><code>&lt;draftRevisionId&gt;</code></td><td>Zero-based integer revision ID of the draft to publish.</td><td><code>1</code></td></tr>
+              <tr><td><code>&lt;publisherCapId&gt;</code></td><td>Sui object ID of a PublisherCap.</td><td><code>0x3a…</code></td></tr>
+              <tr><td><code>&lt;address&gt;</code>, <code>&lt;recipient&gt;</code>, <code>&lt;holder&gt;</code></td><td>Sui address.</td><td><code>0xf1…</code></td></tr>
+              <tr><td><code>&lt;publication&gt;</code></td><td>Publication slug or Sui object ID.</td><td><code>my-blog</code>, <code>0x7c…</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+
+        <h2 id="context">Context</h2>
+        <p>Set the active publication and collection so subsequent commands use them automatically.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Command</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><td><code>use &lt;publication&gt; [collection]</code></td><td>Set the active publication (slug or id) and collection (optional). Omitting the collection clears it.</td></tr>
+              <tr><td><code>use --clear</code></td><td>Clear the active context.</td></tr>
+              <tr><td><code>status</code></td><td>Show the active profile, network, account, publication, and collection.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="code-block code-block-output">
+          <div class="code-header"><span class="code-lang">example</span></div>
+          <pre>$ morse use my-blog posts
+Switched to publication "my-blog", collection "posts".
+
+$ morse status
+  profile:     testnet
+  network:     testnet
+  account:     0x71a3...9f2b
+  publication: my-blog (0x1a2b...)
+  collection:  posts</pre>
+        </div>
+
+        <h2 id="config">Config</h2>
+        <p>Configure CLI profiles, each pointing to a different network and account.</p>
         <div class="table-wrap">
           <table>
             <thead><tr><th>Command</th><th>Purpose</th></tr></thead>
             <tbody>
               <tr><td><code>config add &lt;name&gt; --network &lt;net&gt; [--rpc &lt;url&gt;]</code></td><td>Create or update a profile.</td></tr>
-              <tr><td><code>config list</code></td><td>List profiles; <code>*</code> marks the default.</td></tr>
-              <tr><td><code>config use &lt;name&gt;</code></td><td>Set the default profile.</td></tr>
+              <tr><td><code>config list</code></td><td>List profiles; <code>*</code> marks the active.</td></tr>
+              <tr><td><code>config use &lt;name&gt;</code></td><td>Set the active profile.</td></tr>
               <tr><td><code>config remove &lt;name&gt;</code></td><td>Delete a profile.</td></tr>
               <tr><td><code>config path</code></td><td>Print the config file path.</td></tr>
             </tbody>
           </table>
         </div>
+        <div class="code-block code-block-output">
+          <div class="code-header"><span class="code-lang">example</span></div>
+          <pre>$ morse config add testnet --network testnet
+Profile "testnet" created and set as default.</pre>
+        </div>
 
-        <h2 id="account">account</h2>
+        <h2 id="account">Account</h2>
+        <p>Import, list, and manage keypairs used for signing transactions.</p>
         <div class="table-wrap">
           <table>
             <thead><tr><th>Command</th><th>Purpose</th></tr></thead>
@@ -196,97 +173,133 @@ morse use my-blog posts                                     <span class="cm"># s
             </tbody>
           </table>
         </div>
+        <div class="code-block code-block-output">
+          <div class="code-header"><span class="code-lang">example</span></div>
+          <pre>$ morse account list
+* 0x71a3...9f2b
+  0xd4e5...6f7a</pre>
+        </div>
 
-        <h2 id="publication">publication <span style="opacity:0.6;font-size:13px;">(alias: pub)</span></h2>
+        <h2 id="publication">Publication</h2>
+        <p>Create and manage publications - the top-level content containers.</p>
         <div class="table-wrap">
           <table>
             <thead><tr><th>Command</th><th>Purpose</th></tr></thead>
             <tbody>
-              <tr><td><code>publication get [publication]</code></td><td>Fetch a publication (default: active).</td></tr>
-              <tr><td><code>publication list [address] [--ids-only]</code></td><td>List publications owned by an address (default: active account); shows slug, id, name.</td></tr>
-              <tr><td><code>publication create --name &lt;name&gt; --slug &lt;slug&gt;</code></td><td>Create a publication and select it.</td></tr>
-              <tr><td><code>publication delete [publication] [--owner-cap &lt;id&gt;]</code></td><td>Delete an empty publication.</td></tr>
-              <tr><td><code>publication transfer-ownership &lt;recipient&gt; [-P &lt;slug|id&gt;] [--owner-cap &lt;id&gt;]</code></td><td>Transfer the OwnerCap.</td></tr>
+              <tr><td><code>publication get [&lt;slug|id&gt;]</code></td><td>Fetch a publication (default: active).</td></tr>
+              <tr><td><code>publication list [&lt;address&gt;] [--ids-only] [--limit &lt;n&gt;] [--cursor &lt;cursor&gt;]</code></td><td>List publications owned by an address (default: active account). <code>--ids-only</code> returns bare IDs; <code>--limit</code> / <code>--cursor</code> paginate.</td></tr>
+              <tr><td><code>publication create --name &lt;name&gt; --slug &lt;slug&gt;</code></td><td>Create a publication and set it as the active one.</td></tr>
+              <tr><td><code>publication delete [publication] [--owner-cap &lt;id&gt;]</code></td><td>Delete an empty publication. <code>--owner-cap</code> overrides auto-resolved OwnerCap.</td></tr>
+              <tr><td><code>publication transfer-ownership &lt;recipient&gt; [-P &lt;slug|id&gt;] [--owner-cap &lt;id&gt;]</code></td><td>Transfer the OwnerCap to another address. <code>--owner-cap</code> overrides auto-resolved OwnerCap.</td></tr>
             </tbody>
           </table>
         </div>
+        <div class="code-block code-block-output">
+          <div class="code-header"><span class="code-lang">example</span></div>
+          <pre>$ morse publication create --name "My Blog" --slug my-blog
+Created publication "My Blog".
+  slug:          my-blog
+  publicationId: 0x1a2b...3c4d
+  ownerCapId:    0x5e6f...7a8b</pre>
+        </div>
 
-        <h2 id="collection">collection</h2>
+        <h2 id="collection">Collection</h2>
+        <p>Create and manage collections within a publication.</p>
         <div class="table-wrap">
           <table>
             <thead><tr><th>Command</th><th>Purpose</th></tr></thead>
             <tbody>
               <tr><td><code>collection list [-P &lt;slug|id&gt;]</code></td><td>List collections in a publication.</td></tr>
-              <tr><td><code>collection create &lt;name&gt; [--mode blob|quilt] [-P &lt;slug|id&gt;]</code></td><td>Create a collection and select it.</td></tr>
-              <tr><td><code>collection delete &lt;name&gt; [-P &lt;slug|id&gt;] [--publisher-cap &lt;id&gt;]</code></td><td>Delete an empty collection.</td></tr>
+              <tr><td><code>collection create &lt;name&gt; [--mode blob|quilt] [-P &lt;slug|id&gt;] [--publisher-cap &lt;id&gt;]</code></td><td>Create a collection and set it as the active one. <code>--publisher-cap</code> overrides auto-resolved PublisherCap.</td></tr>
+              <tr><td><code>collection delete &lt;name&gt; [-P &lt;slug|id&gt;] [--publisher-cap &lt;id&gt;]</code></td><td>Delete an empty collection. <code>--publisher-cap</code> overrides auto-resolved PublisherCap.</td></tr>
             </tbody>
           </table>
         </div>
+        <div class="code-block code-block-output">
+          <div class="code-header"><span class="code-lang">example</span></div>
+          <pre>$ morse collection create posts --mode blob
+Created collection "posts". Selected as the active collection. (tx: AbCdEf...)</pre>
+        </div>
 
-        <h2 id="entry">entry</h2>
+        <h2 id="entry">Entry</h2>
+        <p>Add, read, and delete entries within a collection.</p>
         <div class="table-wrap">
           <table>
             <thead><tr><th>Command</th><th>Purpose</th></tr></thead>
             <tbody>
               <tr><td><code>entry get &lt;entryId&gt;</code></td><td>Fetch a single entry's metadata.</td></tr>
-              <tr><td><code>entry read &lt;entryId&gt; [revisionIndex] [--out &lt;path&gt;]</code></td><td>Fetch a public entry's content to stdout or a file.</td></tr>
-              <tr><td><code>entry list</code></td><td>List entries (paginated).</td></tr>
-              <tr><td><code>entry scan</code></td><td>List every entry (auto-paginated).</td></tr>
-              <tr><td><code>entry add &lt;name&gt; --file &lt;path&gt;</code></td><td>Upload content and add a new entry; prints a viewable link.</td></tr>
-              <tr><td><code>entry delete &lt;entryId&gt;</code></td><td>Delete an entry and its revisions.</td></tr>
-              <tr><td><code>entry add-encrypted &lt;name&gt; --file &lt;path&gt;</code></td><td>Encrypt with Seal, upload, and add a new entry.</td></tr>
-              <tr><td><code>entry decrypt &lt;entryId&gt; [revisionIndex] [--out &lt;path&gt;]</code></td><td>Decrypt an encrypted revision (signs a SessionKey with the active account).</td></tr>
+              <tr><td><code>entry read &lt;entryId&gt; [&lt;revisionIndex&gt;] [--out &lt;path&gt;] [--via-aggregator]</code></td><td>Fetch a public entry's content to stdout or a file. Reads the latest revision unless <code>revisionIndex</code> is specified; <code>--via-aggregator</code> fetches through a Walrus aggregator instead of directly.</td></tr>
+              <tr><td><code>entry list [--limit &lt;n&gt;] [--cursor &lt;cursor&gt;] [--drafts-only]</code></td><td>List entries. <code>--drafts-only</code> filters to unpublished entries.</td></tr>
+              <tr><td><code>entry scan [--drafts-only]</code></td><td>List every entry (auto-paginated). <code>--drafts-only</code> filters to unpublished entries.</td></tr>
+              <tr><td><code>entry add &lt;name&gt; (--file &lt;path&gt; | --stdin) [--content-type &lt;type&gt;] [--epochs &lt;n&gt;] [--publisher-cap &lt;id&gt;]</code></td><td>Upload content and add a new entry. <code>--file</code> reads from a file path, <code>--stdin</code> reads from standard input; <code>--content-type</code> is inferred from file extension when omitted; <code>--epochs</code> sets Walrus storage duration (default 3).</td></tr>
+              <tr><td><code>entry delete &lt;entryId&gt; [--publisher-cap &lt;id&gt;]</code></td><td>Delete an entry and its revisions.</td></tr>
+              <tr><td><code>entry add-encrypted &lt;name&gt; (--file &lt;path&gt; | --stdin) [--content-type &lt;type&gt;] [--epochs &lt;n&gt;] [--publisher-cap &lt;id&gt;]</code></td><td>Encrypt with Seal, upload, and add a new entry.</td></tr>
+              <tr><td><code>entry decrypt &lt;entryId&gt; [&lt;revisionIndex&gt;] [--out &lt;path&gt;] [--publisher-cap &lt;id&gt;] [--via-aggregator]</code></td><td>Decrypt an encrypted revision; reads the latest unless <code>revisionIndex</code> is specified. Signs a SessionKey with the active account.</td></tr>
             </tbody>
           </table>
         </div>
-        <p>All take <code>-P</code>/<code>-C</code>. <code>add</code>, <code>add-encrypted</code>, and the revision commands accept <code>--file &lt;path&gt;</code> (or <code>-</code> for stdin), <code>--stdin</code>, <code>--content-type &lt;type&gt;</code> (inferred from the file extension otherwise), and <code>--epochs &lt;n&gt;</code> (Walrus storage duration, default 3; more epochs store longer and cost more WAL).</p>
-
-        <div class="callout callout-info">
-          <span class="callout-icon">🔐</span>
+        <div class="callout callout-warning">
+          <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="callout-body">
-            <div class="callout-title">Encrypted entries stay as drafts</div>
-            <div class="callout-text">A plaintext <code>entry add</code> is public immediately. An <code>entry add-encrypted</code> entry is a draft (never public on-chain) and is read with <code>entry decrypt</code> plus a PublisherCap, not <code>entry read</code>.</div>
+            <div class="callout-title">Encrypted entries are always created as drafts</div>
+            <div class="callout-text">Encrypted entries are always created as drafts - there is no public head yet. Published revisions are always unencrypted and public, so to publish an encrypted entry you must supply a new unencrypted blob. A revision cannot be both published and encrypted. See <a href="entries.html#adding-an-entry">Entries -> Adding an Entry</a> for the full explanation.</div>
           </div>
         </div>
+        <div class="code-block code-block-output">
+          <div class="code-header"><span class="code-lang">example</span></div>
+          <pre>$ morse entry add welcome-post --file ./welcome.json
+Added entry #0 "welcome-post". (tx: AbCdEf...)
+  https://aggregator.walrus-testnet.walrus.space/v1/blobs/...</pre>
+        </div>
 
-        <h2 id="revision">revision</h2>
+        <h2 id="revision">Revision</h2>
+        <p>Manage drafts and published revisions of an entry.</p>
         <div class="table-wrap">
           <table>
             <thead><tr><th>Command</th><th>Purpose</th></tr></thead>
             <tbody>
-              <tr><td><code>revision publish-direct &lt;entryId&gt; --file &lt;path&gt;</code></td><td>Upload content and append a public revision.</td></tr>
-              <tr><td><code>revision append-draft &lt;entryId&gt; --file &lt;path&gt;</code></td><td>Upload content and append a draft revision.</td></tr>
-              <tr><td><code>revision publish-from-draft &lt;entryId&gt; &lt;draftRevisionId&gt; --file &lt;path&gt;</code></td><td>Publish a new revision, referencing a draft.</td></tr>
+              <tr><td><code>revision publish-direct &lt;entryId&gt; (--file &lt;path&gt; | --stdin) [--content-type &lt;type&gt;] [--epochs &lt;n&gt;] [--publisher-cap &lt;id&gt;]</code></td><td>Upload content and append a public revision.</td></tr>
+              <tr><td><code>revision append-draft &lt;entryId&gt; (--file &lt;path&gt; | --stdin) [--content-type &lt;type&gt;] [--epochs &lt;n&gt;] [--publisher-cap &lt;id&gt;]</code></td><td>Upload content and append a draft revision.</td></tr>
+              <tr><td><code>revision publish-from-draft &lt;entryId&gt; &lt;draftRevisionId&gt; [--file &lt;path&gt; | --stdin] [--content-type &lt;type&gt;] [--epochs &lt;n&gt;] [--publisher-cap &lt;id&gt;]</code></td><td>Publish a draft as a new revision; reuses the draft's content by default, pass <code>--file</code>/<code>--stdin</code> to replace it.</td></tr>
             </tbody>
           </table>
         </div>
+        <div class="code-block code-block-output">
+          <div class="code-header"><span class="code-lang">example</span></div>
+          <pre>$ morse revision publish-direct 0 --file ./welcome-v2.json
+Published revision #1 on entry #0. (tx: AbCdEf...)</pre>
+        </div>
 
-        <h2 id="cap">cap</h2>
+        <h2 id="cap">Cap</h2>
+        <p>Issue, revoke, and transfer publisher capabilities.</p>
         <div class="table-wrap">
           <table>
             <thead><tr><th>Command</th><th>Purpose</th></tr></thead>
             <tbody>
-              <tr><td><code>cap list [address]</code></td><td>List PublisherCaps held by an address.</td></tr>
+              <tr><td><code>cap list [&lt;address&gt;] [--limit &lt;n&gt;] [--cursor &lt;cursor&gt;]</code></td><td>List PublisherCaps held by an address.</td></tr>
               <tr><td><code>cap issue &lt;holder&gt; [-P &lt;slug|id&gt;] [--owner-cap &lt;id&gt;]</code></td><td>Issue a PublisherCap bound to an address.</td></tr>
               <tr><td><code>cap revoke &lt;publisherCapId&gt; [-P &lt;slug|id&gt;] [--owner-cap &lt;id&gt;]</code></td><td>Revoke a PublisherCap.</td></tr>
               <tr><td><code>cap destroy &lt;publisherCapId&gt; [-P &lt;slug|id&gt;]</code></td><td>Destroy a PublisherCap you hold.</td></tr>
-              <tr><td><code>cap transfer &lt;publisherCapId&gt; &lt;recipient&gt;</code></td><td>Transfer a PublisherCap object.</td></tr>
+              <tr><td><code>cap transfer &lt;publisherCapId&gt; &lt;recipient&gt;</code></td><td>Transfer a PublisherCap object. Does not change the <code>holder</code> binding  - the recipient cannot use or destroy the cap unless they are the bound holder. To rotate access, destroy the old cap and issue a new one.</td></tr>
             </tbody>
           </table>
         </div>
-        <p>OwnerCap and PublisherCap IDs are auto-resolved from the active account when the <code>--owner-cap</code> / <code>--publisher-cap</code> override is omitted. The owner (OwnerCap holder) issues and revokes caps; publishers (PublisherCap holders) write content; these are the protocol's only two roles.</p>
+        <div class="code-block code-block-output">
+          <div class="code-header"><span class="code-lang">example</span></div>
+          <pre>$ morse cap issue 0x71a3...9f2b
+Issued PublisherCap 0xCAP_ID to 0x71a3...9f2b. (tx: AbCdEf...)</pre>
+        </div>
+        <p><code>OwnerCap</code> and <code>PublisherCap</code> IDs are auto-resolved from the active account when the <code>--owner-cap</code> / <code>--publisher-cap</code> override is omitted. Morse separates ownership from publishing. <br>See <a href="access-control.html#ownercap">Access Control -> OwnerCap</a> and <a href="access-control.html#publishercap">Access Control -> PublisherCap</a> for how capability-based authorization works.</p>
 
         <h2 id="next-steps">Next Steps</h2>
         <div class="card-grid">
-          <a href="cli-overview.html" class="card">
-            <span class="card-icon">💻</span>
-            <div class="card-title">CLI Overview</div>
-            <div class="card-desc">Install, the active-context model, the security model, and exit codes.</div>
+          <a href="cli-workflows.html" class="card">
+            <div class="card-title">CLI: Cookbooks</div>
+            <div class="card-desc">Step-by-step recipes: publishing, encrypted entries, multi-writer setups, CI/CD scripting.</div>
           </a>
-          <a href="https://www.npmjs.com/package/@arcadiasystems/morse-cli" target="_blank" rel="noopener" class="card">
-            <span class="card-icon">📦</span>
-            <div class="card-title">npm package</div>
-            <div class="card-desc">The README ships a full quick-start walkthrough and command reference.</div>
+          <a href="quick-start-cli.html" class="card">
+            <div class="card-title">Quick Start: CLI</div>
+            <div class="card-desc">Create your first publication, collection, and entry from the terminal.</div>
           </a>
         </div>
       </article>
@@ -294,11 +307,11 @@ morse use my-blog posts                                     <span class="cm"># s
       <div class="page-nav">
         <a href="cli-overview.html" class="pnav">
           <span class="pnav-dir">Previous</span>
-          <span class="pnav-title">← CLI Overview</span>
+          <span class="pnav-title">← CLI: Overview</span>
         </a>
         <a href="cli-workflows.html" class="pnav pnav-right">
           <span class="pnav-dir">Next</span>
-          <span class="pnav-title">Workflows →</span>
+          <span class="pnav-title">CLI: Cookbooks →</span>
         </a>
       </div>
     </div>
@@ -310,6 +323,7 @@ morse use my-blog posts                                     <span class="cm"># s
   </aside>
 </div>
 
+<script src="assets/sidebar.js"></script>
 <script src="assets/search-index.js"></script>
 <script src="assets/script.js"></script>
 </body>

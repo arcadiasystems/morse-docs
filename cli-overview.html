@@ -6,7 +6,7 @@
   <title>CLI Overview · Morse dCMS Documentation</title>
   <meta name="description" content="morse-cli: a command-line client for the Morse dCMS on Sui. Encrypted keystore, active context, content on Walrus, encryption with Seal. Runs on Node or Bun.">
   <link rel="stylesheet" href="assets/styles.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'><rect width='34' height='34' rx='8' fill='%230c1022' stroke='rgba(68,76,231,0.3)' stroke-width='1'/><path d='M5 26V10L12 19L17 12L22 19L29 10V26' stroke='%23444CE7' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='17' cy='21' r='2' fill='%23dbff4b'/><rect x='11' y='27' width='4' height='1.5' rx='0.75' fill='%23444CE7' opacity='0.7'/><rect x='16.5' y='27' width='7' height='1.5' rx='0.75' fill='%23444CE7' opacity='0.7'/></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'><rect width='34' height='34' rx='8' fill='%23141414' stroke='rgba(0,210,210,0.3)' stroke-width='1'/><path d='M5 26V10L12 19L17 12L22 19L29 10V26' stroke='%2300d2d2' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='17' cy='21' r='2' fill='%2300d2d2'/><rect x='11' y='27' width='4' height='1.5' rx='0.75' fill='%2300d2d2' opacity='0.7'/><rect x='16.5' y='27' width='7' height='1.5' rx='0.75' fill='%2300d2d2' opacity='0.7'/></svg>">
 </head>
 <body>
 
@@ -17,11 +17,11 @@
     </button>
     <a href="index.html" class="logo">
       <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon">
-      <rect width="34" height="34" rx="8" fill="#0c1022" stroke="rgba(68,76,231,0.3)" stroke-width="1"/>
-      <path d="M5 26V10L12 19L17 12L22 19L29 10V26" stroke="#444CE7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      <circle cx="17" cy="21" r="2" fill="#dbff4b"/>
-      <rect x="11" y="27" width="4" height="1.5" rx="0.75" fill="#444CE7" opacity="0.7"/>
-      <rect x="16.5" y="27" width="7" height="1.5" rx="0.75" fill="#444CE7" opacity="0.7"/>
+      <rect width="34" height="34" rx="8" fill="#141414" stroke="rgba(0,210,210,0.3)" stroke-width="1"/>
+      <path d="M5 26V10L12 19L17 12L22 19L29 10V26" stroke="#00d2d2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <circle cx="17" cy="21" r="2" fill="#00d2d2"/>
+      <rect x="11" y="27" width="4" height="1.5" rx="0.75" fill="#00d2d2" opacity="0.7"/>
+      <rect x="16.5" y="27" width="7" height="1.5" rx="0.75" fill="#00d2d2" opacity="0.7"/>
     </svg>
     <span class="logo-wordmark">MORSE</span>
     </a>
@@ -33,7 +33,7 @@
       </div>
     </div>
     <nav class="header-links">
-      <a href="https://github.com/TheDivic/morse-dcms" target="_blank" rel="noopener" class="header-link">
+      <a href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener" class="header-link">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
         GitHub
       </a>
@@ -46,63 +46,7 @@
 
 <div class="layout">
   <aside class="sidebar" id="sidebar">
-    <nav>
-      <div class="nav-section">
-        <div class="nav-section-title">Getting Started</div>
-        <ul class="nav-list">
-          <li><a href="index.html" class="nav-link" data-page="index.html"><span class="nav-icon">🏠</span> Introduction</a></li>
-          <li><a href="quick-start.html" class="nav-link" data-page="quick-start.html"><span class="nav-icon">⚡</span> Quick Start</a></li>
-          <li><a href="core-concepts.html" class="nav-link" data-page="core-concepts.html"><span class="nav-icon">📐</span> Core Concepts</a></li>
-        </ul>
-      </div>
-      <div class="nav-divider"></div>
-      <div class="nav-section">
-        <div class="nav-section-title">Protocol</div>
-        <ul class="nav-list">
-          <li><a href="publications.html" class="nav-link" data-page="publications.html"><span class="nav-icon">📰</span> Publications</a></li>
-          <li><a href="collections.html" class="nav-link" data-page="collections.html"><span class="nav-icon">🗂</span> Collections</a></li>
-          <li><a href="entries.html" class="nav-link" data-page="entries.html"><span class="nav-icon">📝</span> Entries &amp; Revisions</a></li>
-          <li><a href="access-control.html" class="nav-link" data-page="access-control.html"><span class="nav-icon">🔐</span> Access Control</a></li>
-        </ul>
-      </div>
-      <div class="nav-divider"></div>
-      <div class="nav-section">
-        <div class="nav-section-title">Smart Contracts</div>
-        <ul class="nav-list">
-          <li><a href="contracts.html" class="nav-link" data-page="contracts.html"><span class="nav-icon">⛓</span> Reference</a></li>
-        </ul>
-      </div>
-      <div class="nav-divider"></div>
-      <div class="nav-section">
-        <div class="nav-section-title">SDK</div>
-        <ul class="nav-list">
-          <li><a href="sdk-overview.html" class="nav-link" data-page="sdk-overview.html"><span class="nav-icon">📦</span> Overview</a></li>
-          <li><a href="sdk-client-setup.html" class="nav-link" data-page="sdk-client-setup.html"><span class="nav-icon">🔧</span> Client Setup</a></li>
-          <li><a href="sdk-publishing.html" class="nav-link" data-page="sdk-publishing.html"><span class="nav-icon">📤</span> Publishing</a></li>
-        </ul>
-      </div>
-      <div class="nav-section">
-        <div class="nav-section-title">CLI</div>
-        <ul class="nav-list">
-          <li><a href="cli-overview.html" class="nav-link" data-page="cli-overview.html"><span class="nav-icon">💻</span> Overview</a></li>
-          <li><a href="cli-commands.html" class="nav-link" data-page="cli-commands.html"><span class="nav-icon">📋</span> Commands</a></li>
-          <li><a href="cli-workflows.html" class="nav-link" data-page="cli-workflows.html"><span class="nav-icon">🛠</span> Workflows</a></li>
-        </ul>
-      </div>
-      <div class="nav-section">
-        <div class="nav-section-title">Indexer <span class="nav-badge-soon">Soon</span></div>
-        <ul class="nav-list">
-          <li><a href="#" class="nav-link nav-disabled"><span class="nav-icon">🔍</span> Overview</a></li>
-        </ul>
-      </div>
-      <div class="nav-divider"></div>
-      <div class="nav-section">
-        <div class="nav-section-title">Reference</div>
-        <ul class="nav-list">
-          <li><a href="glossary.html" class="nav-link" data-page="glossary.html"><span class="nav-icon">📖</span> Glossary</a></li>
-        </ul>
-      </div>
-    </nav>
+    <nav></nav>
   </aside>
 
   <main class="main">
@@ -120,15 +64,15 @@
         </p>
 
         <div class="callout callout-info">
-          <span class="callout-icon">💻</span>
+          <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">Published on npm · testnet only</div>
-            <div class="callout-text">Install <code>@arcadiasystems/morse-cli</code> from npm. Addresses are baked in for testnet; mainnet support arrives once the contracts are frozen at v1.0.0.</div>
+            <div class="callout-text">Install <code>@arcadiasystems/morse-cli</code> from npm. The CLI is currently configured for testnet only. Mainnet support to be added soon.</div>
           </div>
         </div>
 
-        <h2 id="install">Install</h2>
-        <p>Runs under Node (&gt;= 18) or Bun (&gt;= 1.2). The published bin is a Node-targeted bundle, so neither runtime is required to install, only to run.</p>
+        <h2 id="installing">Installing</h2>
+        <p>The published binary is a Node-targeted bundle. You need Node (&gt;= 18) or Bun (&gt;= 1.2) to run it.</p>
 
         <div class="code-block">
           <div class="code-header">
@@ -138,18 +82,10 @@
               Copy
             </button>
           </div>
-          <pre>npm i -g @arcadiasystems/morse-cli     <span class="cm"># or: bun add -g, pnpm add -g</span>
-morse --help
-
-<span class="cm"># run without installing:</span>
-npx @arcadiasystems/morse-cli --help   <span class="cm"># or: bunx @arcadiasystems/morse-cli</span></pre>
+          <pre>npm i -g @arcadiasystems/morse-cli
+morse --help</pre>
         </div>
-
-        <p>You also need a funded Sui testnet address for gas, and testnet WAL for Walrus storage when adding content (faucets: <a href="https://faucet.sui.io/" target="_blank" rel="noopener">SUI</a>, <a href="https://docs.walrus.site/usage/web-tool.html" target="_blank" rel="noopener">WAL</a>).</p>
-
-        <h2 id="quick-flow">The friendly flow</h2>
-        <p>Select an active publication and collection once; commands then default to them, so you never paste a 64-character object id. <code>publication create</code> and <code>collection create</code> auto-select the new object.</p>
-
+        <p>Also available via <code>bun add -g</code> or <code>pnpm add -g</code>. <br> <br> Or run without installing:</p>
         <div class="code-block">
           <div class="code-header">
             <span class="code-lang">bash</span>
@@ -158,33 +94,31 @@ npx @arcadiasystems/morse-cli --help   <span class="cm"># or: bunx @arcadiasyste
               Copy
             </button>
           </div>
-          <pre>morse config add testnet --network testnet   <span class="cm"># create a profile (becomes default)</span>
-morse account import                          <span class="cm"># import a key (hidden prompts)</span>
-morse publication create --name "My Blog" --slug my-blog   <span class="cm"># becomes active</span>
-morse collection create posts                 <span class="cm"># becomes active</span>
-morse entry add hello --file post.md          <span class="cm"># no ids needed; prints a view link</span>
-morse entry read 0                            <span class="cm"># read the content back</span></pre>
+          <pre>npx @arcadiasystems/morse-cli --help</pre>
         </div>
 
-        <h2 id="context">Active context</h2>
-        <p>The active publication and collection live in the current profile. Override per command with <code>-P, --publication &lt;slug|id&gt;</code> and <code>-C, --collection &lt;name&gt;</code>; flags always win over the context. Slugs resolve against publications owned by the active account.</p>
+        <h2 id="getting-started">Getting Started</h2>
+        <p>Select an active publication and collection once - all subsequent commands will use them automatically, so you never have to paste a 64-character object ID. <code>publication create</code> and <code>collection create</code> auto-select the new object. <br><br>See <a href="cli-workflows.html">CLI Cookbooks</a> for step-by-step guides.</p>
+
+        <h2 id="active-context">Active Context</h2>
+        <p>The active publication and collection live in the current profile. Override per command with <code>-P, --publication &lt;slug|id&gt;</code> and <code>-C, --collection &lt;name&gt;</code>. Slugs resolve against publications owned by the active account.</p>
         <ul>
-          <li><code>morse use &lt;slug|id&gt; [collection]</code>: set the active publication and optional collection.</li>
-          <li><code>morse use --clear</code>: clear them.</li>
-          <li><code>morse status</code>: show the active profile, account, publication, and collection.</li>
+          <li><code>morse use &lt;slug|id&gt; [collection]</code>: set the active publication and collection (optional)</li>
+          <li><code>morse use --clear</code>: clear the active context</li>
+          <li><code>morse status</code>: show the active profile, account, publication, and collection</li>
         </ul>
 
-        <h2 id="security">Security model</h2>
+        <h2 id="security-model">Security Model</h2>
         <p>Private keys are stored in an encrypted keystore (scrypt + AES-256-GCM) and unlocked by a password.</p>
         <ul>
-          <li>Keys are <strong>never accepted as command-line flags</strong> (they would leak via <code>ps</code>, <code>/proc</code>, and shell history). They come only from an interactive hidden prompt, the <code>MORSE_PRIVATE_KEY</code> env var, or the encrypted keystore.</li>
+          <li>Keys are <strong>never accepted as command-line flags</strong>. They come only from an interactive hidden prompt, the <code>MORSE_PRIVATE_KEY</code> env var, or the encrypted keystore.</li>
           <li>Keystore files are written <code>chmod 600</code>; group- or world-readable key files are refused on read.</li>
           <li>Keys are never printed or logged, including under <code>--debug</code>. The sole exception is <code>account export</code>, which deliberately reveals a key: interactive-only, requires confirmation, unavailable in <code>--json</code>.</li>
           <li>For CI, set <code>MORSE_PRIVATE_KEY</code> (raw key, never persisted) and <code>MORSE_KEYSTORE_PASSWORD</code> to skip prompts.</li>
         </ul>
 
         <h2 id="config">Configuration</h2>
-        <p>Settings resolve with the precedence <code>flags &gt; MORSE_* env &gt; config file &gt; defaults</code>. The config file lives under <code>$XDG_CONFIG_HOME/morse</code> (default <code>~/.config/morse</code>); encrypted keystores live in <code>keystores/</code> beside it.</p>
+        <p>Settings resolve with the precedence <code>flags</code> &gt; <code>MORSE_* env</code> &gt; <code>config file</code> &gt; <code>defaults</code>. The config file lives under <code>$XDG_CONFIG_HOME/morse</code> (default <code>~/.config/morse</code>); encrypted keystores live in <code>keystores/</code> beside it.</p>
 
         <div class="table-wrap">
           <table>
@@ -192,33 +126,34 @@ morse entry read 0                            <span class="cm"># read the conten
               <tr><th>Variable</th><th>Overrides</th><th>Notes</th></tr>
             </thead>
             <tbody>
-              <tr><td><code>MORSE_PROFILE</code></td><td><code>--profile</code></td><td>Profile to use.</td></tr>
+              <tr><td><code>MORSE_PROFILE</code></td><td><code>-p, --profile</code></td><td>Profile to use.</td></tr>
               <tr><td><code>MORSE_NETWORK</code></td><td><code>--network</code></td><td><code>testnet</code> or <code>localnet</code>.</td></tr>
               <tr><td><code>MORSE_RPC_URL</code></td><td><code>--rpc</code></td><td>Sui RPC URL override.</td></tr>
               <tr><td><code>MORSE_ADDRESS</code></td><td>(no flag)</td><td>Active account address.</td></tr>
-              <tr><td><code>MORSE_PUBLICATION</code></td><td><code>-P</code></td><td>Active publication id.</td></tr>
-              <tr><td><code>MORSE_COLLECTION</code></td><td><code>-C</code></td><td>Active collection name.</td></tr>
+              <tr><td><code>MORSE_PUBLICATION</code></td><td><code>-P, --publication</code></td><td>Active publication ID.</td></tr>
+              <tr><td><code>MORSE_COLLECTION</code></td><td><code>-C, --collection</code></td><td>Active collection name.</td></tr>
               <tr><td><code>MORSE_PRIVATE_KEY</code></td><td>(no flag)</td><td>Raw Bech32 secret key. Highest-priority key source; never persisted.</td></tr>
               <tr><td><code>MORSE_KEYSTORE_PASSWORD</code></td><td>(no flag)</td><td>Keystore password for non-interactive unlock.</td></tr>
             </tbody>
           </table>
         </div>
 
-        <h2 id="output">Output &amp; scripting</h2>
+        <h2 id="output-and-scripting">Output &amp; Scripting</h2>
         <ul>
-          <li>Human output goes to <strong>stdout</strong>; progress, warnings, and prompts go to <strong>stderr</strong>. Redirecting stdout yields only the result.</li>
-          <li><code>--json</code> emits a single JSON document on stdout. <code>bigint</code> values (e.g. <code>gasUsedMist</code>) are encoded as decimal strings and byte arrays (<code>sealId</code>, quilt patch ids) as <code>0x</code>-hex.</li>
+          <li>Human-readable output goes to <strong>stdout</strong>; progress, warnings, and prompts go to <strong>stderr</strong>. Redirecting stdout yields only the result.</li>
+          <li>In <code>--json</code> mode, <code>bigint</code> values (e.g. <code>gasUsedMist</code>) are encoded as decimal strings and byte arrays (<code>sealId</code>, quilt patch IDs) as <code>0x</code>-hex.</li>
           <li>Color is emitted only to a TTY and honors <code>NO_COLOR</code> / <code>FORCE_COLOR</code>.</li>
         </ul>
+        <p>See <a href="cli-commands.html#global-options">CLI Command Reference &rarr; Global Options</a> for a full list of global flags (<code>--json</code>, <code>--quiet</code>, <code>--yes</code>, and more).</p>
 
-        <h2 id="exit-codes">Exit codes</h2>
+        <h2 id="exit-codes">Exit Codes</h2>
         <div class="table-wrap">
           <table>
             <thead><tr><th>Code</th><th>Meaning</th></tr></thead>
             <tbody>
               <tr><td><code>0</code></td><td>Success</td></tr>
               <tr><td><code>1</code></td><td>Generic error (contract abort, uncategorized)</td></tr>
-              <tr><td><code>2</code></td><td>Usage error (bad flags/args, invalid id/slug/address, declined confirmation)</td></tr>
+              <tr><td><code>2</code></td><td>Usage error (bad flags/args, invalid ID/slug/address, declined confirmation)</td></tr>
               <tr><td><code>3</code></td><td>Not found</td></tr>
               <tr><td><code>4</code></td><td>Auth or permission failure (keystore unlock, unauthorized, no-access)</td></tr>
               <tr><td><code>5</code></td><td>Network or transport failure</td></tr>
@@ -229,31 +164,28 @@ morse entry read 0                            <span class="cm"># read the conten
         <h2 id="next-steps">Next Steps</h2>
         <div class="card-grid">
           <a href="cli-commands.html" class="card">
-            <span class="card-icon">📋</span>
-            <div class="card-title">Command Reference</div>
+            <div class="card-title">CLI: Command Reference</div>
             <div class="card-desc">Every command and flag: config, account, publication, collection, entry, revision, cap.</div>
           </a>
-          <a href="quick-start.html" class="card">
-            <span class="card-icon">⚡</span>
-            <div class="card-title">Quick Start</div>
-            <div class="card-desc">The protocol concepts the CLI drives: publications, collections, entries.</div>
+          <a href="cli-workflows.html" class="card">
+            <div class="card-title">CLI: Cookbooks</div>
+            <div class="card-desc">Step-by-step recipes: publishing, encrypted entries, multi-writer setups, CI/CD scripting.</div>
           </a>
-          <a href="https://www.npmjs.com/package/@arcadiasystems/morse-cli" target="_blank" rel="noopener" class="card">
-            <span class="card-icon">📦</span>
-            <div class="card-title">npm package</div>
-            <div class="card-desc">Install, versions, and the full README with a copy-pasteable walkthrough.</div>
+          <a href="quick-start-cli.html" class="card">
+            <div class="card-title">Quick Start: CLI</div>
+            <div class="card-desc">The protocol concepts the CLI drives: publications, collections, entries.</div>
           </a>
         </div>
       </article>
 
       <div class="page-nav">
-        <a href="sdk-publishing.html" class="pnav">
+        <a href="access-control.html" class="pnav">
           <span class="pnav-dir">Previous</span>
-          <span class="pnav-title">← SDK Publishing</span>
+          <span class="pnav-title">← Access Control</span>
         </a>
         <a href="cli-commands.html" class="pnav pnav-right">
           <span class="pnav-dir">Next</span>
-          <span class="pnav-title">Command Reference →</span>
+          <span class="pnav-title">CLI: Command Reference →</span>
         </a>
       </div>
     </div>
@@ -265,6 +197,7 @@ morse entry read 0                            <span class="cm"># read the conten
   </aside>
 </div>
 
+<script src="assets/sidebar.js"></script>
 <script src="assets/search-index.js"></script>
 <script src="assets/script.js"></script>
 </body>

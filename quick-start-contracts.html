@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick Start: Smart Contracts · Morse dCMS Documentation</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'><rect width='34' height='34' rx='8' fill='%23141414' stroke='rgba(0,210,210,0.3)' stroke-width='1'/><path d='M5 26V10L12 19L17 12L22 19L29 10V26' stroke='%2300d2d2' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='17' cy='21' r='2' fill='%2300d2d2'/><rect x='11' y='27' width='4' height='1.5' rx='0.75' fill='%2300d2d2' opacity='0.7'/><rect x='16.5' y='27' width='7' height='1.5' rx='0.75' fill='%2300d2d2' opacity='0.7'/></svg>">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <button class="hamburger" id="hamburger" aria-label="Toggle sidebar">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <a href="index.html" class="logo">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon">
+      <rect width="34" height="34" rx="8" fill="#141414" stroke="rgba(0,210,210,0.3)" stroke-width="1"/>
+      <path d="M5 26V10L12 19L17 12L22 19L29 10V26" stroke="#00d2d2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <circle cx="17" cy="21" r="2" fill="#00d2d2"/>
+      <rect x="11" y="27" width="4" height="1.5" rx="0.75" fill="#00d2d2" opacity="0.7"/>
+      <rect x="16.5" y="27" width="7" height="1.5" rx="0.75" fill="#00d2d2" opacity="0.7"/>
+    </svg>
+    <span class="logo-wordmark">MORSE</span>
+    </a>
+    <div class="header-search">
+      <div class="search-box">
+        <span class="search-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <span class="search-placeholder">Search documentation…</span>
+        <kbd class="search-kbd">⌘K</kbd>
+      </div>
+    </div>
+    <nav class="header-links">
+      <a href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener" class="header-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="https://walrus.xyz" target="_blank" rel="noopener" class="header-link header-link-primary">Walrus ↗</a>
+    </nav>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <nav></nav>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+      <nav class="breadcrumbs">
+        <span class="breadcrumb-link">Getting Started</span>
+        <span class="breadcrumb-sep">›</span>
+        <a href="quick-start.html" class="breadcrumb-link">Quick Start</a>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-current">Smart Contracts</span>
+      </nav>
+
+      <article class="article">
+        <h1>Quick Start: Smart Contracts</h1>
+        <p class="article-lead">
+          Create a publication, add a collection, and publish an entry using raw Programmable Transaction Blocks against the deployed Morse contracts on testnet. No SDK wrappers  - just <code>tx.moveCall</code>.
+        </p>
+
+        <h2 id="prerequisites">Prerequisites</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Requirement</th><th>Details</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><td>Bun or Node</td><td>v1.2+ / >= 18</td><td>JavaScript runtime</td></tr>
+              <tr><td>SUI + WAL tokens</td><td><a href="https://faucet.sui.io/" target="_blank">SUI faucet</a> / <a href="https://stake-wal.wal.app/?network=testnet" target="_blank">Swap SUI for WAL</a></td><td>Gas fees (SUI) and Walrus storage fees (WAL)</td></tr>
+              <tr><td>Bech32 private key</td><td>A <code>suiprivkey1...</code> string</td><td>Transaction signing - export from your wallet's settings</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="installing">Installing</h2>
+        <p>Install the Morse SDK (for network configuration and Walrus uploads) and the Sui SDK (for transaction construction and signing).</p>
+        <p>With Bun:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre>bun add @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal</pre>
+        </div>
+        <p>Or with npm:</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre>npm install @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal</pre>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">Why the SDK if we're using raw PTBs?</div>
+            <div class="callout-text">This guide uses raw <code>tx.moveCall</code> - no SDK wrappers for contract calls. The SDK packages provide three things:
+              <ul style="margin:8px 0 0;padding-left:20px;">
+                <li><code>morseConfig</code> - resolves the deployed package ID, registry ID, and RPC URL so you don't hard-code addresses</li>
+                <li><code>DefaultWalrusWriteAdapter</code> - handles blob uploads to Walrus (requires <code>@mysten/walrus</code>)</li>
+                <li><code>DefaultSealAdapter</code> - handles Seal encryption (requires <code>@mysten/seal</code>, loaded at runtime even for non-encrypted workflows)</li>
+              </ul>
+              For the high-level wrapper approach, see the <a href="quick-start-sdk.html">SDK Quick Start</a>.
+            </div>
+          </div>
+        </div>
+
+        <h2 id="writing-the-script">Writing the Script</h2>
+        <p>Save this as <code>quickstart-contracts.ts</code>. It creates a publication, adds a collection, uploads content to Walrus, and registers an on-chain entry  - all using raw PTBs.</p>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">Transport: gRPC</div>
+            <div class="callout-text">This guide uses <code>SuiGrpcClient</code> for its typed interface and lower latency. The Morse SDK also supports JSON-RPC via <code>SuiHTTPTransport</code> from <code>@mysten/sui/client</code> if your environment requires it  - see <a href="sdk-client-setup.html">SDK Client Setup</a> for details.</div>
+          </div>
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">typescript</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre><span class="kw">import</span> { <span class="ty">SuiGrpcClient</span> } <span class="kw">from</span> <span class="st">"@mysten/sui/grpc"</span>;
+<span class="kw">import</span> { <span class="ty">Transaction</span> } <span class="kw">from</span> <span class="st">"@mysten/sui/transactions"</span>;
+<span class="kw">import</span> { <span class="ty">Ed25519Keypair</span> } <span class="kw">from</span> <span class="st">"@mysten/sui/keypairs/ed25519"</span>;
+<span class="kw">import</span> { bcs } <span class="kw">from</span> <span class="st">"@mysten/sui/bcs"</span>;
+<span class="kw">import</span> { morseConfig, DefaultWalrusWriteAdapter } <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
+
+<span class="kw">const</span> privateKey = process.env.PRIVATE_KEY;
+<span class="kw">if</span> (!privateKey) <span class="kw">throw new</span> <span class="fn">Error</span>(<span class="st">"Set PRIVATE_KEY to a suiprivkey1... Bech32 string"</span>);
+
+<span class="cm">// ---------------------------------------------------------------------------</span>
+<span class="cm">// 1. Configure client, keypair, and Walrus adapter</span>
+<span class="cm">// ---------------------------------------------------------------------------</span>
+<span class="kw">const</span> config = <span class="fn">morseConfig</span>({ network: <span class="st">"testnet"</span> });
+<span class="kw">const</span> PACKAGE_ID = config.packageId;
+<span class="kw">const</span> REGISTRY_ID = config.registryId;
+
+<span class="kw">const</span> client = <span class="kw">new</span> <span class="ty">SuiGrpcClient</span>({
+  network: <span class="st">"testnet"</span>,
+  baseUrl: config.rpcUrl,
+});
+<span class="kw">const</span> keypair = <span class="ty">Ed25519Keypair</span>.fromSecretKey(privateKey);
+<span class="kw">const</span> walrusWriter = DefaultWalrusWriteAdapter.<span class="fn">fromConfig</span>(
+  { network: <span class="st">"testnet"</span>, suiClient: client },
+  keypair,
+);
+
+<span class="cm">// ---------------------------------------------------------------------------</span>
+<span class="cm">// 2. Create a publication</span>
+<span class="cm">//    new_publication returns (Publication, OwnerCap, PublisherCap).</span>
+<span class="cm">//    Share the publication and transfer the caps in the same PTB.</span>
+<span class="cm">// ---------------------------------------------------------------------------</span>
+<span class="kw">const</span> pubTx = <span class="kw">new</span> <span class="ty">Transaction</span>();
+
+<span class="kw">const</span> created = pubTx.moveCall({
+  target: <span class="st">`${PACKAGE_ID}::publication::new_publication`</span>,
+  arguments: [
+    pubTx.object(REGISTRY_ID),
+    pubTx.pure.string(<span class="st">"My Blog"</span>),
+    pubTx.pure.string(<span class="st">"my-blog"</span>),
+  ],
+});
+
+<span class="cm">// Share the publication so other transactions can reference it.</span>
+pubTx.moveCall({
+  target: <span class="st">`${PACKAGE_ID}::publication::share_publication`</span>,
+  arguments: [created[<span class="nu">0</span>]],
+});
+
+<span class="cm">// Transfer caps using typed wrappers (key-only objects can't use transferObjects).</span>
+pubTx.moveCall({
+  target: <span class="st">`${PACKAGE_ID}::publication::transfer_owner_cap`</span>,
+  arguments: [created[<span class="nu">1</span>], pubTx.pure.address(keypair.toSuiAddress())],
+});
+pubTx.moveCall({
+  target: <span class="st">`${PACKAGE_ID}::publication::transfer_publisher_cap`</span>,
+  arguments: [created[<span class="nu">2</span>], pubTx.pure.address(keypair.toSuiAddress())],
+});
+
+<span class="kw">const</span> pubResult = <span class="kw">await</span> client.signAndExecuteTransaction({
+  transaction: pubTx,
+  signer: keypair,
+  include: { effects: <span class="kw">true</span>, objectTypes: <span class="kw">true</span> },
+});
+
+<span class="cm">// Extract created object IDs from transaction effects.</span>
+<span class="kw">const</span> { effects, objectTypes } = pubResult.Transaction;
+<span class="kw">const</span> createdObjects = effects.changedObjects
+  .filter((c) =&gt; c.idOperation === <span class="st">"Created"</span> &amp;&amp; objectTypes?.[c.objectId])
+  .map((c) =&gt; ({ objectId: c.objectId, type: objectTypes[c.objectId] }));
+
+<span class="kw">const</span> PUBLICATION_ID = createdObjects.find((o) =&gt; o.type.includes(<span class="st">"Publication"</span>))!.objectId;
+<span class="kw">const</span> OWNER_CAP_ID = createdObjects.find((o) =&gt; o.type.includes(<span class="st">"OwnerCap"</span>))!.objectId;
+<span class="kw">const</span> PUBLISHER_CAP_ID = createdObjects.find((o) =&gt; o.type.includes(<span class="st">"PublisherCap"</span>))!.objectId;
+
+console.log(<span class="st">"Publication:"</span>, PUBLICATION_ID);
+console.log(<span class="st">"OwnerCap:"</span>, OWNER_CAP_ID);
+console.log(<span class="st">"PublisherCap:"</span>, PUBLISHER_CAP_ID);
+
+<span class="cm">// Wait for the transaction to be indexed before referencing the new objects.</span>
+<span class="kw">await</span> client.<span class="fn">waitForTransaction</span>({ digest: pubResult.Transaction.digest });
+
+<span class="cm">// ---------------------------------------------------------------------------</span>
+<span class="cm">// 3. Add a collection</span>
+<span class="cm">//    Blob mode (storage_mode = 0): each entry holds a standalone Walrus Blob.</span>
+<span class="cm">// ---------------------------------------------------------------------------</span>
+<span class="kw">const</span> colTx = <span class="kw">new</span> <span class="ty">Transaction</span>();
+
+colTx.moveCall({
+  target: <span class="st">`${PACKAGE_ID}::publication::create_collection`</span>,
+  arguments: [
+    colTx.object(PUBLICATION_ID),
+    colTx.object(PUBLISHER_CAP_ID),
+    colTx.pure.string(<span class="st">"posts"</span>),
+    colTx.pure.u8(<span class="nu">0</span>),  <span class="cm">// STORAGE_MODE_BLOB</span>
+  ],
+});
+
+<span class="kw">const</span> colResult = <span class="kw">await</span> client.signAndExecuteTransaction({ transaction: colTx, signer: keypair });
+console.log(<span class="st">"Collection created: posts"</span>);
+
+<span class="cm">// Wait for the collection transaction to be indexed before modifying the publication again.</span>
+<span class="kw">await</span> client.<span class="fn">waitForTransaction</span>({ digest: colResult.Transaction.digest });
+
+<span class="cm">// ---------------------------------------------------------------------------</span>
+<span class="cm">// 4. Upload content to Walrus and add an entry</span>
+<span class="cm">//    Upload returns the Blob *object* ID (a Sui object reference).</span>
+<span class="cm">//    Pass it via tx.object()  - the contract takes &amp;Blob, not the hash.</span>
+<span class="cm">// ---------------------------------------------------------------------------</span>
+<span class="kw">const</span> content = <span class="kw">new</span> TextEncoder().encode(
+  JSON.stringify({ title: <span class="st">"Hello World"</span>, body: <span class="st">"My first post on Morse."</span> })
+);
+<span class="kw">const</span> { blobObjectId: BLOB_OBJECT_ID } = <span class="kw">await</span> walrusWriter.<span class="fn">uploadBlob</span>(content, {
+  epochs: <span class="nu">3</span>,
+  deletable: <span class="kw">true</span>,
+});
+console.log(<span class="st">"Blob uploaded:"</span>, BLOB_OBJECT_ID);
+
+<span class="cm">// BCS-encode Option&lt;vector&lt;u8&gt;&gt;::None for quilt_patch_id and seal_id.</span>
+<span class="kw">const</span> optionNone = bcs.option(bcs.vector(bcs.u8())).serialize(<span class="kw">null</span>).toBytes();
+
+<span class="kw">const</span> entryTx = <span class="kw">new</span> <span class="ty">Transaction</span>();
+
+entryTx.moveCall({
+  target: <span class="st">`${PACKAGE_ID}::publication::add_entry_to_collection`</span>,
+  arguments: [
+    entryTx.object(PUBLICATION_ID),     <span class="cm">// &amp;mut Publication</span>
+    entryTx.object(PUBLISHER_CAP_ID),   <span class="cm">// &amp;PublisherCap</span>
+    entryTx.pure.string(<span class="st">"posts"</span>),       <span class="cm">// collection name</span>
+    entryTx.pure.string(<span class="st">"hello-world"</span>),  <span class="cm">// entry name</span>
+    entryTx.object(BLOB_OBJECT_ID),     <span class="cm">// blob: &amp;Blob (must be deletable)</span>
+    entryTx.pure(optionNone),           <span class="cm">// quilt_patch_id: None (blob mode)</span>
+    entryTx.pure.string(<span class="st">"application/json"</span>), <span class="cm">// content type</span>
+    entryTx.pure.bool(<span class="kw">false</span>),           <span class="cm">// encrypted: false</span>
+    entryTx.pure.u8(<span class="nu">0</span>),                <span class="cm">// access_policy: PUBLIC</span>
+    entryTx.pure(optionNone),           <span class="cm">// seal_id: None</span>
+  ],
+});
+
+<span class="kw">await</span> client.signAndExecuteTransaction({ transaction: entryTx, signer: keypair });
+console.log(<span class="st">"Entry added: hello-world (ID 0)"</span>);</pre>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="callout-body">
+            <div class="callout-title">Which IDs to save</div>
+            <div class="callout-text">Save the Publication, OwnerCap, and PublisherCap object IDs from the output  - you need them for all subsequent contract calls. You can also recover the publication ID from its slug using <code>get_publication_id_by_slug</code> on the registry.</div>
+          </div>
+        </div>
+
+        <h2 id="running-it">Running It</h2>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre>PRIVATE_KEY="suiprivkey1..." bun run quickstart-contracts.ts</pre>
+        </div>
+
+        <div class="code-block code-block-output">
+          <div class="code-header">
+            <span class="code-lang">output</span>
+          </div>
+          <pre>Publication: 0x1a2b...3c4d
+OwnerCap: 0x5e6f...7a8b
+PublisherCap: 0x9c0d...1e2f
+Collection created: posts
+Blob uploaded: 0x4d5e...6f7a
+Entry added: hello-world (ID 0)</pre>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">You're live on-chain</div>
+            <div class="callout-text">Your publication, collection, and entry are on Sui testnet. The entry content is stored on Walrus. For a friendlier reading experience, use the <a href="quick-start-cli.html">Morse CLI</a>: <code>morse entry read 0 --via-aggregator</code>.</div>
+          </div>
+        </div>
+
+        <h2 id="next-steps">Next Steps</h2>
+        <div class="card-grid">
+          <a href="contracts-workflows.html" class="card">
+            <div class="card-title">Contract Cookbooks</div>
+            <div class="card-desc">Revisions, drafts, encrypted content, delegating access, and teardown  - all via raw PTBs.</div>
+          </a>
+          <a href="contracts-reference.html" class="card">
+            <div class="card-title">Contract Reference</div>
+            <div class="card-desc">Full function signatures, argument types, error codes, and Move struct definitions.</div>
+          </a>
+          <a href="core-concepts.html" class="card">
+            <div class="card-title">Core Concepts</div>
+            <div class="card-desc">Understand the data model  - publications, collections, entries, and revisions.</div>
+          </a>
+        </div>
+      </article>
+
+      <div class="page-nav">
+        <a href="quick-start-sdk.html" class="pnav">
+          <span class="pnav-dir">Previous</span>
+          <span class="pnav-title">← Quick Start: SDK</span>
+        </a>
+        <a href="publications.html" class="pnav pnav-right">
+          <span class="pnav-dir">Next</span>
+          <span class="pnav-title">Publications →</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <aside class="toc">
+    <div class="toc-title">On this page</div>
+    <ul class="toc-list"></ul>
+  </aside>
+</div>
+
+<script src="assets/sidebar.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>
