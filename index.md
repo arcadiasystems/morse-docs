@@ -1,4 +1,4 @@
-> Source: https://morse-docs.vercel.app/index.html · Full docs: https://morse-docs.vercel.app/llms-full.txt
+> Source: https://morsecms-docs.vercel.app/index.html · Full docs: https://morsecms-docs.vercel.app/llms-full.txt
 > Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback
 
 # Morse - The Decentralized Headless CMS Protocol
@@ -52,7 +52,7 @@ Morse is composed of five layers. Only the contracts are the source of truth; al
 
 ## Next Steps
 
-- [Quick Start](https://morse-docs.vercel.app/quick-start.html): Choose your path - CLI, SDK, or contracts - and go from zero to published content on testnet.
-- [Core Concepts](https://morse-docs.vercel.app/core-concepts.html): Understand the Publication → Collection → Entry model.
-- [CLI](https://morse-docs.vercel.app/cli-overview.html): Manage publications and content from your terminal. Encrypted keystore, active context, no IDs to paste.
-- [SDK](https://morse-docs.vercel.app/sdk-overview.html): Build on Morse from Node or the browser. Adapter pattern, branded IDs, structured errors.
+- [Quick Start](https://morsecms-docs.vercel.app/quick-start.html): Choose your path - CLI, SDK, or contracts - and go from zero to published content on testnet.
+- [Core Concepts](https://morsecms-docs.vercel.app/core-concepts.html): Understand the Publication → Collection → Entry model.
+- [CLI](https://morsecms-docs.vercel.app/cli-overview.html): Manage publications and content from your terminal. Encrypted keystore, active context, no IDs to paste.
+- [SDK](https://morsecms-docs.vercel.app/sdk-overview.html): Build on Morse from Node or the browser. Adapter pattern, branded IDs, structured errors.

@@ -1,9 +1,9 @@
 # Morse Documentation — Complete
 # Morse is an open, decentralized headless CMS protocol built on Sui and Walrus.
-# Index: https://morse-docs.vercel.app/llms.txt · Site: https://morse-docs.vercel.app/
+# Index: https://morsecms-docs.vercel.app/llms.txt · Site: https://morsecms-docs.vercel.app/
 # Feedback: https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback
 
-<!-- Source: https://morse-docs.vercel.app/index.html -->
+<!-- Source: https://morsecms-docs.vercel.app/index.html -->
 
 # Morse - The Decentralized Headless CMS Protocol
 
@@ -56,15 +56,15 @@ Morse is composed of five layers. Only the contracts are the source of truth; al
 
 ## Next Steps
 
-- [Quick Start](https://morse-docs.vercel.app/quick-start.html): Choose your path - CLI, SDK, or contracts - and go from zero to published content on testnet.
-- [Core Concepts](https://morse-docs.vercel.app/core-concepts.html): Understand the Publication → Collection → Entry model.
-- [CLI](https://morse-docs.vercel.app/cli-overview.html): Manage publications and content from your terminal. Encrypted keystore, active context, no IDs to paste.
-- [SDK](https://morse-docs.vercel.app/sdk-overview.html): Build on Morse from Node or the browser. Adapter pattern, branded IDs, structured errors.
+- [Quick Start](https://morsecms-docs.vercel.app/quick-start.html): Choose your path - CLI, SDK, or contracts - and go from zero to published content on testnet.
+- [Core Concepts](https://morsecms-docs.vercel.app/core-concepts.html): Understand the Publication → Collection → Entry model.
+- [CLI](https://morsecms-docs.vercel.app/cli-overview.html): Manage publications and content from your terminal. Encrypted keystore, active context, no IDs to paste.
+- [SDK](https://morsecms-docs.vercel.app/sdk-overview.html): Build on Morse from Node or the browser. Adapter pattern, branded IDs, structured errors.
 
 
 ---
 
-<!-- Source: https://morse-docs.vercel.app/core-concepts.html -->
+<!-- Source: https://morsecms-docs.vercel.app/core-concepts.html -->
 
 # Core Concepts
 
@@ -95,19 +95,19 @@ Editors operate mostly at the **Entry / Revision** level. Owners operate mostly 
 
 Think of a publication as your project or site - it is the top-level namespace that groups all your content together. Every publication gets a unique slug (like `my-blog`) that acts as a human-readable identifier across the protocol. All collections, entries, and permissions live under this single umbrella.
 
-[See Publications for the full reference →](https://morse-docs.vercel.app/publications.html)
+[See Publications for the full reference →](https://morsecms-docs.vercel.app/publications.html)
 
 ## Collections
 
 Collections are how you organize entries within a publication - similar to folders or content types. For example, a blog might have an `articles` collection and a `site-pages` collection. When you create a collection, you choose how its content is stored: individually as separate blobs (good for standalone posts or images) or as a shared document that can be patched in place (good for structured data like settings or configuration).
 
-[See Collections for the full reference →](https://morse-docs.vercel.app/collections.html)
+[See Collections for the full reference →](https://morsecms-docs.vercel.app/collections.html)
 
 ## Entries & Revisions
 
 Entries are the actual content pieces - a blog post, an image, a page. Every edit creates a new revision rather than overwriting the previous one, giving you a complete version history that can never be lost. The system tracks two pointers for each entry: a draft head for work-in-progress and a public head that readers see. This lets drafts evolve privately while production clients serve stable published content.
 
-[See Entries for the full reference →](https://morse-docs.vercel.app/entries.html)
+[See Entries for the full reference →](https://morsecms-docs.vercel.app/entries.html)
 
 ## How Publishing Works
 
@@ -125,19 +125,19 @@ Instead of usernames and passwords, Morse uses on-chain capability objects to ma
 
 Revocation uses a denylist-based model - issuing caps is cheap (zero table writes), and only revocations write to the denylist. Once revoked, all future writes using that cap are immediately rejected.
 
-[See Access Control for the full reference →](https://morse-docs.vercel.app/access-control.html)
+[See Access Control for the full reference →](https://morsecms-docs.vercel.app/access-control.html)
 
 ## Walrus Storage
 
 The Sui blockchain only stores references (pointers) to your content, not the content bytes themselves. The actual payloads live on Walrus, a decentralized storage network designed for large data. This separation keeps on-chain costs low while ensuring your content is permanently available and verifiable. Walrus is format-agnostic, so Morse can support JSON, Markdown, images, video, or any custom schema.
 
-[See Collections → Storage Modes for storage mode details →](https://morse-docs.vercel.app/collections.html#storage-modes)
+[See Collections → Storage Modes for storage mode details →](https://morsecms-docs.vercel.app/collections.html#storage-modes)
 
 ## Access Control
 
 Morse can gate content behind on-chain encryption using Seal. Only users who meet specific on-chain conditions can decrypt and read the content. This means access rules are enforced by the blockchain itself, not by a server you have to trust. This approach enables paid subscriptions, token-gated access, team-only content, and other models - all without a centralized gatekeeper.
 
-[See Access Control for the full reference →](https://morse-docs.vercel.app/access-control.html)
+[See Access Control for the full reference →](https://morsecms-docs.vercel.app/access-control.html)
 
 ## Off-Chain Services
 
@@ -152,30 +152,30 @@ Importantly, all off-chain services are replaceable. Any team can run their own 
 
 ## Next Steps
 
-- [Quick Start](https://morse-docs.vercel.app/quick-start.html): Choose CLI, SDK, or Smart Contracts and go from zero to published content on testnet.
-- [Publications](https://morse-docs.vercel.app/publications.html): Full reference for the top-level content container: slugs, capabilities, and lifecycle.
-- [Collections](https://morse-docs.vercel.app/collections.html): Storage modes, entry IDs, and collection management.
-- [Access Control](https://morse-docs.vercel.app/access-control.html): OwnerCap, PublisherCap, revocation, and Seal encryption.
+- [Quick Start](https://morsecms-docs.vercel.app/quick-start.html): Choose CLI, SDK, or Smart Contracts and go from zero to published content on testnet.
+- [Publications](https://morsecms-docs.vercel.app/publications.html): Full reference for the top-level content container: slugs, capabilities, and lifecycle.
+- [Collections](https://morsecms-docs.vercel.app/collections.html): Storage modes, entry IDs, and collection management.
+- [Access Control](https://morsecms-docs.vercel.app/access-control.html): OwnerCap, PublisherCap, revocation, and Seal encryption.
 
 
 ---
 
-<!-- Source: https://morse-docs.vercel.app/quick-start.html -->
+<!-- Source: https://morsecms-docs.vercel.app/quick-start.html -->
 
 # Quick Start
 
 > Choose the path that fits your workflow. Each guide takes you from zero to published content on testnet.
 
-New to Morse? Start with [Core Concepts](https://morse-docs.vercel.app/core-concepts.html) for an overview, or jump straight into the CLI guide - it's the fastest way to see Morse in action.
+New to Morse? Start with [Core Concepts](https://morsecms-docs.vercel.app/core-concepts.html) for an overview, or jump straight into the CLI guide - it's the fastest way to see Morse in action.
 
-- [CLI](https://morse-docs.vercel.app/quick-start-cli.html): Install morse-cli from npm, create a publication, publish and read content - all from your terminal. For operators and content managers. *(~5 min · Requires: Bun or Node, funded Sui wallet)*
-- [TypeScript SDK](https://morse-docs.vercel.app/quick-start-sdk.html): Wire up @arcadiasystems/morse-sdk, create a publication, add an entry, and read it back in a single script. For app developers building on Morse. *(~5 min · Requires: Bun or Node, funded Sui wallet)*
-- [Smart Contracts](https://morse-docs.vercel.app/quick-start-contracts.html): Interact with Morse's deployed contracts directly via PTBs. For developers who want full control over transaction construction. *(~10 min · Requires: Sui CLI, funded Sui wallet)*
+- [CLI](https://morsecms-docs.vercel.app/quick-start-cli.html): Install morse-cli from npm, create a publication, publish and read content - all from your terminal. For operators and content managers. *(~5 min · Requires: Bun or Node, funded Sui wallet)*
+- [TypeScript SDK](https://morsecms-docs.vercel.app/quick-start-sdk.html): Wire up @arcadiasystems/morse-sdk, create a publication, add an entry, and read it back in a single script. For app developers building on Morse. *(~5 min · Requires: Bun or Node, funded Sui wallet)*
+- [Smart Contracts](https://morsecms-docs.vercel.app/quick-start-contracts.html): Interact with Morse's deployed contracts directly via PTBs. For developers who want full control over transaction construction. *(~10 min · Requires: Sui CLI, funded Sui wallet)*
 
 
 ---
 
-<!-- Source: https://morse-docs.vercel.app/quick-start-cli.html -->
+<!-- Source: https://morsecms-docs.vercel.app/quick-start-cli.html -->
 
 # Quick Start: CLI
 
@@ -311,18 +311,18 @@ The optional `--via-aggregator` flag routes reads through the Walrus aggregator,
 >
 > Your content is stored on Walrus and registered on Sui testnet. Run `morse status` to see your active context, or `morse entry list` to see all entries in the collection.
 
-If you hit errors at any step, run `morse --help` for command usage or see the [CLI Cookbooks → Troubleshooting](https://morse-docs.vercel.app/cli-workflows.html#troubleshooting) section.
+If you hit errors at any step, run `morse --help` for command usage or see the [CLI Cookbooks → Troubleshooting](https://morsecms-docs.vercel.app/cli-workflows.html#troubleshooting) section.
 
 ## Next Steps
 
-- [CLI: Command Reference](https://morse-docs.vercel.app/cli-commands.html): Every command and flag: publication, collection, entry, revision, cap.
-- [CLI: Cookbooks](https://morse-docs.vercel.app/cli-workflows.html): Multi-step recipes: encrypted entries, multi-writer setups, CI/CD scripting.
-- [Core Concepts](https://morse-docs.vercel.app/core-concepts.html): Understand the data model - publications, collections, entries, and revisions.
+- [CLI: Command Reference](https://morsecms-docs.vercel.app/cli-commands.html): Every command and flag: publication, collection, entry, revision, cap.
+- [CLI: Cookbooks](https://morsecms-docs.vercel.app/cli-workflows.html): Multi-step recipes: encrypted entries, multi-writer setups, CI/CD scripting.
+- [Core Concepts](https://morsecms-docs.vercel.app/core-concepts.html): Understand the data model - publications, collections, entries, and revisions.
 
 
 ---
 
-<!-- Source: https://morse-docs.vercel.app/quick-start-sdk.html -->
+<!-- Source: https://morsecms-docs.vercel.app/quick-start-sdk.html -->
 
 # Quick Start: SDK
 
@@ -338,7 +338,7 @@ If you hit errors at any step, run `morse --help` for command usage or see the [
 
 ## Installing
 
-Install the SDK and its peer dependencies using your preferred package manager. See [SDK Client Setup → Compatibility](https://morse-docs.vercel.app/sdk-client-setup.html#compatibility) for compatible dependency versions.
+Install the SDK and its peer dependencies using your preferred package manager. See [SDK Client Setup → Compatibility](https://morsecms-docs.vercel.app/sdk-client-setup.html#compatibility) for compatible dependency versions.
 
 With Bun:
 
@@ -366,7 +366,7 @@ Save this as `quickstart.ts`. It creates a publication, adds a collection, uploa
 
 > **INFO: Transport: gRPC**
 >
-> This guide uses `SuiGrpcClient` for its typed interface and lower latency. Morse SDK also supports JSON-RPC via `SuiHTTPTransport` from `@mysten/sui/client` if your environment requires it - see [SDK Client Setup](https://morse-docs.vercel.app/sdk-client-setup.html) for details.
+> This guide uses `SuiGrpcClient` for its typed interface and lower latency. Morse SDK also supports JSON-RPC via `SuiHTTPTransport` from `@mysten/sui/client` if your environment requires it - see [SDK Client Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html) for details.
 
 ```typescript
 import { SuiGrpcClient } from "@mysten/sui/grpc";
@@ -445,7 +445,7 @@ const content = await walrusReader.readBlobRef(fetched.revisions[0].blobRef);
 console.log(new TextDecoder().decode(content));
 ```
 
-`HttpAggregatorReadAdapter` routes content reads through the Walrus aggregator, which is more reliable on testnet. See [SDK Client Setup → Picking a Walrus Adapter](https://morse-docs.vercel.app/sdk-client-setup.html#picking-a-walrus-adapter) for alternatives.
+`HttpAggregatorReadAdapter` routes content reads through the Walrus aggregator, which is more reliable on testnet. See [SDK Client Setup → Picking a Walrus Adapter](https://morsecms-docs.vercel.app/sdk-client-setup.html#picking-a-walrus-adapter) for alternatives.
 
 > **TIP: Which IDs to save**
 >
@@ -475,18 +475,18 @@ Revisions: 1
 
 > **TIP: You're live on-chain**
 >
-> Your publication, collection, and entry are on Sui testnet. The entry content is stored on Walrus. For browser integration with wallet popups, see [SDK Client Setup -> Browser](https://morse-docs.vercel.app/sdk-client-setup.html#browser-setup).
+> Your publication, collection, and entry are on Sui testnet. The entry content is stored on Walrus. For browser integration with wallet popups, see [SDK Client Setup -> Browser](https://morsecms-docs.vercel.app/sdk-client-setup.html#browser-setup).
 
 ## Next Steps
 
-- [SDK: Client Setup](https://morse-docs.vercel.app/sdk-client-setup.html): Browser setup, wallet adapters, Walrus adapter options, and error handling.
-- [SDK: Cookbooks](https://morse-docs.vercel.app/sdk-workflows.html): Encrypted entries, revisions, reading content, and the full publishing API.
-- [Core Concepts](https://morse-docs.vercel.app/core-concepts.html): Understand the data model - publications, collections, entries, and revisions.
+- [SDK: Client Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html): Browser setup, wallet adapters, Walrus adapter options, and error handling.
+- [SDK: Cookbooks](https://morsecms-docs.vercel.app/sdk-workflows.html): Encrypted entries, revisions, reading content, and the full publishing API.
+- [Core Concepts](https://morsecms-docs.vercel.app/core-concepts.html): Understand the data model - publications, collections, entries, and revisions.
 
 
 ---
 
-<!-- Source: https://morse-docs.vercel.app/quick-start-contracts.html -->
+<!-- Source: https://morsecms-docs.vercel.app/quick-start-contracts.html -->
 
 # Quick Start: Smart Contracts
 
@@ -518,7 +518,7 @@ npm install @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal
 
 > **INFO: Why the SDK if we're using raw PTBs?**
 >
-> This guide uses raw `tx.moveCall` - no SDK wrappers for contract calls. The SDK packages provide three things:  `morseConfig` - resolves the deployed package ID, registry ID, and RPC URL so you don't hard-code addresses `DefaultWalrusWriteAdapter` - handles blob uploads to Walrus (requires `@mysten/walrus`) `DefaultSealAdapter` - handles Seal encryption (requires `@mysten/seal`, loaded at runtime even for non-encrypted workflows)  For the high-level wrapper approach, see the [SDK Quick Start](https://morse-docs.vercel.app/quick-start-sdk.html).
+> This guide uses raw `tx.moveCall` - no SDK wrappers for contract calls. The SDK packages provide three things:  `morseConfig` - resolves the deployed package ID, registry ID, and RPC URL so you don't hard-code addresses `DefaultWalrusWriteAdapter` - handles blob uploads to Walrus (requires `@mysten/walrus`) `DefaultSealAdapter` - handles Seal encryption (requires `@mysten/seal`, loaded at runtime even for non-encrypted workflows)  For the high-level wrapper approach, see the [SDK Quick Start](https://morsecms-docs.vercel.app/quick-start-sdk.html).
 
 ## Writing the Script
 
@@ -526,7 +526,7 @@ Save this as `quickstart-contracts.ts`. It creates a publication, adds a collect
 
 > **INFO: Transport: gRPC**
 >
-> This guide uses `SuiGrpcClient` for its typed interface and lower latency. The Morse SDK also supports JSON-RPC via `SuiHTTPTransport` from `@mysten/sui/client` if your environment requires it - see [SDK Client Setup](https://morse-docs.vercel.app/sdk-client-setup.html) for details.
+> This guide uses `SuiGrpcClient` for its typed interface and lower latency. The Morse SDK also supports JSON-RPC via `SuiHTTPTransport` from `@mysten/sui/client` if your environment requires it - see [SDK Client Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html) for details.
 
 ```typescript
 import { SuiGrpcClient } from "@mysten/sui/grpc";
@@ -692,18 +692,18 @@ Entry added: hello-world (ID 0)
 
 > **TIP: You're live on-chain**
 >
-> Your publication, collection, and entry are on Sui testnet. The entry content is stored on Walrus. For a friendlier reading experience, use the [Morse CLI](https://morse-docs.vercel.app/quick-start-cli.html): `morse entry read 0 --via-aggregator`.
+> Your publication, collection, and entry are on Sui testnet. The entry content is stored on Walrus. For a friendlier reading experience, use the [Morse CLI](https://morsecms-docs.vercel.app/quick-start-cli.html): `morse entry read 0 --via-aggregator`.
 
 ## Next Steps
 
-- [Contract Cookbooks](https://morse-docs.vercel.app/contracts-workflows.html): Revisions, drafts, encrypted content, delegating access, and teardown  - all via raw PTBs.
-- [Contract Reference](https://morse-docs.vercel.app/contracts-reference.html): Full function signatures, argument types, error codes, and Move struct definitions.
-- [Core Concepts](https://morse-docs.vercel.app/core-concepts.html): Understand the data model  - publications, collections, entries, and revisions.
+- [Contract Cookbooks](https://morsecms-docs.vercel.app/contracts-workflows.html): Revisions, drafts, encrypted content, delegating access, and teardown  - all via raw PTBs.
+- [Contract Reference](https://morsecms-docs.vercel.app/contracts-reference.html): Full function signatures, argument types, error codes, and Move struct definitions.
+- [Core Concepts](https://morsecms-docs.vercel.app/core-concepts.html): Understand the data model  - publications, collections, entries, and revisions.
 
 
 ---
 
-<!-- Source: https://morse-docs.vercel.app/publications.html -->
+<!-- Source: https://morsecms-docs.vercel.app/publications.html -->
 
 # Publications
 
@@ -783,7 +783,7 @@ The registry is a mandatory argument to `new_publication`. You cannot create a p
 
 To list publications owned by your account, use the CLI: `morse publication list`. You can also fetch a specific publication by slug with `morse publication get <slug>`.
 
-See [CLI Commands → Publication](https://morse-docs.vercel.app/cli-commands.html#publication) for the full syntax.
+See [CLI Commands → Publication](https://morsecms-docs.vercel.app/cli-commands.html#publication) for the full syntax.
 
 ## Creating a Publication
 
@@ -840,13 +840,13 @@ public fun transfer_owner_cap(owner_cap: OwnerCap, recipient: address)
 public fun transfer_publisher_cap(cap: PublisherCap, recipient: address)
 ```
 
-Use [SDK Setup → morseConfig()](https://morse-docs.vercel.app/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server Setup](https://morse-docs.vercel.app/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://morse-docs.vercel.app/contracts-workflows.html) for complete PTB examples.
+Use [SDK Setup → morseConfig()](https://morsecms-docs.vercel.app/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://morsecms-docs.vercel.app/contracts-workflows.html) for complete PTB examples.
 
 `new_publication` returns three objects in a tuple:
 
 - **Publication** - the shared content container
-- `OwnerCap` - admin authority over the publication (one per publication, held by the owner wallet). See [Access Control → OwnerCap](https://morse-docs.vercel.app/access-control.html#ownercap)
-- `PublisherCap` - write authority for content operations, bound to the transaction sender. See [Access Control → PublisherCap](https://morse-docs.vercel.app/access-control.html#publishercap)
+- `OwnerCap` - admin authority over the publication (one per publication, held by the owner wallet). See [Access Control → OwnerCap](https://morsecms-docs.vercel.app/access-control.html#ownercap)
+- `PublisherCap` - write authority for content operations, bound to the transaction sender. See [Access Control → PublisherCap](https://morsecms-docs.vercel.app/access-control.html#publishercap)
 
 ## Deleting a Publication
 
@@ -945,7 +945,7 @@ After receiving the `OwnerCap`, the recipient must set the publication as active
 
 Publishers are managed through capability tokens. An owner can issue, revoke, and destroy publisher caps. Revoked caps are added to the publication's denylist, and any future operation attempted with a revoked cap aborts with `EPublisherCapRevoked`.
 
-See [Access Control → PublisherCap](https://morse-docs.vercel.app/access-control.html#publishercap) for the full API with Move, CLI, and SDK examples.
+See [Access Control → PublisherCap](https://morsecms-docs.vercel.app/access-control.html#publishercap) for the full API with Move, CLI, and SDK examples.
 
 ## Events
 
@@ -962,7 +962,7 @@ The publications module emits the following events. An off-chain indexer can sub
 
 ## Error Codes
 
-For more error codes, see: [Collections](https://morse-docs.vercel.app/collections.html#error-codes), [Entries](https://morse-docs.vercel.app/entries.html#error-codes), [Access Control](https://morse-docs.vercel.app/access-control.html#error-codes).
+For more error codes, see: [Collections](https://morsecms-docs.vercel.app/collections.html#error-codes), [Entries](https://morsecms-docs.vercel.app/entries.html#error-codes), [Access Control](https://morsecms-docs.vercel.app/access-control.html#error-codes).
 
 | Code | Constant | Meaning |
 | --- | --- | --- |
@@ -979,7 +979,7 @@ For more error codes, see: [Collections](https://morse-docs.vercel.app/collectio
 
 ---
 
-<!-- Source: https://morse-docs.vercel.app/collections.html -->
+<!-- Source: https://morsecms-docs.vercel.app/collections.html -->
 
 # Collections
 
@@ -1051,9 +1051,9 @@ The contract validates that every `QuiltPatchId` is exactly 37 bytes. Shorter or
 
 ## Creating a Collection
 
-Collections are created through the publication module's `create_collection` function, which requires a valid [PublisherCap](https://morse-docs.vercel.app/access-control.html#publishercap).
+Collections are created through the publication module's `create_collection` function, which requires a valid [PublisherCap](https://morsecms-docs.vercel.app/access-control.html#publishercap).
 
-A collection cannot exist outside of a [publication](https://morse-docs.vercel.app/publications.html) - every collection is scoped to exactly one.
+A collection cannot exist outside of a [publication](https://morsecms-docs.vercel.app/publications.html) - every collection is scoped to exactly one.
 
 **CLI:**
 
@@ -1103,7 +1103,7 @@ public fun create_collection(
 )
 ```
 
-Use [SDK Setup → morseConfig()](https://morse-docs.vercel.app/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server Setup](https://morse-docs.vercel.app/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://morse-docs.vercel.app/contracts-workflows.html) for complete PTB examples.
+Use [SDK Setup → morseConfig()](https://morsecms-docs.vercel.app/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://morsecms-docs.vercel.app/contracts-workflows.html) for complete PTB examples.
 
 Collection names must be unique within a publication. Creating a collection with a name that already exists aborts with `ECollectionAlreadyExists`.
 
@@ -1113,7 +1113,7 @@ Collection names must be unique within a publication. Creating a collection with
 
 To list collections in a publication, use the CLI: `morse collection list`.
 
-See [CLI Commands → Collection](https://morse-docs.vercel.app/cli-commands.html#collection) for the full syntax.
+See [CLI Commands → Collection](https://morsecms-docs.vercel.app/cli-commands.html#collection) for the full syntax.
 
 ## Deleting a Collection
 
@@ -1167,7 +1167,7 @@ Collection lifecycle events are emitted by the `publication` module.
 
 ## Error Codes
 
-For more error codes, see: [Publications](https://morse-docs.vercel.app/publications.html#error-codes), [Entries](https://morse-docs.vercel.app/entries.html#error-codes), [Access Control](https://morse-docs.vercel.app/access-control.html#error-codes).
+For more error codes, see: [Publications](https://morsecms-docs.vercel.app/publications.html#error-codes), [Entries](https://morsecms-docs.vercel.app/entries.html#error-codes), [Access Control](https://morsecms-docs.vercel.app/access-control.html#error-codes).
 
 | Code | Constant | Meaning |
 | --- | --- | --- |
@@ -1179,7 +1179,7 @@ For more error codes, see: [Publications](https://morse-docs.vercel.app/publicat
 
 ---
 
-<!-- Source: https://morse-docs.vercel.app/entries.html -->
+<!-- Source: https://morsecms-docs.vercel.app/entries.html -->
 
 # Entries & Revisions
 
@@ -1228,7 +1228,7 @@ public enum BlobRef has copy, drop, store {
 }
 ```
 
-The variant used must match the collection's [storage mode](https://morse-docs.vercel.app/collections.html#storage-modes). The `make_blob_ref` function enforces this - you cannot accidentally mix modes.
+The variant used must match the collection's [storage mode](https://morsecms-docs.vercel.app/collections.html#storage-modes). The `make_blob_ref` function enforces this - you cannot accidentally mix modes.
 
 ## The Dual-Head Model
 
@@ -1245,9 +1245,9 @@ This is what makes real editorial workflows possible: editors can keep appending
 
 ## Adding an Entry
 
-Create a new entry and add it to a named collection. Requires a valid [PublisherCap](https://morse-docs.vercel.app/publications.html#publisher-cap-management). Returns the assigned `entry_id`.
+Create a new entry and add it to a named collection. Requires a valid [PublisherCap](https://morsecms-docs.vercel.app/publications.html#publisher-cap-management). Returns the assigned `entry_id`.
 
-An entry cannot exist outside of a [collection](https://morse-docs.vercel.app/collections.html) - every entry is scoped to exactly one.
+An entry cannot exist outside of a [collection](https://morsecms-docs.vercel.app/collections.html) - every entry is scoped to exactly one.
 
 **CLI:**
 
@@ -1316,7 +1316,7 @@ public fun add_entry_to_collection(
 ): u64                                   // returns entry_id
 ```
 
-Use [SDK Setup → morseConfig()](https://morse-docs.vercel.app/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server Setup](https://morse-docs.vercel.app/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://morse-docs.vercel.app/contracts-workflows.html) for complete PTB examples.
+Use [SDK Setup → morseConfig()](https://morsecms-docs.vercel.app/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://morsecms-docs.vercel.app/contracts-workflows.html) for complete PTB examples.
 
 For unencrypted public entries: `encrypted = false`, `access_policy = 0`, `seal_id = None`. The initial revision goes directly to `public_head`.
 
@@ -1326,7 +1326,7 @@ For unencrypted public entries: `encrypted = false`, `access_policy = 0`, `seal_
 
 To list entries in a collection, use the CLI: `morse entry list`. The command supports pagination with `--limit` and `--cursor` flags, and `--drafts-only` to filter for draft entries.
 
-See [CLI Commands → Entry](https://morse-docs.vercel.app/cli-commands.html#entry) for the full syntax.
+See [CLI Commands → Entry](https://morsecms-docs.vercel.app/cli-commands.html#entry) for the full syntax.
 
 ## Appending a Draft Revision
 
@@ -1643,7 +1643,7 @@ All production write paths require a reference to the Walrus `&Blob` object (not
 
 ## Access Policy & Encryption Rules
 
-The `encrypted` flag and `access_policy` must be consistent. The contract enforces this at every write. See [Access Control](https://morse-docs.vercel.app/access-control.html) for the full permission model.
+The `encrypted` flag and `access_policy` must be consistent. The contract enforces this at every write. See [Access Control](https://morsecms-docs.vercel.app/access-control.html) for the full permission model.
 
 | encrypted | access_policy | seal_id | Result |
 | --- | --- | --- | --- |
@@ -1662,7 +1662,7 @@ Entry and revision operations do not emit on-chain events. Use the transaction l
 
 ## Error Codes
 
-For more error codes, see: [Publications](https://morse-docs.vercel.app/publications.html#error-codes), [Collections](https://morse-docs.vercel.app/collections.html#error-codes), [Access Control](https://morse-docs.vercel.app/access-control.html#error-codes).
+For more error codes, see: [Publications](https://morsecms-docs.vercel.app/publications.html#error-codes), [Collections](https://morsecms-docs.vercel.app/collections.html#error-codes), [Access Control](https://morsecms-docs.vercel.app/access-control.html#error-codes).
 
 | Code | Constant | Meaning |
 | --- | --- | --- |
@@ -1682,7 +1682,7 @@ For more error codes, see: [Publications](https://morse-docs.vercel.app/publicat
 
 ---
 
-<!-- Source: https://morse-docs.vercel.app/access-control.html -->
+<!-- Source: https://morsecms-docs.vercel.app/access-control.html -->
 
 # Access Control
 
@@ -1784,7 +1784,7 @@ public fun issue_publisher_cap(
 public fun transfer_publisher_cap(cap: PublisherCap, recipient: address)
 ```
 
-Use [SDK Setup → morseConfig()](https://morse-docs.vercel.app/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server Setup](https://morse-docs.vercel.app/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://morse-docs.vercel.app/contracts-workflows.html) for complete PTB examples.
+Use [SDK Setup → morseConfig()](https://morsecms-docs.vercel.app/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://morsecms-docs.vercel.app/contracts-workflows.html) for complete PTB examples.
 
 ### Ownership vs holder binding
 
@@ -1982,7 +1982,7 @@ Every revision stored on-chain carries an `access_policy` field that determines 
 
 > **WARNING: Policy and encryption are coupled**
 >
-> Public revisions must be unencrypted; publisher revisions must be encrypted with a Seal identity. The contract rejects mismatches at write time. See [Entries → Error Codes](https://morse-docs.vercel.app/entries.html#error-codes) for the specific error constants.
+> Public revisions must be unencrypted; publisher revisions must be encrypted with a Seal identity. The contract rejects mismatches at write time. See [Entries → Error Codes](https://morsecms-docs.vercel.app/entries.html#error-codes) for the specific error constants.
 
 ## Real-World Usage Pattern
 
@@ -1999,11 +1999,11 @@ Every revision stored on-chain carries an `access_policy` field that determines 
    When an editor leaves, the owner calls `revoke_publisher_cap(cap_id)`. The revocation is immediate - the next write attempt using that cap aborts. Historical content is unaffected.
 
 5. **Transfer ownership (optional)**
-   The owner calls `transfer_owner_cap(owner_cap, new_owner_address)`. The new owner gains full admin authority immediately. The old owner retains only their `PublisherCap` (if any) unless it is revoked by the new owner. See [Publications → Ownership Transfer](https://morse-docs.vercel.app/publications.html#ownership-transfer) for details.
+   The owner calls `transfer_owner_cap(owner_cap, new_owner_address)`. The new owner gains full admin authority immediately. The old owner retains only their `PublisherCap` (if any) unless it is revoked by the new owner. See [Publications → Ownership Transfer](https://morsecms-docs.vercel.app/publications.html#ownership-transfer) for details.
 
 ## Error Codes
 
-For more error codes, see: [Publications](https://morse-docs.vercel.app/publications.html#error-codes), [Collections](https://morse-docs.vercel.app/collections.html#error-codes), [Entries](https://morse-docs.vercel.app/entries.html#error-codes).
+For more error codes, see: [Publications](https://morsecms-docs.vercel.app/publications.html#error-codes), [Collections](https://morsecms-docs.vercel.app/collections.html#error-codes), [Entries](https://morsecms-docs.vercel.app/entries.html#error-codes).
 
 | Code | Constant | Meaning |
 | --- | --- | --- |
@@ -2016,7 +2016,7 @@ For more error codes, see: [Publications](https://morse-docs.vercel.app/publicat
 
 ---
 
-<!-- Source: https://morse-docs.vercel.app/cli-overview.html -->
+<!-- Source: https://morsecms-docs.vercel.app/cli-overview.html -->
 
 # CLI Overview
 
@@ -2047,7 +2047,7 @@ npx @arcadiasystems/morse-cli --help
 
 Select an active publication and collection once - all subsequent commands will use them automatically, so you never have to paste a 64-character object ID. `publication create` and `collection create` auto-select the new object. 
 
-See [CLI Cookbooks](https://morse-docs.vercel.app/cli-workflows.html) for step-by-step guides.
+See [CLI Cookbooks](https://morsecms-docs.vercel.app/cli-workflows.html) for step-by-step guides.
 
 ## Active Context
 
@@ -2087,7 +2087,7 @@ Settings resolve with the precedence `flags` > `MORSE_* env` > `config file` > `
 - In `--json` mode, `bigint` values (e.g. `gasUsedMist`) are encoded as decimal strings and byte arrays (`sealId`, quilt patch IDs) as `0x`-hex.
 - Color is emitted only to a TTY and honors `NO_COLOR` / `FORCE_COLOR`.
 
-See [CLI Command Reference → Global Options](https://morse-docs.vercel.app/cli-commands.html#global-options) for a full list of global flags (`--json`, `--quiet`, `--yes`, and more).
+See [CLI Command Reference → Global Options](https://morsecms-docs.vercel.app/cli-commands.html#global-options) for a full list of global flags (`--json`, `--quiet`, `--yes`, and more).
 
 ## Exit Codes
 
@@ -2102,14 +2102,14 @@ See [CLI Command Reference → Global Options](https://morse-docs.vercel.app/cli
 
 ## Next Steps
 
-- [CLI: Command Reference](https://morse-docs.vercel.app/cli-commands.html): Every command and flag: config, account, publication, collection, entry, revision, cap.
-- [CLI: Cookbooks](https://morse-docs.vercel.app/cli-workflows.html): Step-by-step recipes: publishing, encrypted entries, multi-writer setups, CI/CD scripting.
-- [Quick Start: CLI](https://morse-docs.vercel.app/quick-start-cli.html): The protocol concepts the CLI drives: publications, collections, entries.
+- [CLI: Command Reference](https://morsecms-docs.vercel.app/cli-commands.html): Every command and flag: config, account, publication, collection, entry, revision, cap.
+- [CLI: Cookbooks](https://morsecms-docs.vercel.app/cli-workflows.html): Step-by-step recipes: publishing, encrypted entries, multi-writer setups, CI/CD scripting.
+- [Quick Start: CLI](https://morsecms-docs.vercel.app/quick-start-cli.html): The protocol concepts the CLI drives: publications, collections, entries.
 
 
 ---
 
-<!-- Source: https://morse-docs.vercel.app/cli-commands.html -->
+<!-- Source: https://morsecms-docs.vercel.app/cli-commands.html -->
 
 # CLI Command Reference
 
@@ -2265,7 +2265,7 @@ Add, read, and delete entries within a collection.
 
 > **WARNING: Encrypted entries are always created as drafts**
 >
-> Encrypted entries are always created as drafts - there is no public head yet. Published revisions are always unencrypted and public, so to publish an encrypted entry you must supply a new unencrypted blob. A revision cannot be both published and encrypted. See [Entries -> Adding an Entry](https://morse-docs.vercel.app/entries.html#adding-an-entry) for the full explanation.
+> Encrypted entries are always created as drafts - there is no public head yet. Published revisions are always unencrypted and public, so to publish an encrypted entry you must supply a new unencrypted blob. A revision cannot be both published and encrypted. See [Entries -> Adding an Entry](https://morsecms-docs.vercel.app/entries.html#adding-an-entry) for the full explanation.
 
 ```example
 $ morse entry add welcome-post --file ./welcome.json
@@ -2306,21 +2306,21 @@ Issued PublisherCap 0xCAP_ID to 0x71a3...9f2b. (tx: AbCdEf...)
 ```
 
 `OwnerCap` and `PublisherCap` IDs are auto-resolved from the active account when the `--owner-cap` / `--publisher-cap` override is omitted. Morse separates ownership from publishing. 
-See [Access Control -> OwnerCap](https://morse-docs.vercel.app/access-control.html#ownercap) and [Access Control -> PublisherCap](https://morse-docs.vercel.app/access-control.html#publishercap) for how capability-based authorization works.
+See [Access Control -> OwnerCap](https://morsecms-docs.vercel.app/access-control.html#ownercap) and [Access Control -> PublisherCap](https://morsecms-docs.vercel.app/access-control.html#publishercap) for how capability-based authorization works.
 
 ## Next Steps
 
-- [CLI: Cookbooks](https://morse-docs.vercel.app/cli-workflows.html): Step-by-step recipes: publishing, encrypted entries, multi-writer setups, CI/CD scripting.
-- [Quick Start: CLI](https://morse-docs.vercel.app/quick-start-cli.html): Create your first publication, collection, and entry from the terminal.
+- [CLI: Cookbooks](https://morsecms-docs.vercel.app/cli-workflows.html): Step-by-step recipes: publishing, encrypted entries, multi-writer setups, CI/CD scripting.
+- [Quick Start: CLI](https://morsecms-docs.vercel.app/quick-start-cli.html): Create your first publication, collection, and entry from the terminal.
 
 
 ---
 
-<!-- Source: https://morse-docs.vercel.app/cli-workflows.html -->
+<!-- Source: https://morsecms-docs.vercel.app/cli-workflows.html -->
 
 # CLI Cookbooks
 
-> End-to-end recipes for `morse-cli`: publish content, read it back, encrypt and decrypt, delegate write access, and script it in CI. These use the active context, so most commands need no object IDs. For the full per-command reference, see [CLI Command Reference](https://morse-docs.vercel.app/cli-commands.html).
+> End-to-end recipes for `morse-cli`: publish content, read it back, encrypt and decrypt, delegate write access, and script it in CI. These use the active context, so most commands need no object IDs. For the full per-command reference, see [CLI Command Reference](https://morsecms-docs.vercel.app/cli-commands.html).
 
 ## Prerequisites
 
@@ -2331,7 +2331,7 @@ See [Access Control -> OwnerCap](https://morse-docs.vercel.app/access-control.ht
 | SUI + WAL tokens | [SUI faucet](https://faucet.sui.io/) / [Swap SUI for WAL](https://stake-wal.wal.app/?network=testnet) | Gas fees (SUI) and Walrus storage fees (WAL) |
 | Bech32 private key | A `suiprivkey1...` string | CLI authentication - export from your wallet's settings |
 
-Make sure the CLI is installed and your account is imported before continuing. See [CLI Overview](https://morse-docs.vercel.app/cli-overview.html) for setup.
+Make sure the CLI is installed and your account is imported before continuing. See [CLI Overview](https://morsecms-docs.vercel.app/cli-overview.html) for setup.
 
 ## Publishing Your First Entry
 
@@ -2358,7 +2358,7 @@ A publication's name and slug are immutable on-chain (the slug is the registry's
 
 Check the active context any time with `morse status`; switch the active publication (and collection) with `morse use <slug> [collection]`.
 
-See also: [SDK Cookbooks → Creating a Publication](https://morse-docs.vercel.app/sdk-workflows.html#creating-a-publication)
+See also: [SDK Cookbooks → Creating a Publication](https://morsecms-docs.vercel.app/sdk-workflows.html#creating-a-publication)
 
 ## Reading It Back
 
@@ -2374,7 +2374,7 @@ morse entry read 0 --via-aggregator --out got.md
 >
 > On testnet, the default direct-node read path may fail. Add `--via-aggregator` to `entry read` and `entry decrypt` commands to route through the Walrus aggregator instead. This applies to testnet only; mainnet storage nodes are expected to be more reliable.
 
-See also: [SDK Cookbooks → Reading It Back](https://morse-docs.vercel.app/sdk-workflows.html#reading-it-back)
+See also: [SDK Cookbooks → Reading It Back](https://morsecms-docs.vercel.app/sdk-workflows.html#reading-it-back)
 
 ## Listing Your Content
 
@@ -2410,11 +2410,11 @@ morse revision append-draft 0 --file draft.md
 morse revision publish-from-draft 0 1
 ```
 
-See also: [SDK Cookbooks → Publishing a New Revision](https://morse-docs.vercel.app/sdk-workflows.html#publishing-a-new-revision)
+See also: [SDK Cookbooks → Publishing a New Revision](https://morsecms-docs.vercel.app/sdk-workflows.html#publishing-a-new-revision)
 
 ## Encrypted Content
 
-Morse uses [Seal](https://morse-docs.vercel.app/access-control.html#seal-integration) for on-chain access control over encrypted content. When you add an encrypted entry, the CLI handles Seal key negotiation automatically.
+Morse uses [Seal](https://morsecms-docs.vercel.app/access-control.html#seal-integration) for on-chain access control over encrypted content. When you add an encrypted entry, the CLI handles Seal key negotiation automatically.
 
 ```bash
 echo "members only" > secret.txt
@@ -2424,13 +2424,13 @@ morse entry decrypt 1 --via-aggregator --out recovered.txt
 
 > **WARNING: Encrypted entries are always drafts**
 >
-> Encrypted entries are always created as drafts. You must explicitly publish them with a separate transaction after adding. Retrieve encrypted content with `entry decrypt` plus a PublisherCap, not `entry read`. See [Entries](https://morse-docs.vercel.app/entries.html#adding-an-entry) for why encrypted entries bypass the public head.
+> Encrypted entries are always created as drafts. You must explicitly publish them with a separate transaction after adding. Retrieve encrypted content with `entry decrypt` plus a PublisherCap, not `entry read`. See [Entries](https://morsecms-docs.vercel.app/entries.html#adding-an-entry) for why encrypted entries bypass the public head.
 
-See also: [SDK Cookbooks → Encrypted Content](https://morse-docs.vercel.app/sdk-workflows.html#encrypted-content)
+See also: [SDK Cookbooks → Encrypted Content](https://morsecms-docs.vercel.app/sdk-workflows.html#encrypted-content)
 
 ## Delegating Write Access
 
-Morse separates ownership (`OwnerCap`) from publishing (`PublisherCap`). The owner issues a cap bound to a co-author's address, granting them write access. Once issued, the co-author can publish entries using their own key. Revoking the cap causes further writes to abort on-chain. See [Access Control -> Issuing Publisher Caps](https://morse-docs.vercel.app/access-control.html#issuing-publisher-caps) for details.
+Morse separates ownership (`OwnerCap`) from publishing (`PublisherCap`). The owner issues a cap bound to a co-author's address, granting them write access. Once issued, the co-author can publish entries using their own key. Revoking the cap causes further writes to abort on-chain. See [Access Control -> Issuing Publisher Caps](https://morsecms-docs.vercel.app/access-control.html#issuing-publisher-caps) for details.
 
 As the **owner**, issue a cap to grant write access and revoke it to remove access:
 
@@ -2448,7 +2448,7 @@ morse cap destroy 0xCAP_ID
 
 To rotate a cap to a different address, destroy the old one and have the owner issue a new cap to the new address. Do not use `morse cap transfer` to send a cap to a different holder - the on-chain `holder` binding is immutable, so the recipient would own the object but be unable to use or destroy it.
 
-See also: [SDK Cookbooks → Delegating Write Access](https://morse-docs.vercel.app/sdk-workflows.html#delegating-write-access)
+See also: [SDK Cookbooks → Delegating Write Access](https://morsecms-docs.vercel.app/sdk-workflows.html#delegating-write-access)
 
 ## Transferring Ownership
 
@@ -2462,11 +2462,11 @@ morse publication transfer-ownership 0xNEW_OWNER
 >
 > Once transferred, the original owner loses all governance rights immediately. The new owner could transfer back, but there is no built-in undo.
 
-See also: [SDK Cookbooks → Transferring Ownership](https://morse-docs.vercel.app/sdk-workflows.html#transferring-ownership)
+See also: [SDK Cookbooks → Transferring Ownership](https://morsecms-docs.vercel.app/sdk-workflows.html#transferring-ownership)
 
 ## Deleting and Tearing Down
 
-Deletion is bottom-up: remove entries first, then collections, then the publication. Each container must be empty before it can be deleted. Entry IDs are permanently retired on deletion and never reused. See [Entries → Deleting an Entry](https://morse-docs.vercel.app/entries.html#deleting-an-entry) for details.
+Deletion is bottom-up: remove entries first, then collections, then the publication. Each container must be empty before it can be deleted. Entry IDs are permanently retired on deletion and never reused. See [Entries → Deleting an Entry](https://morsecms-docs.vercel.app/entries.html#deleting-an-entry) for details.
 
 ```bash
 morse entry delete 0
@@ -2475,7 +2475,7 @@ morse collection delete posts
 morse publication delete
 ```
 
-See also: [SDK Cookbooks → Deleting and Tearing Down](https://morse-docs.vercel.app/sdk-workflows.html#deleting-and-tearing-down)
+See also: [SDK Cookbooks → Deleting and Tearing Down](https://morsecms-docs.vercel.app/sdk-workflows.html#deleting-and-tearing-down)
 
 ## Scripting and CI
 
@@ -2508,13 +2508,13 @@ morse publication get 0x00 || echo "exit $?"
 
 ## Next Steps
 
-- [SDK: Overview](https://morse-docs.vercel.app/sdk-overview.html): TypeScript client setup, publishing, reading, and encryption via the SDK.
-- [Smart Contracts: Overview](https://morse-docs.vercel.app/contracts-overview.html): On-chain modules, object model, and the Move API behind Morse dCMS.
+- [SDK: Overview](https://morsecms-docs.vercel.app/sdk-overview.html): TypeScript client setup, publishing, reading, and encryption via the SDK.
+- [Smart Contracts: Overview](https://morsecms-docs.vercel.app/contracts-overview.html): On-chain modules, object model, and the Move API behind Morse dCMS.
 
 
 ---
 
-<!-- Source: https://morse-docs.vercel.app/sdk-overview.html -->
+<!-- Source: https://morsecms-docs.vercel.app/sdk-overview.html -->
 
 # SDK Overview
 
@@ -2526,7 +2526,7 @@ morse publication get 0x00 || echo "exit $?"
 
 ## Getting Started
 
-Install the SDK and its peer dependencies, then wire a wallet adapter and Walrus configuration for your environment. See [SDK Setup](https://morse-docs.vercel.app/sdk-client-setup.html) for installation and configuration, and [SDK Cookbooks](https://morse-docs.vercel.app/sdk-workflows.html) for step-by-step guides.
+Install the SDK and its peer dependencies, then wire a wallet adapter and Walrus configuration for your environment. See [SDK Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html) for installation and configuration, and [SDK Cookbooks](https://morsecms-docs.vercel.app/sdk-workflows.html) for step-by-step guides.
 
 ## Capabilities
 
@@ -2552,24 +2552,24 @@ The rest of the SDK - functions like `createPublication`, `addEntryFromBytes`, t
 
 - **Testnet only at v0.x.** Mainnet config is released once the contracts are stable.
 - **gRPC client only.** Reader and adapter interfaces are typed against `SuiGrpcClient` from `@mysten/sui/grpc`. JSON-RPC fallback is planned.
-- **No encrypted publish path.** The Move contract hardcodes `encrypted=false` on `publish_from_draft` and `publish_direct`. Encrypted content stays as drafts - see [SDK Cookbooks → Encrypted entries](https://morse-docs.vercel.app/sdk-workflows.html#encrypted-entries) for the full lifecycle.
+- **No encrypted publish path.** The Move contract hardcodes `encrypted=false` on `publish_from_draft` and `publish_direct`. Encrypted content stays as drafts - see [SDK Cookbooks → Encrypted entries](https://morsecms-docs.vercel.app/sdk-workflows.html#encrypted-entries) for the full lifecycle.
 - **Only the `Publisher` access policy is enforced.** The `Subscription` policy is not yet active.
 - **`listEntries` is not sorted chronologically.** Results follow on-chain storage order. Sort by `entry.id` for insertion order.
 - **zkLogin support is untested.** The decoder is included, but Walrus and Seal `SessionKey` flows have not been verified with zkLogin signatures. Use keypair or passkey accounts until you have tested your setup.
 
 > **WARNING: Encrypted entries are always created as drafts**
 >
-> Encrypted entries are always created as drafts. You must explicitly publish them with a separate transaction after adding. The Move contract hardcodes `encrypted=false` on `publish_from_draft` and `publish_direct`, so published revisions are always unencrypted and public. See [Entries -> Adding an Entry](https://morse-docs.vercel.app/entries.html#adding-an-entry) for the full explanation.
+> Encrypted entries are always created as drafts. You must explicitly publish them with a separate transaction after adding. The Move contract hardcodes `encrypted=false` on `publish_from_draft` and `publish_direct`, so published revisions are always unencrypted and public. See [Entries -> Adding an Entry](https://morsecms-docs.vercel.app/entries.html#adding-an-entry) for the full explanation.
 
 ## Next Steps
 
-- [SDK: Setup](https://morse-docs.vercel.app/sdk-client-setup.html): Install, wire a wallet, pick a Walrus adapter, handle errors.
-- [SDK: Cookbooks](https://morse-docs.vercel.app/sdk-workflows.html): Create publications and collections, add entries (plain + encrypted), read them back.
+- [SDK: Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html): Install, wire a wallet, pick a Walrus adapter, handle errors.
+- [SDK: Cookbooks](https://morsecms-docs.vercel.app/sdk-workflows.html): Create publications and collections, add entries (plain + encrypted), read them back.
 
 
 ---
 
-<!-- Source: https://morse-docs.vercel.app/sdk-client-setup.html -->
+<!-- Source: https://morsecms-docs.vercel.app/sdk-client-setup.html -->
 
 # SDK Setup
 
@@ -2959,7 +2959,7 @@ const { results } = await reader.listPublicationsOwnedBy(adapter.address);
 console.log(`Connected! Found ${results.length} publication(s).`);
 ```
 
-A successful call confirms the client, config, and RPC endpoint are wired correctly - even if the count is 0. Follow the [SDK Cookbooks](https://morse-docs.vercel.app/sdk-workflows.html) to create your first publication.
+A successful call confirms the client, config, and RPC endpoint are wired correctly - even if the count is 0. Follow the [SDK Cookbooks](https://morsecms-docs.vercel.app/sdk-workflows.html) to create your first publication.
 
 ## Error Handling
 
@@ -3008,17 +3008,17 @@ try {
 
 ## Next Steps
 
-- [SDK: Cookbooks](https://morse-docs.vercel.app/sdk-workflows.html): Create publications, add entries (plain + encrypted), read them back.
-- [Quick Start: SDK](https://morse-docs.vercel.app/quick-start-sdk.html): End-to-end script: create a publication, add an entry, and read it back.
+- [SDK: Cookbooks](https://morsecms-docs.vercel.app/sdk-workflows.html): Create publications, add entries (plain + encrypted), read them back.
+- [Quick Start: SDK](https://morsecms-docs.vercel.app/quick-start-sdk.html): End-to-end script: create a publication, add an entry, and read it back.
 
 
 ---
 
-<!-- Source: https://morse-docs.vercel.app/sdk-workflows.html -->
+<!-- Source: https://morsecms-docs.vercel.app/sdk-workflows.html -->
 
 # SDK Cookbooks
 
-> End-to-end recipes for `morse-sdk`: publish content, revise entries, encrypt and decrypt, delegate write access, and tear down resources. For installation and adapter wiring, see [SDK Setup](https://morse-docs.vercel.app/sdk-client-setup.html).
+> End-to-end recipes for `morse-sdk`: publish content, revise entries, encrypt and decrypt, delegate write access, and tear down resources. For installation and adapter wiring, see [SDK Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html).
 
 ## Prerequisites
 
@@ -3028,13 +3028,13 @@ try {
 | SUI + WAL tokens | [SUI faucet](https://faucet.sui.io/) / [Swap SUI for WAL](https://stake-wal.wal.app/?network=testnet) | Gas fees (SUI) and Walrus storage fees (WAL) |
 | Bech32 private key | A `suiprivkey1...` string | SDK authentication - export from your wallet's settings |
 
-Make sure the SDK is installed and configured before continuing. See [SDK Setup](https://morse-docs.vercel.app/sdk-client-setup.html) for details.
+Make sure the SDK is installed and configured before continuing. See [SDK Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html) for details.
 
 ## Lifecycle
 
 Publications hold collections; collections hold entries; entries hold an append-only vector of revisions. Permission management lives in Sui; payloads live in Walrus.
 
-The examples below assume you've built a context as shown in [SDK Setup](https://morse-docs.vercel.app/sdk-client-setup.html). Browser flows carry a `signer` (via `WalletStandardSigner.fromAccount`) instead of `keypair`. Walrus adapters (`walrusWriter`, `walrusReader`) are constructed where needed - see [Picking a Walrus Adapter](https://morse-docs.vercel.app/sdk-client-setup.html#picking-a-walrus-adapter) for options.
+The examples below assume you've built a context as shown in [SDK Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html). Browser flows carry a `signer` (via `WalletStandardSigner.fromAccount`) instead of `keypair`. Walrus adapters (`walrusWriter`, `walrusReader`) are constructed where needed - see [Picking a Walrus Adapter](https://morsecms-docs.vercel.app/sdk-client-setup.html#picking-a-walrus-adapter) for options.
 
 ## Creating a Publication
 
@@ -3106,7 +3106,7 @@ const entry = await addEntryFromBytes(adapter, config, {
 >
 > If transaction 1 (register + upload) succeeds but transaction 2 (certify + add_entry) fails, the SDK throws `UncertifiedBlobError` carrying `blobObjectId` and `blobId`. The blob exists on storage nodes but remains uncertified and is released when the registration expires. Log the IDs or surface the error for debugging.
 
-See also: [CLI Cookbooks → Publishing Your First Entry](https://morse-docs.vercel.app/cli-workflows.html#publishing-your-first-entry)
+See also: [CLI Cookbooks → Publishing Your First Entry](https://morsecms-docs.vercel.app/cli-workflows.html#publishing-your-first-entry)
 
 ## Encrypted Content
 
@@ -3248,7 +3248,7 @@ const revision = await appendEncryptedDraftRevision(adapter, config, {
 console.log("Revision", revision.revisionId, "appended");
 ```
 
-See also: [CLI Cookbooks → Encrypted Content](https://morse-docs.vercel.app/cli-workflows.html#encrypted-content)
+See also: [CLI Cookbooks → Encrypted Content](https://morsecms-docs.vercel.app/cli-workflows.html#encrypted-content)
 
 ## Reading It Back
 
@@ -3287,13 +3287,13 @@ for await (const e of reader.scanEntries(created.publicationId, "blog")) {
 
 > **WARNING: Use `HttpAggregatorReadAdapter` for reads on testnet**
 >
-> On testnet, `DefaultWalrusReadAdapter` (direct-node fanout) may fail. Use `HttpAggregatorReadAdapter` for reads instead - it routes through a single aggregator endpoint and is reliable on testnet. Mainnet storage nodes are expected to be more reliable. See [SDK Client Setup → Picking a Walrus Adapter](https://morse-docs.vercel.app/sdk-client-setup.html#picking-a-walrus-adapter).
+> On testnet, `DefaultWalrusReadAdapter` (direct-node fanout) may fail. Use `HttpAggregatorReadAdapter` for reads instead - it routes through a single aggregator endpoint and is reliable on testnet. Mainnet storage nodes are expected to be more reliable. See [SDK Client Setup → Picking a Walrus Adapter](https://morsecms-docs.vercel.app/sdk-client-setup.html#picking-a-walrus-adapter).
 
 > **INFO: Ordering caveat**
 >
 > `listEntries` and `scanEntries` return entries in dynamic-field object-store order, not chronological order. Sort by `entry.id` if you need insertion order.
 
-See also: [CLI Cookbooks → Reading It Back](https://morse-docs.vercel.app/cli-workflows.html#reading-it-back)
+See also: [CLI Cookbooks → Reading It Back](https://morsecms-docs.vercel.app/cli-workflows.html#reading-it-back)
 
 ## Publishing a New Revision
 
@@ -3372,11 +3372,11 @@ const published = await publishFromDraft(adapter, config, {
 });
 ```
 
-See also: [CLI Cookbooks → Publishing a New Revision](https://morse-docs.vercel.app/cli-workflows.html#publishing-a-new-revision)
+See also: [CLI Cookbooks → Publishing a New Revision](https://morsecms-docs.vercel.app/cli-workflows.html#publishing-a-new-revision)
 
 ## Delegating Write Access
 
-Morse separates ownership (`OwnerCap`) from publishing (`PublisherCap`). The owner issues a cap bound to a co-author's address, granting them write access. Once issued, the co-author can publish entries using their own key. Revoking the cap causes further writes to abort on-chain. See [Access Control → Issuing Publisher Caps](https://morse-docs.vercel.app/access-control.html#issuing-publisher-caps) for details.
+Morse separates ownership (`OwnerCap`) from publishing (`PublisherCap`). The owner issues a cap bound to a co-author's address, granting them write access. Once issued, the co-author can publish entries using their own key. Revoking the cap causes further writes to abort on-chain. See [Access Control → Issuing Publisher Caps](https://morsecms-docs.vercel.app/access-control.html#issuing-publisher-caps) for details.
 
 ```typescript
 import {
@@ -3411,7 +3411,7 @@ await destroyPublisherCap(coAuthorAdapter, config, {
 >
 > A PublisherCap is bound to the `holder` address at issue time. Transferring the Sui object to a different address does NOT grant write rights. To rotate authority to a new address, destroy the old cap and issue a fresh one.
 
-See also: [CLI Cookbooks → Delegating Write Access](https://morse-docs.vercel.app/cli-workflows.html#delegating-write-access)
+See also: [CLI Cookbooks → Delegating Write Access](https://morsecms-docs.vercel.app/cli-workflows.html#delegating-write-access)
 
 ## Transferring Ownership
 
@@ -3430,12 +3430,12 @@ await transferOwnership(adapter, config, {
 >
 > Once transferred, the original owner loses all governance rights immediately. The new owner could transfer back, but there is no built-in undo.
 
-See also: [CLI Cookbooks → Transferring Ownership](https://morse-docs.vercel.app/cli-workflows.html#transferring-ownership)
+See also: [CLI Cookbooks → Transferring Ownership](https://morsecms-docs.vercel.app/cli-workflows.html#transferring-ownership)
 
 ## Deleting and Tearing Down
 
 Deletion works bottom-up: remove entries first, then the collections, then the publication. The Move layer enforces this - deleting a non-empty collection or publication aborts on-chain. This assumes the caller still holds both a `PublisherCap` and the `OwnerCap`. 
-Entry IDs are permanently retired on deletion and never reused. See [Entries → Deleting an Entry](https://morse-docs.vercel.app/entries.html#deleting-an-entry) for details.
+Entry IDs are permanently retired on deletion and never reused. See [Entries → Deleting an Entry](https://morsecms-docs.vercel.app/entries.html#deleting-an-entry) for details.
 
 ```typescript
 import {
@@ -3477,7 +3477,7 @@ await deletePublication(reader, adapter, config, {
 });
 ```
 
-See also: [CLI Cookbooks → Deleting and Tearing Down](https://morse-docs.vercel.app/cli-workflows.html#deleting-and-tearing-down)
+See also: [CLI Cookbooks → Deleting and Tearing Down](https://morsecms-docs.vercel.app/cli-workflows.html#deleting-and-tearing-down)
 
 ## Entry Path Options
 
@@ -3526,13 +3526,13 @@ const entry = await addEntry(adapter, config, {
 
 ## Next Steps
 
-- [CLI: Overview](https://morse-docs.vercel.app/cli-overview.html): Interactive command-line tool for managing publications, collections, and entries without writing code.
-- [Smart Contracts: Overview](https://morse-docs.vercel.app/contracts-overview.html): Architecture of the Morse Move package - modules, shared objects, and the on-chain data model.
+- [CLI: Overview](https://morsecms-docs.vercel.app/cli-overview.html): Interactive command-line tool for managing publications, collections, and entries without writing code.
+- [Smart Contracts: Overview](https://morsecms-docs.vercel.app/contracts-overview.html): Architecture of the Morse Move package - modules, shared objects, and the on-chain data model.
 
 
 ---
 
-<!-- Source: https://morse-docs.vercel.app/contracts-overview.html -->
+<!-- Source: https://morsecms-docs.vercel.app/contracts-overview.html -->
 
 # Contract Overview
 
@@ -3540,11 +3540,11 @@ const entry = await addEntry(adapter, config, {
 
 > **INFO: Testnet deployment**
 >
-> Use [SDK Setup → morseConfig()](https://morse-docs.vercel.app/sdk-client-setup.html#morse-config) to get the current package ID, original ID, and registry ID. These values update automatically when the contract is upgraded.
+> Use [SDK Setup → morseConfig()](https://morsecms-docs.vercel.app/sdk-client-setup.html#morse-config) to get the current package ID, original ID, and registry ID. These values update automatically when the contract is upgraded.
 
 ## Getting Started
 
-Use `morseConfig()` from `@arcadiasystems/morse-sdk` to resolve the package and registry addresses, then construct PTBs with `tx.moveCall`. See the [Contract Reference](https://morse-docs.vercel.app/contracts-reference.html) for complete function signatures and struct definitions, and the [Contract Cookbooks](https://morse-docs.vercel.app/contracts-workflows.html) for step-by-step recipes.
+Use `morseConfig()` from `@arcadiasystems/morse-sdk` to resolve the package and registry addresses, then construct PTBs with `tx.moveCall`. See the [Contract Reference](https://morsecms-docs.vercel.app/contracts-reference.html) for complete function signatures and struct definitions, and the [Contract Cookbooks](https://morsecms-docs.vercel.app/contracts-workflows.html) for step-by-step recipes.
 
 ## Package Structure
 
@@ -3641,20 +3641,20 @@ public enum BlobRef has copy, drop, store {
 
 ## Known Limitations
 
-- **No encrypted publish path.** `publish_from_draft` and `publish_direct` hardcode `encrypted = false`. Encrypted content stays as drafts - see [Entries → Adding an Entry](https://morse-docs.vercel.app/entries.html#adding-an-entry) for the full lifecycle.
+- **No encrypted publish path.** `publish_from_draft` and `publish_direct` hardcode `encrypted = false`. Encrypted content stays as drafts - see [Entries → Adding an Entry](https://morsecms-docs.vercel.app/entries.html#adding-an-entry) for the full lifecycle.
 - **Only the Publisher access policy is enforced.** The `Subscription` policy constant is defined but the approval entry point is not yet implemented.
 - **All blobs must be deletable.** The contract calls `blob.is_deletable()` and aborts if a permanent blob is passed.
 - **Single entry point module.** All public functions live in `publication::publication`. The other modules are internal.
 
 ## Next Steps
 
-- [Smart Contracts: Reference](https://morse-docs.vercel.app/contracts-reference.html): Complete function signatures, events, error codes, and constants.
-- [Smart Contracts: Cookbooks](https://morse-docs.vercel.app/contracts-workflows.html): Step-by-step recipes for creating publications, managing entries, and encrypting content via PTBs.
+- [Smart Contracts: Reference](https://morsecms-docs.vercel.app/contracts-reference.html): Complete function signatures, events, error codes, and constants.
+- [Smart Contracts: Cookbooks](https://morsecms-docs.vercel.app/contracts-workflows.html): Step-by-step recipes for creating publications, managing entries, and encrypting content via PTBs.
 
 
 ---
 
-<!-- Source: https://morse-docs.vercel.app/contracts-reference.html -->
+<!-- Source: https://morsecms-docs.vercel.app/contracts-reference.html -->
 
 # Contract Reference
 
@@ -3774,17 +3774,17 @@ These functions are defined in `publication::entry`. Getter functions that opera
 
 ## Next Steps
 
-- [Smart Contracts: Overview](https://morse-docs.vercel.app/contracts-overview.html): Package structure, struct definitions, capabilities, and known limitations.
-- [Smart Contracts: Cookbooks](https://morse-docs.vercel.app/contracts-workflows.html): Step-by-step PTB recipes for publishing, encrypted entries, and cap management.
+- [Smart Contracts: Overview](https://morsecms-docs.vercel.app/contracts-overview.html): Package structure, struct definitions, capabilities, and known limitations.
+- [Smart Contracts: Cookbooks](https://morsecms-docs.vercel.app/contracts-workflows.html): Step-by-step PTB recipes for publishing, encrypted entries, and cap management.
 
 
 ---
 
-<!-- Source: https://morse-docs.vercel.app/contracts-workflows.html -->
+<!-- Source: https://morsecms-docs.vercel.app/contracts-workflows.html -->
 
 # Contract Cookbooks
 
-> End-to-end recipes for interacting with Morse smart contracts directly via Sui Programmable Transaction Blocks (PTBs). Each recipe shows the raw `tx.moveCall` pattern using `@mysten/sui/transactions`. For the high-level SDK wrappers, see [SDK Cookbooks](https://morse-docs.vercel.app/sdk-workflows.html). For the full function reference, see [Contract Reference](https://morse-docs.vercel.app/contracts-reference.html).
+> End-to-end recipes for interacting with Morse smart contracts directly via Sui Programmable Transaction Blocks (PTBs). Each recipe shows the raw `tx.moveCall` pattern using `@mysten/sui/transactions`. For the high-level SDK wrappers, see [SDK Cookbooks](https://morsecms-docs.vercel.app/sdk-workflows.html). For the full function reference, see [Contract Reference](https://morsecms-docs.vercel.app/contracts-reference.html).
 
 ## Prerequisites
 
@@ -3795,7 +3795,7 @@ These functions are defined in `publication::entry`. Getter functions that opera
 | Bech32 private key | A `suiprivkey1...` string | Transaction signing - export from your wallet's settings |
 | Morse SDK | `@arcadiasystems/morse-sdk` | Provides `morseConfig()` for package ID, registry ID, and RPC URL |
 
-Make sure the SDK and its peer dependencies are installed before continuing. See [SDK Setup](https://morse-docs.vercel.app/sdk-client-setup.html) for the install command.
+Make sure the SDK and its peer dependencies are installed before continuing. See [SDK Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html) for the install command.
 
 ## Setup
 
@@ -3803,7 +3803,7 @@ All recipes below assume the following imports and configuration are in scope. F
 
 > **INFO: Why the SDK imports?**
 >
-> Contract calls are raw `tx.moveCall` with no SDK wrappers. The SDK is only used for configuration and adapters: `morseConfig()` resolves deployed addresses, `DefaultWalrusWriteAdapter` uploads blobs, and `DefaultSealAdapter` handles encryption. See [SDK Client Setup](https://morse-docs.vercel.app/sdk-client-setup.html) for details.
+> Contract calls are raw `tx.moveCall` with no SDK wrappers. The SDK is only used for configuration and adapters: `morseConfig()` resolves deployed addresses, `DefaultWalrusWriteAdapter` uploads blobs, and `DefaultSealAdapter` handles encryption. See [SDK Client Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html) for details.
 
 ```typescript
 import { SuiGrpcClient } from "@mysten/sui/grpc";
@@ -3891,7 +3891,7 @@ const createdObjects = effects.changedObjects
 console.log("Created objects:", createdObjects);
 ```
 
-See also: [SDK Cookbooks → Creating a Publication](https://morse-docs.vercel.app/sdk-workflows.html#creating-a-publication)
+See also: [SDK Cookbooks → Creating a Publication](https://morsecms-docs.vercel.app/sdk-workflows.html#creating-a-publication)
 
 ## Adding a Collection
 
@@ -3938,7 +3938,7 @@ tx.moveCall({
 await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 ```
 
-See also: [SDK Cookbooks → Adding a Collection](https://morse-docs.vercel.app/sdk-workflows.html#adding-a-collection)
+See also: [SDK Cookbooks → Adding a Collection](https://morsecms-docs.vercel.app/sdk-workflows.html#adding-a-collection)
 
 ## Adding an Entry
 
@@ -3980,7 +3980,7 @@ await client.signAndExecuteTransaction({
 });
 ```
 
-See also: [SDK Cookbooks → Adding an Entry](https://morse-docs.vercel.app/sdk-workflows.html#adding-an-entry)
+See also: [SDK Cookbooks → Adding an Entry](https://morsecms-docs.vercel.app/sdk-workflows.html#adding-an-entry)
 
 ## Publishing a New Revision
 
@@ -4074,7 +4074,7 @@ tx.moveCall({
 await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 ```
 
-See also: [SDK Cookbooks → Publishing a New Revision](https://morse-docs.vercel.app/sdk-workflows.html#publishing-a-new-revision)
+See also: [SDK Cookbooks → Publishing a New Revision](https://morsecms-docs.vercel.app/sdk-workflows.html#publishing-a-new-revision)
 
 ## Encrypted Content
 
@@ -4130,11 +4130,11 @@ await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 >
 > The publish functions hardcode `encrypted=false` on the public path - they cannot promote encrypted content to a public head. Read encrypted entries via `seal.decrypt` using the `sealId` stored in the revision metadata.
 
-See also: [SDK Cookbooks → Encrypted Content](https://morse-docs.vercel.app/sdk-workflows.html#encrypted-content)
+See also: [SDK Cookbooks → Encrypted Content](https://morsecms-docs.vercel.app/sdk-workflows.html#encrypted-content)
 
 ## Delegating Write Access
 
-The owner issues `PublisherCap` objects to grant write access to co-authors. Revocation adds the cap ID to an on-chain denylist; all subsequent writes using that cap abort with `EPublisherCapRevoked`. See [Access Control](https://morse-docs.vercel.app/access-control.html) for the full capability model.
+The owner issues `PublisherCap` objects to grant write access to co-authors. Revocation adds the cap ID to an on-chain denylist; all subsequent writes using that cap abort with `EPublisherCapRevoked`. See [Access Control](https://morsecms-docs.vercel.app/access-control.html) for the full capability model.
 
 ### Issuing a PublisherCap
 
@@ -4219,7 +4219,7 @@ tx.moveCall({
 await client.signAndExecuteTransaction({ transaction: tx, signer: coAuthorKeypair });
 ```
 
-See also: [SDK Cookbooks → Delegating Write Access](https://morse-docs.vercel.app/sdk-workflows.html#delegating-write-access)
+See also: [SDK Cookbooks → Delegating Write Access](https://morsecms-docs.vercel.app/sdk-workflows.html#delegating-write-access)
 
 ## Transferring Ownership
 
@@ -4243,7 +4243,7 @@ await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 >
 > Once transferred, the original owner loses all governance rights immediately. The new owner could transfer back, but there is no built-in undo.
 
-See also: [SDK Cookbooks → Transferring Ownership](https://morse-docs.vercel.app/sdk-workflows.html#transferring-ownership)
+See also: [SDK Cookbooks → Transferring Ownership](https://morsecms-docs.vercel.app/sdk-workflows.html#transferring-ownership)
 
 ## Deleting and Tearing Down
 
@@ -4325,7 +4325,7 @@ tx.moveCall({
 await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 ```
 
-See also: [SDK Cookbooks → Deleting and Tearing Down](https://morse-docs.vercel.app/sdk-workflows.html#deleting-and-tearing-down)
+See also: [SDK Cookbooks → Deleting and Tearing Down](https://morsecms-docs.vercel.app/sdk-workflows.html#deleting-and-tearing-down)
 
 ## Troubleshooting
 
@@ -4346,13 +4346,13 @@ Move aborts surface as `MoveAbort` errors in the RPC response with a module name
 
 ## Next Steps
 
-- [CLI: Overview](https://morse-docs.vercel.app/cli-overview.html): Install the CLI and manage publications, collections, and entries from the terminal.
-- [SDK: Overview](https://morse-docs.vercel.app/sdk-overview.html): TypeScript client for building custom integrations and automating Morse operations.
+- [CLI: Overview](https://morsecms-docs.vercel.app/cli-overview.html): Install the CLI and manage publications, collections, and entries from the terminal.
+- [SDK: Overview](https://morsecms-docs.vercel.app/sdk-overview.html): TypeScript client for building custom integrations and automating Morse operations.
 
 
 ---
 
-<!-- Source: https://morse-docs.vercel.app/glossary.html -->
+<!-- Source: https://morsecms-docs.vercel.app/glossary.html -->
 
 # Glossary
 
@@ -4360,109 +4360,109 @@ Move aborts surface as `MoveAbort` errors in the RPC response with a module name
 
 ## A
 
-**[Access Policy](https://morse-docs.vercel.app/entries.html#access-policy-and-encryption-rules)** — A numeric constant stored per revision that defines who can read the payload. Current values: `0` (public), `1` (publisher), `2` (subscription, reserved). Strictly coupled with the `encrypted` flag: public (`0`) requires `encrypted=false`; publisher (`1`) requires `encrypted=true`.
+**[Access Policy](https://morsecms-docs.vercel.app/entries.html#access-policy-and-encryption-rules)** — A numeric constant stored per revision that defines who can read the payload. Current values: `0` (public), `1` (publisher), `2` (subscription, reserved). Strictly coupled with the `encrypted` flag: public (`0`) requires `encrypted=false`; publisher (`1`) requires `encrypted=true`.
 
 ## B
 
-**[Blob Mode](https://morse-docs.vercel.app/collections.html#storage-modes)** — Storage mode `0` for collections. Each entry revision stores a `BlobRef::Blob(ID)` pointing to an independent Walrus `Blob` object by Sui object ID. Best for growing, frequently-changing collections.
+**[Blob Mode](https://morsecms-docs.vercel.app/collections.html#storage-modes)** — Storage mode `0` for collections. Each entry revision stores a `BlobRef::Blob(ID)` pointing to an independent Walrus `Blob` object by Sui object ID. Best for growing, frequently-changing collections.
 
-**[BlobRef](https://morse-docs.vercel.app/entries.html#the-blobref-enum)** — A Move enum stored per revision that abstracts the two Walrus payload reference formats. Variants: `Blob(ID)` for standalone blobs, `QuiltPatch(vector<u8>)` for 37-byte quilt patch identifiers.
+**[BlobRef](https://morsecms-docs.vercel.app/entries.html#the-blobref-enum)** — A Move enum stored per revision that abstracts the two Walrus payload reference formats. Variants: `Blob(ID)` for standalone blobs, `QuiltPatch(vector<u8>)` for 37-byte quilt patch identifiers.
 
 ## C
 
-**[Capability](https://morse-docs.vercel.app/access-control.html)** — A Move object that proves authorization to perform a specific action. Morse has two capability types: `OwnerCap` (admin authority) and `PublisherCap` (write authority). Capabilities cannot be fabricated - they can only be issued by the protocol.
+**[Capability](https://morsecms-docs.vercel.app/access-control.html)** — A Move object that proves authorization to perform a specific action. Morse has two capability types: `OwnerCap` (admin authority) and `PublisherCap` (write authority). Capabilities cannot be fabricated - they can only be issued by the protocol.
 
 **CMS** — Content Management System. Software for creating, organizing, and publishing structured digital content. Morse implements a decentralized, headless CMS protocol where permission management lives on-chain rather than in a centralized backend.
 
-**[Collection](https://morse-docs.vercel.app/collections.html#what-is-a-collection)** — A named content lane inside a [publication](https://morse-docs.vercel.app/publications.html). Holds entries in a table keyed by monotonic `entry_id` values. Has an immutable `storage_mode` (blob or quilt).
+**[Collection](https://morsecms-docs.vercel.app/collections.html#what-is-a-collection)** — A named content lane inside a [publication](https://morsecms-docs.vercel.app/publications.html). Holds entries in a table keyed by monotonic `entry_id` values. Has an immutable `storage_mode` (blob or quilt).
 
-**[Content Type](https://morse-docs.vercel.app/entries.html#entry-structure)** — A MIME-format string stored per entry revision that describes the payload format (e.g. `application/json`, `text/markdown`, `image/png`). Max 255 characters. Lowercase is recommended for consistency but not enforced on-chain.
+**[Content Type](https://morsecms-docs.vercel.app/entries.html#entry-structure)** — A MIME-format string stored per entry revision that describes the payload format (e.g. `application/json`, `text/markdown`, `image/png`). Max 255 characters. Lowercase is recommended for consistency but not enforced on-chain.
 
 ## D
 
 **dCMS** — Decentralized Content Management System - the category Morse belongs to. Publication identity, authorization, and state transitions are governed on-chain; payloads are stored off-chain in decentralized storage (Walrus).
 
-**[Denylist](https://morse-docs.vercel.app/access-control.html#the-denylist-model)** — The revocation model used for PublisherCaps. A `Table<ID, bool>` on each publication stores IDs of revoked caps. Issuance writes nothing to the table; only revocations write. This optimizes for the common case where revocations never occur.
+**[Denylist](https://morsecms-docs.vercel.app/access-control.html#the-denylist-model)** — The revocation model used for PublisherCaps. A `Table<ID, bool>` on each publication stores IDs of revoked caps. Issuance writes nothing to the table; only revocations write. This optimizes for the common case where revocations never occur.
 
-**[Draft Head](https://morse-docs.vercel.app/entries.html#the-dual-head-model)** — An `Option<u64>` pointer in an Entry that tracks the index of the latest draft revision. May be `None` if no draft has been created. Updated by `append_collection_entry_draft_revision`.
+**[Draft Head](https://morsecms-docs.vercel.app/entries.html#the-dual-head-model)** — An `Option<u64>` pointer in an Entry that tracks the index of the latest draft revision. May be `None` if no draft has been created. Updated by `append_collection_entry_draft_revision`.
 
-**[Dual-head Model](https://morse-docs.vercel.app/entries.html#the-dual-head-model)** — The entry versioning architecture where each entry maintains two independent revision head pointers: `draft_head` (latest work-in-progress) and `public_head` (currently published). Enables editorial iteration without disrupting stable reader delivery.
+**[Dual-head Model](https://morsecms-docs.vercel.app/entries.html#the-dual-head-model)** — The entry versioning architecture where each entry maintains two independent revision head pointers: `draft_head` (latest work-in-progress) and `public_head` (currently published). Enables editorial iteration without disrupting stable reader delivery.
 
 ## E
 
-**[Entry](https://morse-docs.vercel.app/entries.html#entry-structure)** — A single content unit within a collection. Holds a name, an immutable revision vector, and two head pointers. Identified by a stable monotonic `entry_id` within its collection.
+**[Entry](https://morsecms-docs.vercel.app/entries.html#entry-structure)** — A single content unit within a collection. Holds a name, an immutable revision vector, and two head pointers. Identified by a stable monotonic `entry_id` within its collection.
 
-**[Entry ID](https://morse-docs.vercel.app/entries.html#entry-ids)** — A `u64` assigned to an entry when added to a collection. Values start at `0` and increment monotonically. IDs are never reused after deletion - stable for external references.
+**[Entry ID](https://morsecms-docs.vercel.app/entries.html#entry-ids)** — A `u64` assigned to an entry when added to a collection. Values start at `0` and increment monotonically. IDs are never reused after deletion - stable for external references.
 
-**[EntryRevision](https://morse-docs.vercel.app/entries.html#revisions)** — The Move struct that stores a single revision's data: `blob_ref`, `content_type`, `encrypted`, `access_policy`, `seal_id`, and `author`. Has `store, drop` abilities. Stored in an entry's `revisions` vector.
+**[EntryRevision](https://morsecms-docs.vercel.app/entries.html#revisions)** — The Move struct that stores a single revision's data: `blob_ref`, `content_type`, `encrypted`, `access_policy`, `seal_id`, and `author`. Has `store, drop` abilities. Stored in an entry's `revisions` vector.
 
 **Epoch** — A Walrus storage duration unit. When uploading a blob, the `epochs` parameter controls how long the data is available on the Walrus network. Passed as `--epochs <n>` in the CLI or `epochs: number` in the SDK.
 
-**Events** — On-chain event structs emitted by the Morse contracts during state transitions. All have `copy, drop` abilities. Includes `PublicationCreated`, `PublicationDeleted`, `SlugRegistered`, `SlugReleased`, `PublisherCapIssued`, `PublisherCapRevoked`, `CollectionAdded`, and `CollectionRemoved`. See the Events tables on [Publications](https://morse-docs.vercel.app/publications.html#events), [Collections](https://morse-docs.vercel.app/collections.html#events), and [Entries](https://morse-docs.vercel.app/entries.html#events).
+**Events** — On-chain event structs emitted by the Morse contracts during state transitions. All have `copy, drop` abilities. Includes `PublicationCreated`, `PublicationDeleted`, `SlugRegistered`, `SlugReleased`, `PublisherCapIssued`, `PublisherCapRevoked`, `CollectionAdded`, and `CollectionRemoved`. See the Events tables on [Publications](https://morsecms-docs.vercel.app/publications.html#events), [Collections](https://morsecms-docs.vercel.app/collections.html#events), and [Entries](https://morsecms-docs.vercel.app/entries.html#events).
 
 ## G
 
-**gRPC** — A high-performance RPC framework used by `SuiGrpcClient` from `@mysten/sui/grpc`. The Morse SDK requires gRPC transport for all Sui interactions. Works in modern browsers without a proxy. See [SDK Overview → Known Limitations](https://morse-docs.vercel.app/sdk-overview.html#known-limitations) for JSON-RPC fallback status.
+**gRPC** — A high-performance RPC framework used by `SuiGrpcClient` from `@mysten/sui/grpc`. The Morse SDK requires gRPC transport for all Sui interactions. Works in modern browsers without a proxy. See [SDK Overview → Known Limitations](https://morsecms-docs.vercel.app/sdk-overview.html#known-limitations) for JSON-RPC fallback status.
 
 ## H
 
 **Headless CMS** — A CMS architecture that separates content management from presentation. The CMS manages content and metadata; client applications decide how to render it. Content is delivered through APIs. Morse follows this model while decentralizing identity, authorization, and state transitions.
 
-**[Holder](https://morse-docs.vercel.app/access-control.html#publishercap)** — The `address` field on a PublisherCap that binds the capability to a specific wallet. Write operations check that `tx.sender() == cap.holder`. A cap cannot be shared between addresses.
+**[Holder](https://morsecms-docs.vercel.app/access-control.html#publishercap)** — The `address` field on a PublisherCap that binds the capability to a specific wallet. Write operations check that `tx.sender() == cap.holder`. A cap cannot be shared between addresses.
 
 ## I
 
-**Indexer** — The off-chain service that listens to on-chain events and builds a read-optimized index of publications, collections, and entries. Currently planned. See [How Morse Works → Off-Chain Services](https://morse-docs.vercel.app/core-concepts.html#off-chain-services).
+**Indexer** — The off-chain service that listens to on-chain events and builds a read-optimized index of publications, collections, and entries. Currently planned. See [How Morse Works → Off-Chain Services](https://morsecms-docs.vercel.app/core-concepts.html#off-chain-services).
 
 ## M
 
-**[Monotonic ID](https://morse-docs.vercel.app/entries.html#entry-ids)** — A collection-scoped, auto-incrementing integer assigned to each entry. IDs are never reused after deletion. See [Entries → Entry IDs](https://morse-docs.vercel.app/entries.html#entry-ids).
+**[Monotonic ID](https://morsecms-docs.vercel.app/entries.html#entry-ids)** — A collection-scoped, auto-incrementing integer assigned to each entry. IDs are never reused after deletion. See [Entries → Entry IDs](https://morsecms-docs.vercel.app/entries.html#entry-ids).
 
 **Move** — The programming language used for smart contracts on the Sui blockchain. Morse's on-chain logic is written in Move.
 
 ## O
 
-**[OwnerCap](https://morse-docs.vercel.app/access-control.html#ownercap)** — The admin capability for a publication. Exactly one exists per publication. Grants authority to issue and revoke publisher caps, delete the publication, and transfer ownership. Has `key` ability only - transferable via `transfer_owner_cap`.
+**[OwnerCap](https://morsecms-docs.vercel.app/access-control.html#ownercap)** — The admin capability for a publication. Exactly one exists per publication. Grants authority to issue and revoke publisher caps, delete the publication, and transfer ownership. Has `key` ability only - transferable via `transfer_owner_cap`.
 
 ## P
 
-**[Publication](https://morse-docs.vercel.app/publications.html#what-is-a-publication)** — The top-level Morse content domain. A shared Sui object that bundles a name, an immutable slug, named collections, and a revocation denylist. Created via `new_publication`.
+**[Publication](https://morsecms-docs.vercel.app/publications.html#what-is-a-publication)** — The top-level Morse content domain. A shared Sui object that bundles a name, an immutable slug, named collections, and a revocation denylist. Created via `new_publication`.
 
-**[PublicationRegistry](https://morse-docs.vercel.app/publications.html#publication-registry)** — A shared singleton Sui object created at package deploy time. Maintains a `Table<String, ID>` that maps slugs to publication IDs, enforcing global slug uniqueness. Required argument for `new_publication` and `delete_publication`.
+**[PublicationRegistry](https://morsecms-docs.vercel.app/publications.html#publication-registry)** — A shared singleton Sui object created at package deploy time. Maintains a `Table<String, ID>` that maps slugs to publication IDs, enforcing global slug uniqueness. Required argument for `new_publication` and `delete_publication`.
 
-**[Public Head](https://morse-docs.vercel.app/entries.html#the-dual-head-model)** — An `Option<u64>` pointer in an Entry that tracks the index of the currently published revision. What reader-facing clients should read. Updated by `publish_collection_entry_from_draft` and `publish_collection_entry_direct`.
+**[Public Head](https://morsecms-docs.vercel.app/entries.html#the-dual-head-model)** — An `Option<u64>` pointer in an Entry that tracks the index of the currently published revision. What reader-facing clients should read. Updated by `publish_collection_entry_from_draft` and `publish_collection_entry_direct`.
 
-**[PublisherCap](https://morse-docs.vercel.app/access-control.html#publishercap)** — The write capability for a publication. Many can exist per publication. Grants authority to create/delete collections and entries, append drafts, and publish content. Bound to a `holder` address. Issued by the owner; revocable by the owner.
+**[PublisherCap](https://morsecms-docs.vercel.app/access-control.html#publishercap)** — The write capability for a publication. Many can exist per publication. Grants authority to create/delete collections and entries, append drafts, and publish content. Bound to a `holder` address. Issued by the owner; revocable by the owner.
 
 **PTB** — Programmable Transaction Block - Sui's composable transaction format. Multiple operations can be combined into a single atomic transaction. The Morse protocol uses pure creation functions that return objects for callers to compose in PTBs.
 
-**[Policy Tag](https://morse-docs.vercel.app/access-control.html#seal-identity-format)** — A single byte in a Seal identity that identifies which access policy the identity targets. Currently only `0x01` (publisher) is defined. Allows future policy types to coexist within the same publication namespace.
+**[Policy Tag](https://morsecms-docs.vercel.app/access-control.html#seal-identity-format)** — A single byte in a Seal identity that identifies which access policy the identity targets. Currently only `0x01` (publisher) is defined. Allows future policy types to coexist within the same publication namespace.
 
 ## Q
 
-**[Quilt Mode](https://morse-docs.vercel.app/collections.html#storage-modes)** — Storage mode `1` for collections. Each entry revision stores a 37-byte `QuiltPatchId` pointing to a patch within a shared Walrus Quilt blob. Best for stable, grouped content sets.
+**[Quilt Mode](https://morsecms-docs.vercel.app/collections.html#storage-modes)** — Storage mode `1` for collections. Each entry revision stores a 37-byte `QuiltPatchId` pointing to a patch within a shared Walrus Quilt blob. Best for stable, grouped content sets.
 
-**[QuiltPatchId](https://morse-docs.vercel.app/collections.html#storage-modes)** — A 37-byte identifier used in quilt mode collections. Layout: `quilt_blob_id (32 bytes) || version (1 byte) || start_index (2 bytes) || end_index (2 bytes)`. Stored as a `BlobRef::QuiltPatch(vector<u8>)`.
+**[QuiltPatchId](https://morsecms-docs.vercel.app/collections.html#storage-modes)** — A 37-byte identifier used in quilt mode collections. Layout: `quilt_blob_id (32 bytes) || version (1 byte) || start_index (2 bytes) || end_index (2 bytes)`. Stored as a `BlobRef::QuiltPatch(vector<u8>)`.
 
 ## R
 
-**[Revision](https://morse-docs.vercel.app/entries.html#revisions)** — An immutable version of an entry at a point in time. Stored in the entry's `revisions: vector<EntryRevision>`. Each revision records a `BlobRef`, content type, encryption state, access policy, optional Seal identity, and author address. Revisions are never mutated - edits append new ones.
+**[Revision](https://morsecms-docs.vercel.app/entries.html#revisions)** — An immutable version of an entry at a point in time. Stored in the entry's `revisions: vector<EntryRevision>`. Each revision records a `BlobRef`, content type, encryption state, access policy, optional Seal identity, and author address. Revisions are never mutated - edits append new ones.
 
-**[Revision ID](https://morse-docs.vercel.app/entries.html#revisions)** — The index of a revision within an entry's `revisions` vector. Starts at `0`. Returned by all revision-appending functions. Used to reference a specific revision in `publish_collection_entry_from_draft`.
+**[Revision ID](https://morsecms-docs.vercel.app/entries.html#revisions)** — The index of a revision within an entry's `revisions` vector. Starts at `0`. Returned by all revision-appending functions. Used to reference a specific revision in `publish_collection_entry_from_draft`.
 
-**[Revocation](https://morse-docs.vercel.app/access-control.html#revoking-publisher-caps)** — The act of adding a `PublisherCap`'s object ID to a publication's denylist via `revoke_publisher_cap`. Immediate effect - the next write attempt using the revoked cap will abort. Historical content is unaffected.
+**[Revocation](https://morsecms-docs.vercel.app/access-control.html#revoking-publisher-caps)** — The act of adding a `PublisherCap`'s object ID to a publication's denylist via `revoke_publisher_cap`. Immediate effect - the next write attempt using the revoked cap will abort. Historical content is unaffected.
 
 ## S
 
-**[Seal](https://morse-docs.vercel.app/access-control.html#seal-integration)** — Mysten Labs' on-chain access control layer for Walrus blob decryption. Morse integrates via the `seal_approve_publisher` entry function, which validates that an active publisher cap holder is authorized within a specific publication namespace.
+**[Seal](https://morsecms-docs.vercel.app/access-control.html#seal-integration)** — Mysten Labs' on-chain access control layer for Walrus blob decryption. Morse integrates via the `seal_approve_publisher` entry function, which validates that an active publisher cap holder is authorized within a specific publication namespace.
 
-**[Seal Identity](https://morse-docs.vercel.app/access-control.html#seal-identity-format)** — A byte vector (`vector<u8>`) that Seal presents to the approval function during decryption. In Morse, the format is: `[publication_id (32 bytes)][policy_tag (1 byte)][nonce (variable)]`. Scopes decryption approval to a specific publication and policy.
+**[Seal Identity](https://morsecms-docs.vercel.app/access-control.html#seal-identity-format)** — A byte vector (`vector<u8>`) that Seal presents to the approval function during decryption. In Morse, the format is: `[publication_id (32 bytes)][policy_tag (1 byte)][nonce (variable)]`. Scopes decryption approval to a specific publication and policy.
 
-**[Shared Object](https://morse-docs.vercel.app/contracts-reference.html#object-abilities)** — A Sui object accessible to any transaction, not owned by a single address. In Morse, `Publication` and `PublicationRegistry` are shared objects. Shared objects enable multi-writer collaboration but require consensus on ordering.
+**[Shared Object](https://morsecms-docs.vercel.app/contracts-reference.html#object-abilities)** — A Sui object accessible to any transaction, not owned by a single address. In Morse, `Publication` and `PublicationRegistry` are shared objects. Shared objects enable multi-writer collaboration but require consensus on ordering.
 
-**[Slug](https://morse-docs.vercel.app/publications.html#the-slug-system)** — A short, unique identifier for a publication. Immutable after creation. Constraints: lowercase `a-z`, digits `0-9`, hyphens; max 64 characters; no leading/trailing hyphens. Enforced globally by the `PublicationRegistry`.
+**[Slug](https://morsecms-docs.vercel.app/publications.html#the-slug-system)** — A short, unique identifier for a publication. Immutable after creation. Constraints: lowercase `a-z`, digits `0-9`, hyphens; max 64 characters; no leading/trailing hyphens. Enforced globally by the `PublicationRegistry`.
 
-**[Storage Mode](https://morse-docs.vercel.app/collections.html#storage-modes)** — An immutable property of a collection that determines how entry revision blob references are stored. `0` = blob mode (standalone Walrus blobs), `1` = quilt mode (QuiltPatchId references).
+**[Storage Mode](https://morsecms-docs.vercel.app/collections.html#storage-modes)** — An immutable property of a collection that determines how entry revision blob references are stored. `0` = blob mode (standalone Walrus blobs), `1` = quilt mode (QuiltPatchId references).
 
 **Sui** — The Layer 1 blockchain on which Morse contracts are deployed. Sui uses the Move programming language and features an object-centric data model, parallel execution, and programmable transaction blocks.
 
@@ -4476,12 +4476,12 @@ Move aborts surface as `MoveAbort` errors in the RPC response with a module name
 
 **Walrus** — MystenLabs' decentralized blob storage network integrated with Sui. Morse stores all content payloads in Walrus - the contracts hold references (`BlobRef`), not the raw bytes. Walrus is format-agnostic; payload interpretation is the client's responsibility.
 
-**[Walrus Blob](https://morse-docs.vercel.app/entries.html#walrus-blob-requirements)** — A Sui object (`walrus::blob::Blob`) representing a payload stored in the Walrus network. Production Morse write paths require a reference to this object (not just the blob ID) so the contract can verify the blob is deletable.
+**[Walrus Blob](https://morsecms-docs.vercel.app/entries.html#walrus-blob-requirements)** — A Sui object (`walrus::blob::Blob`) representing a payload stored in the Walrus network. Production Morse write paths require a reference to this object (not just the blob ID) so the contract can verify the blob is deletable.
 
 
 ---
 
-<!-- Source: https://morse-docs.vercel.app/use-morse-with-ai.html -->
+<!-- Source: https://morsecms-docs.vercel.app/use-morse-with-ai.html -->
 
 # Use Morse with AI
 
@@ -4493,16 +4493,16 @@ Every page on this site is available in three agent-friendly forms. No scraping,
 
 | Format | URL | Use it for |
 | --- | --- | --- |
-| **llms.txt** | [`/llms.txt`](https://morse-docs.vercel.app/llms.txt) | Compact index of all pages with one-line descriptions. Point an agent here first so it can pick which pages to read. |
-| **llms-full.txt** | [`/llms-full.txt`](https://morse-docs.vercel.app/llms-full.txt) | The complete documentation concatenated into a single Markdown file. One fetch gives an agent everything. |
-| **Markdown twins** | `/<page>.md` | Every page has a Markdown version at the same URL with `.md` instead of `.html` — e.g. [`/entries.md`](https://morse-docs.vercel.app/entries.md). |
+| **llms.txt** | [`/llms.txt`](https://morsecms-docs.vercel.app/llms.txt) | Compact index of all pages with one-line descriptions. Point an agent here first so it can pick which pages to read. |
+| **llms-full.txt** | [`/llms-full.txt`](https://morsecms-docs.vercel.app/llms-full.txt) | The complete documentation concatenated into a single Markdown file. One fetch gives an agent everything. |
+| **Markdown twins** | `/<page>.md` | Every page has a Markdown version at the same URL with `.md` instead of `.html` — e.g. [`/entries.md`](https://morsecms-docs.vercel.app/entries.md). |
 
 ## Prime a Coding Agent
 
 Paste one line into your agent to load the full Morse context:
 
 ```prompt
-Read https://morse-docs.vercel.app/llms-full.txt — the full documentation for Morse,
+Read https://morsecms-docs.vercel.app/llms-full.txt — the full documentation for Morse,
 the decentralized headless CMS protocol on Sui + Walrus. Use it to help me build
 with the Morse CLI, TypeScript SDK, or Move contracts.
 ```
@@ -4511,13 +4511,13 @@ Or fetch context on demand from a terminal-capable agent:
 
 ```bash
 # Index of all pages
-curl -s https://morse-docs.vercel.app/llms.txt
+curl -s https://morsecms-docs.vercel.app/llms.txt
 
 # One specific page as Markdown
-curl -s https://morse-docs.vercel.app/quick-start-cli.md
+curl -s https://morsecms-docs.vercel.app/quick-start-cli.md
 
 # Everything at once
-curl -s https://morse-docs.vercel.app/llms-full.txt
+curl -s https://morsecms-docs.vercel.app/llms-full.txt
 ```
 
 > **TIP: Working in a Morse project?**
@@ -4538,10 +4538,10 @@ There is also **Ask AI** in the header (or press `⌘I`): type a question and it
 
 Morse isn't just documented for agents — it is *operable* by them. There is no dashboard signup, no API-key console, no human-only provisioning step anywhere in the protocol. Everything is a CLI command, an SDK call, or a transaction:
 
-- **Provision from the terminal** — `morse init`, `morse publication create`, `morse entry add`: a coding agent can go from nothing to published content without leaving the shell. See the [CLI quick start](https://morse-docs.vercel.app/quick-start-cli.html).
-- **Script it with the SDK** — `@arcadiasystems/morse-sdk` exposes the same operations as typed TypeScript with structured errors, ideal for agent-authored automation. See the [SDK quick start](https://morse-docs.vercel.app/quick-start-sdk.html).
-- **Verify on-chain** — every mutation returns a transaction digest an agent can check. State is queryable from the contracts directly; no opaque backend to trust. See [Smart Contracts](https://morse-docs.vercel.app/contracts-overview.html).
-- **Deterministic auth** — capability objects (`OwnerCap`, `PublisherCap`) make permissions explicit and inspectable, so an agent always knows what it is allowed to do. See [Access Control](https://morse-docs.vercel.app/access-control.html).
+- **Provision from the terminal** — `morse init`, `morse publication create`, `morse entry add`: a coding agent can go from nothing to published content without leaving the shell. See the [CLI quick start](https://morsecms-docs.vercel.app/quick-start-cli.html).
+- **Script it with the SDK** — `@arcadiasystems/morse-sdk` exposes the same operations as typed TypeScript with structured errors, ideal for agent-authored automation. See the [SDK quick start](https://morsecms-docs.vercel.app/quick-start-sdk.html).
+- **Verify on-chain** — every mutation returns a transaction digest an agent can check. State is queryable from the contracts directly; no opaque backend to trust. See [Smart Contracts](https://morsecms-docs.vercel.app/contracts-overview.html).
+- **Deterministic auth** — capability objects (`OwnerCap`, `PublisherCap`) make permissions explicit and inspectable, so an agent always knows what it is allowed to do. See [Access Control](https://morsecms-docs.vercel.app/access-control.html).
 
 ```bash
 # A complete agent-driven publishing flow

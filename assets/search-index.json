@@ -1663,7 +1663,7 @@
     "pageTitle": "Use Morse with AI",
     "section": "Reference",
     "heading": "Prime a Coding Agent",
-    "text": "Paste one line into your agent to load the full Morse context: prompt Copy Read https://morse-docs.vercel.app/llms-full.txt — the full documentation for Morse, the decentralized headless CMS protocol on Sui + Walrus. Use it to help me build with the Morse CLI, TypeScript SDK, or Move contracts. Or fetch context on demand from a terminal-capable agent: bash Copy # Index of all pages curl -s https://morse-docs.vercel.app/llms.txt # One specific page as Markdown curl -s https://morse-docs.vercel.app/quick-start-cli.md # Everything at once curl -s https://morse-docs.vercel.app/llms-full.txt Workin"
+    "text": "Paste one line into your agent to load the full Morse context: prompt Copy Read https://morsecms-docs.vercel.app/llms-full.txt — the full documentation for Morse, the decentralized headless CMS protocol on Sui + Walrus. Use it to help me build with the Morse CLI, TypeScript SDK, or Move contracts. Or fetch context on demand from a terminal-capable agent: bash Copy # Index of all pages curl -s https://morsecms-docs.vercel.app/llms.txt # One specific page as Markdown curl -s https://morsecms-docs.vercel.app/quick-start-cli.md # Everything at once curl -s https://morsecms-docs.vercel.app/llms-ful"
   },
   {
     "url": "use-morse-with-ai.html#copy-any-page-for-ai",

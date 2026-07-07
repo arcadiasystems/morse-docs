@@ -1,9 +1,9 @@
-> Source: https://morse-docs.vercel.app/contracts-workflows.html · Full docs: https://morse-docs.vercel.app/llms-full.txt
+> Source: https://morsecms-docs.vercel.app/contracts-workflows.html · Full docs: https://morsecms-docs.vercel.app/llms-full.txt
 > Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback
 
 # Contract Cookbooks
 
-> End-to-end recipes for interacting with Morse smart contracts directly via Sui Programmable Transaction Blocks (PTBs). Each recipe shows the raw `tx.moveCall` pattern using `@mysten/sui/transactions`. For the high-level SDK wrappers, see [SDK Cookbooks](https://morse-docs.vercel.app/sdk-workflows.html). For the full function reference, see [Contract Reference](https://morse-docs.vercel.app/contracts-reference.html).
+> End-to-end recipes for interacting with Morse smart contracts directly via Sui Programmable Transaction Blocks (PTBs). Each recipe shows the raw `tx.moveCall` pattern using `@mysten/sui/transactions`. For the high-level SDK wrappers, see [SDK Cookbooks](https://morsecms-docs.vercel.app/sdk-workflows.html). For the full function reference, see [Contract Reference](https://morsecms-docs.vercel.app/contracts-reference.html).
 
 ## Prerequisites
 
@@ -14,7 +14,7 @@
 | Bech32 private key | A `suiprivkey1...` string | Transaction signing - export from your wallet's settings |
 | Morse SDK | `@arcadiasystems/morse-sdk` | Provides `morseConfig()` for package ID, registry ID, and RPC URL |
 
-Make sure the SDK and its peer dependencies are installed before continuing. See [SDK Setup](https://morse-docs.vercel.app/sdk-client-setup.html) for the install command.
+Make sure the SDK and its peer dependencies are installed before continuing. See [SDK Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html) for the install command.
 
 ## Setup
 
@@ -22,7 +22,7 @@ All recipes below assume the following imports and configuration are in scope. F
 
 > **INFO: Why the SDK imports?**
 >
-> Contract calls are raw `tx.moveCall` with no SDK wrappers. The SDK is only used for configuration and adapters: `morseConfig()` resolves deployed addresses, `DefaultWalrusWriteAdapter` uploads blobs, and `DefaultSealAdapter` handles encryption. See [SDK Client Setup](https://morse-docs.vercel.app/sdk-client-setup.html) for details.
+> Contract calls are raw `tx.moveCall` with no SDK wrappers. The SDK is only used for configuration and adapters: `morseConfig()` resolves deployed addresses, `DefaultWalrusWriteAdapter` uploads blobs, and `DefaultSealAdapter` handles encryption. See [SDK Client Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html) for details.
 
 ```typescript
 import { SuiGrpcClient } from "@mysten/sui/grpc";
@@ -110,7 +110,7 @@ const createdObjects = effects.changedObjects
 console.log("Created objects:", createdObjects);
 ```
 
-See also: [SDK Cookbooks → Creating a Publication](https://morse-docs.vercel.app/sdk-workflows.html#creating-a-publication)
+See also: [SDK Cookbooks → Creating a Publication](https://morsecms-docs.vercel.app/sdk-workflows.html#creating-a-publication)
 
 ## Adding a Collection
 
@@ -157,7 +157,7 @@ tx.moveCall({
 await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 ```
 
-See also: [SDK Cookbooks → Adding a Collection](https://morse-docs.vercel.app/sdk-workflows.html#adding-a-collection)
+See also: [SDK Cookbooks → Adding a Collection](https://morsecms-docs.vercel.app/sdk-workflows.html#adding-a-collection)
 
 ## Adding an Entry
 
@@ -199,7 +199,7 @@ await client.signAndExecuteTransaction({
 });
 ```
 
-See also: [SDK Cookbooks → Adding an Entry](https://morse-docs.vercel.app/sdk-workflows.html#adding-an-entry)
+See also: [SDK Cookbooks → Adding an Entry](https://morsecms-docs.vercel.app/sdk-workflows.html#adding-an-entry)
 
 ## Publishing a New Revision
 
@@ -293,7 +293,7 @@ tx.moveCall({
 await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 ```
 
-See also: [SDK Cookbooks → Publishing a New Revision](https://morse-docs.vercel.app/sdk-workflows.html#publishing-a-new-revision)
+See also: [SDK Cookbooks → Publishing a New Revision](https://morsecms-docs.vercel.app/sdk-workflows.html#publishing-a-new-revision)
 
 ## Encrypted Content
 
@@ -349,11 +349,11 @@ await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 >
 > The publish functions hardcode `encrypted=false` on the public path - they cannot promote encrypted content to a public head. Read encrypted entries via `seal.decrypt` using the `sealId` stored in the revision metadata.
 
-See also: [SDK Cookbooks → Encrypted Content](https://morse-docs.vercel.app/sdk-workflows.html#encrypted-content)
+See also: [SDK Cookbooks → Encrypted Content](https://morsecms-docs.vercel.app/sdk-workflows.html#encrypted-content)
 
 ## Delegating Write Access
 
-The owner issues `PublisherCap` objects to grant write access to co-authors. Revocation adds the cap ID to an on-chain denylist; all subsequent writes using that cap abort with `EPublisherCapRevoked`. See [Access Control](https://morse-docs.vercel.app/access-control.html) for the full capability model.
+The owner issues `PublisherCap` objects to grant write access to co-authors. Revocation adds the cap ID to an on-chain denylist; all subsequent writes using that cap abort with `EPublisherCapRevoked`. See [Access Control](https://morsecms-docs.vercel.app/access-control.html) for the full capability model.
 
 ### Issuing a PublisherCap
 
@@ -438,7 +438,7 @@ tx.moveCall({
 await client.signAndExecuteTransaction({ transaction: tx, signer: coAuthorKeypair });
 ```
 
-See also: [SDK Cookbooks → Delegating Write Access](https://morse-docs.vercel.app/sdk-workflows.html#delegating-write-access)
+See also: [SDK Cookbooks → Delegating Write Access](https://morsecms-docs.vercel.app/sdk-workflows.html#delegating-write-access)
 
 ## Transferring Ownership
 
@@ -462,7 +462,7 @@ await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 >
 > Once transferred, the original owner loses all governance rights immediately. The new owner could transfer back, but there is no built-in undo.
 
-See also: [SDK Cookbooks → Transferring Ownership](https://morse-docs.vercel.app/sdk-workflows.html#transferring-ownership)
+See also: [SDK Cookbooks → Transferring Ownership](https://morsecms-docs.vercel.app/sdk-workflows.html#transferring-ownership)
 
 ## Deleting and Tearing Down
 
@@ -544,7 +544,7 @@ tx.moveCall({
 await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 ```
 
-See also: [SDK Cookbooks → Deleting and Tearing Down](https://morse-docs.vercel.app/sdk-workflows.html#deleting-and-tearing-down)
+See also: [SDK Cookbooks → Deleting and Tearing Down](https://morsecms-docs.vercel.app/sdk-workflows.html#deleting-and-tearing-down)
 
 ## Troubleshooting
 
@@ -565,5 +565,5 @@ Move aborts surface as `MoveAbort` errors in the RPC response with a module name
 
 ## Next Steps
 
-- [CLI: Overview](https://morse-docs.vercel.app/cli-overview.html): Install the CLI and manage publications, collections, and entries from the terminal.
-- [SDK: Overview](https://morse-docs.vercel.app/sdk-overview.html): TypeScript client for building custom integrations and automating Morse operations.
+- [CLI: Overview](https://morsecms-docs.vercel.app/cli-overview.html): Install the CLI and manage publications, collections, and entries from the terminal.
+- [SDK: Overview](https://morsecms-docs.vercel.app/sdk-overview.html): TypeScript client for building custom integrations and automating Morse operations.

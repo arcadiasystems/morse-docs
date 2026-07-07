@@ -1,4 +1,4 @@
-> Source: https://morse-docs.vercel.app/access-control.html · Full docs: https://morse-docs.vercel.app/llms-full.txt
+> Source: https://morsecms-docs.vercel.app/access-control.html · Full docs: https://morsecms-docs.vercel.app/llms-full.txt
 > Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback
 
 # Access Control
@@ -101,7 +101,7 @@ public fun issue_publisher_cap(
 public fun transfer_publisher_cap(cap: PublisherCap, recipient: address)
 ```
 
-Use [SDK Setup → morseConfig()](https://morse-docs.vercel.app/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server Setup](https://morse-docs.vercel.app/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://morse-docs.vercel.app/contracts-workflows.html) for complete PTB examples.
+Use [SDK Setup → morseConfig()](https://morsecms-docs.vercel.app/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://morsecms-docs.vercel.app/contracts-workflows.html) for complete PTB examples.
 
 ### Ownership vs holder binding
 
@@ -299,7 +299,7 @@ Every revision stored on-chain carries an `access_policy` field that determines 
 
 > **WARNING: Policy and encryption are coupled**
 >
-> Public revisions must be unencrypted; publisher revisions must be encrypted with a Seal identity. The contract rejects mismatches at write time. See [Entries → Error Codes](https://morse-docs.vercel.app/entries.html#error-codes) for the specific error constants.
+> Public revisions must be unencrypted; publisher revisions must be encrypted with a Seal identity. The contract rejects mismatches at write time. See [Entries → Error Codes](https://morsecms-docs.vercel.app/entries.html#error-codes) for the specific error constants.
 
 ## Real-World Usage Pattern
 
@@ -316,11 +316,11 @@ Every revision stored on-chain carries an `access_policy` field that determines 
    When an editor leaves, the owner calls `revoke_publisher_cap(cap_id)`. The revocation is immediate - the next write attempt using that cap aborts. Historical content is unaffected.
 
 5. **Transfer ownership (optional)**
-   The owner calls `transfer_owner_cap(owner_cap, new_owner_address)`. The new owner gains full admin authority immediately. The old owner retains only their `PublisherCap` (if any) unless it is revoked by the new owner. See [Publications → Ownership Transfer](https://morse-docs.vercel.app/publications.html#ownership-transfer) for details.
+   The owner calls `transfer_owner_cap(owner_cap, new_owner_address)`. The new owner gains full admin authority immediately. The old owner retains only their `PublisherCap` (if any) unless it is revoked by the new owner. See [Publications → Ownership Transfer](https://morsecms-docs.vercel.app/publications.html#ownership-transfer) for details.
 
 ## Error Codes
 
-For more error codes, see: [Publications](https://morse-docs.vercel.app/publications.html#error-codes), [Collections](https://morse-docs.vercel.app/collections.html#error-codes), [Entries](https://morse-docs.vercel.app/entries.html#error-codes).
+For more error codes, see: [Publications](https://morsecms-docs.vercel.app/publications.html#error-codes), [Collections](https://morsecms-docs.vercel.app/collections.html#error-codes), [Entries](https://morsecms-docs.vercel.app/entries.html#error-codes).
 
 | Code | Constant | Meaning |
 | --- | --- | --- |

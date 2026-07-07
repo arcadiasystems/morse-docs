@@ -1,4 +1,4 @@
-> Source: https://morse-docs.vercel.app/entries.html · Full docs: https://morse-docs.vercel.app/llms-full.txt
+> Source: https://morsecms-docs.vercel.app/entries.html · Full docs: https://morsecms-docs.vercel.app/llms-full.txt
 > Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback
 
 # Entries & Revisions
@@ -48,7 +48,7 @@ public enum BlobRef has copy, drop, store {
 }
 ```
 
-The variant used must match the collection's [storage mode](https://morse-docs.vercel.app/collections.html#storage-modes). The `make_blob_ref` function enforces this - you cannot accidentally mix modes.
+The variant used must match the collection's [storage mode](https://morsecms-docs.vercel.app/collections.html#storage-modes). The `make_blob_ref` function enforces this - you cannot accidentally mix modes.
 
 ## The Dual-Head Model
 
@@ -65,9 +65,9 @@ This is what makes real editorial workflows possible: editors can keep appending
 
 ## Adding an Entry
 
-Create a new entry and add it to a named collection. Requires a valid [PublisherCap](https://morse-docs.vercel.app/publications.html#publisher-cap-management). Returns the assigned `entry_id`.
+Create a new entry and add it to a named collection. Requires a valid [PublisherCap](https://morsecms-docs.vercel.app/publications.html#publisher-cap-management). Returns the assigned `entry_id`.
 
-An entry cannot exist outside of a [collection](https://morse-docs.vercel.app/collections.html) - every entry is scoped to exactly one.
+An entry cannot exist outside of a [collection](https://morsecms-docs.vercel.app/collections.html) - every entry is scoped to exactly one.
 
 **CLI:**
 
@@ -136,7 +136,7 @@ public fun add_entry_to_collection(
 ): u64                                   // returns entry_id
 ```
 
-Use [SDK Setup → morseConfig()](https://morse-docs.vercel.app/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server Setup](https://morse-docs.vercel.app/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://morse-docs.vercel.app/contracts-workflows.html) for complete PTB examples.
+Use [SDK Setup → morseConfig()](https://morsecms-docs.vercel.app/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://morsecms-docs.vercel.app/contracts-workflows.html) for complete PTB examples.
 
 For unencrypted public entries: `encrypted = false`, `access_policy = 0`, `seal_id = None`. The initial revision goes directly to `public_head`.
 
@@ -146,7 +146,7 @@ For unencrypted public entries: `encrypted = false`, `access_policy = 0`, `seal_
 
 To list entries in a collection, use the CLI: `morse entry list`. The command supports pagination with `--limit` and `--cursor` flags, and `--drafts-only` to filter for draft entries.
 
-See [CLI Commands → Entry](https://morse-docs.vercel.app/cli-commands.html#entry) for the full syntax.
+See [CLI Commands → Entry](https://morsecms-docs.vercel.app/cli-commands.html#entry) for the full syntax.
 
 ## Appending a Draft Revision
 
@@ -463,7 +463,7 @@ All production write paths require a reference to the Walrus `&Blob` object (not
 
 ## Access Policy & Encryption Rules
 
-The `encrypted` flag and `access_policy` must be consistent. The contract enforces this at every write. See [Access Control](https://morse-docs.vercel.app/access-control.html) for the full permission model.
+The `encrypted` flag and `access_policy` must be consistent. The contract enforces this at every write. See [Access Control](https://morsecms-docs.vercel.app/access-control.html) for the full permission model.
 
 | encrypted | access_policy | seal_id | Result |
 | --- | --- | --- | --- |
@@ -482,7 +482,7 @@ Entry and revision operations do not emit on-chain events. Use the transaction l
 
 ## Error Codes
 
-For more error codes, see: [Publications](https://morse-docs.vercel.app/publications.html#error-codes), [Collections](https://morse-docs.vercel.app/collections.html#error-codes), [Access Control](https://morse-docs.vercel.app/access-control.html#error-codes).
+For more error codes, see: [Publications](https://morsecms-docs.vercel.app/publications.html#error-codes), [Collections](https://morsecms-docs.vercel.app/collections.html#error-codes), [Access Control](https://morsecms-docs.vercel.app/access-control.html#error-codes).
 
 | Code | Constant | Meaning |
 | --- | --- | --- |

@@ -1,4 +1,4 @@
-> Source: https://morse-docs.vercel.app/publications.html · Full docs: https://morse-docs.vercel.app/llms-full.txt
+> Source: https://morsecms-docs.vercel.app/publications.html · Full docs: https://morsecms-docs.vercel.app/llms-full.txt
 > Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback
 
 # Publications
@@ -79,7 +79,7 @@ The registry is a mandatory argument to `new_publication`. You cannot create a p
 
 To list publications owned by your account, use the CLI: `morse publication list`. You can also fetch a specific publication by slug with `morse publication get <slug>`.
 
-See [CLI Commands → Publication](https://morse-docs.vercel.app/cli-commands.html#publication) for the full syntax.
+See [CLI Commands → Publication](https://morsecms-docs.vercel.app/cli-commands.html#publication) for the full syntax.
 
 ## Creating a Publication
 
@@ -136,13 +136,13 @@ public fun transfer_owner_cap(owner_cap: OwnerCap, recipient: address)
 public fun transfer_publisher_cap(cap: PublisherCap, recipient: address)
 ```
 
-Use [SDK Setup → morseConfig()](https://morse-docs.vercel.app/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server Setup](https://morse-docs.vercel.app/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://morse-docs.vercel.app/contracts-workflows.html) for complete PTB examples.
+Use [SDK Setup → morseConfig()](https://morsecms-docs.vercel.app/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://morsecms-docs.vercel.app/contracts-workflows.html) for complete PTB examples.
 
 `new_publication` returns three objects in a tuple:
 
 - **Publication** - the shared content container
-- `OwnerCap` - admin authority over the publication (one per publication, held by the owner wallet). See [Access Control → OwnerCap](https://morse-docs.vercel.app/access-control.html#ownercap)
-- `PublisherCap` - write authority for content operations, bound to the transaction sender. See [Access Control → PublisherCap](https://morse-docs.vercel.app/access-control.html#publishercap)
+- `OwnerCap` - admin authority over the publication (one per publication, held by the owner wallet). See [Access Control → OwnerCap](https://morsecms-docs.vercel.app/access-control.html#ownercap)
+- `PublisherCap` - write authority for content operations, bound to the transaction sender. See [Access Control → PublisherCap](https://morsecms-docs.vercel.app/access-control.html#publishercap)
 
 ## Deleting a Publication
 
@@ -241,7 +241,7 @@ After receiving the `OwnerCap`, the recipient must set the publication as active
 
 Publishers are managed through capability tokens. An owner can issue, revoke, and destroy publisher caps. Revoked caps are added to the publication's denylist, and any future operation attempted with a revoked cap aborts with `EPublisherCapRevoked`.
 
-See [Access Control → PublisherCap](https://morse-docs.vercel.app/access-control.html#publishercap) for the full API with Move, CLI, and SDK examples.
+See [Access Control → PublisherCap](https://morsecms-docs.vercel.app/access-control.html#publishercap) for the full API with Move, CLI, and SDK examples.
 
 ## Events
 
@@ -258,7 +258,7 @@ The publications module emits the following events. An off-chain indexer can sub
 
 ## Error Codes
 
-For more error codes, see: [Collections](https://morse-docs.vercel.app/collections.html#error-codes), [Entries](https://morse-docs.vercel.app/entries.html#error-codes), [Access Control](https://morse-docs.vercel.app/access-control.html#error-codes).
+For more error codes, see: [Collections](https://morsecms-docs.vercel.app/collections.html#error-codes), [Entries](https://morsecms-docs.vercel.app/entries.html#error-codes), [Access Control](https://morsecms-docs.vercel.app/access-control.html#error-codes).
 
 | Code | Constant | Meaning |
 | --- | --- | --- |

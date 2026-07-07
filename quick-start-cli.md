@@ -1,4 +1,4 @@
-> Source: https://morse-docs.vercel.app/quick-start-cli.html · Full docs: https://morse-docs.vercel.app/llms-full.txt
+> Source: https://morsecms-docs.vercel.app/quick-start-cli.html · Full docs: https://morsecms-docs.vercel.app/llms-full.txt
 > Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback
 
 # Quick Start: CLI
@@ -135,10 +135,10 @@ The optional `--via-aggregator` flag routes reads through the Walrus aggregator,
 >
 > Your content is stored on Walrus and registered on Sui testnet. Run `morse status` to see your active context, or `morse entry list` to see all entries in the collection.
 
-If you hit errors at any step, run `morse --help` for command usage or see the [CLI Cookbooks → Troubleshooting](https://morse-docs.vercel.app/cli-workflows.html#troubleshooting) section.
+If you hit errors at any step, run `morse --help` for command usage or see the [CLI Cookbooks → Troubleshooting](https://morsecms-docs.vercel.app/cli-workflows.html#troubleshooting) section.
 
 ## Next Steps
 
-- [CLI: Command Reference](https://morse-docs.vercel.app/cli-commands.html): Every command and flag: publication, collection, entry, revision, cap.
-- [CLI: Cookbooks](https://morse-docs.vercel.app/cli-workflows.html): Multi-step recipes: encrypted entries, multi-writer setups, CI/CD scripting.
-- [Core Concepts](https://morse-docs.vercel.app/core-concepts.html): Understand the data model - publications, collections, entries, and revisions.
+- [CLI: Command Reference](https://morsecms-docs.vercel.app/cli-commands.html): Every command and flag: publication, collection, entry, revision, cap.
+- [CLI: Cookbooks](https://morsecms-docs.vercel.app/cli-workflows.html): Multi-step recipes: encrypted entries, multi-writer setups, CI/CD scripting.
+- [Core Concepts](https://morsecms-docs.vercel.app/core-concepts.html): Understand the data model - publications, collections, entries, and revisions.

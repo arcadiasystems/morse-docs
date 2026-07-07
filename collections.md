@@ -1,4 +1,4 @@
-> Source: https://morse-docs.vercel.app/collections.html · Full docs: https://morse-docs.vercel.app/llms-full.txt
+> Source: https://morsecms-docs.vercel.app/collections.html · Full docs: https://morsecms-docs.vercel.app/llms-full.txt
 > Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback
 
 # Collections
@@ -71,9 +71,9 @@ The contract validates that every `QuiltPatchId` is exactly 37 bytes. Shorter or
 
 ## Creating a Collection
 
-Collections are created through the publication module's `create_collection` function, which requires a valid [PublisherCap](https://morse-docs.vercel.app/access-control.html#publishercap).
+Collections are created through the publication module's `create_collection` function, which requires a valid [PublisherCap](https://morsecms-docs.vercel.app/access-control.html#publishercap).
 
-A collection cannot exist outside of a [publication](https://morse-docs.vercel.app/publications.html) - every collection is scoped to exactly one.
+A collection cannot exist outside of a [publication](https://morsecms-docs.vercel.app/publications.html) - every collection is scoped to exactly one.
 
 **CLI:**
 
@@ -123,7 +123,7 @@ public fun create_collection(
 )
 ```
 
-Use [SDK Setup → morseConfig()](https://morse-docs.vercel.app/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server Setup](https://morse-docs.vercel.app/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://morse-docs.vercel.app/contracts-workflows.html) for complete PTB examples.
+Use [SDK Setup → morseConfig()](https://morsecms-docs.vercel.app/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://morsecms-docs.vercel.app/contracts-workflows.html) for complete PTB examples.
 
 Collection names must be unique within a publication. Creating a collection with a name that already exists aborts with `ECollectionAlreadyExists`.
 
@@ -133,7 +133,7 @@ Collection names must be unique within a publication. Creating a collection with
 
 To list collections in a publication, use the CLI: `morse collection list`.
 
-See [CLI Commands → Collection](https://morse-docs.vercel.app/cli-commands.html#collection) for the full syntax.
+See [CLI Commands → Collection](https://morsecms-docs.vercel.app/cli-commands.html#collection) for the full syntax.
 
 ## Deleting a Collection
 
@@ -187,7 +187,7 @@ Collection lifecycle events are emitted by the `publication` module.
 
 ## Error Codes
 
-For more error codes, see: [Publications](https://morse-docs.vercel.app/publications.html#error-codes), [Entries](https://morse-docs.vercel.app/entries.html#error-codes), [Access Control](https://morse-docs.vercel.app/access-control.html#error-codes).
+For more error codes, see: [Publications](https://morsecms-docs.vercel.app/publications.html#error-codes), [Entries](https://morsecms-docs.vercel.app/entries.html#error-codes), [Access Control](https://morsecms-docs.vercel.app/access-control.html#error-codes).
 
 | Code | Constant | Meaning |
 | --- | --- | --- |
