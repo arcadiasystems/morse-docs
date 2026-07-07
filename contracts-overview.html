@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contract Overview · Morse dCMS Documentation</title>
+  <meta name="description" content="The Morse smart contract: a Move package on Sui managing publications, collections, and entries on-chain with Walrus blob storage. Architecture, capability model, storage modes, revision workflow, and Seal encryption.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'><rect width='34' height='34' rx='8' fill='%23141414' stroke='rgba(0,210,210,0.3)' stroke-width='1'/><path d='M5 26V10L12 19L17 12L22 19L29 10V26' stroke='%2300d2d2' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='17' cy='21' r='2' fill='%2300d2d2'/><rect x='11' y='27' width='4' height='1.5' rx='0.75' fill='%2300d2d2' opacity='0.7'/><rect x='16.5' y='27' width='7' height='1.5' rx='0.75' fill='%2300d2d2' opacity='0.7'/></svg>">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <button class="hamburger" id="hamburger" aria-label="Toggle sidebar">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <a href="index.html" class="logo">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon">
+      <rect width="34" height="34" rx="8" fill="#141414" stroke="rgba(0,210,210,0.3)" stroke-width="1"/>
+      <path d="M5 26V10L12 19L17 12L22 19L29 10V26" stroke="#00d2d2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <circle cx="17" cy="21" r="2" fill="#00d2d2"/>
+      <rect x="11" y="27" width="4" height="1.5" rx="0.75" fill="#00d2d2" opacity="0.7"/>
+      <rect x="16.5" y="27" width="7" height="1.5" rx="0.75" fill="#00d2d2" opacity="0.7"/>
+    </svg>
+    <span class="logo-wordmark">MORSE</span>
+    </a>
+    <div class="header-search">
+      <div class="search-box">
+        <span class="search-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <span class="search-placeholder">Search documentation…</span>
+        <kbd class="search-kbd">⌘K</kbd>
+      </div>
+    </div>
+    <nav class="header-links">
+      <a href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener" class="header-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="https://walrus.xyz" target="_blank" rel="noopener" class="header-link header-link-primary">Walrus ↗</a>
+    </nav>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <nav></nav>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+      <nav class="breadcrumbs">
+        <span class="breadcrumb-link">Smart Contracts</span>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-current">Overview</span>
+      </nav>
+
+      <article class="article">
+        <h1>Contract Overview</h1>
+        <p class="article-lead">
+          The Morse smart contract is a Move package named <code>publication</code> deployed on Sui. It manages publications, collections, and entries on-chain, with content stored on Walrus. Interact with it directly via Sui Programmable Transaction Blocks (PTBs) using <code>@mysten/sui</code>.
+        </p>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">Testnet deployment</div>
+            <div class="callout-text">
+              Use <a href="sdk-client-setup.html#morse-config">SDK Setup &rarr; morseConfig()</a> to get the current package ID, original ID, and registry ID. These values update automatically when the contract is upgraded.
+            </div>
+          </div>
+        </div>
+
+        <h2 id="getting-started">Getting Started</h2>
+        <p>Use <code>morseConfig()</code> from <code>@arcadiasystems/morse-sdk</code> to resolve the package and registry addresses, then construct PTBs with <code>tx.moveCall</code>. See the <a href="contracts-reference.html">Contract Reference</a> for complete function signatures and struct definitions, and the <a href="contracts-workflows.html">Contract Cookbooks</a> for step-by-step recipes.</p>
+
+        <h2 id="package-structure">Package Structure</h2>
+        <p>The package compiles three modules. Every public entry point lives in <code>publication::publication</code>; the other two modules define the data types and internal logic it builds on.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Module</th><th>Source file</th><th>Role</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>publication::publication</code></td>
+                <td><code>sources/publication.move</code></td>
+                <td>Defines <code>Publication</code>, <code>OwnerCap</code>, <code>PublisherCap</code>, and <code>PublicationRegistry</code>. Top-level API for publication lifecycle, capability issuance, collection and entry operations, and Seal approval.</td>
+              </tr>
+              <tr>
+                <td><code>publication::collection</code></td>
+                <td><code>sources/collection.move</code></td>
+                <td>Defines <code>Collection</code> and the storage-mode constant, manages the per-collection <code>Table&lt;u64, Entry&gt;</code>.</td>
+              </tr>
+              <tr>
+                <td><code>publication::entry</code></td>
+                <td><code>sources/entry.move</code></td>
+                <td>Defines <code>Entry</code>, <code>EntryRevision</code>, and the <code>BlobRef</code> enum. Contains revision append and publish logic and access-policy validation.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="struct-definitions">Struct Definitions</h2>
+
+        <h3 id="struct-publication">Publication module</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">Move</span>
+            <button class="code-copy"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+          </div>
+          <pre><span class="cm">// Root container for a publication. Shared object  - key only (no store).</span>
+<span class="kw">public struct</span> <span class="ty">Publication</span> <span class="kw">has</span> <span class="ty">key</span> {
+  id: <span class="ty">UID</span>,
+  name: <span class="ty">String</span>,
+  slug: <span class="ty">String</span>,
+  collections: <span class="ty">VecMap</span>&lt;<span class="ty">String</span>, <span class="ty">Collection</span>&gt;,
+  revoked_publisher_caps: <span class="ty">Table</span>&lt;<span class="ty">ID</span>, <span class="ty">bool</span>&gt;,
+}
+
+<span class="cm">// Shared singleton. Created by the package initializer. Holds slug-to-ID mapping.</span>
+<span class="kw">public struct</span> <span class="ty">PublicationRegistry</span> <span class="kw">has</span> <span class="ty">key</span> {
+  id: <span class="ty">UID</span>,
+  slugs: <span class="ty">Table</span>&lt;<span class="ty">String</span>, <span class="ty">ID</span>&gt;,
+}
+
+<span class="cm">// Proves ownership. One per publication. Transferable.</span>
+<span class="kw">public struct</span> <span class="ty">OwnerCap</span> <span class="kw">has</span> <span class="ty">key</span> {
+  id: <span class="ty">UID</span>,
+  publication_id: <span class="ty">ID</span>,
+}
+
+<span class="cm">// Grants write access. Many per publication. Holder-bound.</span>
+<span class="kw">public struct</span> <span class="ty">PublisherCap</span> <span class="kw">has</span> <span class="ty">key</span> {
+  id: <span class="ty">UID</span>,
+  publication_id: <span class="ty">ID</span>,
+  holder: <span class="ty">address</span>,
+}</pre>
+        </div>
+
+        <h3 id="struct-collection">Collection module</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">Move</span>
+            <button class="code-copy"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+          </div>
+          <pre><span class="cm">// Stored value inside Publication.collections VecMap.</span>
+<span class="kw">public struct</span> <span class="ty">Collection</span> <span class="kw">has</span> <span class="ty">store</span> {
+  name: <span class="ty">String</span>,
+  storage_mode: <span class="ty">u8</span>,       <span class="cm">// 0 = STORAGE_MODE_BLOB, 1 = STORAGE_MODE_QUILT. Immutable.</span>
+  next_entry_id: <span class="ty">u64</span>,     <span class="cm">// Monotonic counter; never decremented on delete.</span>
+  entries: <span class="ty">Table</span>&lt;<span class="ty">u64</span>, <span class="ty">Entry</span>&gt;,
+}</pre>
+        </div>
+
+        <h3 id="struct-entry">Entry module</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">Move</span>
+            <button class="code-copy"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+          </div>
+          <pre><span class="cm">// Stored value inside Collection.entries Table.</span>
+<span class="kw">public struct</span> <span class="ty">Entry</span> <span class="kw">has</span> <span class="ty">store</span>, <span class="ty">drop</span> {
+  name: <span class="ty">String</span>,
+  revisions: <span class="ty">vector</span>&lt;<span class="ty">EntryRevision</span>&gt;,
+  draft_head: <span class="ty">Option</span>&lt;<span class="ty">u64</span>&gt;,
+  public_head: <span class="ty">Option</span>&lt;<span class="ty">u64</span>&gt;,
+}
+
+<span class="cm">// Immutable revision metadata appended to Entry.revisions.</span>
+<span class="kw">public struct</span> <span class="ty">EntryRevision</span> <span class="kw">has</span> <span class="ty">store</span>, <span class="ty">drop</span> {
+  blob_ref: <span class="ty">BlobRef</span>,
+  content_type: <span class="ty">String</span>,
+  encrypted: <span class="ty">bool</span>,
+  access_policy: <span class="ty">u8</span>,
+  seal_id: <span class="ty">Option</span>&lt;<span class="ty">vector</span>&lt;<span class="ty">u8</span>&gt;&gt;,
+  author: <span class="ty">address</span>,
+}
+
+<span class="cm">// Identifies the Walrus content for a revision.</span>
+<span class="cm">// Blob(ID): Sui object ID of a standalone Walrus Blob (STORAGE_MODE_BLOB).</span>
+<span class="cm">// QuiltPatch(vector&lt;u8&gt;): 37-byte QuiltPatchId  - quilt_blob_id (32) || version (1) || start_index (2) || end_index (2).</span>
+<span class="kw">public enum</span> <span class="ty">BlobRef</span> <span class="kw">has</span> <span class="ty">copy</span>, <span class="ty">drop</span>, <span class="ty">store</span> {
+  Blob(<span class="ty">ID</span>),
+  QuiltPatch(<span class="ty">vector</span>&lt;<span class="ty">u8</span>&gt;),
+}</pre>
+        </div>
+
+        <h2 id="capabilities">What PTBs Give You</h2>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <div class="feature-title">Full transaction control</div>
+            <div class="feature-desc">Compose multiple Move calls in a single PTB - create a publication, add a collection, and publish an entry atomically.</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-title">No SDK abstraction layer</div>
+            <div class="feature-desc">Call the contract functions directly. Useful when the SDK doesn't expose a wrapper for your use case or when you need fine-grained control.</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-title">Custom batching</div>
+            <div class="feature-desc">Delete 50 entries, 3 collections, and a publication in one transaction. The SDK processes these sequentially; PTBs batch them.</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-title">BCS encoding</div>
+            <div class="feature-desc">Pass <code>Option&lt;vector&lt;u8&gt;&gt;</code> and other Move types directly via <code>@mysten/sui/bcs</code>. Required for encrypted entries and quilt patches.</div>
+          </div>
+        </div>
+
+        <h2 id="known-limitations">Known Limitations</h2>
+        <ul>
+          <li><strong>No encrypted publish path.</strong> <code>publish_from_draft</code> and <code>publish_direct</code> hardcode <code>encrypted = false</code>. Encrypted content stays as drafts - see <a href="entries.html#adding-an-entry">Entries &rarr; Adding an Entry</a> for the full lifecycle.</li>
+          <li><strong>Only the Publisher access policy is enforced.</strong> The <code>Subscription</code> policy constant is defined but the approval entry point is not yet implemented.</li>
+          <li><strong>All blobs must be deletable.</strong> The contract calls <code>blob.is_deletable()</code> and aborts if a permanent blob is passed.</li>
+          <li><strong>Single entry point module.</strong> All public functions live in <code>publication::publication</code>. The other modules are internal.</li>
+        </ul>
+
+        <h2 id="next-steps">Next Steps</h2>
+        <div class="card-grid">
+          <a href="contracts-reference.html" class="card">
+            <div class="card-title">Smart Contracts: Reference</div>
+            <div class="card-desc">Complete function signatures, events, error codes, and constants.</div>
+          </a>
+          <a href="contracts-workflows.html" class="card">
+            <div class="card-title">Smart Contracts: Cookbooks</div>
+            <div class="card-desc">Step-by-step recipes for creating publications, managing entries, and encrypting content via PTBs.</div>
+          </a>
+        </div>
+      </article>
+
+      <div class="page-nav">
+        <a href="sdk-workflows.html" class="pnav">
+          <span class="pnav-dir">Previous</span>
+          <span class="pnav-title">← SDK: Cookbooks</span>
+        </a>
+        <a href="contracts-reference.html" class="pnav pnav-right">
+          <span class="pnav-dir">Next</span>
+          <span class="pnav-title">Smart Contracts: Reference →</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <aside class="toc">
+    <div class="toc-title">On this page</div>
+    <ul class="toc-list"></ul>
+  </aside>
+</div>
+
+<script src="assets/sidebar.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick Start: CLI · Morse dCMS Documentation</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'><rect width='34' height='34' rx='8' fill='%23141414' stroke='rgba(0,210,210,0.3)' stroke-width='1'/><path d='M5 26V10L12 19L17 12L22 19L29 10V26' stroke='%2300d2d2' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='17' cy='21' r='2' fill='%2300d2d2'/><rect x='11' y='27' width='4' height='1.5' rx='0.75' fill='%2300d2d2' opacity='0.7'/><rect x='16.5' y='27' width='7' height='1.5' rx='0.75' fill='%2300d2d2' opacity='0.7'/></svg>">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <button class="hamburger" id="hamburger" aria-label="Toggle sidebar">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <a href="index.html" class="logo">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon">
+      <rect width="34" height="34" rx="8" fill="#141414" stroke="rgba(0,210,210,0.3)" stroke-width="1"/>
+      <path d="M5 26V10L12 19L17 12L22 19L29 10V26" stroke="#00d2d2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <circle cx="17" cy="21" r="2" fill="#00d2d2"/>
+      <rect x="11" y="27" width="4" height="1.5" rx="0.75" fill="#00d2d2" opacity="0.7"/>
+      <rect x="16.5" y="27" width="7" height="1.5" rx="0.75" fill="#00d2d2" opacity="0.7"/>
+    </svg>
+    <span class="logo-wordmark">MORSE</span>
+    </a>
+    <div class="header-search">
+      <div class="search-box">
+        <span class="search-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <span class="search-placeholder">Search documentation…</span>
+        <kbd class="search-kbd">⌘K</kbd>
+      </div>
+    </div>
+    <nav class="header-links">
+      <a href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener" class="header-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="https://walrus.xyz" target="_blank" rel="noopener" class="header-link header-link-primary">Walrus ↗</a>
+    </nav>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <nav></nav>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+      <nav class="breadcrumbs">
+        <span class="breadcrumb-link">Getting Started</span>
+        <span class="breadcrumb-sep">›</span>
+        <a href="quick-start.html" class="breadcrumb-link">Quick Start</a>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-current">CLI</span>
+      </nav>
+
+      <article class="article">
+        <h1>Quick Start: CLI</h1>
+        <p class="article-lead">
+          Install morse-cli and go from zero to published content on testnet in under 5 minutes - no contracts, no code, just your terminal.
+        </p>
+
+        <h2 id="prerequisites">Prerequisites</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Requirement</th><th>Details</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><td>Bun or Node</td><td>v1.2+ / >= 18</td><td>JavaScript runtime</td></tr>
+              <tr><td>Sui wallet</td><td>Sui Wallet, Suiet, or any Sui-compatible wallet</td><td>Signing transactions on testnet</td></tr>
+              <tr><td>SUI + WAL tokens</td><td><a href="https://faucet.sui.io/" target="_blank">SUI faucet</a> / <a href="https://stake-wal.wal.app/?network=testnet" target="_blank">Swap SUI for WAL</a></td><td>Gas fees (SUI) and Walrus storage fees (WAL)</td></tr>
+              <tr><td>Bech32 private key</td><td>A <code>suiprivkey1...</code> string</td><td>CLI authentication - export from your wallet's settings</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="installing">Installing</h2>
+        <p>Install the CLI globally using your preferred package manager.</p>
+        <p>With npm:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre>npm i -g @arcadiasystems/morse-cli</pre>
+        </div>
+        <p>Or with Bun / pnpm:</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre>bun add -g @arcadiasystems/morse-cli</pre>
+        </div>
+        <p>Verify the installation:</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre>morse --help</pre>
+        </div>
+
+        <h2 id="creating-a-profile">Creating a Profile</h2>
+        <p>A profile stores your network, RPC endpoint, and active context. Create one for testnet:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre>morse config add testnet --network testnet</pre>
+        </div>
+
+        <p>Verify your profile is active:</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre>morse status</pre>
+        </div>
+
+        <h2 id="importing-your-key">Importing Your Key</h2>
+        <p>Import a Sui private key into the encrypted keystore. The CLI prompts interactively for the key and a password - keys are never passed as flags.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre>morse account import</pre>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">Key format</div>
+            <div class="callout-text">Paste a Bech32 <code>suiprivkey1...</code> string. Export one from your wallet's settings. For non-interactive environments (CI, scripts), set <code>MORSE_PRIVATE_KEY</code> instead - the CLI uses it directly and skips the keystore prompt entirely.</div>
+          </div>
+        </div>
+
+        <h2 id="creating-a-publication">Creating a Publication</h2>
+        <p>This creates a publication with a globally unique slug and auto-selects it as the active context.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre>morse publication create --name "My Blog" --slug my-blog</pre>
+        </div>
+
+        <div class="code-block code-block-output">
+          <div class="code-header">
+            <span class="code-lang">output</span>
+          </div>
+          <pre>Creating "My Blog"...
+Created "My Blog" (0x23d2...)
+  ownerCap:     0xa40a...
+  publisherCap: 0x6141...
+  tx:           7nF2n...
+Selected as the active publication.</pre>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="callout-body">
+            <div class="callout-title">Which IDs to save</div>
+            <div class="callout-text">The CLI auto-selects new publications and collections as your active context, so you rarely need to paste IDs. If you do need them later, run <code>morse status</code> to see your active publication ID and collection.</div>
+          </div>
+        </div>
+
+        <h2 id="creating-a-collection">Creating a Collection</h2>
+        <p>Collections group entries within a publication. The CLI auto-selects the new collection as your active context, so subsequent <code>entry</code> commands target it automatically. Run <code>morse status</code> at any point to see your active publication and collection.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre>morse collection create posts</pre>
+        </div>
+
+        <div class="code-block code-block-output">
+          <div class="code-header">
+            <span class="code-lang">output</span>
+          </div>
+          <pre>Creating collection "posts" (blob)...
+Created collection "posts".
+Selected as the active collection. (tx: DWkD...)</pre>
+        </div>
+
+        <h2 id="publishing-an-entry">Publishing an Entry</h2>
+        <p>Create a content file and publish it. The CLI uploads the file to Walrus and registers the entry on-chain.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre>echo '{"title": "Hello World", "body": "My first post on Morse."}' > post.json</pre>
+        </div>
+        <p>Publish it. The CLI targets the active publication and collection by default - these are set automatically when you create them. You can override with <code>-P &lt;slug|id&gt;</code> and <code>-C &lt;name&gt;</code> flags:</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre>morse entry add hello --file post.json</pre>
+        </div>
+
+        <div class="code-block code-block-output">
+          <div class="code-header">
+            <span class="code-lang">output</span>
+          </div>
+          <pre>Uploading 65 bytes to Walrus...
+✔ Added entry #0 "hello" (tx: D9Yfjk...)
+  view: https://aggregator.walrus-testnet.walrus.space/v1/blobs/0iKeii...</pre>
+        </div>
+
+        <h2 id="reading-it-back">Reading It Back</h2>
+        <p>Fetch the entry content by its ID. Entry IDs are monotonic - your first entry is <code>0</code>.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre>morse entry read 0 --via-aggregator</pre>
+        </div>
+        <p>The optional <code>--via-aggregator</code> flag routes reads through the Walrus aggregator, which is more reliable on testnet.</p>
+
+        <div class="code-block code-block-output">
+          <div class="code-header">
+            <span class="code-lang">output</span>
+          </div>
+          <pre>{"title": "Hello World", "body": "My first post on Morse."}</pre>
+        </div>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">You're live on-chain</div>
+            <div class="callout-text">Your content is stored on Walrus and registered on Sui testnet. Run <code>morse status</code> to see your active context, or <code>morse entry list</code> to see all entries in the collection.</div>
+          </div>
+        </div>
+
+        <!-- <div class="ai-prompt">
+          <details>
+            <summary>Build with AI</summary>
+            <p>Copy this prompt into <a href="https://claude.ai" target="_blank" rel="noopener">Claude</a> or another AI coding assistant to scaffold this workflow automatically:</p>
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-lang">prompt</span>
+                <button class="code-copy">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                  Copy
+                </button>
+              </div>
+              <pre>Install the Morse CLI globally, create a testnet profile, import my Sui private key, then create a publication named "My Blog" with slug "my-blog", add a collection called "posts", publish a JSON file as an entry, and read it back. Use the morse CLI for every step and show me the expected output of each command.</pre>
+            </div>
+          </details>
+        </div> -->
+
+        <p>If you hit errors at any step, run <code>morse --help</code> for command usage or see the <a href="cli-workflows.html#troubleshooting">CLI Cookbooks &rarr; Troubleshooting</a> section.</p>
+
+        <h2 id="next-steps">Next Steps</h2>
+        <div class="card-grid">
+          <a href="cli-commands.html" class="card">
+            <div class="card-title">CLI: Command Reference</div>
+            <div class="card-desc">Every command and flag: publication, collection, entry, revision, cap.</div>
+          </a>
+          <a href="cli-workflows.html" class="card">
+            <div class="card-title">CLI: Cookbooks</div>
+            <div class="card-desc">Multi-step recipes: encrypted entries, multi-writer setups, CI/CD scripting.</div>
+          </a>
+          <a href="core-concepts.html" class="card">
+            <div class="card-title">Core Concepts</div>
+            <div class="card-desc">Understand the data model - publications, collections, entries, and revisions.</div>
+          </a>
+        </div>
+      </article>
+
+      <div class="page-nav">
+        <a href="quick-start.html" class="pnav">
+          <span class="pnav-dir">Previous</span>
+          <span class="pnav-title">← Quick Start</span>
+        </a>
+        <a href="quick-start-sdk.html" class="pnav pnav-right">
+          <span class="pnav-dir">Next</span>
+          <span class="pnav-title">Quick Start: SDK →</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <aside class="toc">
+    <div class="toc-title">On this page</div>
+    <ul class="toc-list"></ul>
+  </aside>
+</div>
+
+<script src="assets/sidebar.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

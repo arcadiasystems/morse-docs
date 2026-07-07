@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contract Reference · Morse dCMS Documentation</title>
+  <meta name="description" content="Complete reference for all public functions, events, error codes, and struct definitions in the Morse Move package.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'><rect width='34' height='34' rx='8' fill='%23141414' stroke='rgba(0,210,210,0.3)' stroke-width='1'/><path d='M5 26V10L12 19L17 12L22 19L29 10V26' stroke='%2300d2d2' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='17' cy='21' r='2' fill='%2300d2d2'/><rect x='11' y='27' width='4' height='1.5' rx='0.75' fill='%2300d2d2' opacity='0.7'/><rect x='16.5' y='27' width='7' height='1.5' rx='0.75' fill='%2300d2d2' opacity='0.7'/></svg>">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <button class="hamburger" id="hamburger" aria-label="Toggle sidebar">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <a href="index.html" class="logo">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon">
+      <rect width="34" height="34" rx="8" fill="#141414" stroke="rgba(0,210,210,0.3)" stroke-width="1"/>
+      <path d="M5 26V10L12 19L17 12L22 19L29 10V26" stroke="#00d2d2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <circle cx="17" cy="21" r="2" fill="#00d2d2"/>
+      <rect x="11" y="27" width="4" height="1.5" rx="0.75" fill="#00d2d2" opacity="0.7"/>
+      <rect x="16.5" y="27" width="7" height="1.5" rx="0.75" fill="#00d2d2" opacity="0.7"/>
+    </svg>
+    <span class="logo-wordmark">MORSE</span>
+    </a>
+    <div class="header-search">
+      <div class="search-box">
+        <span class="search-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <span class="search-placeholder">Search documentation…</span>
+        <kbd class="search-kbd">⌘K</kbd>
+      </div>
+    </div>
+    <nav class="header-links">
+      <a href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener" class="header-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="https://walrus.xyz" target="_blank" rel="noopener" class="header-link header-link-primary">Walrus ↗</a>
+    </nav>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <nav></nav>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+      <nav class="breadcrumbs">
+        <span class="breadcrumb-link">Smart Contracts</span>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-current">Reference</span>
+      </nav>
+
+      <article class="article">
+        <h1>Contract Reference</h1>
+        <p class="article-lead">
+          Complete reference for the Morse Move package  - function signatures, struct definitions, events, error codes, and constants for the <code>publication</code>, <code>collection</code>, and <code>entry</code> modules.
+        </p>
+
+        <h2 id="publication-functions">Publication module</h2>
+        <p>All functions live in <code>publication::publication</code>. Functions that accept a <code>&amp;PublisherCap</code> also validate that the cap is not revoked and that <code>cap.holder == ctx.sender()</code>.</p>
+
+        <h3 id="publication-lifecycle">Publication Lifecycle</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Function</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>new_publication(registry: &amp;mut PublicationRegistry, name: String, slug: String, ctx: &amp;mut TxContext)</code></td>
+                <td>Returns <code>(Publication, OwnerCap, PublisherCap)</code>. Create a publication and register its slug. Call <code>share_publication</code> and transfer caps in the same PTB.</td>
+              </tr>
+              <tr>
+                <td><code>share_publication(publication: Publication)</code></td>
+                <td>Share the publication object. Call after <code>new_publication</code> in the same PTB.</td>
+              </tr>
+              <tr>
+                <td><code>delete_publication(registry: &amp;mut PublicationRegistry, publication: Publication, owner_cap: OwnerCap)</code></td>
+                <td>Requires <code>OwnerCap</code> (consumed). Delete a publication and release its slug. All collections must be empty first.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="registry-queries">Registry Queries</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Function</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>contains_slug(registry: &amp;PublicationRegistry, slug: String)</code></td>
+                <td>Returns <code>bool</code>. Whether a slug is currently registered.</td>
+              </tr>
+              <tr>
+                <td><code>get_publication_id_by_slug(registry: &amp;PublicationRegistry, slug: String)</code></td>
+                <td>Returns <code>&amp;ID</code>. Resolve a slug to its publication object ID. Aborts if not registered.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="cap-management">Capability Management</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Function</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>transfer_owner_cap(owner_cap: OwnerCap, recipient: address)</code></td>
+                <td><code>OwnerCap</code> is consumed. Transfer ownership to another address.</td>
+              </tr>
+              <tr>
+                <td><code>issue_publisher_cap(publication: &amp;mut Publication, owner_cap: &amp;OwnerCap, holder: address, ctx: &amp;mut TxContext)</code></td>
+                <td>Requires <code>OwnerCap</code>. Returns <code>PublisherCap</code>. Mint a new cap bound to <code>holder</code>. Emits <code>PublisherCapIssued</code>.</td>
+              </tr>
+              <tr>
+                <td><code>revoke_publisher_cap(publication: &amp;mut Publication, owner_cap: &amp;OwnerCap, cap_id: ID)</code></td>
+                <td>Requires <code>OwnerCap</code>. Add a cap ID to the revocation denylist. Emits <code>PublisherCapRevoked</code>.</td>
+              </tr>
+              <tr>
+                <td><code>destroy_publisher_cap(publication: &amp;mut Publication, cap: PublisherCap, ctx: &amp;mut TxContext)</code></td>
+                <td>Requires <code>PublisherCap</code> (holder only, consumed). Surrender write access. If revoked, also removes cap from the denylist.</td>
+              </tr>
+              <tr>
+                <td><code>transfer_publisher_cap(cap: PublisherCap, recipient: address)</code></td>
+                <td><code>PublisherCap</code> is consumed. Transfer to another address. Does not change <code>holder</code> binding.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="collection-management">Collection Management</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Function</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>create_collection(publication: &amp;mut Publication, cap: &amp;PublisherCap, name: String, storage_mode: u8, ctx: &amp;mut TxContext)</code></td>
+                <td>Requires <code>PublisherCap</code>. Add a named collection. <code>storage_mode</code>: <code>0</code> (blob) or <code>1</code> (quilt), immutable. Emits <code>CollectionAdded</code>.</td>
+              </tr>
+              <tr>
+                <td><code>delete_collection(publication: &amp;mut Publication, cap: &amp;PublisherCap, name: String, ctx: &amp;mut TxContext)</code></td>
+                <td>Requires <code>PublisherCap</code>. Remove a named collection. Entries must be empty. Emits <code>CollectionRemoved</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="entry-management">Entry Management</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Function</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>add_entry_to_collection(publication: &amp;mut Publication, cap: &amp;PublisherCap, collection_name: String, name: String, blob: &amp;Blob, quilt_patch_id: Option&lt;vector&lt;u8&gt;&gt;, content_type: String, encrypted: bool, access_policy: u8, seal_id: Option&lt;vector&lt;u8&gt;&gt;, ctx: &amp;mut TxContext)</code></td>
+                <td>Requires <code>PublisherCap</code>. Returns <code>u64</code> (entry ID). Create a new entry in a named collection.</td>
+              </tr>
+              <tr>
+                <td><code>delete_entry_from_collection(publication: &amp;mut Publication, cap: &amp;PublisherCap, collection_name: String, entry_id: u64, ctx: &amp;mut TxContext)</code></td>
+                <td>Requires <code>PublisherCap</code>. Remove an entry by ID. The ID slot is not reused.</td>
+              </tr>
+              <tr>
+                <td><code>append_collection_entry_draft_revision(publication: &amp;mut Publication, cap: &amp;PublisherCap, collection_name: String, entry_id: u64, blob: &amp;Blob, quilt_patch_id: Option&lt;vector&lt;u8&gt;&gt;, content_type: String, encrypted: bool, access_policy: u8, seal_id: Option&lt;vector&lt;u8&gt;&gt;, ctx: &amp;mut TxContext)</code></td>
+                <td>Requires <code>PublisherCap</code>. Returns <code>u64</code> (revision index). Append a draft revision and advance <code>draft_head</code>.</td>
+              </tr>
+              <tr>
+                <td><code>publish_collection_entry_from_draft(publication: &amp;mut Publication, cap: &amp;PublisherCap, collection_name: String, entry_id: u64, draft_revision_id: u64, blob: &amp;Blob, quilt_patch_id: Option&lt;vector&lt;u8&gt;&gt;, content_type: String, ctx: &amp;mut TxContext)</code></td>
+                <td>Requires <code>PublisherCap</code>. Returns <code>u64</code> (revision index). Publish from a draft revision. Advances <code>public_head</code>.</td>
+              </tr>
+              <tr>
+                <td><code>publish_collection_entry_direct(publication: &amp;mut Publication, cap: &amp;PublisherCap, collection_name: String, entry_id: u64, blob: &amp;Blob, quilt_patch_id: Option&lt;vector&lt;u8&gt;&gt;, content_type: String, ctx: &amp;mut TxContext)</code></td>
+                <td>Requires <code>PublisherCap</code>. Returns <code>u64</code> (revision index). Publish directly without a draft. Advances <code>public_head</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="seal-function">Seal Function</h2>
+        <p>The Seal approval entry point is called by the Seal network during decryption  - not by end users directly. It is declared as an <code>entry</code> function (not <code>public fun</code>).</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Function</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>seal_approve_publisher(id: vector&lt;u8&gt;, publication: &amp;Publication, cap: &amp;PublisherCap, ctx: &amp;TxContext)</code></td>
+                <td>Requires <code>PublisherCap</code>. Called by Seal during decryption. Validates active cap and Seal identity namespace. Format: <code>[publication_id_bytes][0x01][nonce]</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="collection-functions">Collection module</h2>
+        <p>These functions are defined in <code>publication::collection</code>. All take a <code>&amp;Collection</code> reference; the collection is always accessed through the parent <code>Publication</code> object.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Function</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>get_name(collection: &amp;Collection)</code></td>
+                <td>Returns <code>String</code>. The collection's display name.</td>
+              </tr>
+              <tr>
+                <td><code>get_storage_mode(collection: &amp;Collection)</code></td>
+                <td>Returns <code>u8</code>. Storage mode constant: <code>0</code> for blob, <code>1</code> for quilt. Immutable after creation.</td>
+              </tr>
+              <tr>
+                <td><code>entries_length(collection: &amp;Collection)</code></td>
+                <td>Returns <code>u64</code>. Current number of entries. Does not account for holes from deleted entries.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="entry-functions">Entry module</h2>
+        <p>These functions are defined in <code>publication::entry</code>. Getter functions that operate on the latest revision use the last element of the <code>revisions</code> vector, not <code>public_head</code> or <code>draft_head</code>.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Function</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>get_name(entry: &amp;Entry)</code></td>
+                <td>Returns <code>String</code>. The entry's display name.</td>
+              </tr>
+              <tr>
+                <td><code>get_draft_head(entry: &amp;Entry)</code></td>
+                <td>Returns <code>Option&lt;u64&gt;</code>. Revision index of the current draft head. <code>None</code> if no draft exists.</td>
+              </tr>
+              <tr>
+                <td><code>get_public_head(entry: &amp;Entry)</code></td>
+                <td>Returns <code>Option&lt;u64&gt;</code>. Revision index of the current public head. <code>None</code> if not yet published.</td>
+              </tr>
+              <tr>
+                <td><code>get_blob_ref(entry: &amp;Entry)</code></td>
+                <td>Returns <code>BlobRef</code>. The blob reference from the latest revision.</td>
+              </tr>
+              <tr>
+                <td><code>get_content_type(entry: &amp;Entry)</code></td>
+                <td>Returns <code>String</code>. MIME content type from the latest revision.</td>
+              </tr>
+              <tr>
+                <td><code>get_encrypted(entry: &amp;Entry)</code></td>
+                <td>Returns <code>bool</code>. Whether the latest revision is encrypted.</td>
+              </tr>
+              <tr>
+                <td><code>get_access_policy(entry: &amp;Entry)</code></td>
+                <td>Returns <code>u8</code>. Access policy of the latest revision: <code>0</code> = public, <code>1</code> = publisher, <code>2</code> = subscription.</td>
+              </tr>
+              <tr>
+                <td><code>get_seal_id(entry: &amp;Entry)</code></td>
+                <td>Returns <code>Option&lt;vector&lt;u8&gt;&gt;</code>. Seal identity from the latest revision. <code>None</code> for unencrypted revisions.</td>
+              </tr>
+              <tr>
+                <td><code>get_author(entry: &amp;Entry)</code></td>
+                <td>Returns <code>address</code>. Author of the latest revision (<code>ctx.sender()</code> at creation time).</td>
+              </tr>
+              <tr>
+                <td><code>get_revision(entry: &amp;Entry, revision_id: u64)</code></td>
+                <td>Returns <code>&amp;EntryRevision</code>. A specific revision by zero-based index. Aborts with <code>ERevisionNotFound</code> if out of bounds.</td>
+              </tr>
+              <tr>
+                <td><code>access_policy_public()</code></td>
+                <td>Returns <code>u8</code> (<code>0</code>). The <code>ACCESS_PUBLIC</code> constant.</td>
+              </tr>
+              <tr>
+                <td><code>access_policy_publisher()</code></td>
+                <td>Returns <code>u8</code> (<code>1</code>). The <code>ACCESS_PUBLISHER</code> constant.</td>
+              </tr>
+              <tr>
+                <td><code>access_policy_subscription()</code></td>
+                <td>Returns <code>u8</code> (<code>2</code>). The <code>ACCESS_SUBSCRIPTION</code> constant. Reserved  - not yet implemented.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="constants">Constants</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Constant</th><th>Value</th><th>Module</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td><code>MAX_SLUG_LENGTH</code></td><td><code>64</code></td><td><code>publication</code></td><td>Maximum slug length in bytes.</td></tr>
+              <tr><td><code>SEAL_POLICY_TAG_PUBLISHER</code></td><td><code>1</code></td><td><code>publication</code></td><td>Policy tag byte for publisher-gated Seal identities. Placed after the publication ID bytes in the identity prefix.</td></tr>
+              <tr><td><code>STORAGE_MODE_BLOB</code></td><td><code>0</code></td><td><code>collection</code></td><td>Each entry references a standalone Walrus Blob by its Sui object ID. Use for dynamic collections.</td></tr>
+              <tr><td><code>STORAGE_MODE_QUILT</code></td><td><code>1</code></td><td><code>collection</code></td><td>Entries are patches within a shared Walrus Quilt blob, referenced by QuiltPatchId. Use for small, rarely-changing collections.</td></tr>
+              <tr><td><code>MAX_ENTRY_NAME_LENGTH</code></td><td><code>256</code></td><td><code>entry</code></td><td>Maximum entry name length in bytes.</td></tr>
+              <tr><td><code>MAX_CONTENT_TYPE_LENGTH</code></td><td><code>255</code></td><td><code>entry</code></td><td>Maximum <code>content_type</code> length in bytes.</td></tr>
+              <tr><td><code>QUILT_PATCH_ID_LENGTH</code></td><td><code>37</code></td><td><code>entry</code></td><td>Required exact byte length of a QuiltPatchId: <code>quilt_blob_id</code> (32) || <code>version</code> (1) || <code>start_index</code> (2) || <code>end_index</code> (2).</td></tr>
+              <tr><td><code>ACCESS_PUBLIC</code></td><td><code>0</code></td><td><code>entry</code></td><td>Unencrypted public access policy.</td></tr>
+              <tr><td><code>ACCESS_PUBLISHER</code></td><td><code>1</code></td><td><code>entry</code></td><td>Publisher-gated encrypted access policy.</td></tr>
+              <tr><td><code>ACCESS_SUBSCRIPTION</code></td><td><code>2</code></td><td><code>entry</code></td><td>Subscription-gated access policy (reserved for future use).</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="object-abilities">Object Abilities</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Type</th><th>Abilities</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td><code>Publication</code></td><td><code>key</code></td><td>Shared object. No <code>store</code>  - prevents wrapping outside this module.</td></tr>
+              <tr><td><code>PublicationRegistry</code></td><td><code>key</code></td><td>Shared singleton. Created by the package <code>init()</code> function at publish time.</td></tr>
+              <tr><td><code>OwnerCap</code></td><td><code>key</code></td><td>Owned object. Transferable. Exactly one exists per publication.</td></tr>
+              <tr><td><code>PublisherCap</code></td><td><code>key</code></td><td>Owned object. Holder-bound. Multiple can exist per publication. No <code>store</code>  - cannot be fabricated externally.</td></tr>
+              <tr><td><code>Collection</code></td><td><code>store</code></td><td>Wrapped value inside <code>Publication.collections</code> VecMap.</td></tr>
+              <tr><td><code>Entry</code></td><td><code>store, drop</code></td><td>Wrapped value inside <code>Collection.entries</code> Table. Dropped automatically on deletion.</td></tr>
+              <tr><td><code>EntryRevision</code></td><td><code>store, drop</code></td><td>Element of the <code>Entry.revisions</code> vector. Immutable after creation.</td></tr>
+              <tr><td><code>BlobRef</code></td><td><code>copy, drop, store</code></td><td>Enum  - either <code>Blob(ID)</code> or <code>QuiltPatch(vector&lt;u8&gt;)</code>. Copyable because it is a reference, not the blob itself.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="next-steps">Next Steps</h2>
+        <div class="card-grid">
+          <a href="contracts-overview.html" class="card">
+            <div class="card-title">Smart Contracts: Overview</div>
+            <div class="card-desc">Package structure, struct definitions, capabilities, and known limitations.</div>
+          </a>
+          <a href="contracts-workflows.html" class="card">
+            <div class="card-title">Smart Contracts: Cookbooks</div>
+            <div class="card-desc">Step-by-step PTB recipes for publishing, encrypted entries, and cap management.</div>
+          </a>
+        </div>
+      </article>
+
+      <div class="page-nav">
+        <a href="contracts-overview.html" class="pnav">
+          <span class="pnav-dir">Previous</span>
+          <span class="pnav-title">← Smart Contracts: Overview</span>
+        </a>
+        <a href="contracts-workflows.html" class="pnav pnav-right">
+          <span class="pnav-dir">Next</span>
+          <span class="pnav-title">Smart Contracts: Cookbooks →</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <aside class="toc">
+    <div class="toc-title">On this page</div>
+    <ul class="toc-list"></ul>
+  </aside>
+</div>
+
+<script src="assets/sidebar.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SDK Cookbooks · Morse dCMS Documentation</title>
+  <meta name="description" content="End-to-end SDK recipes: publish content, revise entries, encrypt and decrypt, delegate write access, and tear down resources.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'><rect width='34' height='34' rx='8' fill='%23141414' stroke='rgba(0,210,210,0.3)' stroke-width='1'/><path d='M5 26V10L12 19L17 12L22 19L29 10V26' stroke='%2300d2d2' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='17' cy='21' r='2' fill='%2300d2d2'/><rect x='11' y='27' width='4' height='1.5' rx='0.75' fill='%2300d2d2' opacity='0.7'/><rect x='16.5' y='27' width='7' height='1.5' rx='0.75' fill='%2300d2d2' opacity='0.7'/></svg>">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <button class="hamburger" id="hamburger" aria-label="Toggle sidebar">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <a href="index.html" class="logo">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon">
+      <rect width="34" height="34" rx="8" fill="#141414" stroke="rgba(0,210,210,0.3)" stroke-width="1"/>
+      <path d="M5 26V10L12 19L17 12L22 19L29 10V26" stroke="#00d2d2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <circle cx="17" cy="21" r="2" fill="#00d2d2"/>
+      <rect x="11" y="27" width="4" height="1.5" rx="0.75" fill="#00d2d2" opacity="0.7"/>
+      <rect x="16.5" y="27" width="7" height="1.5" rx="0.75" fill="#00d2d2" opacity="0.7"/>
+    </svg>
+    <span class="logo-wordmark">MORSE</span>
+    </a>
+    <div class="header-search">
+      <div class="search-box">
+        <span class="search-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <span class="search-placeholder">Search documentation…</span>
+        <kbd class="search-kbd">⌘K</kbd>
+      </div>
+    </div>
+    <nav class="header-links">
+      <a href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener" class="header-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="https://walrus.xyz" target="_blank" rel="noopener" class="header-link header-link-primary">Walrus ↗</a>
+    </nav>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <nav></nav>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+      <nav class="breadcrumbs">
+        <span class="breadcrumb-link">SDK</span>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-current">Cookbooks</span>
+      </nav>
+
+      <article class="article">
+        <h1>SDK Cookbooks</h1>
+        <p class="article-lead">
+          End-to-end recipes for <code>morse-sdk</code>: publish content, revise entries, encrypt and decrypt, delegate write access, and tear down resources. For installation and adapter wiring, see <a href="sdk-client-setup.html">SDK Setup</a>.
+        </p>
+
+        <h2 id="prerequisites">Prerequisites</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Requirement</th><th>Details</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><td>Bun or Node</td><td>v1.2+ / >= 18</td><td>JavaScript runtime</td></tr>
+              <tr><td>SUI + WAL tokens</td><td><a href="https://faucet.sui.io/" target="_blank">SUI faucet</a> / <a href="https://stake-wal.wal.app/?network=testnet" target="_blank">Swap SUI for WAL</a></td><td>Gas fees (SUI) and Walrus storage fees (WAL)</td></tr>
+              <tr><td>Bech32 private key</td><td>A <code>suiprivkey1...</code> string</td><td>SDK authentication - export from your wallet's settings</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Make sure the SDK is installed and configured before continuing. See <a href="sdk-client-setup.html">SDK Setup</a> for details.</p>
+
+        <h2 id="lifecycle">Lifecycle</h2>
+        <p>Publications hold collections; collections hold entries; entries hold an append-only vector of revisions. Permission management lives in Sui; payloads live in Walrus.</p>
+
+        <p>The examples below assume you've built a context as shown in <a href="sdk-client-setup.html">SDK Setup</a>. Browser flows carry a <code>signer</code> (via <code>WalletStandardSigner.fromAccount</code>) instead of <code>keypair</code>. Walrus adapters (<code>walrusWriter</code>, <code>walrusReader</code>) are constructed where needed - see <a href="sdk-client-setup.html#picking-a-walrus-adapter">Picking a Walrus Adapter</a> for options.</p>
+
+        <h2 id="creating-a-publication">Creating a Publication</h2>
+        <p>Returns the publication's ID along with an <code>OwnerCap</code> for governance and a <code>PublisherCap</code> for write access, both transferred to the caller's address atomically.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">typescript</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre><span class="kw">import</span> { ContractAbortError, createPublication } <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
+
+<span class="kw">try</span> {
+  <span class="kw">const</span> created = <span class="kw">await</span> <span class="fn">createPublication</span>(adapter, config, {
+    name: <span class="st">"My Publication"</span>,
+    slug: <span class="st">"my-publication"</span>,
+  });
+  <span class="cm">// created.publicationId, created.ownerCapId, created.publisherCapId</span>
+} <span class="kw">catch</span> (err) {
+  <span class="kw">if</span> (err <span class="kw">instanceof</span> ContractAbortError &amp;&amp; err.reason === <span class="st">"ESlugAlreadyExists"</span>) {
+    <span class="cm">// slug is globally unique - pick another or look up the existing publication</span>
+  }
+  <span class="kw">throw</span> err;
+}</pre>
+        </div>
+
+        <h2 id="adding-a-collection">Adding a Collection</h2>
+        <p><code>storageMode</code> is fixed at creation; switching the mode for the same collection name requires deleting and recreating.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">typescript</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre><span class="kw">import</span> { createCollection } <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
+
+<span class="kw">await</span> <span class="fn">createCollection</span>(adapter, config, {
+  publicationId: created.publicationId,
+  publisherCapId: created.publisherCapId,
+  name: <span class="st">"blog"</span>,
+  storageMode: <span class="st">"blob"</span>,  <span class="cm">// or "quilt" for packed small payloads</span>
+});</pre>
+        </div>
+
+        <h2 id="adding-an-entry">Adding an Entry</h2>
+        <p>Uploads bytes to Walrus and attaches them as the first revision of a new entry in 2 transactions. Returns the assigned <code>entryId</code> (a monotonic <code>u64</code>) used to reference the entry in all subsequent operations.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">typescript</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre><span class="kw">import</span> {
+  addEntryFromBytes,
+  DefaultWalrusWriteAdapter,
+} <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
+
+<span class="kw">const</span> walrusWriter = DefaultWalrusWriteAdapter.<span class="fn">fromConfig</span>(
+  { network: <span class="st">"testnet"</span>, suiClient: client },
+  keypair,  <span class="cm">// or `signer` in the browser</span>
+);
+
+<span class="kw">const</span> entry = <span class="kw">await</span> <span class="fn">addEntryFromBytes</span>(adapter, config, {
+  walrus: walrusWriter,
+  publicationId: created.publicationId,
+  publisherCapId: created.publisherCapId,
+  collectionName: <span class="st">"blog"</span>,
+  name: <span class="st">"first-post"</span>,
+  bytes: <span class="kw">new</span> <span class="fn">TextEncoder</span>().<span class="fn">encode</span>(<span class="st">"hello world"</span>),
+  contentType: <span class="st">"text/plain"</span>,
+  upload: { epochs: <span class="nu">3</span>, deletable: <span class="kw">true</span> },
+});
+<span class="cm">// entry.entryId is the stable monotonic ID (0, 1, 2, ...)</span></pre>
+        </div>
+
+        <p><code>addEntryFromBytes</code> uses the Walrus flow-aware capability to combine <code>certify_blob</code> and <code>add_entry_to_collection</code> into a single PTB, reducing the total from 3 transactions to 2. The HTTP publisher path collapses this further to 1 transaction.</p>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">Handle <code>UncertifiedBlobError</code></div>
+            <div class="callout-text">If transaction 1 (register + upload) succeeds but transaction 2 (certify + add_entry) fails, the SDK throws <code>UncertifiedBlobError</code> carrying <code>blobObjectId</code> and <code>blobId</code>. The blob exists on storage nodes but remains uncertified and is released when the registration expires. Log the IDs or surface the error for debugging.</div>
+          </div>
+        </div>
+
+        <p class="see-also">See also: <a href="cli-workflows.html#publishing-your-first-entry">CLI Cookbooks &rarr; Publishing Your First Entry</a></p>
+
+        <h2 id="encrypted-content">Encrypted Content</h2>
+        <p>Encrypts content with Seal, uploads ciphertext to Walrus, and attaches it as the first revision of an encrypted entry in 2 transactions. Returns the same <code>entryId</code> as the plaintext path. Encrypted entries are always created as drafts and accessed via Seal decryption, not the public read path.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">typescript</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre><span class="kw">import</span> {
+  addEncryptedEntryFromBytes,
+  buildPublisherSealId,
+  createCollection,
+  DefaultSealAdapter,
+  DefaultWalrusWriteAdapter,
+} <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
+
+<span class="cm">// Create a blob-mode collection for encrypted content.</span>
+<span class="kw">await</span> <span class="fn">createCollection</span>(adapter, config, {
+  publicationId: created.publicationId,
+  publisherCapId: created.publisherCapId,
+  name: <span class="st">"secret-blog"</span>,
+  storageMode: <span class="st">"blob"</span>,
+});
+
+<span class="kw">const</span> seal = DefaultSealAdapter.<span class="fn">fromMorseConfig</span>(config, {}, client);
+<span class="kw">const</span> walrusWriter = DefaultWalrusWriteAdapter.<span class="fn">fromConfig</span>(
+  { network: <span class="st">"testnet"</span>, suiClient: client },
+  keypair,
+);
+
+<span class="cm">// Fresh per-entry identity. publicId(32) || tag(1=Publisher) || nonce.</span>
+<span class="kw">const</span> nonce = crypto.<span class="fn">getRandomValues</span>(<span class="kw">new</span> <span class="ty">Uint8Array</span>(<span class="nu">16</span>));
+<span class="kw">const</span> sealId = <span class="fn">buildPublisherSealId</span>(created.publicationId, nonce);
+
+<span class="kw">const</span> plaintext = <span class="kw">new</span> <span class="fn">TextEncoder</span>().<span class="fn">encode</span>(<span class="st">"secret content"</span>);
+<span class="kw">const</span> result = <span class="kw">await</span> <span class="fn">addEncryptedEntryFromBytes</span>(adapter, config, {
+  walrus: walrusWriter,
+  seal,
+  publicationId: created.publicationId,
+  publisherCapId: created.publisherCapId,
+  collectionName: <span class="st">"secret-blog"</span>,
+  name: <span class="st">"private-doc"</span>,
+  plaintext,
+  contentType: <span class="st">"application/octet-stream"</span>,
+  sealId,
+  upload: { epochs: <span class="nu">3</span>, deletable: <span class="kw">true</span> },
+});</pre>
+        </div>
+
+        <p><code>buildPublisherSealId</code> constructs the Seal identity from the publication ID and a random nonce. Each entry needs a fresh nonce - reusing a nonce produces the same identity. When creating a <code>SessionKey</code>, always pass <code>config.originalPackageId ?? config.packageId</code> as the package ID. Seal uses the original (genesis) package address, not the current upgrade address.</p>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">Encrypted entries are always created as drafts</div>
+            <div class="callout-text"><code>publishFromDraft</code> and <code>publishDirect</code> always write non-encrypted revisions - the contract hardcodes <code>encrypted=false</code> on the public path. For encrypted content, use <code>addEncryptedEntryFromBytes</code> / <code>appendEncryptedDraftRevision</code> and read via <code>seal.decrypt</code>.</div>
+          </div>
+        </div>
+
+        <h3 id="reading-encrypted-entries">Reading Encrypted Entries</h3>
+        <p>The full read flow for encrypted content combines entry metadata lookup, Walrus blob fetch, and Seal decryption. Decryption requires three things: a Seal <code>SessionKey</code> (built via wallet personal-message signature), the <code>sealId</code> bound to the revision, and a non-revoked <code>PublisherCap</code> ID.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">typescript</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre><span class="kw">import</span> { SessionKey } <span class="kw">from</span> <span class="st">"@mysten/seal"</span>;
+<span class="kw">import</span> { DefaultSealAdapter, HttpAggregatorReadAdapter } <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
+
+<span class="kw">const</span> seal = DefaultSealAdapter.<span class="fn">fromMorseConfig</span>(config, {}, client);
+<span class="kw">const</span> walrusReader = HttpAggregatorReadAdapter.<span class="fn">fromMorseConfig</span>(config, client);
+
+<span class="cm">// 1. Read entry metadata to get the draft revision.</span>
+<span class="kw">const</span> fetched = <span class="kw">await</span> reader.<span class="fn">getEntry</span>(
+  created.publicationId,
+  <span class="st">"secret-blog"</span>,
+  result.entryId,
+);
+<span class="kw">const</span> revision = fetched.revisions[fetched.draftHead];
+
+<span class="cm">// 2. Extract the blobRef and sealId from the revision.</span>
+<span class="kw">const</span> blobRef = revision.blobRef;   <span class="cm">// { kind: "blob", blobObjectId: "0x..." }</span>
+<span class="kw">const</span> sealId = revision.sealId;     <span class="cm">// Uint8Array</span>
+
+<span class="cm">// 3. Fetch ciphertext from Walrus.</span>
+<span class="kw">const</span> ciphertext = <span class="kw">await</span> walrusReader.<span class="fn">readBlobRef</span>(blobRef);
+
+<span class="cm">// 4. Create a SessionKey and decrypt with Seal.</span>
+<span class="kw">const</span> sessionKey = <span class="kw">await</span> SessionKey.<span class="fn">create</span>({
+  address: keypair.<span class="fn">toSuiAddress</span>(),
+  packageId: config.originalPackageId ?? config.packageId,
+  ttlMin: <span class="nu">10</span>,
+  signer: keypair,  <span class="cm">// or `signer` in the browser</span>
+  suiClient: client,
+});
+
+<span class="kw">const</span> plaintext = <span class="kw">await</span> seal.<span class="fn">decrypt</span>(ciphertext, {
+  sessionKey,
+  sealId,
+  publisherCapId: created.publisherCapId,
+});
+
+console.<span class="fn">log</span>(<span class="kw">new</span> <span class="fn">TextDecoder</span>().<span class="fn">decode</span>(plaintext));</pre>
+        </div>
+
+        <h3 id="encrypted-draft-revisions">Encrypted Draft Revisions</h3>
+        <p>After creating an encrypted entry with <code>addEncryptedEntryFromBytes</code>, use <code>appendEncryptedDraftRevision</code> to add subsequent encrypted revisions to the same entry. You encrypt and upload the blob yourself, then pass the <code>blobObjectId</code> to the SDK.</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">typescript</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre><span class="kw">import</span> {
+  appendEncryptedDraftRevision,
+  buildPublisherSealId,
+  DefaultSealAdapter,
+  DefaultWalrusWriteAdapter,
+} <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
+
+<span class="kw">const</span> seal = DefaultSealAdapter.<span class="fn">fromMorseConfig</span>(config, {}, client);
+<span class="kw">const</span> walrusWriter = DefaultWalrusWriteAdapter.<span class="fn">fromConfig</span>(
+  { network: <span class="st">"testnet"</span>, suiClient: client },
+  keypair,
+);
+
+<span class="cm">// 1. Build a fresh Seal identity for the new revision.</span>
+<span class="kw">const</span> nonce = crypto.<span class="fn">getRandomValues</span>(<span class="kw">new</span> <span class="ty">Uint8Array</span>(<span class="nu">16</span>));
+<span class="kw">const</span> sealId = <span class="fn">buildPublisherSealId</span>(created.publicationId, nonce);
+
+<span class="cm">// 2. Encrypt the updated content and upload to Walrus.</span>
+<span class="kw">const</span> updatedPlaintext = <span class="kw">new</span> <span class="fn">TextEncoder</span>().<span class="fn">encode</span>(<span class="st">"updated secret content"</span>);
+<span class="kw">const</span> { ciphertext } = <span class="kw">await</span> seal.<span class="fn">encrypt</span>(updatedPlaintext, { sealId });
+<span class="kw">const</span> blob = <span class="kw">await</span> walrusWriter.<span class="fn">uploadBlob</span>(ciphertext, {
+  epochs: <span class="nu">3</span>,
+  deletable: <span class="kw">true</span>,
+});
+
+<span class="cm">// 3. Append the encrypted revision to the existing entry.</span>
+<span class="kw">const</span> revision = <span class="kw">await</span> <span class="fn">appendEncryptedDraftRevision</span>(adapter, config, {
+  publicationId: created.publicationId,
+  publisherCapId: created.publisherCapId,
+  collectionName: <span class="st">"secret-blog"</span>,
+  entryId: result.entryId,              <span class="cm">// from addEncryptedEntryFromBytes</span>
+  blobObjectId: blob.blobObjectId,
+  contentType: <span class="st">"application/octet-stream"</span>,
+  sealId,
+});
+
+console.<span class="fn">log</span>(<span class="st">"Revision"</span>, revision.revisionId, <span class="st">"appended"</span>);</pre>
+        </div>
+<!-- <div class="ai-prompt">
+          <details>
+            <summary>Build with AI</summary>
+            <p>Copy this prompt into <a href="https://claude.ai" target="_blank" rel="noopener">Claude</a> or another AI coding assistant. Assumes @arcadiasystems/morse-sdk is already installed - see <a href="quick-start-sdk.html">SDK Quick Start</a> if not.</p>
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-lang">prompt</span>
+                <button class="code-copy">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                  Copy
+                </button>
+              </div>
+              <pre>Generate a TypeScript script using @arcadiasystems/morse-sdk that demonstrates end-to-end encrypted content on Sui testnet: connect with a Bech32 private key, create a publication and collection, set up DefaultSealAdapter, generate a Seal identity, add an encrypted entry with addEncryptedEntryFromBytes, then decrypt it with a SessionKey. Print the decrypted plaintext to verify round-trip.</pre>
+            </div>
+          </details>
+        </div> -->
+
+        <p class="see-also">See also: <a href="cli-workflows.html#encrypted-content">CLI Cookbooks &rarr; Encrypted Content</a></p>
+
+        <h2 id="reading-it-back">Reading It Back</h2>
+        <p>Single-object reads, paginated lists, and an async iterator for full-collection scans. The reader is gRPC-backed.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">typescript</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre><span class="kw">import</span> { HttpAggregatorReadAdapter } <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
+
+<span class="kw">const</span> walrusReader = HttpAggregatorReadAdapter.<span class="fn">fromMorseConfig</span>(config, client);
+
+<span class="cm">// Single entry by ID.</span>
+<span class="kw">const</span> fetched = <span class="kw">await</span> reader.<span class="fn">getEntry</span>(
+  created.publicationId,
+  <span class="st">"blog"</span>,
+  entry.entryId,
+);
+<span class="kw">const</span> firstRevision = fetched.revisions[<span class="nu">0</span>];
+
+<span class="cm">// Fetch the actual content bytes from Walrus.</span>
+<span class="kw">const</span> content = <span class="kw">await</span> walrusReader.<span class="fn">readBlobRef</span>(firstRevision.blobRef);
+console.<span class="fn">log</span>(<span class="kw">new</span> <span class="fn">TextDecoder</span>().<span class="fn">decode</span>(content));
+
+<span class="cm">// Paginated list.</span>
+<span class="kw">const</span> page = <span class="kw">await</span> reader.<span class="fn">listEntries</span>(
+  created.publicationId,
+  <span class="st">"blog"</span>,
+  { limit: <span class="nu">50</span> },
+);
+console.<span class="fn">log</span>(page.results.length, <span class="st">"entries, next cursor:"</span>, page.nextCursor);
+
+<span class="cm">// Stream every entry in a collection.</span>
+<span class="kw">for await</span> (<span class="kw">const</span> e <span class="kw">of</span> reader.<span class="fn">scanEntries</span>(created.publicationId, <span class="st">"blog"</span>)) {
+  console.<span class="fn">log</span>(e.id, e.name);
+}</pre>
+        </div>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">Use <code>HttpAggregatorReadAdapter</code> for reads on testnet</div>
+            <div class="callout-text">On testnet, <code>DefaultWalrusReadAdapter</code> (direct-node fanout) may fail. Use <code>HttpAggregatorReadAdapter</code> for reads instead - it routes through a single aggregator endpoint and is reliable on testnet. Mainnet storage nodes are expected to be more reliable. See <a href="sdk-client-setup.html#picking-a-walrus-adapter">SDK Client Setup &rarr; Picking a Walrus Adapter</a>.</div>
+          </div>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">Ordering caveat</div>
+            <div class="callout-text"><code>listEntries</code> and <code>scanEntries</code> return entries in dynamic-field object-store order, not chronological order. Sort by <code>entry.id</code> if you need insertion order.</div>
+          </div>
+        </div>
+<!-- <div class="ai-prompt">
+          <details>
+            <summary>Build with AI</summary>
+            <p>Copy this prompt into <a href="https://claude.ai" target="_blank" rel="noopener">Claude</a> or another AI coding assistant. Assumes @arcadiasystems/morse-sdk is already installed - see <a href="quick-start-sdk.html">SDK Quick Start</a> if not.</p>
+            <div class="code-block">
+              <div class="code-header">
+                <span class="code-lang">prompt</span>
+                <button class="code-copy">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                  Copy
+                </button>
+              </div>
+              <pre>Generate a TypeScript script using @arcadiasystems/morse-sdk that reads from an existing Morse publication on Sui testnet. Accept a publication ID as a CLI argument. Show three read patterns: fetch a single entry by ID with reader.getEntry, list a page of entries with reader.listEntries, and scan all entries with the async iterator reader.scanEntries. No private key needed - reads are public.</pre>
+            </div>
+          </details>
+        </div> -->
+
+        <p class="see-also">See also: <a href="cli-workflows.html#reading-it-back">CLI Cookbooks &rarr; Reading It Back</a></p>
+
+        <h2 id="publishing-a-new-revision">Publishing a New Revision</h2>
+        <p>Append a new public revision directly, or stage a draft first and promote it. Revisions are append-only - existing revisions are never edited in place. Two heads track progress: <code>draftHead</code> (work in progress) and <code>publicHead</code> (the live version).</p>
+
+        <h3 id="publish-direct">Option A: Publish direct</h3>
+        <p>Skip the draft stage and append a public revision in one step. Requires a pre-uploaded blob (use <code>uploadBlob</code> first).</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">typescript</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre><span class="kw">import</span> { publishDirect, DefaultWalrusWriteAdapter } <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
+
+<span class="kw">const</span> walrusWriter = DefaultWalrusWriteAdapter.<span class="fn">fromConfig</span>(
+  { network: <span class="st">"testnet"</span>, suiClient: client },
+  keypair,
+);
+
+<span class="kw">const</span> blob = <span class="kw">await</span> walrusWriter.<span class="fn">uploadBlob</span>(
+  <span class="kw">new</span> <span class="fn">TextEncoder</span>().<span class="fn">encode</span>(<span class="st">"updated content"</span>),
+  { epochs: <span class="nu">3</span>, deletable: <span class="kw">true</span> },
+);
+
+<span class="kw">const</span> result = <span class="kw">await</span> <span class="fn">publishDirect</span>(adapter, config, {
+  publicationId: created.publicationId,
+  publisherCapId: created.publisherCapId,
+  collectionName: <span class="st">"blog"</span>,
+  entryId: entry.entryId,
+  blobObjectId: blob.blobObjectId,
+  contentType: <span class="st">"text/plain"</span>,
+});
+<span class="cm">// result.revisionId is the index of the new public revision</span></pre>
+        </div>
+
+        <h3 id="draft-then-publish">Option B: Draft then publish</h3>
+        <p>Stage a draft revision (updates <code>draftHead</code> only), iterate on it, then promote to a public revision. Both steps require a pre-uploaded blob (use <code>uploadBlob</code> first). The promotion appends a fresh public revision; the draft blob is referenced for validation but not reused.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">typescript</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre><span class="kw">import</span> { appendDraftRevision, publishFromDraft, DefaultWalrusWriteAdapter } <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
+
+<span class="kw">const</span> walrusWriter = DefaultWalrusWriteAdapter.<span class="fn">fromConfig</span>(
+  { network: <span class="st">"testnet"</span>, suiClient: client },
+  keypair,
+);
+
+<span class="cm">// 1. Upload the draft content</span>
+<span class="kw">const</span> draftBlob = <span class="kw">await</span> walrusWriter.<span class="fn">uploadBlob</span>(
+  <span class="kw">new</span> <span class="fn">TextEncoder</span>().<span class="fn">encode</span>(<span class="st">"draft content"</span>),
+  { epochs: <span class="nu">3</span>, deletable: <span class="kw">true</span> },
+);
+
+<span class="cm">// 2. Stage a draft revision</span>
+<span class="kw">const</span> draft = <span class="kw">await</span> <span class="fn">appendDraftRevision</span>(adapter, config, {
+  publicationId: created.publicationId,
+  publisherCapId: created.publisherCapId,
+  collectionName: <span class="st">"blog"</span>,
+  entryId: entry.entryId,
+  blobObjectId: draftBlob.blobObjectId,
+  contentType: <span class="st">"text/plain"</span>,
+});
+
+<span class="cm">// 3. Upload the final content and promote the draft</span>
+<span class="kw">const</span> finalBlob = <span class="kw">await</span> walrusWriter.<span class="fn">uploadBlob</span>(
+  <span class="kw">new</span> <span class="fn">TextEncoder</span>().<span class="fn">encode</span>(<span class="st">"final content"</span>),
+  { epochs: <span class="nu">3</span>, deletable: <span class="kw">true</span> },
+);
+
+<span class="kw">const</span> published = <span class="kw">await</span> <span class="fn">publishFromDraft</span>(adapter, config, {
+  publicationId: created.publicationId,
+  publisherCapId: created.publisherCapId,
+  collectionName: <span class="st">"blog"</span>,
+  entryId: entry.entryId,
+  draftRevisionId: draft.revisionId,
+  blobObjectId: finalBlob.blobObjectId,
+  contentType: <span class="st">"text/plain"</span>,
+});</pre>
+        </div>
+
+        <p class="see-also">See also: <a href="cli-workflows.html#publishing-a-new-revision">CLI Cookbooks &rarr; Publishing a New Revision</a></p>
+
+        <h2 id="delegating-write-access">Delegating Write Access</h2>
+        <p>Morse separates ownership (<code>OwnerCap</code>) from publishing (<code>PublisherCap</code>). The owner issues a cap bound to a co-author's address, granting them write access. Once issued, the co-author can publish entries using their own key. Revoking the cap causes further writes to abort on-chain. See <a href="access-control.html#issuing-publisher-caps">Access Control &rarr; Issuing Publisher Caps</a> for details.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">typescript</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre><span class="kw">import</span> {
+  issuePublisherCap,
+  revokePublisherCap,
+  destroyPublisherCap,
+} <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
+
+<span class="cm">// Owner issues a cap bound to a co-author's address</span>
+<span class="kw">const</span> issued = <span class="kw">await</span> <span class="fn">issuePublisherCap</span>(adapter, config, {
+  publicationId: created.publicationId,
+  ownerCapId: created.ownerCapId,
+  holder: <span class="st">"0xCO_AUTHOR_ADDRESS"</span>,
+});
+<span class="cm">// issued.publisherCapId</span>
+
+<span class="cm">// Owner revokes; further writes with this cap abort with EPublisherCapRevoked</span>
+<span class="kw">await</span> <span class="fn">revokePublisherCap</span>(adapter, config, {
+  publicationId: created.publicationId,
+  ownerCapId: created.ownerCapId,
+  publisherCapId: issued.publisherCapId,
+});
+
+<span class="cm">// Co-author destroys their own cap (requires an adapter built from the co-author's keypair — see SDK Setup)</span>
+<span class="kw">await</span> <span class="fn">destroyPublisherCap</span>(coAuthorAdapter, config, {
+  publicationId: created.publicationId,
+  publisherCapId: issued.publisherCapId,
+});</pre>
+        </div>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">Holder binding is immutable</div>
+            <div class="callout-text">A PublisherCap is bound to the <code>holder</code> address at issue time. Transferring the Sui object to a different address does NOT grant write rights. To rotate authority to a new address, destroy the old cap and issue a fresh one.</div>
+          </div>
+        </div>
+
+        <p class="see-also">See also: <a href="cli-workflows.html#delegating-write-access">CLI Cookbooks &rarr; Delegating Write Access</a></p>
+
+        <h2 id="transferring-ownership">Transferring Ownership</h2>
+        <p>Transfer the <code>OwnerCap</code> to a new address. The recipient gains governance rights: issuing/revoking publisher caps and deleting the publication. Existing publisher caps remain usable until individually revoked.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">typescript</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre><span class="kw">import</span> { transferOwnership } <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
+
+<span class="kw">await</span> <span class="fn">transferOwnership</span>(adapter, config, {
+  ownerCapId: created.ownerCapId,
+  recipient: <span class="st">"0xNEW_OWNER_ADDRESS"</span>,
+});</pre>
+        </div>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">One-way for the sender</div>
+            <div class="callout-text">Once transferred, the original owner loses all governance rights immediately. The new owner could transfer back, but there is no built-in undo.</div>
+          </div>
+        </div>
+
+        <p class="see-also">See also: <a href="cli-workflows.html#transferring-ownership">CLI Cookbooks &rarr; Transferring Ownership</a></p>
+
+        <h2 id="deleting-and-tearing-down">Deleting and Tearing Down</h2>
+        <p>Deletion works bottom-up: remove entries first, then the collections, then the publication. The Move layer enforces this - deleting a non-empty collection or publication aborts on-chain. This assumes the caller still holds both a <code>PublisherCap</code> and the <code>OwnerCap</code>. <br>Entry IDs are permanently retired on deletion and never reused. See <a href="entries.html#deleting-an-entry">Entries &rarr; Deleting an Entry</a> for details.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">typescript</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre><span class="kw">import</span> {
+  deleteEntry,
+  deleteCollection,
+  deletePublication,
+} <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
+
+<span class="cm">// 1. Remove all entries from each collection</span>
+<span class="kw">await</span> <span class="fn">deleteEntry</span>(adapter, config, {
+  publicationId: created.publicationId,
+  publisherCapId: created.publisherCapId,
+  collectionName: <span class="st">"blog"</span>,
+  entryId: entry.entryId,
+});
+<span class="kw">await</span> <span class="fn">deleteEntry</span>(adapter, config, {
+  publicationId: created.publicationId,
+  publisherCapId: created.publisherCapId,
+  collectionName: <span class="st">"secret-blog"</span>,
+  entryId: result.entryId,
+});
+
+<span class="cm">// 2. Remove the empty collections</span>
+<span class="kw">await</span> <span class="fn">deleteCollection</span>(adapter, config, {
+  publicationId: created.publicationId,
+  publisherCapId: created.publisherCapId,
+  name: <span class="st">"blog"</span>,
+});
+<span class="kw">await</span> <span class="fn">deleteCollection</span>(adapter, config, {
+  publicationId: created.publicationId,
+  publisherCapId: created.publisherCapId,
+  name: <span class="st">"secret-blog"</span>,
+});
+
+<span class="cm">// 3. Delete the publication (requires OwnerCap; reader verifies it's empty)</span>
+<span class="kw">await</span> <span class="fn">deletePublication</span>(reader, adapter, config, {
+  publicationId: created.publicationId,
+  ownerCapId: created.ownerCapId,
+});</pre>
+        </div>
+
+        <p class="see-also">See also: <a href="cli-workflows.html#deleting-and-tearing-down">CLI Cookbooks &rarr; Deleting and Tearing Down</a></p>
+
+        <h2 id="entry-path-options">Entry Path Options</h2>
+        <p>The SDK provides two ways to publish content. <code>addEntryFromBytes</code> (and <code>addEncryptedEntryFromBytes</code> for encrypted content) handles upload and on-chain registration in one call and is the recommended default. For cases that need more control, use the split form: <code>uploadBlob</code> followed by <code>addEntry</code>.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Use case</th>
+                <th>Function</th>
+                <th>Transactions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Publish raw bytes as a new entry (typical case)</td>
+                <td><code>addEntryFromBytes</code></td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>Publish encrypted bytes as a new entry</td>
+                <td><code>addEncryptedEntryFromBytes</code></td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>Reuse one blob across many entries (deduplication)</td>
+                <td><code>uploadBlob</code> once, then <code>addEntry</code> N times</td>
+                <td>2 + N</td>
+              </tr>
+              <tr>
+                <td>Decouple upload and add-entry (draft-then-attach UX)</td>
+                <td><code>uploadBlob</code> at upload time, <code>addEntry</code> at publish time</td>
+                <td>2 + 1</td>
+              </tr>
+              <tr>
+                <td>Server pre-uploads; browser only adds entries</td>
+                <td><code>uploadBlob</code> (server), <code>addEntry</code> (browser)</td>
+                <td>2 + 1</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="split-upload-path">Split Upload Path</h3>
+        <p>When you need control over the upload step - for example, to retry blob registration independently or reuse a blob across entries - split the operation into two calls:</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">ts</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre><span class="kw">import</span> { addEntry, DefaultWalrusWriteAdapter } <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
+
+<span class="kw">const</span> walrusWriter = DefaultWalrusWriteAdapter.<span class="fn">fromConfig</span>(
+  { network: <span class="st">"testnet"</span>, suiClient: client },
+  keypair,
+);
+
+<span class="kw">const</span> content = <span class="kw">new</span> <span class="fn">TextEncoder</span>().<span class="fn">encode</span>(<span class="st">"hello world"</span>);
+
+<span class="cm">// 1. Upload blob to Walrus (2 wallet popups: register + certify).</span>
+<span class="kw">const</span> blob = <span class="kw">await</span> walrusWriter.<span class="fn">uploadBlob</span>(content, {
+  epochs: <span class="nu">3</span>,
+  deletable: <span class="kw">true</span>,
+});
+
+<span class="cm">// 2. Reference the blob in a new entry (1 wallet popup).</span>
+<span class="kw">const</span> entry = <span class="kw">await</span> <span class="fn">addEntry</span>(adapter, config, {
+  publicationId: created.publicationId,
+  publisherCapId: created.publisherCapId,
+  collectionName: <span class="st">"blog"</span>,
+  name: <span class="st">"first-post"</span>,
+  blobObjectId: blob.blobObjectId,
+  contentType: <span class="st">"text/plain"</span>,
+});</pre>
+        </div>
+
+        <p><code>addEntryFromBytes</code> requires an adapter that implements <code>WalrusFlowCapable</code>, which combines the certify and add-entry steps into a single transaction. <code>DefaultWalrusWriteAdapter</code> supports this; the HTTP publisher adapter does not. Passing an incompatible adapter throws a <code>TransportError</code> before any I/O - use the split path (<code>uploadBlob</code> + <code>addEntry</code>) instead.</p>
+
+        <h2 id="next-steps">Next Steps</h2>
+        <div class="card-grid">
+          <a href="cli-overview.html" class="card">
+            <div class="card-title">CLI: Overview</div>
+            <div class="card-desc">Interactive command-line tool for managing publications, collections, and entries without writing code.</div>
+          </a>
+          <a href="contracts-overview.html" class="card">
+            <div class="card-title">Smart Contracts: Overview</div>
+            <div class="card-desc">Architecture of the Morse Move package - modules, shared objects, and the on-chain data model.</div>
+          </a>
+        </div>
+      </article>
+
+      <div class="page-nav">
+        <a href="sdk-client-setup.html" class="pnav">
+          <span class="pnav-dir">Previous</span>
+          <span class="pnav-title">← SDK: Setup</span>
+        </a>
+        <a href="contracts-overview.html" class="pnav pnav-right">
+          <span class="pnav-dir">Next</span>
+          <span class="pnav-title">Smart Contracts: Overview →</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <aside class="toc">
+    <div class="toc-title">On this page</div>
+    <ul class="toc-list"></ul>
+  </aside>
+</div>
+
+<script src="assets/sidebar.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>
