@@ -3,41 +3,93 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CLI Cookbooks · Morse dCMS Documentation</title>
+  <title>CLI Cookbooks · Morse Docs</title>
   <meta name="description" content="End-to-end morse CLI recipes: publish content, read it back, encrypt and decrypt, delegate write access, and script it in CI, with troubleshooting.">
   <link rel="stylesheet" href="assets/styles.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'><rect width='34' height='34' rx='8' fill='%23141414' stroke='rgba(0,210,210,0.3)' stroke-width='1'/><path d='M5 26V10L12 19L17 12L22 19L29 10V26' stroke='%2300d2d2' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='17' cy='21' r='2' fill='%2300d2d2'/><rect x='11' y='27' width='4' height='1.5' rx='0.75' fill='%2300d2d2' opacity='0.7'/><rect x='16.5' y='27' width='7' height='1.5' rx='0.75' fill='%2300d2d2' opacity='0.7'/></svg>">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='8' fill='%230A0A0A'/%3E%3Crect x='8' y='17' width='14' height='5' fill='%23FFB000'/%3E%3Crect x='26' y='17' width='14' height='5' fill='%23FFB000'/%3E%3Ccircle cx='11' cy='29.5' r='2.5' fill='%23F2F2EF'/%3E%3Crect x='18' y='27' width='9' height='5' fill='%23F2F2EF'/%3E%3Ccircle cx='33' cy='29.5' r='2.5' fill='%23F2F2EF'/%3E%3C/svg%3E">
+  <link rel="canonical" href="https://morse-docs.vercel.app/cli-workflows.html">
+  <meta property="og:title" content="CLI Cookbooks · Morse Docs">
+  <meta property="og:description" content="End-to-end morse CLI recipes: publish content, read it back, encrypt and decrypt, delegate write access, and script it in CI, with troubleshooting.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://morse-docs.vercel.app/cli-workflows.html">
+  <meta property="og:site_name" content="Morse Docs">
+  <meta name="twitter:card" content="summary">
+  <link rel="alternate" type="text/markdown" href="https://morse-docs.vercel.app/cli-workflows.md" title="Markdown version">
 </head>
 <body>
+
+<div class="banner">
+  <a href="https://www.morsecms.xyz" target="_blank" rel="noopener"><span class="banner-label-long">MORSE PROTOCOL V1 — LIVE ON SUI TESTNET</span><span class="banner-label-short">MORSE V1 — SUI TESTNET</span></a>
+  <div class="banner-links">
+    <a href="https://www.morsecms.xyz" target="_blank" rel="noopener">MORSECMS.XYZ</a>
+    <a href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener">GITHUB</a>
+  </div>
+</div>
 
 <header class="header">
   <div class="header-inner">
     <button class="hamburger" id="hamburger" aria-label="Toggle sidebar">
       <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
-    <a href="index.html" class="logo">
-      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon">
-      <rect width="34" height="34" rx="8" fill="#141414" stroke="rgba(0,210,210,0.3)" stroke-width="1"/>
-      <path d="M5 26V10L12 19L17 12L22 19L29 10V26" stroke="#00d2d2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-      <circle cx="17" cy="21" r="2" fill="#00d2d2"/>
-      <rect x="11" y="27" width="4" height="1.5" rx="0.75" fill="#00d2d2" opacity="0.7"/>
-      <rect x="16.5" y="27" width="7" height="1.5" rx="0.75" fill="#00d2d2" opacity="0.7"/>
-    </svg>
-    <span class="logo-wordmark">MORSE</span>
+    <a href="index.html" class="logo-home" aria-label="Morse docs home">
+      <span class="logo">
+        <span class="logo-wordmark">MORSE</span>
+        <span class="morse-glyphs logo-code" aria-hidden="true"><span class="dash"></span><span class="dash"></span><span class="gap"></span><span class="dash"></span><span class="dash"></span><span class="dash"></span><span class="gap"></span><span class="dot"></span><span class="dash"></span><span class="dot"></span><span class="gap"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="gap"></span><span class="dot"></span></span>
+      </span>
+      <span class="logo-suffix">Docs</span>
     </a>
     <div class="header-search">
-      <div class="search-box">
+      <button class="search-box" type="button" aria-label="Search documentation (⌘K)">
         <span class="search-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
         <span class="search-placeholder">Search documentation…</span>
         <kbd class="search-kbd">⌘K</kbd>
-      </div>
+      </button>
     </div>
     <nav class="header-links">
-      <a href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener" class="header-link">
+      <button class="header-link" id="askai-btn" title="Ask AI (⌘I)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>
+        <span>Ask AI</span>
+      </button>
+      <div class="agents-wrap">
+        <button class="agents-btn" id="agents-btn" aria-expanded="false" aria-haspopup="true">
+          <span class="morse-glyphs" aria-hidden="true" style="color:var(--accent)"><span class="dot"></span><span class="dash"></span><span class="dot"></span></span>
+          <span>For agents</span>
+        </button>
+        <div class="agents-menu" id="agents-menu">
+          <div class="agents-menu-title">Use Morse docs with AI</div>
+          <a class="agents-item" href="llms.txt">
+            <span class="agents-item-title">llms.txt</span>
+            <span class="agents-item-desc">Compact index of every docs page, for agent retrieval.</span>
+          </a>
+          <div class="agents-cmd"><code data-copy="https://morse-docs.vercel.app/llms.txt">https://morse-docs.vercel.app/llms.txt</code><button class="agents-copy" aria-label="Copy llms.txt URL"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>
+          <a class="agents-item" href="llms-full.txt">
+            <span class="agents-item-title">llms-full.txt</span>
+            <span class="agents-item-desc">The entire documentation as one Markdown file.</span>
+          </a>
+          <div class="agents-cmd"><code data-copy="https://morse-docs.vercel.app/llms-full.txt">https://morse-docs.vercel.app/llms-full.txt</code><button class="agents-copy" aria-label="Copy llms-full.txt URL"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>
+          <div class="agents-item" role="presentation">
+            <span class="agents-item-title">Markdown twins</span>
+            <span class="agents-item-desc">Every page is also served as Markdown — swap <code>.html</code> for <code>.md</code>.</span>
+          </div>
+          <div class="agents-cmd"><code data-copy="curl https://morse-docs.vercel.app/entries.md"><span class="prompt">$ </span>curl https://morse-docs.vercel.app/entries.md</code><button class="agents-copy" aria-label="Copy curl command"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>
+          <div class="agents-divider"></div>
+          <div class="agents-item" role="presentation">
+            <span class="agents-item-title">Prime your coding agent</span>
+            <span class="agents-item-desc">Paste into Claude Code, Cursor, or any agent.</span>
+          </div>
+          <div class="agents-cmd"><code data-copy="Read https://morse-docs.vercel.app/llms-full.txt — the full documentation for Morse, the decentralized headless CMS protocol on Sui + Walrus. Use it to help me build with the Morse CLI, TypeScript SDK, or Move contracts.">Read https://morse-docs.vercel.app/llms-full.txt — the full docs for Morse…</code><button class="agents-copy" aria-label="Copy agent prompt"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>
+          <div class="agents-divider"></div>
+          <a class="agents-item" href="use-morse-with-ai.html">
+            <span class="agents-item-title">Use Morse with AI →</span>
+            <span class="agents-item-desc">Full guide: agent workflows, SDK &amp; CLI for automation.</span>
+          </a>
+        </div>
+      </div>
+      <a href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener" class="header-link header-link-github" title="GitHub">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-        GitHub
+        <span>GitHub</span>
       </a>
-      <a href="https://walrus.xyz" target="_blank" rel="noopener" class="header-link header-link-primary">Walrus ↗</a>
+      <a href="https://www.morsecms.xyz" target="_blank" rel="noopener" class="header-link header-link-primary">morsecms.xyz</a>
     </nav>
   </div>
 </header>
@@ -56,6 +108,19 @@
         <span class="breadcrumb-sep">›</span>
         <span class="breadcrumb-current">Cookbooks</span>
       </nav>
+
+      <div class="page-actions">
+        <button class="pgact-btn pgact-main" id="pgact-copy"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy page</button>
+        <button class="pgact-btn pgact-caret" id="pgact-caret" aria-label="More AI actions" aria-haspopup="true" aria-expanded="false">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="pgact-menu" id="pgact-menu">
+          <button class="pgact-item" id="pgact-copy-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy page as Markdown</button>
+          <a class="pgact-item" id="pgact-view-md" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> View as Markdown</a>
+          <a class="pgact-item" id="pgact-chatgpt" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg> Open in ChatGPT</a>
+          <a class="pgact-item" id="pgact-claude" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg> Open in Claude</a>
+        </div>
+      </div>
 
       <article class="article">
         <h1>CLI Cookbooks</h1>
@@ -410,6 +475,18 @@ morse publication get 0x00 || echo "exit $?"</pre>
           </a>
         </div>
       </article>
+
+      <div class="page-footer">
+        <div class="feedback" id="feedback">
+          <span>Was this helpful?</span>
+          <button class="feedback-btn" data-feedback="yes">Yes</button>
+          <button class="feedback-btn" data-feedback="no">No</button>
+        </div>
+        <div class="page-meta">
+          <a href="https://github.com/MandaWeb3/morse-docs/edit/main/cli-workflows.html" target="_blank" rel="noopener">Suggest changes</a>
+          <span>Updated 2026-06-19</span>
+        </div>
+      </div>
 
       <div class="page-nav">
         <a href="cli-commands.html" class="pnav">

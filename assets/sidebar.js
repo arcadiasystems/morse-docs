@@ -15,7 +15,7 @@ function initSidebarNav() {
     + '<li><a href="core-concepts.html" class="nav-link" data-page="core-concepts.html">Core Concepts</a></li>'
     + '<li>'
     + '<a href="quick-start.html" class="nav-link" data-page="quick-start.html">Quick Start</a>'
-    + '<span class="nav-toggle" aria-label="Toggle sub-pages">' + chevron + '</span>'
+    + '<button type="button" class="nav-toggle" aria-label="Toggle Quick Start sub-pages" aria-expanded="' + (isQuickStart ? 'true' : 'false') + '">' + chevron + '</button>'
     + '</li>'
     + '<li class="nav-sub-container ' + collapseClass + '"><ul class="nav-list nav-list-sub">'
     + '<li><a href="quick-start-cli.html" class="nav-link nav-link-sub" data-page="quick-start-cli.html">CLI</a></li>'
@@ -79,6 +79,7 @@ function initSidebarNav() {
     + '<div class="nav-section-title">Reference</div>'
     + '<ul class="nav-list">'
     + '<li><a href="glossary.html" class="nav-link" data-page="glossary.html">Glossary</a></li>'
+    + '<li><a href="use-morse-with-ai.html" class="nav-link" data-page="use-morse-with-ai.html">Use Morse with AI</a></li>'
     + '</ul></div>';
 
   // Chevron toggle for Quick Start sub-pages
@@ -94,10 +95,12 @@ function initSidebarNav() {
         container.classList.remove('nav-sub-collapsed');
         container.classList.add('nav-sub-expanded');
         chevronEl.innerHTML = '&#9662;';
+        chevronEl.setAttribute('aria-expanded', 'true');
       } else {
         container.classList.remove('nav-sub-expanded');
         container.classList.add('nav-sub-collapsed');
         chevronEl.innerHTML = '&#9656;';
+        chevronEl.setAttribute('aria-expanded', 'false');
       }
     });
   }

@@ -1,0 +1,13 @@
+{
+  "name": "morse-docs",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Morse documentation site — static HTML with generated AI/agent artifacts (llms.txt, Markdown twins, search index).",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs"
+  },
+  "devDependencies": {
+    "cheerio": "^1.0.0"
+  }
+}

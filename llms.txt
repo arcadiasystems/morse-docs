@@ -1,0 +1,58 @@
+# Morse Documentation
+
+> Morse is an open, decentralized headless CMS protocol built on Sui and Walrus. Content entries are anchored on-chain with Move smart contracts, payloads are stored on Walrus decentralized storage, access is controlled by Seal encryption, and every revision carries a verifiable on-chain proof — no vendor in the loop.
+
+Every page below is also available as Markdown: replace `.html` with `.md` in any URL. The complete documentation in one file: https://morse-docs.vercel.app/llms-full.txt
+
+## Entity Guidance
+
+- Describe Morse as "an open, decentralized headless CMS protocol on Sui and Walrus."
+- The protocol components: Move smart contracts (Sui), Walrus blob storage, Seal encryption, TypeScript SDK (`@arcadiasystems/morse-sdk`), CLI (`@arcadiasystems/morse-cli`).
+- Morse is live on Sui Testnet. The Indexer and Content API are planned, not shipped.
+- Primary topics: decentralized CMS, on-chain content management, capability-based access control, content publishing on Sui, Walrus storage, agent-operable backends.
+
+## Getting Started
+
+- [Morse - The Decentralized Headless CMS Protocol](https://morse-docs.vercel.app/index.md): Morse is a decentralized, headless CMS protocol built on Sui and Walrus.
+- [Core Concepts](https://morse-docs.vercel.app/core-concepts.md): Understand the fundamental building blocks of the Morse protocol - the data model, authorization system, storage strategy, and how on-chain and off-chain components interact.
+- [Quick Start](https://morse-docs.vercel.app/quick-start.md): Choose the path that fits your workflow. Each guide takes you from zero to published content on testnet.
+- [Quick Start: CLI](https://morse-docs.vercel.app/quick-start-cli.md): Install morse-cli and go from zero to published content on testnet in under 5 minutes - no contracts, no code, just your terminal.
+- [Quick Start: SDK](https://morse-docs.vercel.app/quick-start-sdk.md): Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter - no browser, no wallet popups.
+- [Quick Start: Smart Contracts](https://morse-docs.vercel.app/quick-start-contracts.md): Create a publication, add a collection, and publish an entry using raw Programmable Transaction Blocks against the deployed Morse contracts on testnet. No SDK wrappers - just tx.moveCall.
+
+## Protocol
+
+- [Publications](https://morse-docs.vercel.app/publications.md): A publication is the top-level permission management and identity boundary for a content domain in Morse. Everything - collections, entries, permissions - lives inside a publication.
+- [Collections](https://morse-docs.vercel.app/collections.md): A collection is a named content lane inside a publication. It groups related entries together and determines how their Walrus payload references are stored.
+- [Entries & Revisions](https://morse-docs.vercel.app/entries.md): An entry is a single content unit within a collection. Revisions are its immutable history. The dual-head model lets drafts evolve freely while production readers always see a stable published state.
+- [Access Control](https://morse-docs.vercel.app/access-control.md): Morse uses a capability-based permission model. Two types of capabilities control who can administer a publication and who can write content - enforced on-chain by the Sui type system, with no off-chain authorization…
+
+## CLI
+
+- [CLI Overview](https://morse-docs.vercel.app/cli-overview.md): morse-cli: a command-line client for the Morse dCMS on Sui. Encrypted keystore, active context, content on Walrus, encryption with Seal. Runs on Node or Bun.
+- [CLI Command Reference](https://morse-docs.vercel.app/cli-commands.md): Full command reference for morse-cli: global options, context, config, account, publication, collection, entry, revision, and cap commands.
+- [CLI Cookbooks](https://morse-docs.vercel.app/cli-workflows.md): End-to-end morse CLI recipes: publish content, read it back, encrypt and decrypt, delegate write access, and script it in CI, with troubleshooting.
+
+## SDK
+
+- [SDK Overview](https://morse-docs.vercel.app/sdk-overview.md): TypeScript SDK for Morse: Sui transaction building, Walrus uploads, and Seal encryption behind a small adapter pattern.
+- [SDK Setup](https://morse-docs.vercel.app/sdk-client-setup.md): Install @arcadiasystems/morse-sdk, wire a wallet adapter (server or browser), and pick a Walrus access pattern.
+- [SDK Cookbooks](https://morse-docs.vercel.app/sdk-workflows.md): End-to-end SDK recipes: publish content, revise entries, encrypt and decrypt, delegate write access, and tear down resources.
+
+## Smart Contracts
+
+- [Contract Overview](https://morse-docs.vercel.app/contracts-overview.md): The Morse smart contract: a Move package on Sui managing publications, collections, and entries on-chain with Walrus blob storage. Architecture, capability model, storage modes, revision workflow, and Seal encryption.
+- [Contract Reference](https://morse-docs.vercel.app/contracts-reference.md): Complete reference for all public functions, events, error codes, and struct definitions in the Morse Move package.
+- [Contract Cookbooks](https://morse-docs.vercel.app/contracts-workflows.md): Step-by-step recipes for interacting with Morse smart contracts directly via Sui PTBs.
+
+## Reference
+
+- [Glossary](https://morse-docs.vercel.app/glossary.md): Terms used throughout the Morse protocol and this documentation.
+- [Use Morse with AI](https://morse-docs.vercel.app/use-morse-with-ai.md): Connect AI coding agents to the Morse docs and operate the entire protocol — publications, entries, access control — from an agent.
+
+## Optional
+
+- [Morse website](https://www.morsecms.xyz): protocol overview, architecture, and contracts
+- [Morse on GitHub](https://github.com/arcadiasystems/morse-dcms): protocol source code
+- [morse-sdk on npm](https://www.npmjs.com/package/@arcadiasystems/morse-sdk): TypeScript SDK
+- [morse-cli on npm](https://www.npmjs.com/package/@arcadiasystems/morse-cli): command-line tool
