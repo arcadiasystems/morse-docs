@@ -91,6 +91,16 @@ body {
   min-height: 100vh;
 }
 
+/* No horizontal page scroll on mobile — wide content scrolls inside its
+   own container (.table-wrap, pre). clip avoids the position:sticky
+   breakage that overflow:hidden causes. */
+html, body { overflow-x: clip; }
+
+/* iOS Safari: keep text at authored size in landscape */
+html { -webkit-text-size-adjust: 100%; }
+
+img, svg, video { max-width: 100%; }
+
 /* Scrollbar */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
@@ -776,6 +786,8 @@ a:hover { color: var(--accent-bright); }
   margin-bottom: 8px;
 }
 
+.article { overflow-wrap: break-word; }
+
 .article p { margin-bottom: 16px; line-height: 1.75; }
 
 .article ul, .article ol {
@@ -810,7 +822,12 @@ a:hover { color: var(--accent-bright); }
   border-radius: var(--r-xs);
   padding: 1px 6px;
   color: var(--accent-bright);
+  /* Long unbroken tokens (package names, object IDs) may wrap mid-token
+     rather than widen the page on narrow screens */
+  overflow-wrap: anywhere;
 }
+
+pre code { overflow-wrap: normal; }
 
 /* ── CODE BLOCKS ───────────────────────────────────────────── */
 .code-block { position: relative; margin: 22px 0; }
@@ -1880,4 +1897,11 @@ pre.dual-head-visual, .dual-head-visual {
   /* Icon-only "for agents" pill — the ·—· glyphs are the icon */
   .agents-btn > span:not(.morse-glyphs) { display: none; }
   .agents-btn { padding: 8px 12px; }
+}
+
+@media (max-width: 560px) {
+  /* Keep the banner on one clean line: label + GitHub only
+     (the label itself already links to morsecms.xyz) */
+  .banner-links a:first-child { display: none; }
+  .banner { gap: 12px; }
 }

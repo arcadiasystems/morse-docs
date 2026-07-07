@@ -750,7 +750,7 @@ entry_id = <span class="fn">add_entry_to_collection</span>(...) <span class="cm"
       <h2 id="access-policy-and-encryption-rules">Access Policy &amp; Encryption Rules</h2>
       <p>The <code>encrypted</code> flag and <code>access_policy</code> must be consistent. The contract enforces this at every write. See <a href="access-control.html">Access Control</a> for the full permission model.</p>
 
-      <table>
+      <div class="table-wrap"><table>
         <thead>
           <tr><th>encrypted</th><th>access_policy</th><th>seal_id</th><th>Result</th></tr>
         </thead>
@@ -762,7 +762,7 @@ entry_id = <span class="fn">add_entry_to_collection</span>(...) <span class="cm"
           <tr><td><code>true</code></td><td><code>1</code></td><td><code>None</code></td><td>Aborts - <code>ESealIdRequired</code></td></tr>
           <tr><td><code>false</code></td><td><code>0</code></td><td><code>Some(&lt;id&gt;)</code></td><td>Aborts - <code>ESealIdNotAllowed</code></td></tr>
         </tbody>
-      </table>
+      </table></div>
 <br>
       <p><code>ACCESS_SUBSCRIPTION = 2</code> is defined in the protocol but reserved for future use.</p>
 
@@ -772,7 +772,7 @@ entry_id = <span class="fn">add_entry_to_collection</span>(...) <span class="cm"
 
       <h2 id="error-codes">Error Codes</h2>
       <p>For more error codes, see: <a href="publications.html#error-codes">Publications</a>, <a href="collections.html#error-codes">Collections</a>, <a href="access-control.html#error-codes">Access Control</a>. </p>
-      <table>
+      <div class="table-wrap"><table>
         <thead><tr><th>Code</th><th>Constant</th><th>Meaning</th></tr></thead>
         <tbody>
           <tr><td><code>0</code></td><td><code>ENameEmpty</code></td><td>Entry name is empty</td></tr>
@@ -788,7 +788,7 @@ entry_id = <span class="fn">add_entry_to_collection</span>(...) <span class="cm"
           <tr><td><code>10</code></td><td><code>EQuiltPatchIdNotAllowed</code></td><td>Blob mode collection must not include a QuiltPatchId</td></tr>
           <tr><td><code>11</code></td><td><code>EInvalidQuiltPatchId</code></td><td>QuiltPatchId must be exactly 37 bytes</td></tr>
         </tbody>
-      </table>
+      </table></div>
     </article>
 
     <div class="page-footer">

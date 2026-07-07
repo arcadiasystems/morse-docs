@@ -200,7 +200,7 @@
       </ul>
 
       <h3 id="choosing-a-storage-mode">Choosing a Storage Mode</h3>
-      <table>
+      <div class="table-wrap"><table>
         <thead>
           <tr><th>Scenario</th><th>Recommended mode</th></tr>
         </thead>
@@ -212,7 +212,7 @@
           <tr><td>Config JSONs updated as a group</td><td>Quilt (1)</td></tr>
           <tr><td>Small, bounded content sets</td><td>Quilt (1)</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <div class="callout callout-warning">
         <div class="callout-icon">
@@ -389,7 +389,7 @@ morse collection create site-pages --mode quilt</pre>
 
       <h2 id="events">Events</h2>
       <p>Collection lifecycle events are emitted by the <code>publication</code> module.</p>
-      <table>
+      <div class="table-wrap"><table>
         <thead>
           <tr><th>Event</th><th>When emitted</th><th>Fields</th></tr>
         </thead>
@@ -405,11 +405,11 @@ morse collection create site-pages --mode quilt</pre>
             <td><code>publication: ID</code>, <code>name: String</code></td>
           </tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h2 id="error-codes">Error Codes</h2>
       <p>For more error codes, see: <a href="publications.html#error-codes">Publications</a>, <a href="entries.html#error-codes">Entries</a>, <a href="access-control.html#error-codes">Access Control</a>.</p>
-      <table>
+      <div class="table-wrap"><table>
         <thead><tr><th>Code</th><th>Constant</th><th>Meaning</th></tr></thead>
         <tbody>
           <tr><td><code>0</code></td><td><code>ECollectionAlreadyExists</code></td><td>A collection with this name already exists in the publication (from <code>publication</code> module)</td></tr>
@@ -417,7 +417,7 @@ morse collection create site-pages --mode quilt</pre>
           <tr><td><code>1</code></td><td><code>EInvalidStorageMode</code></td><td>Storage mode must be <code>0</code> or <code>1</code></td></tr>
           <tr><td><code>11</code></td><td><code>EInvalidQuiltPatchId</code></td><td>Quilt patch ID must be exactly 37 bytes (from <code>entry</code> module)</td></tr>
         </tbody>
-      </table>
+      </table></div>
     </article>
 
     <div class="page-footer">

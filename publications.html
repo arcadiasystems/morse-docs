@@ -162,7 +162,7 @@
       <p>Every publication is identified by a <strong>slug</strong> - a short, lowercase string that becomes its canonical identifier across the protocol. Slugs are enforced to be globally unique by the <code>PublicationRegistry</code>.</p>
 
       <h3 id="slug-rules">Slug Rules</h3>
-      <table>
+      <div class="table-wrap"><table>
         <thead><tr><th>Rule</th><th>Constraint</th></tr></thead>
         <tbody>
           <tr><td>Characters</td><td>Lowercase letters <code>a-z</code>, digits <code>0-9</code>, hyphens <code>-</code></td></tr>
@@ -171,7 +171,7 @@
           <tr><td>Uniqueness</td><td>Must be globally unique while the publication is active</td></tr>
           <tr><td>Immutability</td><td>Cannot be changed after publication creation</td></tr>
         </tbody>
-      </table>
+      </table></div>
 
       <div class="code-block">
         <div class="code-header">
@@ -464,7 +464,7 @@ Selected as the active publication.</pre>
       <h2 id="events">Events</h2>
       <p>The publications module emits the following events. An off-chain indexer can subscribe to these to maintain a live view of the publication registry.</p>
 
-      <table>
+      <div class="table-wrap"><table>
         <thead>
           <tr><th>Event</th><th>When emitted</th><th>Fields</th></tr>
         </thead>
@@ -500,11 +500,11 @@ Selected as the active publication.</pre>
             <td><code>publication: ID</code>, <code>cap: ID</code></td>
           </tr>
         </tbody>
-      </table>
+      </table></div>
 
       <h2 id="error-codes">Error Codes</h2>
       <p>For more error codes, see: <a href="collections.html#error-codes">Collections</a>, <a href="entries.html#error-codes">Entries</a>, <a href="access-control.html#error-codes">Access Control</a>.</p>
-      <table>
+      <div class="table-wrap"><table>
         <thead><tr><th>Code</th><th>Constant</th><th>Meaning</th></tr></thead>
         <tbody>
           <tr><td><code>6</code></td><td><code>ESlugAlreadyExists</code></td><td>A publication with this slug already exists in the registry</td></tr>
@@ -517,7 +517,7 @@ Selected as the active publication.</pre>
           <tr><td><code>5</code></td><td><code>EPublisherCapRevoked</code></td><td>Publisher cap has been revoked by the owner</td></tr>
           <tr><td><code>0</code></td><td><code>ECollectionAlreadyExists</code></td><td>A collection with this name already exists</td></tr>
         </tbody>
-      </table>
+      </table></div>
     </article>
 
     <div class="page-footer">

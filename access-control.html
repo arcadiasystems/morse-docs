@@ -391,7 +391,7 @@ assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), <span cla
       <h3 id="the-denylist-model">The Denylist Model</h3>
       <p>Morse uses a <strong>denylist</strong> (blocklist), not an allowlist, for publisher cap tracking. This is a deliberate design choice:</p>
 
-      <table>
+      <div class="table-wrap"><table>
         <thead><tr><th></th><th>Denylist (Morse)</th><th>Allowlist (alternative)</th></tr></thead>
         <tbody>
           <tr><td>Issue cap</td><td>Zero table writes</td><td>One table write per issuance</td></tr>
@@ -399,7 +399,7 @@ assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), <span cla
           <tr><td>Write validation</td><td>One table lookup</td><td>One table lookup</td></tr>
           <tr><td>Optimized for</td><td>Common case (no revocations)</td><td>Frequent churn</td></tr>
         </tbody>
-      </table>
+      </table></div>
 <br>
       <p>This is safe because <code>PublisherCap</code> has no <code>store</code> ability and no external constructor - caps cannot be forged outside the module. An attacker cannot create a valid-looking cap; they must obtain a real one from the owner.</p>
 
@@ -611,7 +611,7 @@ assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), <span cla
 
       <h2 id="error-codes">Error Codes</h2>
       <p>For more error codes, see: <a href="publications.html#error-codes">Publications</a>, <a href="collections.html#error-codes">Collections</a>, <a href="entries.html#error-codes">Entries</a>.</p>
-      <table>
+      <div class="table-wrap"><table>
         <thead><tr><th>Code</th><th>Constant</th><th>Meaning</th></tr></thead>
         <tbody>
           <tr><td><code>2</code></td><td><code>EUnauthorized</code></td><td>Capability does not belong to this publication</td></tr>
@@ -620,7 +620,7 @@ assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), <span cla
           <tr><td><code>12</code></td><td><code>ESealInvalidId</code></td><td>Seal identity does not match this publication's namespace</td></tr>
           <tr><td><code>13</code></td><td><code>ESealWrongPolicyTag</code></td><td>Seal identity has an unsupported policy tag byte</td></tr>
         </tbody>
-      </table>
+      </table></div>
     </article>
 
     <div class="page-footer">
