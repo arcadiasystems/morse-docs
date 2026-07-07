@@ -1,4 +1,4 @@
-> Source: https://morsecms-docs.vercel.app/use-morse-with-ai.html · Full docs: https://morsecms-docs.vercel.app/llms-full.txt
+> Source: https://docs.morsecms.xyz/use-morse-with-ai.html · Full docs: https://docs.morsecms.xyz/llms-full.txt
 > Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback
 
 # Use Morse with AI
@@ -11,16 +11,16 @@ Every page on this site is available in three agent-friendly forms. No scraping,
 
 | Format | URL | Use it for |
 | --- | --- | --- |
-| **llms.txt** | [`/llms.txt`](https://morsecms-docs.vercel.app/llms.txt) | Compact index of all pages with one-line descriptions. Point an agent here first so it can pick which pages to read. |
-| **llms-full.txt** | [`/llms-full.txt`](https://morsecms-docs.vercel.app/llms-full.txt) | The complete documentation concatenated into a single Markdown file. One fetch gives an agent everything. |
-| **Markdown twins** | `/<page>.md` | Every page has a Markdown version at the same URL with `.md` instead of `.html` — e.g. [`/entries.md`](https://morsecms-docs.vercel.app/entries.md). |
+| **llms.txt** | [`/llms.txt`](https://docs.morsecms.xyz/llms.txt) | Compact index of all pages with one-line descriptions. Point an agent here first so it can pick which pages to read. |
+| **llms-full.txt** | [`/llms-full.txt`](https://docs.morsecms.xyz/llms-full.txt) | The complete documentation concatenated into a single Markdown file. One fetch gives an agent everything. |
+| **Markdown twins** | `/<page>.md` | Every page has a Markdown version at the same URL with `.md` instead of `.html` — e.g. [`/entries.md`](https://docs.morsecms.xyz/entries.md). |
 
 ## Prime a Coding Agent
 
 Paste one line into your agent to load the full Morse context:
 
 ```prompt
-Read https://morsecms-docs.vercel.app/llms-full.txt — the full documentation for Morse,
+Read https://docs.morsecms.xyz/llms-full.txt — the full documentation for Morse,
 the decentralized headless CMS protocol on Sui + Walrus. Use it to help me build
 with the Morse CLI, TypeScript SDK, or Move contracts.
 ```
@@ -29,13 +29,13 @@ Or fetch context on demand from a terminal-capable agent:
 
 ```bash
 # Index of all pages
-curl -s https://morsecms-docs.vercel.app/llms.txt
+curl -s https://docs.morsecms.xyz/llms.txt
 
 # One specific page as Markdown
-curl -s https://morsecms-docs.vercel.app/quick-start-cli.md
+curl -s https://docs.morsecms.xyz/quick-start-cli.md
 
 # Everything at once
-curl -s https://morsecms-docs.vercel.app/llms-full.txt
+curl -s https://docs.morsecms.xyz/llms-full.txt
 ```
 
 > **TIP: Working in a Morse project?**
@@ -56,10 +56,10 @@ There is also **Ask AI** in the header (or press `⌘I`): type a question and it
 
 Morse isn't just documented for agents — it is *operable* by them. There is no dashboard signup, no API-key console, no human-only provisioning step anywhere in the protocol. Everything is a CLI command, an SDK call, or a transaction:
 
-- **Provision from the terminal** — `morse init`, `morse publication create`, `morse entry add`: a coding agent can go from nothing to published content without leaving the shell. See the [CLI quick start](https://morsecms-docs.vercel.app/quick-start-cli.html).
-- **Script it with the SDK** — `@arcadiasystems/morse-sdk` exposes the same operations as typed TypeScript with structured errors, ideal for agent-authored automation. See the [SDK quick start](https://morsecms-docs.vercel.app/quick-start-sdk.html).
-- **Verify on-chain** — every mutation returns a transaction digest an agent can check. State is queryable from the contracts directly; no opaque backend to trust. See [Smart Contracts](https://morsecms-docs.vercel.app/contracts-overview.html).
-- **Deterministic auth** — capability objects (`OwnerCap`, `PublisherCap`) make permissions explicit and inspectable, so an agent always knows what it is allowed to do. See [Access Control](https://morsecms-docs.vercel.app/access-control.html).
+- **Provision from the terminal** — `morse init`, `morse publication create`, `morse entry add`: a coding agent can go from nothing to published content without leaving the shell. See the [CLI quick start](https://docs.morsecms.xyz/quick-start-cli.html).
+- **Script it with the SDK** — `@arcadiasystems/morse-sdk` exposes the same operations as typed TypeScript with structured errors, ideal for agent-authored automation. See the [SDK quick start](https://docs.morsecms.xyz/quick-start-sdk.html).
+- **Verify on-chain** — every mutation returns a transaction digest an agent can check. State is queryable from the contracts directly; no opaque backend to trust. See [Smart Contracts](https://docs.morsecms.xyz/contracts-overview.html).
+- **Deterministic auth** — capability objects (`OwnerCap`, `PublisherCap`) make permissions explicit and inspectable, so an agent always knows what it is allowed to do. See [Access Control](https://docs.morsecms.xyz/access-control.html).
 
 ```bash
 # A complete agent-driven publishing flow

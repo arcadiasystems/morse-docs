@@ -1,4 +1,4 @@
-> Source: https://morsecms-docs.vercel.app/core-concepts.html · Full docs: https://morsecms-docs.vercel.app/llms-full.txt
+> Source: https://docs.morsecms.xyz/core-concepts.html · Full docs: https://docs.morsecms.xyz/llms-full.txt
 > Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback
 
 # Core Concepts
@@ -30,19 +30,19 @@ Editors operate mostly at the **Entry / Revision** level. Owners operate mostly 
 
 Think of a publication as your project or site - it is the top-level namespace that groups all your content together. Every publication gets a unique slug (like `my-blog`) that acts as a human-readable identifier across the protocol. All collections, entries, and permissions live under this single umbrella.
 
-[See Publications for the full reference →](https://morsecms-docs.vercel.app/publications.html)
+[See Publications for the full reference →](https://docs.morsecms.xyz/publications.html)
 
 ## Collections
 
 Collections are how you organize entries within a publication - similar to folders or content types. For example, a blog might have an `articles` collection and a `site-pages` collection. When you create a collection, you choose how its content is stored: individually as separate blobs (good for standalone posts or images) or as a shared document that can be patched in place (good for structured data like settings or configuration).
 
-[See Collections for the full reference →](https://morsecms-docs.vercel.app/collections.html)
+[See Collections for the full reference →](https://docs.morsecms.xyz/collections.html)
 
 ## Entries & Revisions
 
 Entries are the actual content pieces - a blog post, an image, a page. Every edit creates a new revision rather than overwriting the previous one, giving you a complete version history that can never be lost. The system tracks two pointers for each entry: a draft head for work-in-progress and a public head that readers see. This lets drafts evolve privately while production clients serve stable published content.
 
-[See Entries for the full reference →](https://morsecms-docs.vercel.app/entries.html)
+[See Entries for the full reference →](https://docs.morsecms.xyz/entries.html)
 
 ## How Publishing Works
 
@@ -60,19 +60,19 @@ Instead of usernames and passwords, Morse uses on-chain capability objects to ma
 
 Revocation uses a denylist-based model - issuing caps is cheap (zero table writes), and only revocations write to the denylist. Once revoked, all future writes using that cap are immediately rejected.
 
-[See Access Control for the full reference →](https://morsecms-docs.vercel.app/access-control.html)
+[See Access Control for the full reference →](https://docs.morsecms.xyz/access-control.html)
 
 ## Walrus Storage
 
 The Sui blockchain only stores references (pointers) to your content, not the content bytes themselves. The actual payloads live on Walrus, a decentralized storage network designed for large data. This separation keeps on-chain costs low while ensuring your content is permanently available and verifiable. Walrus is format-agnostic, so Morse can support JSON, Markdown, images, video, or any custom schema.
 
-[See Collections → Storage Modes for storage mode details →](https://morsecms-docs.vercel.app/collections.html#storage-modes)
+[See Collections → Storage Modes for storage mode details →](https://docs.morsecms.xyz/collections.html#storage-modes)
 
 ## Access Control
 
 Morse can gate content behind on-chain encryption using Seal. Only users who meet specific on-chain conditions can decrypt and read the content. This means access rules are enforced by the blockchain itself, not by a server you have to trust. This approach enables paid subscriptions, token-gated access, team-only content, and other models - all without a centralized gatekeeper.
 
-[See Access Control for the full reference →](https://morsecms-docs.vercel.app/access-control.html)
+[See Access Control for the full reference →](https://docs.morsecms.xyz/access-control.html)
 
 ## Off-Chain Services
 
@@ -87,7 +87,7 @@ Importantly, all off-chain services are replaceable. Any team can run their own 
 
 ## Next Steps
 
-- [Quick Start](https://morsecms-docs.vercel.app/quick-start.html): Choose CLI, SDK, or Smart Contracts and go from zero to published content on testnet.
-- [Publications](https://morsecms-docs.vercel.app/publications.html): Full reference for the top-level content container: slugs, capabilities, and lifecycle.
-- [Collections](https://morsecms-docs.vercel.app/collections.html): Storage modes, entry IDs, and collection management.
-- [Access Control](https://morsecms-docs.vercel.app/access-control.html): OwnerCap, PublisherCap, revocation, and Seal encryption.
+- [Quick Start](https://docs.morsecms.xyz/quick-start.html): Choose CLI, SDK, or Smart Contracts and go from zero to published content on testnet.
+- [Publications](https://docs.morsecms.xyz/publications.html): Full reference for the top-level content container: slugs, capabilities, and lifecycle.
+- [Collections](https://docs.morsecms.xyz/collections.html): Storage modes, entry IDs, and collection management.
+- [Access Control](https://docs.morsecms.xyz/access-control.html): OwnerCap, PublisherCap, revocation, and Seal encryption.

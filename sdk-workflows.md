@@ -1,9 +1,9 @@
-> Source: https://morsecms-docs.vercel.app/sdk-workflows.html · Full docs: https://morsecms-docs.vercel.app/llms-full.txt
+> Source: https://docs.morsecms.xyz/sdk-workflows.html · Full docs: https://docs.morsecms.xyz/llms-full.txt
 > Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback
 
 # SDK Cookbooks
 
-> End-to-end recipes for `morse-sdk`: publish content, revise entries, encrypt and decrypt, delegate write access, and tear down resources. For installation and adapter wiring, see [SDK Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html).
+> End-to-end recipes for `morse-sdk`: publish content, revise entries, encrypt and decrypt, delegate write access, and tear down resources. For installation and adapter wiring, see [SDK Setup](https://docs.morsecms.xyz/sdk-client-setup.html).
 
 ## Prerequisites
 
@@ -13,13 +13,13 @@
 | SUI + WAL tokens | [SUI faucet](https://faucet.sui.io/) / [Swap SUI for WAL](https://stake-wal.wal.app/?network=testnet) | Gas fees (SUI) and Walrus storage fees (WAL) |
 | Bech32 private key | A `suiprivkey1...` string | SDK authentication - export from your wallet's settings |
 
-Make sure the SDK is installed and configured before continuing. See [SDK Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html) for details.
+Make sure the SDK is installed and configured before continuing. See [SDK Setup](https://docs.morsecms.xyz/sdk-client-setup.html) for details.
 
 ## Lifecycle
 
 Publications hold collections; collections hold entries; entries hold an append-only vector of revisions. Permission management lives in Sui; payloads live in Walrus.
 
-The examples below assume you've built a context as shown in [SDK Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html). Browser flows carry a `signer` (via `WalletStandardSigner.fromAccount`) instead of `keypair`. Walrus adapters (`walrusWriter`, `walrusReader`) are constructed where needed - see [Picking a Walrus Adapter](https://morsecms-docs.vercel.app/sdk-client-setup.html#picking-a-walrus-adapter) for options.
+The examples below assume you've built a context as shown in [SDK Setup](https://docs.morsecms.xyz/sdk-client-setup.html). Browser flows carry a `signer` (via `WalletStandardSigner.fromAccount`) instead of `keypair`. Walrus adapters (`walrusWriter`, `walrusReader`) are constructed where needed - see [Picking a Walrus Adapter](https://docs.morsecms.xyz/sdk-client-setup.html#picking-a-walrus-adapter) for options.
 
 ## Creating a Publication
 
@@ -91,7 +91,7 @@ const entry = await addEntryFromBytes(adapter, config, {
 >
 > If transaction 1 (register + upload) succeeds but transaction 2 (certify + add_entry) fails, the SDK throws `UncertifiedBlobError` carrying `blobObjectId` and `blobId`. The blob exists on storage nodes but remains uncertified and is released when the registration expires. Log the IDs or surface the error for debugging.
 
-See also: [CLI Cookbooks → Publishing Your First Entry](https://morsecms-docs.vercel.app/cli-workflows.html#publishing-your-first-entry)
+See also: [CLI Cookbooks → Publishing Your First Entry](https://docs.morsecms.xyz/cli-workflows.html#publishing-your-first-entry)
 
 ## Encrypted Content
 
@@ -233,7 +233,7 @@ const revision = await appendEncryptedDraftRevision(adapter, config, {
 console.log("Revision", revision.revisionId, "appended");
 ```
 
-See also: [CLI Cookbooks → Encrypted Content](https://morsecms-docs.vercel.app/cli-workflows.html#encrypted-content)
+See also: [CLI Cookbooks → Encrypted Content](https://docs.morsecms.xyz/cli-workflows.html#encrypted-content)
 
 ## Reading It Back
 
@@ -272,13 +272,13 @@ for await (const e of reader.scanEntries(created.publicationId, "blog")) {
 
 > **WARNING: Use `HttpAggregatorReadAdapter` for reads on testnet**
 >
-> On testnet, `DefaultWalrusReadAdapter` (direct-node fanout) may fail. Use `HttpAggregatorReadAdapter` for reads instead - it routes through a single aggregator endpoint and is reliable on testnet. Mainnet storage nodes are expected to be more reliable. See [SDK Client Setup → Picking a Walrus Adapter](https://morsecms-docs.vercel.app/sdk-client-setup.html#picking-a-walrus-adapter).
+> On testnet, `DefaultWalrusReadAdapter` (direct-node fanout) may fail. Use `HttpAggregatorReadAdapter` for reads instead - it routes through a single aggregator endpoint and is reliable on testnet. Mainnet storage nodes are expected to be more reliable. See [SDK Client Setup → Picking a Walrus Adapter](https://docs.morsecms.xyz/sdk-client-setup.html#picking-a-walrus-adapter).
 
 > **INFO: Ordering caveat**
 >
 > `listEntries` and `scanEntries` return entries in dynamic-field object-store order, not chronological order. Sort by `entry.id` if you need insertion order.
 
-See also: [CLI Cookbooks → Reading It Back](https://morsecms-docs.vercel.app/cli-workflows.html#reading-it-back)
+See also: [CLI Cookbooks → Reading It Back](https://docs.morsecms.xyz/cli-workflows.html#reading-it-back)
 
 ## Publishing a New Revision
 
@@ -357,11 +357,11 @@ const published = await publishFromDraft(adapter, config, {
 });
 ```
 
-See also: [CLI Cookbooks → Publishing a New Revision](https://morsecms-docs.vercel.app/cli-workflows.html#publishing-a-new-revision)
+See also: [CLI Cookbooks → Publishing a New Revision](https://docs.morsecms.xyz/cli-workflows.html#publishing-a-new-revision)
 
 ## Delegating Write Access
 
-Morse separates ownership (`OwnerCap`) from publishing (`PublisherCap`). The owner issues a cap bound to a co-author's address, granting them write access. Once issued, the co-author can publish entries using their own key. Revoking the cap causes further writes to abort on-chain. See [Access Control → Issuing Publisher Caps](https://morsecms-docs.vercel.app/access-control.html#issuing-publisher-caps) for details.
+Morse separates ownership (`OwnerCap`) from publishing (`PublisherCap`). The owner issues a cap bound to a co-author's address, granting them write access. Once issued, the co-author can publish entries using their own key. Revoking the cap causes further writes to abort on-chain. See [Access Control → Issuing Publisher Caps](https://docs.morsecms.xyz/access-control.html#issuing-publisher-caps) for details.
 
 ```typescript
 import {
@@ -396,7 +396,7 @@ await destroyPublisherCap(coAuthorAdapter, config, {
 >
 > A PublisherCap is bound to the `holder` address at issue time. Transferring the Sui object to a different address does NOT grant write rights. To rotate authority to a new address, destroy the old cap and issue a fresh one.
 
-See also: [CLI Cookbooks → Delegating Write Access](https://morsecms-docs.vercel.app/cli-workflows.html#delegating-write-access)
+See also: [CLI Cookbooks → Delegating Write Access](https://docs.morsecms.xyz/cli-workflows.html#delegating-write-access)
 
 ## Transferring Ownership
 
@@ -415,12 +415,12 @@ await transferOwnership(adapter, config, {
 >
 > Once transferred, the original owner loses all governance rights immediately. The new owner could transfer back, but there is no built-in undo.
 
-See also: [CLI Cookbooks → Transferring Ownership](https://morsecms-docs.vercel.app/cli-workflows.html#transferring-ownership)
+See also: [CLI Cookbooks → Transferring Ownership](https://docs.morsecms.xyz/cli-workflows.html#transferring-ownership)
 
 ## Deleting and Tearing Down
 
 Deletion works bottom-up: remove entries first, then the collections, then the publication. The Move layer enforces this - deleting a non-empty collection or publication aborts on-chain. This assumes the caller still holds both a `PublisherCap` and the `OwnerCap`. 
-Entry IDs are permanently retired on deletion and never reused. See [Entries → Deleting an Entry](https://morsecms-docs.vercel.app/entries.html#deleting-an-entry) for details.
+Entry IDs are permanently retired on deletion and never reused. See [Entries → Deleting an Entry](https://docs.morsecms.xyz/entries.html#deleting-an-entry) for details.
 
 ```typescript
 import {
@@ -462,7 +462,7 @@ await deletePublication(reader, adapter, config, {
 });
 ```
 
-See also: [CLI Cookbooks → Deleting and Tearing Down](https://morsecms-docs.vercel.app/cli-workflows.html#deleting-and-tearing-down)
+See also: [CLI Cookbooks → Deleting and Tearing Down](https://docs.morsecms.xyz/cli-workflows.html#deleting-and-tearing-down)
 
 ## Entry Path Options
 
@@ -511,5 +511,5 @@ const entry = await addEntry(adapter, config, {
 
 ## Next Steps
 
-- [CLI: Overview](https://morsecms-docs.vercel.app/cli-overview.html): Interactive command-line tool for managing publications, collections, and entries without writing code.
-- [Smart Contracts: Overview](https://morsecms-docs.vercel.app/contracts-overview.html): Architecture of the Morse Move package - modules, shared objects, and the on-chain data model.
+- [CLI: Overview](https://docs.morsecms.xyz/cli-overview.html): Interactive command-line tool for managing publications, collections, and entries without writing code.
+- [Smart Contracts: Overview](https://docs.morsecms.xyz/contracts-overview.html): Architecture of the Morse Move package - modules, shared objects, and the on-chain data model.

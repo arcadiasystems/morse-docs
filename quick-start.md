@@ -1,12 +1,12 @@
-> Source: https://morsecms-docs.vercel.app/quick-start.html · Full docs: https://morsecms-docs.vercel.app/llms-full.txt
+> Source: https://docs.morsecms.xyz/quick-start.html · Full docs: https://docs.morsecms.xyz/llms-full.txt
 > Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback
 
 # Quick Start
 
 > Choose the path that fits your workflow. Each guide takes you from zero to published content on testnet.
 
-New to Morse? Start with [Core Concepts](https://morsecms-docs.vercel.app/core-concepts.html) for an overview, or jump straight into the CLI guide - it's the fastest way to see Morse in action.
+New to Morse? Start with [Core Concepts](https://docs.morsecms.xyz/core-concepts.html) for an overview, or jump straight into the CLI guide - it's the fastest way to see Morse in action.
 
-- [CLI](https://morsecms-docs.vercel.app/quick-start-cli.html): Install morse-cli from npm, create a publication, publish and read content - all from your terminal. For operators and content managers. *(~5 min · Requires: Bun or Node, funded Sui wallet)*
-- [TypeScript SDK](https://morsecms-docs.vercel.app/quick-start-sdk.html): Wire up @arcadiasystems/morse-sdk, create a publication, add an entry, and read it back in a single script. For app developers building on Morse. *(~5 min · Requires: Bun or Node, funded Sui wallet)*
-- [Smart Contracts](https://morsecms-docs.vercel.app/quick-start-contracts.html): Interact with Morse's deployed contracts directly via PTBs. For developers who want full control over transaction construction. *(~10 min · Requires: Sui CLI, funded Sui wallet)*
+- [CLI](https://docs.morsecms.xyz/quick-start-cli.html): Install morse-cli from npm, create a publication, publish and read content - all from your terminal. For operators and content managers. *(~5 min · Requires: Bun or Node, funded Sui wallet)*
+- [TypeScript SDK](https://docs.morsecms.xyz/quick-start-sdk.html): Wire up @arcadiasystems/morse-sdk, create a publication, add an entry, and read it back in a single script. For app developers building on Morse. *(~5 min · Requires: Bun or Node, funded Sui wallet)*
+- [Smart Contracts](https://docs.morsecms.xyz/quick-start-contracts.html): Interact with Morse's deployed contracts directly via PTBs. For developers who want full control over transaction construction. *(~10 min · Requires: Sui CLI, funded Sui wallet)*

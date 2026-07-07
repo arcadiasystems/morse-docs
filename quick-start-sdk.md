@@ -1,4 +1,4 @@
-> Source: https://morsecms-docs.vercel.app/quick-start-sdk.html · Full docs: https://morsecms-docs.vercel.app/llms-full.txt
+> Source: https://docs.morsecms.xyz/quick-start-sdk.html · Full docs: https://docs.morsecms.xyz/llms-full.txt
 > Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback
 
 # Quick Start: SDK
@@ -15,7 +15,7 @@
 
 ## Installing
 
-Install the SDK and its peer dependencies using your preferred package manager. See [SDK Client Setup → Compatibility](https://morsecms-docs.vercel.app/sdk-client-setup.html#compatibility) for compatible dependency versions.
+Install the SDK and its peer dependencies using your preferred package manager. See [SDK Client Setup → Compatibility](https://docs.morsecms.xyz/sdk-client-setup.html#compatibility) for compatible dependency versions.
 
 With Bun:
 
@@ -43,7 +43,7 @@ Save this as `quickstart.ts`. It creates a publication, adds a collection, uploa
 
 > **INFO: Transport: gRPC**
 >
-> This guide uses `SuiGrpcClient` for its typed interface and lower latency. Morse SDK also supports JSON-RPC via `SuiHTTPTransport` from `@mysten/sui/client` if your environment requires it - see [SDK Client Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html) for details.
+> This guide uses `SuiGrpcClient` for its typed interface and lower latency. Morse SDK also supports JSON-RPC via `SuiHTTPTransport` from `@mysten/sui/client` if your environment requires it - see [SDK Client Setup](https://docs.morsecms.xyz/sdk-client-setup.html) for details.
 
 ```typescript
 import { SuiGrpcClient } from "@mysten/sui/grpc";
@@ -122,7 +122,7 @@ const content = await walrusReader.readBlobRef(fetched.revisions[0].blobRef);
 console.log(new TextDecoder().decode(content));
 ```
 
-`HttpAggregatorReadAdapter` routes content reads through the Walrus aggregator, which is more reliable on testnet. See [SDK Client Setup → Picking a Walrus Adapter](https://morsecms-docs.vercel.app/sdk-client-setup.html#picking-a-walrus-adapter) for alternatives.
+`HttpAggregatorReadAdapter` routes content reads through the Walrus aggregator, which is more reliable on testnet. See [SDK Client Setup → Picking a Walrus Adapter](https://docs.morsecms.xyz/sdk-client-setup.html#picking-a-walrus-adapter) for alternatives.
 
 > **TIP: Which IDs to save**
 >
@@ -152,10 +152,10 @@ Revisions: 1
 
 > **TIP: You're live on-chain**
 >
-> Your publication, collection, and entry are on Sui testnet. The entry content is stored on Walrus. For browser integration with wallet popups, see [SDK Client Setup -> Browser](https://morsecms-docs.vercel.app/sdk-client-setup.html#browser-setup).
+> Your publication, collection, and entry are on Sui testnet. The entry content is stored on Walrus. For browser integration with wallet popups, see [SDK Client Setup -> Browser](https://docs.morsecms.xyz/sdk-client-setup.html#browser-setup).
 
 ## Next Steps
 
-- [SDK: Client Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html): Browser setup, wallet adapters, Walrus adapter options, and error handling.
-- [SDK: Cookbooks](https://morsecms-docs.vercel.app/sdk-workflows.html): Encrypted entries, revisions, reading content, and the full publishing API.
-- [Core Concepts](https://morsecms-docs.vercel.app/core-concepts.html): Understand the data model - publications, collections, entries, and revisions.
+- [SDK: Client Setup](https://docs.morsecms.xyz/sdk-client-setup.html): Browser setup, wallet adapters, Walrus adapter options, and error handling.
+- [SDK: Cookbooks](https://docs.morsecms.xyz/sdk-workflows.html): Encrypted entries, revisions, reading content, and the full publishing API.
+- [Core Concepts](https://docs.morsecms.xyz/core-concepts.html): Understand the data model - publications, collections, entries, and revisions.

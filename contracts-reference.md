@@ -1,4 +1,4 @@
-> Source: https://morsecms-docs.vercel.app/contracts-reference.html · Full docs: https://morsecms-docs.vercel.app/llms-full.txt
+> Source: https://docs.morsecms.xyz/contracts-reference.html · Full docs: https://docs.morsecms.xyz/llms-full.txt
 > Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback
 
 # Contract Reference
@@ -119,5 +119,5 @@ These functions are defined in `publication::entry`. Getter functions that opera
 
 ## Next Steps
 
-- [Smart Contracts: Overview](https://morsecms-docs.vercel.app/contracts-overview.html): Package structure, struct definitions, capabilities, and known limitations.
-- [Smart Contracts: Cookbooks](https://morsecms-docs.vercel.app/contracts-workflows.html): Step-by-step PTB recipes for publishing, encrypted entries, and cap management.
+- [Smart Contracts: Overview](https://docs.morsecms.xyz/contracts-overview.html): Package structure, struct definitions, capabilities, and known limitations.
+- [Smart Contracts: Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html): Step-by-step PTB recipes for publishing, encrypted entries, and cap management.

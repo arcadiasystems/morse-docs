@@ -15,7 +15,7 @@ import { fileURLToPath } from 'node:url';
 import { load } from 'cheerio';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-const BASE_URL = 'https://morsecms-docs.vercel.app';
+const BASE_URL = 'https://docs.morsecms.xyz';
 const DOCS_REPO = 'MandaWeb3/morse-docs';
 
 /** Reading order + sidebar section for every page (mirrors assets/sidebar.js). */

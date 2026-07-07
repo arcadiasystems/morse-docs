@@ -1,4 +1,4 @@
-> Source: https://morsecms-docs.vercel.app/quick-start-contracts.html · Full docs: https://morsecms-docs.vercel.app/llms-full.txt
+> Source: https://docs.morsecms.xyz/quick-start-contracts.html · Full docs: https://docs.morsecms.xyz/llms-full.txt
 > Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback
 
 # Quick Start: Smart Contracts
@@ -31,7 +31,7 @@ npm install @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal
 
 > **INFO: Why the SDK if we're using raw PTBs?**
 >
-> This guide uses raw `tx.moveCall` - no SDK wrappers for contract calls. The SDK packages provide three things:  `morseConfig` - resolves the deployed package ID, registry ID, and RPC URL so you don't hard-code addresses `DefaultWalrusWriteAdapter` - handles blob uploads to Walrus (requires `@mysten/walrus`) `DefaultSealAdapter` - handles Seal encryption (requires `@mysten/seal`, loaded at runtime even for non-encrypted workflows)  For the high-level wrapper approach, see the [SDK Quick Start](https://morsecms-docs.vercel.app/quick-start-sdk.html).
+> This guide uses raw `tx.moveCall` - no SDK wrappers for contract calls. The SDK packages provide three things:  `morseConfig` - resolves the deployed package ID, registry ID, and RPC URL so you don't hard-code addresses `DefaultWalrusWriteAdapter` - handles blob uploads to Walrus (requires `@mysten/walrus`) `DefaultSealAdapter` - handles Seal encryption (requires `@mysten/seal`, loaded at runtime even for non-encrypted workflows)  For the high-level wrapper approach, see the [SDK Quick Start](https://docs.morsecms.xyz/quick-start-sdk.html).
 
 ## Writing the Script
 
@@ -39,7 +39,7 @@ Save this as `quickstart-contracts.ts`. It creates a publication, adds a collect
 
 > **INFO: Transport: gRPC**
 >
-> This guide uses `SuiGrpcClient` for its typed interface and lower latency. The Morse SDK also supports JSON-RPC via `SuiHTTPTransport` from `@mysten/sui/client` if your environment requires it - see [SDK Client Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html) for details.
+> This guide uses `SuiGrpcClient` for its typed interface and lower latency. The Morse SDK also supports JSON-RPC via `SuiHTTPTransport` from `@mysten/sui/client` if your environment requires it - see [SDK Client Setup](https://docs.morsecms.xyz/sdk-client-setup.html) for details.
 
 ```typescript
 import { SuiGrpcClient } from "@mysten/sui/grpc";
@@ -205,10 +205,10 @@ Entry added: hello-world (ID 0)
 
 > **TIP: You're live on-chain**
 >
-> Your publication, collection, and entry are on Sui testnet. The entry content is stored on Walrus. For a friendlier reading experience, use the [Morse CLI](https://morsecms-docs.vercel.app/quick-start-cli.html): `morse entry read 0 --via-aggregator`.
+> Your publication, collection, and entry are on Sui testnet. The entry content is stored on Walrus. For a friendlier reading experience, use the [Morse CLI](https://docs.morsecms.xyz/quick-start-cli.html): `morse entry read 0 --via-aggregator`.
 
 ## Next Steps
 
-- [Contract Cookbooks](https://morsecms-docs.vercel.app/contracts-workflows.html): Revisions, drafts, encrypted content, delegating access, and teardown  - all via raw PTBs.
-- [Contract Reference](https://morsecms-docs.vercel.app/contracts-reference.html): Full function signatures, argument types, error codes, and Move struct definitions.
-- [Core Concepts](https://morsecms-docs.vercel.app/core-concepts.html): Understand the data model  - publications, collections, entries, and revisions.
+- [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html): Revisions, drafts, encrypted content, delegating access, and teardown  - all via raw PTBs.
+- [Contract Reference](https://docs.morsecms.xyz/contracts-reference.html): Full function signatures, argument types, error codes, and Move struct definitions.
+- [Core Concepts](https://docs.morsecms.xyz/core-concepts.html): Understand the data model  - publications, collections, entries, and revisions.

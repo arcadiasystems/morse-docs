@@ -1,4 +1,4 @@
-> Source: https://morsecms-docs.vercel.app/contracts-overview.html · Full docs: https://morsecms-docs.vercel.app/llms-full.txt
+> Source: https://docs.morsecms.xyz/contracts-overview.html · Full docs: https://docs.morsecms.xyz/llms-full.txt
 > Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback
 
 # Contract Overview
@@ -7,11 +7,11 @@
 
 > **INFO: Testnet deployment**
 >
-> Use [SDK Setup → morseConfig()](https://morsecms-docs.vercel.app/sdk-client-setup.html#morse-config) to get the current package ID, original ID, and registry ID. These values update automatically when the contract is upgraded.
+> Use [SDK Setup → morseConfig()](https://docs.morsecms.xyz/sdk-client-setup.html#morse-config) to get the current package ID, original ID, and registry ID. These values update automatically when the contract is upgraded.
 
 ## Getting Started
 
-Use `morseConfig()` from `@arcadiasystems/morse-sdk` to resolve the package and registry addresses, then construct PTBs with `tx.moveCall`. See the [Contract Reference](https://morsecms-docs.vercel.app/contracts-reference.html) for complete function signatures and struct definitions, and the [Contract Cookbooks](https://morsecms-docs.vercel.app/contracts-workflows.html) for step-by-step recipes.
+Use `morseConfig()` from `@arcadiasystems/morse-sdk` to resolve the package and registry addresses, then construct PTBs with `tx.moveCall`. See the [Contract Reference](https://docs.morsecms.xyz/contracts-reference.html) for complete function signatures and struct definitions, and the [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html) for step-by-step recipes.
 
 ## Package Structure
 
@@ -108,12 +108,12 @@ public enum BlobRef has copy, drop, store {
 
 ## Known Limitations
 
-- **No encrypted publish path.** `publish_from_draft` and `publish_direct` hardcode `encrypted = false`. Encrypted content stays as drafts - see [Entries → Adding an Entry](https://morsecms-docs.vercel.app/entries.html#adding-an-entry) for the full lifecycle.
+- **No encrypted publish path.** `publish_from_draft` and `publish_direct` hardcode `encrypted = false`. Encrypted content stays as drafts - see [Entries → Adding an Entry](https://docs.morsecms.xyz/entries.html#adding-an-entry) for the full lifecycle.
 - **Only the Publisher access policy is enforced.** The `Subscription` policy constant is defined but the approval entry point is not yet implemented.
 - **All blobs must be deletable.** The contract calls `blob.is_deletable()` and aborts if a permanent blob is passed.
 - **Single entry point module.** All public functions live in `publication::publication`. The other modules are internal.
 
 ## Next Steps
 
-- [Smart Contracts: Reference](https://morsecms-docs.vercel.app/contracts-reference.html): Complete function signatures, events, error codes, and constants.
-- [Smart Contracts: Cookbooks](https://morsecms-docs.vercel.app/contracts-workflows.html): Step-by-step recipes for creating publications, managing entries, and encrypting content via PTBs.
+- [Smart Contracts: Reference](https://docs.morsecms.xyz/contracts-reference.html): Complete function signatures, events, error codes, and constants.
+- [Smart Contracts: Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html): Step-by-step recipes for creating publications, managing entries, and encrypting content via PTBs.

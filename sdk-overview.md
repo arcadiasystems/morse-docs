@@ -1,4 +1,4 @@
-> Source: https://morsecms-docs.vercel.app/sdk-overview.html · Full docs: https://morsecms-docs.vercel.app/llms-full.txt
+> Source: https://docs.morsecms.xyz/sdk-overview.html · Full docs: https://docs.morsecms.xyz/llms-full.txt
 > Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback
 
 # SDK Overview
@@ -11,7 +11,7 @@
 
 ## Getting Started
 
-Install the SDK and its peer dependencies, then wire a wallet adapter and Walrus configuration for your environment. See [SDK Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html) for installation and configuration, and [SDK Cookbooks](https://morsecms-docs.vercel.app/sdk-workflows.html) for step-by-step guides.
+Install the SDK and its peer dependencies, then wire a wallet adapter and Walrus configuration for your environment. See [SDK Setup](https://docs.morsecms.xyz/sdk-client-setup.html) for installation and configuration, and [SDK Cookbooks](https://docs.morsecms.xyz/sdk-workflows.html) for step-by-step guides.
 
 ## Capabilities
 
@@ -37,16 +37,16 @@ The rest of the SDK - functions like `createPublication`, `addEntryFromBytes`, t
 
 - **Testnet only at v0.x.** Mainnet config is released once the contracts are stable.
 - **gRPC client only.** Reader and adapter interfaces are typed against `SuiGrpcClient` from `@mysten/sui/grpc`. JSON-RPC fallback is planned.
-- **No encrypted publish path.** The Move contract hardcodes `encrypted=false` on `publish_from_draft` and `publish_direct`. Encrypted content stays as drafts - see [SDK Cookbooks → Encrypted entries](https://morsecms-docs.vercel.app/sdk-workflows.html#encrypted-entries) for the full lifecycle.
+- **No encrypted publish path.** The Move contract hardcodes `encrypted=false` on `publish_from_draft` and `publish_direct`. Encrypted content stays as drafts - see [SDK Cookbooks → Encrypted entries](https://docs.morsecms.xyz/sdk-workflows.html#encrypted-entries) for the full lifecycle.
 - **Only the `Publisher` access policy is enforced.** The `Subscription` policy is not yet active.
 - **`listEntries` is not sorted chronologically.** Results follow on-chain storage order. Sort by `entry.id` for insertion order.
 - **zkLogin support is untested.** The decoder is included, but Walrus and Seal `SessionKey` flows have not been verified with zkLogin signatures. Use keypair or passkey accounts until you have tested your setup.
 
 > **WARNING: Encrypted entries are always created as drafts**
 >
-> Encrypted entries are always created as drafts. You must explicitly publish them with a separate transaction after adding. The Move contract hardcodes `encrypted=false` on `publish_from_draft` and `publish_direct`, so published revisions are always unencrypted and public. See [Entries -> Adding an Entry](https://morsecms-docs.vercel.app/entries.html#adding-an-entry) for the full explanation.
+> Encrypted entries are always created as drafts. You must explicitly publish them with a separate transaction after adding. The Move contract hardcodes `encrypted=false` on `publish_from_draft` and `publish_direct`, so published revisions are always unencrypted and public. See [Entries -> Adding an Entry](https://docs.morsecms.xyz/entries.html#adding-an-entry) for the full explanation.
 
 ## Next Steps
 
-- [SDK: Setup](https://morsecms-docs.vercel.app/sdk-client-setup.html): Install, wire a wallet, pick a Walrus adapter, handle errors.
-- [SDK: Cookbooks](https://morsecms-docs.vercel.app/sdk-workflows.html): Create publications and collections, add entries (plain + encrypted), read them back.
+- [SDK: Setup](https://docs.morsecms.xyz/sdk-client-setup.html): Install, wire a wallet, pick a Walrus adapter, handle errors.
+- [SDK: Cookbooks](https://docs.morsecms.xyz/sdk-workflows.html): Create publications and collections, add entries (plain + encrypted), read them back.

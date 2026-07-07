@@ -1,4 +1,4 @@
-> Source: https://morsecms-docs.vercel.app/cli-commands.html · Full docs: https://morsecms-docs.vercel.app/llms-full.txt
+> Source: https://docs.morsecms.xyz/cli-commands.html · Full docs: https://docs.morsecms.xyz/llms-full.txt
 > Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback
 
 # CLI Command Reference
@@ -155,7 +155,7 @@ Add, read, and delete entries within a collection.
 
 > **WARNING: Encrypted entries are always created as drafts**
 >
-> Encrypted entries are always created as drafts - there is no public head yet. Published revisions are always unencrypted and public, so to publish an encrypted entry you must supply a new unencrypted blob. A revision cannot be both published and encrypted. See [Entries -> Adding an Entry](https://morsecms-docs.vercel.app/entries.html#adding-an-entry) for the full explanation.
+> Encrypted entries are always created as drafts - there is no public head yet. Published revisions are always unencrypted and public, so to publish an encrypted entry you must supply a new unencrypted blob. A revision cannot be both published and encrypted. See [Entries -> Adding an Entry](https://docs.morsecms.xyz/entries.html#adding-an-entry) for the full explanation.
 
 ```example
 $ morse entry add welcome-post --file ./welcome.json
@@ -196,9 +196,9 @@ Issued PublisherCap 0xCAP_ID to 0x71a3...9f2b. (tx: AbCdEf...)
 ```
 
 `OwnerCap` and `PublisherCap` IDs are auto-resolved from the active account when the `--owner-cap` / `--publisher-cap` override is omitted. Morse separates ownership from publishing. 
-See [Access Control -> OwnerCap](https://morsecms-docs.vercel.app/access-control.html#ownercap) and [Access Control -> PublisherCap](https://morsecms-docs.vercel.app/access-control.html#publishercap) for how capability-based authorization works.
+See [Access Control -> OwnerCap](https://docs.morsecms.xyz/access-control.html#ownercap) and [Access Control -> PublisherCap](https://docs.morsecms.xyz/access-control.html#publishercap) for how capability-based authorization works.
 
 ## Next Steps
 
-- [CLI: Cookbooks](https://morsecms-docs.vercel.app/cli-workflows.html): Step-by-step recipes: publishing, encrypted entries, multi-writer setups, CI/CD scripting.
-- [Quick Start: CLI](https://morsecms-docs.vercel.app/quick-start-cli.html): Create your first publication, collection, and entry from the terminal.
+- [CLI: Cookbooks](https://docs.morsecms.xyz/cli-workflows.html): Step-by-step recipes: publishing, encrypted entries, multi-writer setups, CI/CD scripting.
+- [Quick Start: CLI](https://docs.morsecms.xyz/quick-start-cli.html): Create your first publication, collection, and entry from the terminal.

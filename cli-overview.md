@@ -1,4 +1,4 @@
-> Source: https://morsecms-docs.vercel.app/cli-overview.html · Full docs: https://morsecms-docs.vercel.app/llms-full.txt
+> Source: https://docs.morsecms.xyz/cli-overview.html · Full docs: https://docs.morsecms.xyz/llms-full.txt
 > Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback
 
 # CLI Overview
@@ -30,7 +30,7 @@ npx @arcadiasystems/morse-cli --help
 
 Select an active publication and collection once - all subsequent commands will use them automatically, so you never have to paste a 64-character object ID. `publication create` and `collection create` auto-select the new object. 
 
-See [CLI Cookbooks](https://morsecms-docs.vercel.app/cli-workflows.html) for step-by-step guides.
+See [CLI Cookbooks](https://docs.morsecms.xyz/cli-workflows.html) for step-by-step guides.
 
 ## Active Context
 
@@ -70,7 +70,7 @@ Settings resolve with the precedence `flags` > `MORSE_* env` > `config file` > `
 - In `--json` mode, `bigint` values (e.g. `gasUsedMist`) are encoded as decimal strings and byte arrays (`sealId`, quilt patch IDs) as `0x`-hex.
 - Color is emitted only to a TTY and honors `NO_COLOR` / `FORCE_COLOR`.
 
-See [CLI Command Reference → Global Options](https://morsecms-docs.vercel.app/cli-commands.html#global-options) for a full list of global flags (`--json`, `--quiet`, `--yes`, and more).
+See [CLI Command Reference → Global Options](https://docs.morsecms.xyz/cli-commands.html#global-options) for a full list of global flags (`--json`, `--quiet`, `--yes`, and more).
 
 ## Exit Codes
 
@@ -85,6 +85,6 @@ See [CLI Command Reference → Global Options](https://morsecms-docs.vercel.app/
 
 ## Next Steps
 
-- [CLI: Command Reference](https://morsecms-docs.vercel.app/cli-commands.html): Every command and flag: config, account, publication, collection, entry, revision, cap.
-- [CLI: Cookbooks](https://morsecms-docs.vercel.app/cli-workflows.html): Step-by-step recipes: publishing, encrypted entries, multi-writer setups, CI/CD scripting.
-- [Quick Start: CLI](https://morsecms-docs.vercel.app/quick-start-cli.html): The protocol concepts the CLI drives: publications, collections, entries.
+- [CLI: Command Reference](https://docs.morsecms.xyz/cli-commands.html): Every command and flag: config, account, publication, collection, entry, revision, cap.
+- [CLI: Cookbooks](https://docs.morsecms.xyz/cli-workflows.html): Step-by-step recipes: publishing, encrypted entries, multi-writer setups, CI/CD scripting.
+- [Quick Start: CLI](https://docs.morsecms.xyz/quick-start-cli.html): The protocol concepts the CLI drives: publications, collections, entries.

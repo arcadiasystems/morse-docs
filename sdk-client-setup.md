@@ -1,4 +1,4 @@
-> Source: https://morsecms-docs.vercel.app/sdk-client-setup.html · Full docs: https://morsecms-docs.vercel.app/llms-full.txt
+> Source: https://docs.morsecms.xyz/sdk-client-setup.html · Full docs: https://docs.morsecms.xyz/llms-full.txt
 > Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback
 
 # SDK Setup
@@ -389,7 +389,7 @@ const { results } = await reader.listPublicationsOwnedBy(adapter.address);
 console.log(`Connected! Found ${results.length} publication(s).`);
 ```
 
-A successful call confirms the client, config, and RPC endpoint are wired correctly - even if the count is 0. Follow the [SDK Cookbooks](https://morsecms-docs.vercel.app/sdk-workflows.html) to create your first publication.
+A successful call confirms the client, config, and RPC endpoint are wired correctly - even if the count is 0. Follow the [SDK Cookbooks](https://docs.morsecms.xyz/sdk-workflows.html) to create your first publication.
 
 ## Error Handling
 
@@ -438,5 +438,5 @@ try {
 
 ## Next Steps
 
-- [SDK: Cookbooks](https://morsecms-docs.vercel.app/sdk-workflows.html): Create publications, add entries (plain + encrypted), read them back.
-- [Quick Start: SDK](https://morsecms-docs.vercel.app/quick-start-sdk.html): End-to-end script: create a publication, add an entry, and read it back.
+- [SDK: Cookbooks](https://docs.morsecms.xyz/sdk-workflows.html): Create publications, add entries (plain + encrypted), read them back.
+- [Quick Start: SDK](https://docs.morsecms.xyz/quick-start-sdk.html): End-to-end script: create a publication, add an entry, and read it back.
