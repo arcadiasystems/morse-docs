@@ -193,7 +193,7 @@
     "pageTitle": "Quick Start: CLI",
     "section": "Getting Started",
     "heading": "Publishing an Entry",
-    "text": "Create a content file and publish it. The CLI uploads the file to Walrus and registers the entry on-chain. bash Copy echo '{\"title\": \"Hello World\", \"body\": \"My first post on Morse.\"}' > post.json Publish it. The CLI targets the active publication and collection by default - these are set automatically when you create them. You can override with -P <slug|id> and -C <name> flags: bash Copy morse entry add hello --file post.json output Uploading 65 bytes to Walrus... ✔ Added entry #0 \"hello\" (tx: D9Yfjk...) view: https://aggregator.walrus-testnet.walrus.space/v1/blobs/0iKeii..."
+    "text": "Create a content file and publish it. The CLI uploads the file to Walrus and registers the entry on-chain. This step needs WAL, not just SUI Everything up to here only cost SUI gas - uploading to Walrus also spends WAL. Make sure your account holds both before running this (swap SUI for WAL at stake-wal.wal.app), or the upload fails with Insufficient WAL balance. bash Copy echo '{\"title\": \"Hello World\", \"body\": \"My first post on Morse.\"}' > post.json Publish it. The CLI targets the active publication and collection by default - these are set automatically when you create them. You can override"
   },
   {
     "url": "quick-start-cli.html#reading-it-back",

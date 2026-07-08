@@ -460,7 +460,7 @@ morse publication get 0x00 || echo "exit $?"</pre>
               <tr><td><code>5</code></td><td>Too many failures while writing blob to nodes</td><td>Walrus storage nodes are degraded. Retry; check WAL balance.</td></tr>
               <tr><td><code>2</code></td><td>Morse is not yet deployed on mainnet</td><td>Use <code>--network testnet</code>.</td></tr>
               <tr><td><code>5</code></td><td>InsufficientGas / out of SUI gas</td><td>The active account does not have enough SUI for gas fees. Run <code>sui client faucet</code> to request testnet SUI.</td></tr>
-              <tr><td><code>5</code></td><td>Insufficient WAL balance</td><td>Walrus storage requires WAL tokens. Get WAL from the <a href="https://faucet.walrus-testnet.walrus.space" target="_blank" rel="noopener">Walrus testnet faucet</a>.</td></tr>
+              <tr><td><code>5</code></td><td>Insufficient WAL balance</td><td>Walrus storage requires WAL tokens. Get WAL from the <a href="https://stake-wal.wal.app/?network=testnet" target="_blank" rel="noopener">Walrus testnet faucet</a>.</td></tr>
               <tr><td><code>5</code></td><td>Walrus blob not retrievable / blob expired</td><td>The blob's storage epoch has ended and it is no longer available on Walrus storage nodes. Re-upload the content and create a new revision with a longer <code>--epochs</code> value.</td></tr>
             </tbody>
           </table>
@@ -486,7 +486,7 @@ morse publication get 0x00 || echo "exit $?"</pre>
           <button class="feedback-btn" data-feedback="no">No</button>
         </div>
         <div class="page-meta">
-          <a href="https://github.com/MandaWeb3/morse-docs/edit/main/cli-workflows.html" target="_blank" rel="noopener">Suggest changes</a>
+          <a href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20cli-workflows.html" target="_blank" rel="noopener">Report an issue</a>
           <span>Updated 2026-06-19</span>
         </div>
       </div>

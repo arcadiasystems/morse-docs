@@ -300,6 +300,14 @@ Selected as the active collection. (tx: DWkD...)</pre>
         <h2 id="publishing-an-entry">Publishing an Entry</h2>
         <p>Create a content file and publish it. The CLI uploads the file to Walrus and registers the entry on-chain.</p>
 
+        <div class="callout callout-warning">
+          <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">This step needs WAL, not just SUI</div>
+            <div class="callout-text">Everything up to here only cost SUI gas - uploading to Walrus also spends WAL. Make sure your account holds both before running this (swap SUI for WAL at <a href="https://stake-wal.wal.app/?network=testnet" target="_blank" rel="noopener">stake-wal.wal.app</a>), or the upload fails with <code>Insufficient WAL balance</code>.</div>
+          </div>
+        </div>
+
         <div class="code-block">
           <div class="code-header">
             <span class="code-lang">bash</span>
@@ -404,7 +412,7 @@ Selected as the active collection. (tx: DWkD...)</pre>
           <button class="feedback-btn" data-feedback="no">No</button>
         </div>
         <div class="page-meta">
-          <a href="https://github.com/MandaWeb3/morse-docs/edit/main/quick-start-cli.html" target="_blank" rel="noopener">Suggest changes</a>
+          <a href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20quick-start-cli.html" target="_blank" rel="noopener">Report an issue</a>
           <span>Updated 2026-06-19</span>
         </div>
       </div>

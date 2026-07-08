@@ -1,5 +1,5 @@
 > Source: https://docs.morsecms.xyz/use-morse-with-ai.html · Full docs: https://docs.morsecms.xyz/llms-full.txt
-> Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback
+> Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs-feedback
 
 # Use Morse with AI
 
@@ -77,5 +77,5 @@ morse entry get "hello"                     # read it back, verified
 
 If these docs are stale, missing, or confusing — for you or your agent — use the **Was this helpful?** control at the bottom of any page, or open an issue directly:
 
-- [File docs feedback](https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback) — include the page URL and what was wrong.
-- [Suggest changes](https://github.com/MandaWeb3/morse-docs) — every page footer links to its source for direct edits.
+- [File docs feedback](https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs-feedback) — include the page URL and what was wrong.
+- [Suggest changes](https://github.com/arcadiasystems/morse-dcms) — every page footer links to its source for direct edits.

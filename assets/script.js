@@ -3,7 +3,7 @@
    ═══════════════════════════════════════════════════════════════ */
 
 // Docs repo (for "Suggest changes" / feedback issues)
-const DOCS_REPO = 'MandaWeb3/morse-docs';
+const DOCS_REPO = 'arcadiasystems/morse-dcms';
 
 function currentPage() {
   return window.location.pathname.split('/').pop() || 'index.html';

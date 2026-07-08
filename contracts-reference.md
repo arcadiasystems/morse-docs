@@ -1,5 +1,5 @@
 > Source: https://docs.morsecms.xyz/contracts-reference.html · Full docs: https://docs.morsecms.xyz/llms-full.txt
-> Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback
+> Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs-feedback
 
 # Contract Reference
 

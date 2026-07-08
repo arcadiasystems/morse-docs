@@ -16,7 +16,7 @@ import { load } from 'cheerio';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const BASE_URL = 'https://docs.morsecms.xyz';
-const DOCS_REPO = 'MandaWeb3/morse-docs';
+const DOCS_REPO = 'arcadiasystems/morse-dcms';
 
 /** Reading order + sidebar section for every page (mirrors assets/sidebar.js). */
 const PAGES = [

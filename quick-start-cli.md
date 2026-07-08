@@ -1,5 +1,5 @@
 > Source: https://docs.morsecms.xyz/quick-start-cli.html · Full docs: https://docs.morsecms.xyz/llms-full.txt
-> Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback
+> Feedback: if these docs are stale, missing, or confusing, open an issue at https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs-feedback
 
 # Quick Start: CLI
 
@@ -104,6 +104,10 @@ Selected as the active collection. (tx: DWkD...)
 ## Publishing an Entry
 
 Create a content file and publish it. The CLI uploads the file to Walrus and registers the entry on-chain.
+
+> **WARNING: This step needs WAL, not just SUI**
+>
+> Everything up to here only cost SUI gas - uploading to Walrus also spends WAL. Make sure your account holds both before running this (swap SUI for WAL at [stake-wal.wal.app](https://stake-wal.wal.app/?network=testnet)), or the upload fails with `Insufficient WAL balance`.
 
 ```bash
 echo '{"title": "Hello World", "body": "My first post on Morse."}' > post.json

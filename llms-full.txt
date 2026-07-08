@@ -1,7 +1,7 @@
 # Morse Documentation — Complete
 # Morse is an open, decentralized headless CMS protocol built on Sui and Walrus.
 # Index: https://docs.morsecms.xyz/llms.txt · Site: https://docs.morsecms.xyz/
-# Feedback: https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback
+# Feedback: https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs-feedback
 
 <!-- Source: https://docs.morsecms.xyz/index.html -->
 
@@ -280,6 +280,10 @@ Selected as the active collection. (tx: DWkD...)
 ## Publishing an Entry
 
 Create a content file and publish it. The CLI uploads the file to Walrus and registers the entry on-chain.
+
+> **WARNING: This step needs WAL, not just SUI**
+>
+> Everything up to here only cost SUI gas - uploading to Walrus also spends WAL. Make sure your account holds both before running this (swap SUI for WAL at [stake-wal.wal.app](https://stake-wal.wal.app/?network=testnet)), or the upload fails with `Insufficient WAL balance`.
 
 ```bash
 echo '{"title": "Hello World", "body": "My first post on Morse."}' > post.json
@@ -2508,7 +2512,7 @@ morse publication get 0x00 || echo "exit $?"
 | `5` | Too many failures while writing blob to nodes | Walrus storage nodes are degraded. Retry; check WAL balance. |
 | `2` | Morse is not yet deployed on mainnet | Use `--network testnet`. |
 | `5` | InsufficientGas / out of SUI gas | The active account does not have enough SUI for gas fees. Run `sui client faucet` to request testnet SUI. |
-| `5` | Insufficient WAL balance | Walrus storage requires WAL tokens. Get WAL from the [Walrus testnet faucet](https://faucet.walrus-testnet.walrus.space). |
+| `5` | Insufficient WAL balance | Walrus storage requires WAL tokens. Get WAL from the [Walrus testnet faucet](https://stake-wal.wal.app/?network=testnet). |
 | `5` | Walrus blob not retrievable / blob expired | The blob's storage epoch has ended and it is no longer available on Walrus storage nodes. Re-upload the content and create a new revision with a longer `--epochs` value. |
 
 ## Next Steps
@@ -4564,5 +4568,5 @@ morse entry get "hello"                     # read it back, verified
 
 If these docs are stale, missing, or confusing — for you or your agent — use the **Was this helpful?** control at the bottom of any page, or open an issue directly:
 
-- [File docs feedback](https://github.com/MandaWeb3/morse-docs/issues/new?labels=docs-feedback) — include the page URL and what was wrong.
-- [Suggest changes](https://github.com/MandaWeb3/morse-docs) — every page footer links to its source for direct edits.
+- [File docs feedback](https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs-feedback) — include the page URL and what was wrong.
+- [Suggest changes](https://github.com/arcadiasystems/morse-dcms) — every page footer links to its source for direct edits.
