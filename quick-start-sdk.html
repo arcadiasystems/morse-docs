@@ -231,7 +231,7 @@
 <span class="cm">// 2. Create a publication</span>
 <span class="kw">const</span> pub = <span class="kw">await</span> <span class="fn">createPublication</span>(adapter, config, {
   name: <span class="st">"My Publication"</span>,
-  slug: <span class="st">"my-publication"</span>,
+  slug: <span class="st">`my-pub-${Date.now()}`</span>, <span class="cm">// slugs are globally unique on-chain</span>
 });
 console.<span class="fn">log</span>(<span class="st">"Publication:"</span>, pub.publicationId);
 
@@ -345,7 +345,7 @@ Revisions: 1</pre>
                   Copy
                 </button>
               </div>
-              <pre>Generate a TypeScript script using @arcadiasystems/morse-sdk that connects to Sui testnet with a Bech32 private key, creates a publication named "My Blog" with slug "my-blog", adds a blob-mode collection called "posts", uploads a JSON entry with title and body fields, and reads it back. Use KeypairAdapter for server-side auth and DefaultWalrusWriteAdapter for Walrus uploads. Make it runnable with `bun run quickstart.ts`.</pre>
+              <pre>Generate a TypeScript script using @arcadiasystems/morse-sdk that connects to Sui testnet with a Bech32 private key, creates a publication named "My Blog" with a unique timestamped slug (slugs are globally unique on-chain), adds a blob-mode collection called "posts", uploads a JSON entry with title and body fields, and reads it back. Use KeypairAdapter for server-side auth and DefaultWalrusWriteAdapter for Walrus uploads. Make it runnable with `bun run quickstart.ts`.</pre>
             </div>
           </details>
         </div> -->

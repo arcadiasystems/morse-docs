@@ -67,8 +67,12 @@ morse account import
 This creates a publication with a globally unique slug and auto-selects it as the active context.
 
 ```bash
-morse publication create --name "My Blog" --slug my-blog
+morse publication create --name "My Blog" --slug "my-blog-$(date +%s)"
 ```
+
+> **INFO: Slugs are globally unique**
+>
+> Like usernames, a slug can only be registered once on the whole network - the timestamp suffix keeps this command collision-free for everyone following this guide. For a real project, pick any unused slug you like. If a slug is taken, the transaction aborts with `ESlugAlreadyExists`.
 
 ```output
 Creating "My Blog"...

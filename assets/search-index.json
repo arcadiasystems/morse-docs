@@ -179,7 +179,7 @@
     "pageTitle": "Quick Start: CLI",
     "section": "Getting Started",
     "heading": "Creating a Publication",
-    "text": "This creates a publication with a globally unique slug and auto-selects it as the active context. bash Copy morse publication create --name \"My Blog\" --slug my-blog output Creating \"My Blog\"... Created \"My Blog\" (0x23d2...) ownerCap: 0xa40a... publisherCap: 0x6141... tx: 7nF2n... Selected as the active publication. Which IDs to save The CLI auto-selects new publications and collections as your active context, so you rarely need to paste IDs. If you do need them later, run morse status to see your active publication ID and collection."
+    "text": "This creates a publication with a globally unique slug and auto-selects it as the active context. bash Copy morse publication create --name \"My Blog\" --slug \"my-blog-$(date +%s)\" Slugs are globally unique Like usernames, a slug can only be registered once on the whole network - the timestamp suffix keeps this command collision-free for everyone following this guide. For a real project, pick any unused slug you like. If a slug is taken, the transaction aborts with ESlugAlreadyExists. output Creating \"My Blog\"... Created \"My Blog\" (0x23d2...) ownerCap: 0xa40a... publisherCap: 0x6141... tx: 7nF2n"
   },
   {
     "url": "quick-start-cli.html#creating-a-collection",
@@ -858,7 +858,7 @@
     "pageTitle": "CLI Cookbooks",
     "section": "CLI",
     "heading": "Publishing Your First Entry",
-    "text": "Create a profile, import a key, then create a publication and a collection. Each create command selects the new object as the active one, so the steps after require no IDs. account import will prompt for your private key and a keystore password. The collection defaults to blob mode when --mode is omitted. bash Copy morse config add testnet --network testnet morse account import morse publication create --name \"My Blog\" --slug my-blog morse collection create posts echo \"hello morse\" > post.md morse entry add hello --file post.md output Uploading 12 bytes to Walrus... Added entry #0 \"hello\". (tx"
+    "text": "Create a profile, import a key, then create a publication and a collection. Each create command selects the new object as the active one, so the steps after require no IDs. account import will prompt for your private key and a keystore password. The collection defaults to blob mode when --mode is omitted. bash Copy morse config add testnet --network testnet morse account import morse publication create --name \"My Blog\" --slug \"my-blog-$(date +%s)\" morse collection create posts echo \"hello morse\" > post.md morse entry add hello --file post.md output Uploading 12 bytes to Walrus... Added entry #"
   },
   {
     "url": "cli-workflows.html#reading-it-back",
@@ -935,7 +935,7 @@
     "pageTitle": "CLI Cookbooks",
     "section": "CLI",
     "heading": "Troubleshooting",
-    "text": "CodeMessageCause 2No account selectedNo key configured. Import one, set MORSE_PRIVATE_KEY, or run account use. 4Incorrect password or corrupted keystoreWrong keystore password (GCM auth-tag mismatch). 2No publication selectedNo active publication. Pass -P <slug|id> or run morse use. 3No publication at 0x…The ID does not exist on this network. 5Too many failures while writing blob to nodesWalrus storage nodes are degraded. Retry; check WAL balance. 2Morse is not yet deployed on mainnetUse --network testnet. 5InsufficientGas / out of SUI gasThe active account does not have enough SUI for gas fee"
+    "text": "CodeMessageCause 2No account selectedNo key configured. Import one, set MORSE_PRIVATE_KEY, or run account use. 4Incorrect password or corrupted keystoreWrong keystore password (GCM auth-tag mismatch). 2No publication selectedNo active publication. Pass -P <slug|id> or run morse use. 3No publication at 0x…The ID does not exist on this network. 5Move abort ESlugAlreadyExistsThe slug is already registered - slugs are globally unique on the network. Re-run with a different slug (e.g. append a timestamp). 5Too many failures while writing blob to nodesWalrus storage nodes are degraded. Retry; check "
   },
   {
     "url": "cli-workflows.html#next-steps",

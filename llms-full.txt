@@ -243,8 +243,12 @@ morse account import
 This creates a publication with a globally unique slug and auto-selects it as the active context.
 
 ```bash
-morse publication create --name "My Blog" --slug my-blog
+morse publication create --name "My Blog" --slug "my-blog-$(date +%s)"
 ```
+
+> **INFO: Slugs are globally unique**
+>
+> Like usernames, a slug can only be registered once on the whole network - the timestamp suffix keeps this command collision-free for everyone following this guide. For a real project, pick any unused slug you like. If a slug is taken, the transaction aborts with `ESlugAlreadyExists`.
 
 ```output
 Creating "My Blog"...
@@ -398,7 +402,7 @@ const reader = RpcPublicationReader.fromMorseConfig(config, client);
 // 2. Create a publication
 const pub = await createPublication(adapter, config, {
   name: "My Publication",
-  slug: "my-publication",
+  slug: `my-pub-${Date.now()}`, // slugs are globally unique on-chain
 });
 console.log("Publication:", pub.publicationId);
 
@@ -567,7 +571,7 @@ const created = pubTx.moveCall({
   arguments: [
     pubTx.object(REGISTRY_ID),
     pubTx.pure.string("My Blog"),
-    pubTx.pure.string("my-blog"),
+    pubTx.pure.string(`my-blog-${Date.now()}`), // slugs are globally unique on-chain
   ],
 });
 
@@ -2341,7 +2345,7 @@ Create a profile, import a key, then create a publication and a collection. Each
 ```bash
 morse config add testnet --network testnet
 morse account import
-morse publication create --name "My Blog" --slug my-blog
+morse publication create --name "My Blog" --slug "my-blog-$(date +%s)"
 morse collection create posts
 
 echo "hello morse" > post.md
@@ -2500,6 +2504,7 @@ morse publication get 0x00 || echo "exit $?"
 | `4` | Incorrect password or corrupted keystore | Wrong keystore password (GCM auth-tag mismatch). |
 | `2` | No publication selected | No active publication. Pass `-P <slug\|id>` or run `morse use`. |
 | `3` | No publication at 0x… | The ID does not exist on this network. |
+| `5` | Move abort `ESlugAlreadyExists` | The slug is already registered - slugs are globally unique on the network. Re-run with a different slug (e.g. append a timestamp). |
 | `5` | Too many failures while writing blob to nodes | Walrus storage nodes are degraded. Retry; check WAL balance. |
 | `2` | Morse is not yet deployed on mainnet | Use `--network testnet`. |
 | `5` | InsufficientGas / out of SUI gas | The active account does not have enough SUI for gas fees. Run `sui client faucet` to request testnet SUI. |
@@ -3853,7 +3858,7 @@ const created = tx.moveCall({
   arguments: [
     tx.object(REGISTRY_ID),
     tx.pure.string("My Blog"),
-    tx.pure.string("my-blog"),
+    tx.pure.string(`my-blog-${Date.now()}`), // slugs are globally unique on-chain
   ],
 });
 const publicationArg  = created[0];

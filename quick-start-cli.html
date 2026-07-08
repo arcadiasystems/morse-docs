@@ -241,7 +241,15 @@
               Copy
             </button>
           </div>
-          <pre>morse publication create --name "My Blog" --slug my-blog</pre>
+          <pre>morse publication create --name "My Blog" --slug "my-blog-$(date +%s)"</pre>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">Slugs are globally unique</div>
+            <div class="callout-text">Like usernames, a slug can only be registered once on the whole network - the timestamp suffix keeps this command collision-free for everyone following this guide. For a real project, pick any unused slug you like. If a slug is taken, the transaction aborts with <code>ESlugAlreadyExists</code>.</div>
+          </div>
         </div>
 
         <div class="code-block code-block-output">
@@ -365,7 +373,7 @@ Selected as the active collection. (tx: DWkD...)</pre>
                   Copy
                 </button>
               </div>
-              <pre>Install the Morse CLI globally, create a testnet profile, import my Sui private key, then create a publication named "My Blog" with slug "my-blog", add a collection called "posts", publish a JSON file as an entry, and read it back. Use the morse CLI for every step and show me the expected output of each command.</pre>
+              <pre>Install the Morse CLI globally, create a testnet profile, import my Sui private key, then create a publication named "My Blog" with a unique slug (append a timestamp - slugs are globally unique on-chain), add a collection called "posts", publish a JSON file as an entry, and read it back. Use the morse CLI for every step and show me the expected output of each command.</pre>
             </div>
           </details>
         </div> -->

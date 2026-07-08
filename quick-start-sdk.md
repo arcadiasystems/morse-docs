@@ -75,7 +75,7 @@ const reader = RpcPublicationReader.fromMorseConfig(config, client);
 // 2. Create a publication
 const pub = await createPublication(adapter, config, {
   name: "My Publication",
-  slug: "my-publication",
+  slug: `my-pub-${Date.now()}`, // slugs are globally unique on-chain
 });
 console.log("Publication:", pub.publicationId);
 

@@ -80,7 +80,7 @@ const created = pubTx.moveCall({
   arguments: [
     pubTx.object(REGISTRY_ID),
     pubTx.pure.string("My Blog"),
-    pubTx.pure.string("my-blog"),
+    pubTx.pure.string(`my-blog-${Date.now()}`), // slugs are globally unique on-chain
   ],
 });
 

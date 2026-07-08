@@ -242,7 +242,7 @@
   arguments: [
     pubTx.object(REGISTRY_ID),
     pubTx.pure.string(<span class="st">"My Blog"</span>),
-    pubTx.pure.string(<span class="st">"my-blog"</span>),
+    pubTx.pure.string(<span class="st">`my-blog-${Date.now()}`</span>), <span class="cm">// slugs are globally unique on-chain</span>
   ],
 });
 

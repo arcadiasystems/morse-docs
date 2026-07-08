@@ -225,7 +225,7 @@
   arguments: [
     tx.object(REGISTRY_ID),
     tx.pure.string(<span class="st">"My Blog"</span>),
-    tx.pure.string(<span class="st">"my-blog"</span>),
+    tx.pure.string(<span class="st">`my-blog-${Date.now()}`</span>), <span class="cm">// slugs are globally unique on-chain</span>
   ],
 });
 <span class="kw">const</span> publicationArg  = created[<span class="nu">0</span>];

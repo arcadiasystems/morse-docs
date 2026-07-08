@@ -24,7 +24,7 @@ Create a profile, import a key, then create a publication and a collection. Each
 ```bash
 morse config add testnet --network testnet
 morse account import
-morse publication create --name "My Blog" --slug my-blog
+morse publication create --name "My Blog" --slug "my-blog-$(date +%s)"
 morse collection create posts
 
 echo "hello morse" > post.md
@@ -183,6 +183,7 @@ morse publication get 0x00 || echo "exit $?"
 | `4` | Incorrect password or corrupted keystore | Wrong keystore password (GCM auth-tag mismatch). |
 | `2` | No publication selected | No active publication. Pass `-P <slug\|id>` or run `morse use`. |
 | `3` | No publication at 0x… | The ID does not exist on this network. |
+| `5` | Move abort `ESlugAlreadyExists` | The slug is already registered - slugs are globally unique on the network. Re-run with a different slug (e.g. append a timestamp). |
 | `5` | Too many failures while writing blob to nodes | Walrus storage nodes are degraded. Retry; check WAL balance. |
 | `2` | Morse is not yet deployed on mainnet | Use `--network testnet`. |
 | `5` | InsufficientGas / out of SUI gas | The active account does not have enough SUI for gas fees. Run `sui client faucet` to request testnet SUI. |

@@ -72,7 +72,7 @@ const created = tx.moveCall({
   arguments: [
     tx.object(REGISTRY_ID),
     tx.pure.string("My Blog"),
-    tx.pure.string("my-blog"),
+    tx.pure.string(`my-blog-${Date.now()}`), // slugs are globally unique on-chain
   ],
 });
 const publicationArg  = created[0];
