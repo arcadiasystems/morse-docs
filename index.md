@@ -5,6 +5,10 @@
 
 > A headless CMS protocol built on Sui and Walrus, for developers building content applications with on-chain ownership and decentralized storage.
 
+> **WARNING: Testnet status**
+>
+> Morse runs on **Sui testnet only** and the contracts are **unaudited**. Sui and Walrus testnets reset periodically (Walrus wipes every few months) - stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Don't publish anything you can't afford to lose.
+
 ## What is Morse?
 
 Morse lets developers build content applications - blogs, knowledge bases, gated media platforms - where the backend is an open protocol instead of a vendor service. You define content structures, set access policies, and publish through a CLI or TypeScript SDK; the contracts handle identity, permissions, and revision history so there is no central point of failure to trust or migrate away from.

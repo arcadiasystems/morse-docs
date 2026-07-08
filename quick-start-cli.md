@@ -5,6 +5,10 @@
 
 > Install morse-cli and go from zero to published content on testnet in under 5 minutes - no contracts, no code, just your terminal.
 
+> **WARNING: Testnet status**
+>
+> Morse runs on **Sui testnet only** and the contracts are **unaudited**. Sui and Walrus testnets reset periodically (Walrus wipes every few months) - stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Don't publish anything you can't afford to lose.
+
 ## Prerequisites
 
 | Requirement | Details | Purpose |

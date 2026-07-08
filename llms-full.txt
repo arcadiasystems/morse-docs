@@ -9,6 +9,10 @@
 
 > A headless CMS protocol built on Sui and Walrus, for developers building content applications with on-chain ownership and decentralized storage.
 
+> **WARNING: Testnet status**
+>
+> Morse runs on **Sui testnet only** and the contracts are **unaudited**. Sui and Walrus testnets reset periodically (Walrus wipes every few months) - stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Don't publish anything you can't afford to lose.
+
 ## What is Morse?
 
 Morse lets developers build content applications - blogs, knowledge bases, gated media platforms - where the backend is an open protocol instead of a vendor service. You define content structures, set access policies, and publish through a CLI or TypeScript SDK; the contracts handle identity, permissions, and revision history so there is no central point of failure to trust or migrate away from.
@@ -105,7 +109,7 @@ Collections are how you organize entries within a publication - similar to folde
 
 ## Entries & Revisions
 
-Entries are the actual content pieces - a blog post, an image, a page. Every edit creates a new revision rather than overwriting the previous one, giving you a complete version history that can never be lost. The system tracks two pointers for each entry: a draft head for work-in-progress and a public head that readers see. This lets drafts evolve privately while production clients serve stable published content.
+Entries are the actual content pieces - a blog post, an image, a page. Every edit creates a new revision rather than overwriting the previous one, giving you a complete version history whose on-chain record is immutable. The system tracks two pointers for each entry: a draft head for work-in-progress and a public head that readers see. This lets drafts evolve privately while production clients serve stable published content.
 
 [See Entries for the full reference →](https://docs.morsecms.xyz/entries.html)
 
@@ -129,7 +133,7 @@ Revocation uses a denylist-based model - issuing caps is cheap (zero table write
 
 ## Walrus Storage
 
-The Sui blockchain only stores references (pointers) to your content, not the content bytes themselves. The actual payloads live on Walrus, a decentralized storage network designed for large data. This separation keeps on-chain costs low while ensuring your content is permanently available and verifiable. Walrus is format-agnostic, so Morse can support JSON, Markdown, images, video, or any custom schema.
+The Sui blockchain only stores references (pointers) to your content, not the content bytes themselves. The actual payloads live on Walrus, a decentralized storage network designed for large data. This separation keeps on-chain costs low while keeping your content verifiable: payloads stay available for the storage period you fund (measured in Walrus epochs) and can be renewed at any time. Walrus is format-agnostic, so Morse can support JSON, Markdown, images, video, or any custom schema.
 
 [See Collections → Storage Modes for storage mode details →](https://docs.morsecms.xyz/collections.html#storage-modes)
 
@@ -180,6 +184,10 @@ New to Morse? Start with [Core Concepts](https://docs.morsecms.xyz/core-concepts
 # Quick Start: CLI
 
 > Install morse-cli and go from zero to published content on testnet in under 5 minutes - no contracts, no code, just your terminal.
+
+> **WARNING: Testnet status**
+>
+> Morse runs on **Sui testnet only** and the contracts are **unaudited**. Sui and Walrus testnets reset periodically (Walrus wipes every few months) - stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Don't publish anything you can't afford to lose.
 
 ## Prerequisites
 
@@ -335,6 +343,10 @@ If you hit errors at any step, run `morse --help` for command usage or see the [
 # Quick Start: SDK
 
 > Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter - no browser, no wallet popups.
+
+> **WARNING: Testnet status**
+>
+> Morse runs on **Sui testnet only** and the contracts are **unaudited**. Sui and Walrus testnets reset periodically (Walrus wipes every few months) - stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Don't publish anything you can't afford to lose.
 
 ## Prerequisites
 
@@ -499,6 +511,10 @@ Revisions: 1
 # Quick Start: Smart Contracts
 
 > Create a publication, add a collection, and publish an entry using raw Programmable Transaction Blocks against the deployed Morse contracts on testnet. No SDK wrappers - just `tx.moveCall`.
+
+> **WARNING: Testnet status**
+>
+> Morse runs on **Sui testnet only** and the contracts are **unaudited**. Sui and Walrus testnets reset periodically (Walrus wipes every few months) - stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Don't publish anything you can't afford to lose.
 
 ## Prerequisites
 
@@ -1645,6 +1661,16 @@ The workflow below applies to both Blob and Quilt storage modes. In Quilt mode, 
 
 All production write paths require a reference to the Walrus `&Blob` object (not just its ID). The contract calls `blob.is_deletable()` and aborts with `EBlobNotDeletable` if the blob is not deletable. This ensures the platform can manage blob lifecycle.
 
+### Blob Lifecycle: Epochs, Expiry, Renewal
+
+The on-chain revision history is immutable, but the payloads it points to are not stored "forever" by default: Walrus storage is **funded per epoch** (roughly one day on testnet, two weeks on mainnet). The `epochs` parameter on every upload sets how long the blob stays available; after its final epoch the blob expires and storage nodes drop it, while the on-chain `BlobRef` and revision metadata remain. Renew a blob before expiry (or re-upload and append a new revision) for longer-lived content.
+
+Morse deliberately requires *deletable* blobs rather than Walrus's permanent variant: a CMS needs unpublishing, correction, and takedown paths. Permanence in Morse means the **history is verifiable and tamper-proof** - not that bytes are irrevocable.
+
+> **WARNING: Testnet payloads are disposable**
+>
+> The quick starts upload with `epochs: 3` - about three days on testnet. Walrus testnet is also wiped periodically (every few months). Treat testnet content as throwaway; fund more epochs and set renewal reminders only for things you actually want to keep around.
+
 > **TIP: Testing without Walrus blobs**
 >
 > In Move unit tests, `walrus::blob::Blob` cannot be constructed because its constructor is `public(package)`. Use the `_for_testing` variants (e.g. `add_entry_to_collection_for_testing`) that accept a raw `blob_id: ID` instead of `&Blob`. These bypass only the deletable check - all other logic is identical.
@@ -2266,7 +2292,7 @@ Add, read, and delete entries within a collection.
 | `entry read <entryId> [<revisionIndex>] [--out <path>] [--via-aggregator]` | Fetch a public entry's content to stdout or a file. Reads the latest revision unless `revisionIndex` is specified; `--via-aggregator` fetches through a Walrus aggregator instead of directly. |
 | `entry list [--limit <n>] [--cursor <cursor>] [--drafts-only]` | List entries. `--drafts-only` filters to unpublished entries. |
 | `entry scan [--drafts-only]` | List every entry (auto-paginated). `--drafts-only` filters to unpublished entries. |
-| `entry add <name> (--file <path> \| --stdin) [--content-type <type>] [--epochs <n>] [--publisher-cap <id>]` | Upload content and add a new entry. `--file` reads from a file path, `--stdin` reads from standard input; `--content-type` is inferred from file extension when omitted; `--epochs` sets Walrus storage duration (default 3). |
+| `entry add <name> (--file <path> \| --stdin) [--content-type <type>] [--epochs <n>] [--publisher-cap <id>]` | Upload content and add a new entry. `--file` reads from a file path, `--stdin` reads from standard input; `--content-type` is inferred from file extension when omitted; `--epochs` sets Walrus storage duration (default 3 - roughly 3 days on testnet; renew or re-upload before expiry for longer-lived content). |
 | `entry delete <entryId> [--publisher-cap <id>]` | Delete an entry and its revisions. |
 | `entry add-encrypted <name> (--file <path> \| --stdin) [--content-type <type>] [--epochs <n>] [--publisher-cap <id>]` | Encrypt with Seal, upload, and add a new entry. |
 | `entry decrypt <entryId> [<revisionIndex>] [--out <path>] [--publisher-cap <id>] [--via-aggregator]` | Decrypt an encrypted revision; reads the latest unless `revisionIndex` is specified. Signs a SessionKey with the active account. |
@@ -4405,7 +4431,7 @@ Move aborts surface as `MoveAbort` errors in the RPC response with a module name
 
 **[EntryRevision](https://docs.morsecms.xyz/entries.html#revisions)** — The Move struct that stores a single revision's data: `blob_ref`, `content_type`, `encrypted`, `access_policy`, `seal_id`, and `author`. Has `store, drop` abilities. Stored in an entry's `revisions` vector.
 
-**Epoch** — A Walrus storage duration unit. When uploading a blob, the `epochs` parameter controls how long the data is available on the Walrus network. Passed as `--epochs <n>` in the CLI or `epochs: number` in the SDK.
+**Epoch** — A Walrus storage duration unit - roughly **one day on testnet** (two weeks on mainnet). When uploading a blob, the `epochs` parameter controls how long the data is available on the Walrus network; expired blobs can be renewed before their deadline. Passed as `--epochs <n>` in the CLI or `epochs: number` in the SDK.
 
 **Events** — On-chain event structs emitted by the Morse contracts during state transitions. All have `copy, drop` abilities. Includes `PublicationCreated`, `PublicationDeleted`, `SlugRegistered`, `SlugReleased`, `PublisherCapIssued`, `PublisherCapRevoked`, `CollectionAdded`, and `CollectionRemoved`. See the Events tables on [Publications](https://docs.morsecms.xyz/publications.html#events), [Collections](https://docs.morsecms.xyz/collections.html#events), and [Entries](https://docs.morsecms.xyz/entries.html#events).
 

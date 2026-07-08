@@ -179,7 +179,7 @@
         <p><a href="collections.html">See Collections for the full reference &#8594;</a></p>
 
         <h2 id="entries-and-revisions">Entries &amp; Revisions</h2>
-        <p>Entries are the actual content pieces - a blog post, an image, a page. Every edit creates a new revision rather than overwriting the previous one, giving you a complete version history that can never be lost. The system tracks two pointers for each entry: a draft head for work-in-progress and a public head that readers see. This lets drafts evolve privately while production clients serve stable published content.</p>
+        <p>Entries are the actual content pieces - a blog post, an image, a page. Every edit creates a new revision rather than overwriting the previous one, giving you a complete version history whose on-chain record is immutable. The system tracks two pointers for each entry: a draft head for work-in-progress and a public head that readers see. This lets drafts evolve privately while production clients serve stable published content.</p>
         <p><a href="entries.html">See Entries for the full reference &#8594;</a></p>
 
         <h2 id="how-publishing-works">How Publishing Works</h2>
@@ -198,7 +198,7 @@
         <p><a href="access-control.html">See Access Control for the full reference &#8594;</a></p>
 
         <h2 id="walrus-storage">Walrus Storage</h2>
-        <p>The Sui blockchain only stores references (pointers) to your content, not the content bytes themselves. The actual payloads live on Walrus, a decentralized storage network designed for large data. This separation keeps on-chain costs low while ensuring your content is permanently available and verifiable. Walrus is format-agnostic, so Morse can support JSON, Markdown, images, video, or any custom schema.</p>
+        <p>The Sui blockchain only stores references (pointers) to your content, not the content bytes themselves. The actual payloads live on Walrus, a decentralized storage network designed for large data. This separation keeps on-chain costs low while keeping your content verifiable: payloads stay available for the storage period you fund (measured in Walrus epochs) and can be renewed at any time. Walrus is format-agnostic, so Morse can support JSON, Markdown, images, video, or any custom schema.</p>
         <p><a href="collections.html#storage-modes">See Collections &rarr; Storage Modes for storage mode details &rarr;</a></p>
 
         <h2 id="access-control">Access Control</h2>

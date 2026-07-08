@@ -457,6 +457,16 @@ The workflow below applies to both Blob and Quilt storage modes. In Quilt mode, 
 
 All production write paths require a reference to the Walrus `&Blob` object (not just its ID). The contract calls `blob.is_deletable()` and aborts with `EBlobNotDeletable` if the blob is not deletable. This ensures the platform can manage blob lifecycle.
 
+### Blob Lifecycle: Epochs, Expiry, Renewal
+
+The on-chain revision history is immutable, but the payloads it points to are not stored "forever" by default: Walrus storage is **funded per epoch** (roughly one day on testnet, two weeks on mainnet). The `epochs` parameter on every upload sets how long the blob stays available; after its final epoch the blob expires and storage nodes drop it, while the on-chain `BlobRef` and revision metadata remain. Renew a blob before expiry (or re-upload and append a new revision) for longer-lived content.
+
+Morse deliberately requires *deletable* blobs rather than Walrus's permanent variant: a CMS needs unpublishing, correction, and takedown paths. Permanence in Morse means the **history is verifiable and tamper-proof** - not that bytes are irrevocable.
+
+> **WARNING: Testnet payloads are disposable**
+>
+> The quick starts upload with `epochs: 3` - about three days on testnet. Walrus testnet is also wiped periodically (every few months). Treat testnet content as throwaway; fund more epochs and set renewal reminders only for things you actually want to keep around.
+
 > **TIP: Testing without Walrus blobs**
 >
 > In Move unit tests, `walrus::blob::Blob` cannot be constructed because its constructor is `public(package)`. Use the `_for_testing` variants (e.g. `add_entry_to_collection_for_testing`) that accept a raw `blob_id: ID` instead of `&Blob`. These bypass only the deletable check - all other logic is identical.

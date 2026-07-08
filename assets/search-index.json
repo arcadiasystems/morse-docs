@@ -4,7 +4,7 @@
     "pageTitle": "Morse - The Decentralized Headless CMS Protocol",
     "section": "Getting Started",
     "heading": "Morse - The Decentralized Headless CMS Protocol",
-    "text": "A headless CMS protocol built on Sui and Walrus, for developers building content applications with on-chain ownership and decentralized storage."
+    "text": "A headless CMS protocol built on Sui and Walrus, for developers building content applications with on-chain ownership and decentralized storage. Testnet status Morse runs on Sui testnet only and the contracts are unaudited. Sui and Walrus testnets reset periodically (Walrus wipes every few months) - stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Don't publish anything you can't afford to lose."
   },
   {
     "url": "index.html#what-is-morse",
@@ -88,7 +88,7 @@
     "pageTitle": "Core Concepts",
     "section": "Getting Started",
     "heading": "Entries & Revisions",
-    "text": "Entries are the actual content pieces - a blog post, an image, a page. Every edit creates a new revision rather than overwriting the previous one, giving you a complete version history that can never be lost. The system tracks two pointers for each entry: a draft head for work-in-progress and a public head that readers see. This lets drafts evolve privately while production clients serve stable published content. See Entries for the full reference →"
+    "text": "Entries are the actual content pieces - a blog post, an image, a page. Every edit creates a new revision rather than overwriting the previous one, giving you a complete version history whose on-chain record is immutable. The system tracks two pointers for each entry: a draft head for work-in-progress and a public head that readers see. This lets drafts evolve privately while production clients serve stable published content. See Entries for the full reference →"
   },
   {
     "url": "core-concepts.html#how-publishing-works",
@@ -109,7 +109,7 @@
     "pageTitle": "Core Concepts",
     "section": "Getting Started",
     "heading": "Walrus Storage",
-    "text": "The Sui blockchain only stores references (pointers) to your content, not the content bytes themselves. The actual payloads live on Walrus, a decentralized storage network designed for large data. This separation keeps on-chain costs low while ensuring your content is permanently available and verifiable. Walrus is format-agnostic, so Morse can support JSON, Markdown, images, video, or any custom schema. See Collections → Storage Modes for storage mode details →"
+    "text": "The Sui blockchain only stores references (pointers) to your content, not the content bytes themselves. The actual payloads live on Walrus, a decentralized storage network designed for large data. This separation keeps on-chain costs low while keeping your content verifiable: payloads stay available for the storage period you fund (measured in Walrus epochs) and can be renewed at any time. Walrus is format-agnostic, so Morse can support JSON, Markdown, images, video, or any custom schema. See Collections → Storage Modes for storage mode details →"
   },
   {
     "url": "core-concepts.html#access-control",
@@ -144,7 +144,7 @@
     "pageTitle": "Quick Start: CLI",
     "section": "Getting Started",
     "heading": "Quick Start: CLI",
-    "text": "Install morse-cli and go from zero to published content on testnet in under 5 minutes - no contracts, no code, just your terminal."
+    "text": "Install morse-cli and go from zero to published content on testnet in under 5 minutes - no contracts, no code, just your terminal. Testnet status Morse runs on Sui testnet only and the contracts are unaudited. Sui and Walrus testnets reset periodically (Walrus wipes every few months) - stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Don't publish anything you can't afford to lose."
   },
   {
     "url": "quick-start-cli.html#prerequisites",
@@ -214,7 +214,7 @@
     "pageTitle": "Quick Start: SDK",
     "section": "Getting Started",
     "heading": "Quick Start: SDK",
-    "text": "Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter - no browser, no wallet popups."
+    "text": "Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter - no browser, no wallet popups. Testnet status Morse runs on Sui testnet only and the contracts are unaudited. Sui and Walrus testnets reset periodically (Walrus wipes every few months) - stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Don't publish anything you can't afford to lose."
   },
   {
     "url": "quick-start-sdk.html#prerequisites",
@@ -256,7 +256,7 @@
     "pageTitle": "Quick Start: Smart Contracts",
     "section": "Getting Started",
     "heading": "Quick Start: Smart Contracts",
-    "text": "Create a publication, add a collection, and publish an entry using raw Programmable Transaction Blocks against the deployed Morse contracts on testnet. No SDK wrappers - just tx.moveCall."
+    "text": "Create a publication, add a collection, and publish an entry using raw Programmable Transaction Blocks against the deployed Morse contracts on testnet. No SDK wrappers - just tx.moveCall. Testnet status Morse runs on Sui testnet only and the contracts are unaudited. Sui and Walrus testnets reset periodically (Walrus wipes every few months) - stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Don't publish anything you can't afford to lose."
   },
   {
     "url": "quick-start-contracts.html#prerequisites",
@@ -536,7 +536,14 @@
     "pageTitle": "Entries & Revisions",
     "section": "Protocol",
     "heading": "Walrus Blob Requirements",
-    "text": "All production write paths require a reference to the Walrus &Blob object (not just its ID). The contract calls blob.is_deletable() and aborts with EBlobNotDeletable if the blob is not deletable. This ensures the platform can manage blob lifecycle. Testing without Walrus blobs In Move unit tests, walrus::blob::Blob cannot be constructed because its constructor is public(package). Use the _for_testing variants (e.g. add_entry_to_collection_for_testing) that accept a raw blob_id: ID instead of &Blob. These bypass only the deletable check - all other logic is identical."
+    "text": "All production write paths require a reference to the Walrus &Blob object (not just its ID). The contract calls blob.is_deletable() and aborts with EBlobNotDeletable if the blob is not deletable. This ensures the platform can manage blob lifecycle."
+  },
+  {
+    "url": "entries.html#blob-lifecycle",
+    "pageTitle": "Entries & Revisions",
+    "section": "Protocol",
+    "heading": "Blob Lifecycle: Epochs, Expiry, Renewal",
+    "text": "The on-chain revision history is immutable, but the payloads it points to are not stored \"forever\" by default: Walrus storage is funded per epoch (roughly one day on testnet, two weeks on mainnet). The epochs parameter on every upload sets how long the blob stays available; after its final epoch the blob expires and storage nodes drop it, while the on-chain BlobRef and revision metadata remain. Renew a blob before expiry (or re-upload and append a new revision) for longer-lived content. Morse deliberately requires deletable blobs rather than Walrus's permanent variant: a CMS needs unpublishing"
   },
   {
     "url": "entries.html#access-policy-and-encryption-rules",

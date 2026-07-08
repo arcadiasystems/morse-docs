@@ -737,6 +737,18 @@ entry_id = <span class="fn">add_entry_to_collection</span>(...) <span class="cm"
       <h2 id="walrus-blob-requirements">Walrus Blob Requirements</h2>
       <p>All production write paths require a reference to the Walrus <code>&amp;Blob</code> object (not just its ID). The contract calls <code>blob.is_deletable()</code> and aborts with <code>EBlobNotDeletable</code> if the blob is not deletable. This ensures the platform can manage blob lifecycle.</p>
 
+      <h3 id="blob-lifecycle">Blob Lifecycle: Epochs, Expiry, Renewal</h3>
+      <p>The on-chain revision history is immutable, but the payloads it points to are not stored "forever" by default: Walrus storage is <strong>funded per epoch</strong> (roughly one day on testnet, two weeks on mainnet). The <code>epochs</code> parameter on every upload sets how long the blob stays available; after its final epoch the blob expires and storage nodes drop it, while the on-chain <code>BlobRef</code> and revision metadata remain. Renew a blob before expiry (or re-upload and append a new revision) for longer-lived content.</p>
+      <p>Morse deliberately requires <em>deletable</em> blobs rather than Walrus's permanent variant: a CMS needs unpublishing, correction, and takedown paths. Permanence in Morse means the <strong>history is verifiable and tamper-proof</strong> - not that bytes are irrevocable.</p>
+
+      <div class="callout callout-warning">
+        <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <div class="callout-body">
+          <div class="callout-title">Testnet payloads are disposable</div>
+          <div class="callout-text">The quick starts upload with <code>epochs: 3</code> - about three days on testnet. Walrus testnet is also wiped periodically (every few months). Treat testnet content as throwaway; fund more epochs and set renewal reminders only for things you actually want to keep around.</div>
+        </div>
+      </div>
+
       <div class="callout callout-tip">
         <div class="callout-icon">
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>

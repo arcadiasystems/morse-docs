@@ -43,7 +43,7 @@
 
 **[EntryRevision](https://docs.morsecms.xyz/entries.html#revisions)** — The Move struct that stores a single revision's data: `blob_ref`, `content_type`, `encrypted`, `access_policy`, `seal_id`, and `author`. Has `store, drop` abilities. Stored in an entry's `revisions` vector.
 
-**Epoch** — A Walrus storage duration unit. When uploading a blob, the `epochs` parameter controls how long the data is available on the Walrus network. Passed as `--epochs <n>` in the CLI or `epochs: number` in the SDK.
+**Epoch** — A Walrus storage duration unit - roughly **one day on testnet** (two weeks on mainnet). When uploading a blob, the `epochs` parameter controls how long the data is available on the Walrus network; expired blobs can be renewed before their deadline. Passed as `--epochs <n>` in the CLI or `epochs: number` in the SDK.
 
 **Events** — On-chain event structs emitted by the Morse contracts during state transitions. All have `copy, drop` abilities. Includes `PublicationCreated`, `PublicationDeleted`, `SlugRegistered`, `SlugReleased`, `PublisherCapIssued`, `PublisherCapRevoked`, `CollectionAdded`, and `CollectionRemoved`. See the Events tables on [Publications](https://docs.morsecms.xyz/publications.html#events), [Collections](https://docs.morsecms.xyz/collections.html#events), and [Entries](https://docs.morsecms.xyz/entries.html#events).
 

@@ -5,6 +5,10 @@
 
 > Create a publication, add a collection, and publish an entry using raw Programmable Transaction Blocks against the deployed Morse contracts on testnet. No SDK wrappers - just `tx.moveCall`.
 
+> **WARNING: Testnet status**
+>
+> Morse runs on **Sui testnet only** and the contracts are **unaudited**. Sui and Walrus testnets reset periodically (Walrus wipes every few months) - stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Don't publish anything you can't afford to lose.
+
 ## Prerequisites
 
 | Requirement | Details | Purpose |
