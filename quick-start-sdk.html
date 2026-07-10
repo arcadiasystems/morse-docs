@@ -8,7 +8,7 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <meta name="description" content="Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter - no browser, no wallet popups.">
+  <meta name="description" content="Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter - no browser, no wallet popups. Want to see the result first? Browse the <a href="https://morse-blog-demo.vercel.app" target="_blank" rel="noopener">live demo blog</a> built on this SDK.">
   <link rel="canonical" href="https://docs.morsecms.xyz/quick-start-sdk.html">
   <meta property="og:title" content="Quick Start: SDK · Morse Docs">
   <meta property="og:description" content="Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter - no browser, no wallet popups.">
@@ -164,7 +164,7 @@
               Copy
             </button>
           </div>
-          <pre>bun add @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal</pre>
+          <pre>bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3</pre>
         </div>
         <p>Or with npm:</p>
         <div class="code-block">
@@ -175,7 +175,7 @@
               Copy
             </button>
           </div>
-          <pre>npm install @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal</pre>
+          <pre>npm install @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3</pre>
         </div>
         <p>Or with Yarn:</p>
         <div class="code-block">
@@ -186,7 +186,7 @@
               Copy
             </button>
           </div>
-          <pre>yarn add @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal</pre>
+          <pre>yarn add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3</pre>
         </div>
 
         <p><code>@mysten/sui</code> is a required peer dependency. <code>@mysten/walrus</code> is needed for the <code>DefaultWalrusWriteAdapter</code> used below. <code>@mysten/seal</code> is required at runtime even for non-encrypted workflows.</p>

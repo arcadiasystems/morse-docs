@@ -24,19 +24,19 @@ Install the SDK and its peer dependencies using your preferred package manager. 
 With Bun:
 
 ```bash
-bun add @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal
+bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3
 ```
 
 Or with npm:
 
 ```bash
-npm install @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal
+npm install @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3
 ```
 
 Or with Yarn:
 
 ```bash
-yarn add @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal
+yarn add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3
 ```
 
 `@mysten/sui` is a required peer dependency. `@mysten/walrus` is needed for the `DefaultWalrusWriteAdapter` used below. `@mysten/seal` is required at runtime even for non-encrypted workflows.

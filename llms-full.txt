@@ -61,6 +61,7 @@ Morse is composed of five layers. Only the contracts are the source of truth; al
 ## Next Steps
 
 - [Quick Start](https://docs.morsecms.xyz/quick-start.html): Choose your path - CLI, SDK, or contracts - and go from zero to published content on testnet.
+- [Live Demo](https://morse-blog-demo.vercel.app): A working blog running on Morse - wallet-native publishing, on-chain revisions, Seal-gated premium posts. No wallet needed to read.
 - [Core Concepts](https://docs.morsecms.xyz/core-concepts.html): Understand the Publication → Collection → Entry model.
 - [CLI](https://docs.morsecms.xyz/cli-overview.html): Manage publications and content from your terminal. Encrypted keystore, active context, no IDs to paste.
 - [SDK](https://docs.morsecms.xyz/sdk-overview.html): Build on Morse from Node or the browser. Adapter pattern, branded IDs, structured errors.
@@ -363,19 +364,19 @@ Install the SDK and its peer dependencies using your preferred package manager. 
 With Bun:
 
 ```bash
-bun add @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal
+bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3
 ```
 
 Or with npm:
 
 ```bash
-npm install @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal
+npm install @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3
 ```
 
 Or with Yarn:
 
 ```bash
-yarn add @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal
+yarn add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3
 ```
 
 `@mysten/sui` is a required peer dependency. `@mysten/walrus` is needed for the `DefaultWalrusWriteAdapter` used below. `@mysten/seal` is required at runtime even for non-encrypted workflows.
@@ -2642,7 +2643,7 @@ The SDK works in both Node and browser environments. It does not depend on Node-
 `@mysten/sui` is a required peer dependency. `@mysten/walrus` is needed for the `DefaultWalrusWriteAdapter`. `@mysten/seal` is required at runtime even for non-encrypted workflows.
 
 ```bash
-bun add @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal
+bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3
 ```
 
 ## morseConfig() Shape

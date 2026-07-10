@@ -37,7 +37,7 @@ The SDK works in both Node and browser environments. It does not depend on Node-
 `@mysten/sui` is a required peer dependency. `@mysten/walrus` is needed for the `DefaultWalrusWriteAdapter`. `@mysten/seal` is required at runtime even for non-encrypted workflows.
 
 ```bash
-bun add @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal
+bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3
 ```
 
 ## morseConfig() Shape

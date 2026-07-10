@@ -46,7 +46,7 @@
     "pageTitle": "Morse - The Decentralized Headless CMS Protocol",
     "section": "Getting Started",
     "heading": "Next Steps",
-    "text": "Quick Start Choose your path - CLI, SDK, or contracts - and go from zero to published content on testnet. Core Concepts Understand the Publication → Collection → Entry model. CLI Manage publications and content from your terminal. Encrypted keystore, active context, no IDs to paste. SDK Build on Morse from Node or the browser. Adapter pattern, branded IDs, structured errors."
+    "text": "Quick Start Choose your path - CLI, SDK, or contracts - and go from zero to published content on testnet. Live Demo A working blog running on Morse - wallet-native publishing, on-chain revisions, Seal-gated premium posts. No wallet needed to read. Core Concepts Understand the Publication → Collection → Entry model. CLI Manage publications and content from your terminal. Encrypted keystore, active context, no IDs to paste. SDK Build on Morse from Node or the browser. Adapter pattern, branded IDs, structured errors."
   },
   {
     "url": "core-concepts.html",
@@ -228,7 +228,7 @@
     "pageTitle": "Quick Start: SDK",
     "section": "Getting Started",
     "heading": "Installing",
-    "text": "Install the SDK and its peer dependencies using your preferred package manager. See SDK Client Setup → Compatibility for compatible dependency versions. With Bun: bash Copy bun add @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal Or with npm: bash Copy npm install @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal Or with Yarn: bash Copy yarn add @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal @mysten/sui is a required peer dependency. @mysten/walrus is needed for the DefaultWalrusWriteAdapter used below. @mysten/seal is required at runtime eve"
+    "text": "Install the SDK and its peer dependencies using your preferred package manager. See SDK Client Setup → Compatibility for compatible dependency versions. With Bun: bash Copy bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3 Or with npm: bash Copy npm install @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3 Or with Yarn: bash Copy yarn add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3 @mysten/sui is a required peer dependency. @mysten/walrus is needed for the DefaultWalrusWriteAd"
   },
   {
     "url": "quick-start-sdk.html#writing-the-script",
@@ -1019,7 +1019,7 @@
     "pageTitle": "SDK Setup",
     "section": "SDK",
     "heading": "Installing",
-    "text": "@mysten/sui is a required peer dependency. @mysten/walrus is needed for the DefaultWalrusWriteAdapter. @mysten/seal is required at runtime even for non-encrypted workflows. bash Copy bun add @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal"
+    "text": "@mysten/sui is a required peer dependency. @mysten/walrus is needed for the DefaultWalrusWriteAdapter. @mysten/seal is required at runtime even for non-encrypted workflows. bash Copy bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3"
   },
   {
     "url": "sdk-client-setup.html#morse-config",

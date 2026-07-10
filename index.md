@@ -57,6 +57,7 @@ Morse is composed of five layers. Only the contracts are the source of truth; al
 ## Next Steps
 
 - [Quick Start](https://docs.morsecms.xyz/quick-start.html): Choose your path - CLI, SDK, or contracts - and go from zero to published content on testnet.
+- [Live Demo](https://morse-blog-demo.vercel.app): A working blog running on Morse - wallet-native publishing, on-chain revisions, Seal-gated premium posts. No wallet needed to read.
 - [Core Concepts](https://docs.morsecms.xyz/core-concepts.html): Understand the Publication → Collection → Entry model.
 - [CLI](https://docs.morsecms.xyz/cli-overview.html): Manage publications and content from your terminal. Encrypted keystore, active context, no IDs to paste.
 - [SDK](https://docs.morsecms.xyz/sdk-overview.html): Build on Morse from Node or the browser. Adapter pattern, branded IDs, structured errors.
