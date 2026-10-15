@@ -5,9 +5,9 @@
 
 > An entry is a single content unit within a collection. Revisions are its immutable history. The dual-head model lets drafts evolve freely while production readers always see a stable published state.
 
-## Entry Structure
+## Entry structure
 
-Entries live inside collections, stored in a `Table<u64, Entry>`. They have `store` and `drop` abilities - they are values owned by their collection, not independent Sui objects.
+Entries live inside collections, stored in a `Table<u64, Entry>`. They have `store` and `drop` abilities; they are values owned by their collection, not independent Sui objects.
 
 ```move
 public struct Entry has store, drop {
@@ -22,7 +22,7 @@ The `name` field must be non-empty and at most 256 characters.
 
 ## Revisions
 
-Each revision is an immutable snapshot of an entry at a point in time. Revisions are never mutated after creation - edits always append new revisions to the vector.
+Each revision is an immutable snapshot of an entry at a point in time. Revisions are never mutated after creation; edits always append new revisions to the vector.
 
 ```move
 public struct EntryRevision has store, drop {
@@ -37,9 +37,9 @@ public struct EntryRevision has store, drop {
 
 The `content_type` field must be non-empty and at most 255 characters; standard MIME format is recommended.
 
-### The BlobRef Enum
+### The BlobRef enum
 
-`BlobRef` is a Move enum that abstracts the two storage modes (the SDK surfaces it as a discriminated union - switch on `.kind`):
+`BlobRef` is a Move enum that abstracts the two storage modes (the SDK surfaces it as a discriminated union; switch on `.kind`):
 
 ```move
 public enum BlobRef has copy, drop, store {
@@ -48,13 +48,13 @@ public enum BlobRef has copy, drop, store {
 }
 ```
 
-The variant used must match the collection's [storage mode](https://docs.morsecms.xyz/collections.html#storage-modes). The `make_blob_ref` function enforces this - you cannot accidentally mix modes.
+The variant used must match the collection's [storage mode](https://docs.morsecms.xyz/collections.html#storage-modes). The `make_blob_ref` function enforces this; you cannot accidentally mix modes.
 
-## The Dual-Head Model
+## The dual-head model
 
 Every entry maintains two independent head pointers into its revision vector:
 
-- **`draft_head`** — Points to the latest draft revision. Work in progress - not visible to public readers. May be `None` on a freshly-published entry.
+- **`draft_head`** — Points to the latest draft revision. Work in progress, not visible to public readers. May be `None` on a freshly-published entry.
 - **`public_head`** — Points to the currently published revision. Stable for readers. May be `None` on an entry that has only drafts.
 ```
 revisions: [rev0, rev1(draft), rev2(draft), rev3(public), rev4(draft)]
@@ -63,11 +63,11 @@ revisions: [rev0, rev1(draft), rev2(draft), rev3(public), rev4(draft)]
 
 This is what makes real editorial workflows possible: editors can keep appending drafts while production clients continuously serve the stable `public_head`.
 
-## Adding an Entry
+## Adding an entry
 
 Create a new entry and add it to a named collection. Requires a valid [PublisherCap](https://docs.morsecms.xyz/publications.html#publisher-cap-management). Returns the assigned `entry_id`.
 
-An entry cannot exist outside of a [collection](https://docs.morsecms.xyz/collections.html) - every entry is scoped to exactly one.
+An entry cannot exist outside of a [collection](https://docs.morsecms.xyz/collections.html); every entry is scoped to exactly one.
 
 **CLI:**
 
@@ -136,19 +136,19 @@ public fun add_entry_to_collection(
 ): u64                                   // returns entry_id
 ```
 
-Use [SDK Setup → morseConfig()](https://docs.morsecms.xyz/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server Setup](https://docs.morsecms.xyz/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html) for complete PTB examples.
+Use [SDK Setup → morseConfig()](https://docs.morsecms.xyz/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server setup](https://docs.morsecms.xyz/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html) for complete PTB examples.
 
 For unencrypted public entries: `encrypted = false`, `access_policy = 0`, `seal_id = None`. The initial revision goes directly to `public_head`.
 
 > **WARNING: Encrypted entries are always created as drafts**
 >
-> When `encrypted = true` and `access_policy = 1` (publisher), the initial revision goes to `draft_head` only - there is no `public_head` yet. Published revisions are always unencrypted and public, so to publish an encrypted entry you must supply a new unencrypted blob using `publish_from_draft` or `publish_direct`. A revision cannot be both published and encrypted.
+> When `encrypted = true` and `access_policy = 1` (publisher), the initial revision goes to `draft_head` only; there is no `public_head` yet. Published revisions are always unencrypted and public, so to publish an encrypted entry you must supply a new unencrypted blob using `publish_from_draft` or `publish_direct`. A revision cannot be both published and encrypted.
 
 To list entries in a collection, use the CLI: `morse entry list`. The command supports pagination with `--limit` and `--cursor` flags, and `--drafts-only` to filter for draft entries.
 
 See [CLI Commands → Entry](https://docs.morsecms.xyz/cli-commands.html#entry) for the full syntax.
 
-## Appending a Draft Revision
+## Appending a draft revision
 
 Append a new revision to an existing entry and advance `draft_head`. The previous revisions are untouched.
 
@@ -221,7 +221,7 @@ public fun append_collection_entry_draft_revision(
 ): u64                                   // returns new revision_id
 ```
 
-## Publishing from Draft
+## Publishing from draft
 
 Take a specific draft revision and publish it. This appends a new public revision and advances `public_head`. The draft revision is referenced for traceability.
 
@@ -303,7 +303,7 @@ public fun publish_collection_entry_from_draft(
 
 The resulting public revision always has `encrypted = false` and `access_policy = ACCESS_PUBLIC`.
 
-## Publishing Direct
+## Publishing direct
 
 Append a new public revision directly, skipping the draft workflow. Advances `public_head` in one step.
 
@@ -376,7 +376,7 @@ public fun publish_collection_entry_direct(
 When an entry is added to a collection, it is assigned a stable, monotonically increasing `entry_id: u64`. The counter starts at `0` and increments with each insertion.
 
 - Entry IDs are **never reused** after deletion
-- IDs are **stable** - external systems can safely hold references by ID
+- IDs are **stable**; external systems can safely hold references by ID
 - Gaps in the ID sequence are expected and normal after deletions
 
 ```example id sequence
@@ -392,7 +392,7 @@ delete_entry_from_collection(..., entry_id: 1, ...)
 entry_id = add_entry_to_collection(...) // → 3
 ```
 
-## Deleting an Entry
+## Deleting an entry
 
 Remove an entry by ID. Since `Entry` has the `drop` ability, it is simply dropped from the table.
 
@@ -437,7 +437,7 @@ public fun delete_entry_from_collection(
 >
 > Deleting an entry removes the on-chain record and the `BlobRef`, but does not delete the underlying Walrus `Blob` object on Sui. Blob lifecycle management (storing, deleting the blob object from Walrus) is the caller's responsibility.
 
-## Typical Editorial Workflow
+## Typical editorial workflow
 
 The workflow below applies to both Blob and Quilt storage modes. In Quilt mode, entries target a specific patch within the shared document rather than a standalone blob, but the revision lifecycle is the same.
 
@@ -453,36 +453,36 @@ The workflow below applies to both Blob and Quilt storage modes. In Quilt mode, 
 4. **Continue iterating**
    Append more drafts after publishing. The cycle continues without limit. Every revision is preserved in the immutable history vector.
 
-## Walrus Blob Requirements
+## Walrus blob requirements
 
 All production write paths require a reference to the Walrus `&Blob` object (not just its ID). The contract calls `blob.is_deletable()` and aborts with `EBlobNotDeletable` if the blob is not deletable. This ensures the platform can manage blob lifecycle.
 
-### Blob Lifecycle: Epochs, Expiry, Renewal
+### Blob lifecycle: epochs, expiry, renewal
 
 The on-chain revision history is immutable, but the payloads it points to are not stored "forever" by default: Walrus storage is **funded per epoch** (roughly one day on testnet, two weeks on mainnet). The `epochs` parameter on every upload sets how long the blob stays available; after its final epoch the blob expires and storage nodes drop it, while the on-chain `BlobRef` and revision metadata remain. Renew a blob before expiry (or re-upload and append a new revision) for longer-lived content.
 
-Morse deliberately requires *deletable* blobs rather than Walrus's permanent variant: a CMS needs unpublishing, correction, and takedown paths. Permanence in Morse means the **history is verifiable and tamper-proof** - not that bytes are irrevocable.
+Morse deliberately requires *deletable* blobs rather than Walrus's permanent variant: a CMS needs unpublishing, correction, and takedown paths. Permanence in Morse means the **history is verifiable and tamper-proof**, not that bytes are irrevocable.
 
 > **WARNING: Testnet payloads are disposable**
 >
-> The quick starts upload with `epochs: 3` - about three days on testnet. Walrus testnet is also wiped periodically (every few months). Treat testnet content as throwaway; fund more epochs and set renewal reminders only for things you actually want to keep around.
+> The quick starts upload with `epochs: 3`, about three days on testnet. Walrus testnet is also wiped periodically (every few months). Treat testnet content as throwaway; fund more epochs and set renewal reminders only for things you actually want to keep around.
 
 > **TIP: Testing without Walrus blobs**
 >
-> In Move unit tests, `walrus::blob::Blob` cannot be constructed because its constructor is `public(package)`. Use the `_for_testing` variants (e.g. `add_entry_to_collection_for_testing`) that accept a raw `blob_id: ID` instead of `&Blob`. These bypass only the deletable check - all other logic is identical.
+> In Move unit tests, `walrus::blob::Blob` cannot be constructed because its constructor is `public(package)`. Use the `_for_testing` variants (e.g. `add_entry_to_collection_for_testing`) that accept a raw `blob_id: ID` instead of `&Blob`. These bypass only the deletable check; all other logic is identical.
 
-## Access Policy & Encryption Rules
+## Access policy & encryption rules
 
 The `encrypted` flag and `access_policy` must be consistent. The contract enforces this at every write. See [Access Control](https://docs.morsecms.xyz/access-control.html) for the full permission model.
 
 | encrypted | access_policy | seal_id | Result |
 | --- | --- | --- | --- |
-| `false` | `0` (PUBLIC) | `None` | Valid - unencrypted public revision |
-| `true` | `1` (PUBLISHER) | `Some(<id>)` | Valid - encrypted publisher-gated revision |
-| `true` | `0` | any | Aborts - `EInvalidAccessPolicy` |
-| `false` | `1` | any | Aborts - `EInvalidAccessPolicy` |
-| `true` | `1` | `None` | Aborts - `ESealIdRequired` |
-| `false` | `0` | `Some(<id>)` | Aborts - `ESealIdNotAllowed` |
+| `false` | `0` (PUBLIC) | `None` | Valid: unencrypted public revision |
+| `true` | `1` (PUBLISHER) | `Some(<id>)` | Valid: encrypted publisher-gated revision |
+| `true` | `0` | any | Aborts: `EInvalidAccessPolicy` |
+| `false` | `1` | any | Aborts: `EInvalidAccessPolicy` |
+| `true` | `1` | `None` | Aborts: `ESealIdRequired` |
+| `false` | `0` | `Some(<id>)` | Aborts: `ESealIdNotAllowed` |
 
 `ACCESS_SUBSCRIPTION = 2` is defined in the protocol but reserved for future use.
 
@@ -490,7 +490,7 @@ The `encrypted` flag and `access_policy` must be consistent. The contract enforc
 
 Entry and revision operations do not emit on-chain events. Use the transaction log or an indexer to track changes.
 
-## Error Codes
+## Error codes
 
 For more error codes, see: [Publications](https://docs.morsecms.xyz/publications.html#error-codes), [Collections](https://docs.morsecms.xyz/collections.html#error-codes), [Access Control](https://docs.morsecms.xyz/access-control.html#error-codes).
 

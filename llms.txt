@@ -13,19 +13,19 @@ Every page below is also available as Markdown: replace `.html` with `.md` in an
 
 ## Getting Started
 
-- [Morse - The Decentralized Headless CMS Protocol](https://docs.morsecms.xyz/index.md): Morse is a decentralized, headless CMS protocol built on Sui and Walrus.
-- [Core Concepts](https://docs.morsecms.xyz/core-concepts.md): Understand the fundamental building blocks of the Morse protocol - the data model, authorization system, storage strategy, and how on-chain and off-chain components interact.
+- [Morse: The Decentralized Headless CMS Protocol](https://docs.morsecms.xyz/index.md): Morse is a decentralized, headless CMS protocol built on Sui and Walrus.
+- [Core Concepts](https://docs.morsecms.xyz/core-concepts.md): Understand the fundamental building blocks of the Morse protocol: the data model, authorization system, storage strategy, and how on-chain and off-chain components interact.
 - [Quick Start](https://docs.morsecms.xyz/quick-start.md): Choose the path that fits your workflow. Each guide takes you from zero to published content on Sui testnet.
 - [Quick Start: CLI](https://docs.morsecms.xyz/quick-start-cli.md): Install morse-cli and go from zero to published content on Sui testnet in under five minutes. No contracts, no code, just your terminal.
-- [Quick Start: SDK](https://docs.morsecms.xyz/quick-start-sdk.md): Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter - no browser, no wallet popups. Want to see the result first? Browse the live demo blog built on this SDK.
-- [Quick Start: Smart Contracts](https://docs.morsecms.xyz/quick-start-contracts.md): Create a publication, add a collection, and publish an entry using raw Programmable Transaction Blocks against the deployed Morse contracts on testnet. No SDK wrappers - just tx.moveCall.
+- [Quick Start: SDK](https://docs.morsecms.xyz/quick-start-sdk.md): Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter: no browser, no wallet popups. Want to see the result first? Browse the live demo blog built on this SDK.
+- [Quick Start: Smart Contracts](https://docs.morsecms.xyz/quick-start-contracts.md): Create a publication, add a collection, and publish an entry using raw Programmable Transaction Blocks against the deployed Morse contracts on testnet. No SDK wrappers, just tx.moveCall.
 
 ## Protocol
 
-- [Publications](https://docs.morsecms.xyz/publications.md): A publication is the top-level permission management and identity boundary for a content domain in Morse. Everything - collections, entries, permissions - lives inside a publication.
+- [Publications](https://docs.morsecms.xyz/publications.md): A publication is the top-level permission management and identity boundary for a content domain in Morse. Everything (collections, entries, permissions) lives inside a publication.
 - [Collections](https://docs.morsecms.xyz/collections.md): A collection is a named content lane inside a publication. It groups related entries together and determines how their Walrus payload references are stored.
 - [Entries & Revisions](https://docs.morsecms.xyz/entries.md): An entry is a single content unit within a collection. Revisions are its immutable history. The dual-head model lets drafts evolve freely while production readers always see a stable published state.
-- [Access Control](https://docs.morsecms.xyz/access-control.md): Morse uses a capability-based permission model. Two types of capabilities control who can administer a publication and who can write content - enforced on-chain by the Sui type system, with no off-chain authorization…
+- [Access Control](https://docs.morsecms.xyz/access-control.md): Morse uses a capability-based permission model. Two types of capabilities control who can administer a publication and who can write content, enforced on-chain by the Sui type system, with no off-chain authorization…
 - [Recipient Files](https://docs.morsecms.xyz/recipient-files.md): Recipient files are Morse's second content model: standalone files on Walrus with a per-file recipient list enforced on-chain. Encrypt a file for specific addresses, share it with a single string, and revoke access…
 
 ## CLI
@@ -49,7 +49,7 @@ Every page below is also available as Markdown: replace `.html` with `.md` in an
 ## Reference
 
 - [Glossary](https://docs.morsecms.xyz/glossary.md): Terms used throughout the Morse protocol and this documentation.
-- [Use Morse with AI](https://docs.morsecms.xyz/use-morse-with-ai.md): Connect AI coding agents to the Morse docs and operate the entire protocol — publications, entries, access control — from an agent.
+- [Use Morse with AI](https://docs.morsecms.xyz/use-morse-with-ai.md): Connect AI coding agents to the Morse docs and operate the entire protocol (publications, entries, access control) from an agent.
 
 ## Optional
 

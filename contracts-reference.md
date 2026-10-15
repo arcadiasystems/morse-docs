@@ -3,13 +3,13 @@
 
 # Contract Reference
 
-> Complete reference for the Morse Move package - function signatures, struct definitions, events, error codes, and constants for the `publication`, `collection`, and `entry` modules.
+> Complete reference for the Morse Move package: function signatures, struct definitions, events, error codes, and constants for the `publication`, `collection`, and `entry` modules.
 
 ## Publication module
 
 All functions live in `publication::publication`. Functions that accept a `&PublisherCap` also validate that the cap is not revoked and that `cap.holder == ctx.sender()`.
 
-### Publication Lifecycle
+### Publication lifecycle
 
 | Function | Description |
 | --- | --- |
@@ -17,14 +17,14 @@ All functions live in `publication::publication`. Functions that accept a `&Publ
 | `share_publication(publication: Publication)` | Share the publication object. Call after `new_publication` in the same PTB. |
 | `delete_publication(registry: &mut PublicationRegistry, publication: Publication, owner_cap: OwnerCap)` | Requires `OwnerCap` (consumed). Delete a publication and release its slug. All collections must be empty first. |
 
-### Registry Queries
+### Registry queries
 
 | Function | Description |
 | --- | --- |
 | `contains_slug(registry: &PublicationRegistry, slug: String)` | Returns `bool`. Whether a slug is currently registered. |
 | `get_publication_id_by_slug(registry: &PublicationRegistry, slug: String)` | Returns `&ID`. Resolve a slug to its publication object ID. Aborts if not registered. |
 
-### Capability Management
+### Capability management
 
 | Function | Description |
 | --- | --- |
@@ -34,14 +34,14 @@ All functions live in `publication::publication`. Functions that accept a `&Publ
 | `destroy_publisher_cap(publication: &mut Publication, cap: PublisherCap, ctx: &mut TxContext)` | Requires `PublisherCap` (holder only, consumed). Surrender write access. If revoked, also removes cap from the denylist. |
 | `transfer_publisher_cap(cap: PublisherCap, recipient: address)` | `PublisherCap` is consumed. Transfer to another address. Does not change `holder` binding. |
 
-### Collection Management
+### Collection management
 
 | Function | Description |
 | --- | --- |
 | `create_collection(publication: &mut Publication, cap: &PublisherCap, name: String, storage_mode: u8, ctx: &mut TxContext)` | Requires `PublisherCap`. Add a named collection. `storage_mode`: `0` (blob) or `1` (quilt), immutable. Emits `CollectionAdded`. |
 | `delete_collection(publication: &mut Publication, cap: &PublisherCap, name: String, ctx: &mut TxContext)` | Requires `PublisherCap`. Remove a named collection. Entries must be empty. Emits `CollectionRemoved`. |
 
-### Entry Management
+### Entry management
 
 | Function | Description |
 | --- | --- |
@@ -51,9 +51,9 @@ All functions live in `publication::publication`. Functions that accept a `&Publ
 | `publish_collection_entry_from_draft(publication: &mut Publication, cap: &PublisherCap, collection_name: String, entry_id: u64, draft_revision_id: u64, blob: &Blob, quilt_patch_id: Option<vector<u8>>, content_type: String, ctx: &mut TxContext)` | Requires `PublisherCap`. Returns `u64` (revision index). Publish from a draft revision. Advances `public_head`. |
 | `publish_collection_entry_direct(publication: &mut Publication, cap: &PublisherCap, collection_name: String, entry_id: u64, blob: &Blob, quilt_patch_id: Option<vector<u8>>, content_type: String, ctx: &mut TxContext)` | Requires `PublisherCap`. Returns `u64` (revision index). Publish directly without a draft. Advances `public_head`. |
 
-## Seal Function
+## Seal function
 
-The Seal approval entry point is called by the Seal network during decryption - not by end users directly. It is declared as an `entry` function (not `public fun`).
+The Seal approval entry point is called by the Seal network during decryption, not by end users directly. It is declared as an `entry` function (not `public fun`).
 
 | Function | Description |
 | --- | --- |
@@ -87,7 +87,7 @@ These functions are defined in `publication::entry`. Getter functions that opera
 | `get_revision(entry: &Entry, revision_id: u64)` | Returns `&EntryRevision`. A specific revision by zero-based index. Aborts with `ERevisionNotFound` if out of bounds. |
 | `access_policy_public()` | Returns `u8` (`0`). The `ACCESS_PUBLIC` constant. |
 | `access_policy_publisher()` | Returns `u8` (`1`). The `ACCESS_PUBLISHER` constant. |
-| `access_policy_subscription()` | Returns `u8` (`2`). The `ACCESS_SUBSCRIPTION` constant. Reserved - not yet implemented. |
+| `access_policy_subscription()` | Returns `u8` (`2`). The `ACCESS_SUBSCRIPTION` constant. Reserved, not yet implemented. |
 
 ## Constants
 
@@ -104,20 +104,20 @@ These functions are defined in `publication::entry`. Getter functions that opera
 | `ACCESS_PUBLISHER` | `1` | `entry` | Publisher-gated encrypted access policy. |
 | `ACCESS_SUBSCRIPTION` | `2` | `entry` | Subscription-gated access policy (reserved for future use). |
 
-## Object Abilities
+## Object abilities
 
 | Type | Abilities | Notes |
 | --- | --- | --- |
-| `Publication` | `key` | Shared object. No `store` - prevents wrapping outside this module. |
+| `Publication` | `key` | Shared object. No `store`: prevents wrapping outside this module. |
 | `PublicationRegistry` | `key` | Shared singleton. Created by the package `init()` function at publish time. |
 | `OwnerCap` | `key` | Owned object. Transferable. Exactly one exists per publication. |
-| `PublisherCap` | `key` | Owned object. Holder-bound. Multiple can exist per publication. No `store` - cannot be fabricated externally. |
+| `PublisherCap` | `key` | Owned object. Holder-bound. Multiple can exist per publication. No `store`: cannot be fabricated externally. |
 | `Collection` | `store` | Wrapped value inside `Publication.collections` VecMap. |
 | `Entry` | `store, drop` | Wrapped value inside `Collection.entries` Table. Dropped automatically on deletion. |
 | `EntryRevision` | `store, drop` | Element of the `Entry.revisions` vector. Immutable after creation. |
-| `BlobRef` | `copy, drop, store` | Enum - either `Blob(ID)` or `QuiltPatch(vector<u8>)`. Copyable because it is a reference, not the blob itself. |
+| `BlobRef` | `copy, drop, store` | Enum: either `Blob(ID)` or `QuiltPatch(vector<u8>)`. Copyable because it is a reference, not the blob itself. |
 
-## Next Steps
+## Next steps
 
 - [Smart Contracts: Overview](https://docs.morsecms.xyz/contracts-overview.html): Package structure, struct definitions, capabilities, and known limitations.
 - [Smart Contracts: Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html): Step-by-step PTB recipes for publishing, encrypted entries, and cap management.

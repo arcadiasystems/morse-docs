@@ -17,7 +17,7 @@
 
 ## C
 
-**[Capability](https://docs.morsecms.xyz/access-control.html)** — A Move object that proves authorization to perform a specific action. Morse has two capability types: `OwnerCap` (admin authority) and `PublisherCap` (write authority). Capabilities cannot be fabricated - they can only be issued by the protocol.
+**[Capability](https://docs.morsecms.xyz/access-control.html)** — A Move object that proves authorization to perform a specific action. Morse has two capability types: `OwnerCap` (admin authority) and `PublisherCap` (write authority). Capabilities cannot be fabricated; they can only be issued by the protocol.
 
 **CMS** — Content Management System. Software for creating, organizing, and publishing structured digital content. Morse implements a decentralized, headless CMS protocol where permission management lives on-chain rather than in a centralized backend.
 
@@ -27,7 +27,7 @@
 
 ## D
 
-**dCMS** — Decentralized Content Management System - the category Morse belongs to. Publication identity, authorization, and state transitions are governed on-chain; payloads are stored off-chain in decentralized storage (Walrus).
+**dCMS** — Decentralized Content Management System, the category Morse belongs to. Publication identity, authorization, and state transitions are governed on-chain; payloads are stored off-chain in decentralized storage (Walrus).
 
 **[Denylist](https://docs.morsecms.xyz/access-control.html#the-denylist-model)** — The revocation model used for PublisherCaps. A `Table<ID, bool>` on each publication stores IDs of revoked caps. Issuance writes nothing to the table; only revocations write. This optimizes for the common case where revocations never occur.
 
@@ -39,17 +39,17 @@
 
 **[Entry](https://docs.morsecms.xyz/entries.html#entry-structure)** — A single content unit within a collection. Holds a name, an immutable revision vector, and two head pointers. Identified by a stable monotonic `entry_id` within its collection.
 
-**[Entry ID](https://docs.morsecms.xyz/entries.html#entry-ids)** — A `u64` assigned to an entry when added to a collection. Values start at `0` and increment monotonically. IDs are never reused after deletion - stable for external references.
+**[Entry ID](https://docs.morsecms.xyz/entries.html#entry-ids)** — A `u64` assigned to an entry when added to a collection. Values start at `0` and increment monotonically. IDs are never reused after deletion (stable for external references).
 
 **[EntryRevision](https://docs.morsecms.xyz/entries.html#revisions)** — The Move struct that stores a single revision's data: `blob_ref`, `content_type`, `encrypted`, `access_policy`, `seal_id`, and `author`. Has `store, drop` abilities. Stored in an entry's `revisions` vector.
 
-**Epoch** — A Walrus storage duration unit - roughly **one day on testnet** (two weeks on mainnet). When uploading a blob, the `epochs` parameter controls how long the data is available on the Walrus network; expired blobs can be renewed before their deadline. Passed as `--epochs <n>` in the CLI or `epochs: number` in the SDK.
+**Epoch** — A Walrus storage duration unit, roughly **one day on testnet** (two weeks on mainnet). When uploading a blob, the `epochs` parameter controls how long the data is available on the Walrus network; expired blobs can be renewed before their deadline. Passed as `--epochs <n>` in the CLI or `epochs: number` in the SDK.
 
 **Events** — On-chain event structs emitted by the Morse contracts during state transitions. All have `copy, drop` abilities. Includes `PublicationCreated`, `PublicationDeleted`, `SlugRegistered`, `SlugReleased`, `PublisherCapIssued`, `PublisherCapRevoked`, `CollectionAdded`, and `CollectionRemoved`. See the Events tables on [Publications](https://docs.morsecms.xyz/publications.html#events), [Collections](https://docs.morsecms.xyz/collections.html#events), and [Entries](https://docs.morsecms.xyz/entries.html#events).
 
 ## G
 
-**gRPC** — A high-performance RPC framework used by `SuiGrpcClient` from `@mysten/sui/grpc`. The Morse SDK requires gRPC transport for all Sui interactions. Works in modern browsers without a proxy. See [SDK Overview → Known Limitations](https://docs.morsecms.xyz/sdk-overview.html#known-limitations) for JSON-RPC fallback status.
+**gRPC** — A high-performance RPC framework used by `SuiGrpcClient` from `@mysten/sui/grpc`. The Morse SDK requires gRPC transport for all Sui interactions. Works in modern browsers without a proxy. See [SDK Overview → Known limitations](https://docs.morsecms.xyz/sdk-overview.html#known-limitations) for JSON-RPC fallback status.
 
 ## H
 
@@ -59,7 +59,7 @@
 
 ## I
 
-**Indexer** — The off-chain service that listens to on-chain events and builds a read-optimized index of publications, collections, and entries. Currently planned. See [How Morse Works → Off-Chain Services](https://docs.morsecms.xyz/core-concepts.html#off-chain-services).
+**Indexer** — The off-chain service that listens to on-chain events and builds a read-optimized index of publications, collections, and entries. Currently planned. See [How Morse Works → Off-chain services](https://docs.morsecms.xyz/core-concepts.html#off-chain-services).
 
 ## M
 
@@ -69,7 +69,7 @@
 
 ## O
 
-**[OwnerCap](https://docs.morsecms.xyz/access-control.html#ownercap)** — The admin capability for a publication. Exactly one exists per publication. Grants authority to issue and revoke publisher caps, delete the publication, and transfer ownership. Has `key` ability only - transferable via `transfer_owner_cap`.
+**[OwnerCap](https://docs.morsecms.xyz/access-control.html#ownercap)** — The admin capability for a publication. Exactly one exists per publication. Grants authority to issue and revoke publisher caps, delete the publication, and transfer ownership. Has `key` ability only. Transferable via `transfer_owner_cap`.
 
 ## P
 
@@ -81,7 +81,7 @@
 
 **[PublisherCap](https://docs.morsecms.xyz/access-control.html#publishercap)** — The write capability for a publication. Many can exist per publication. Grants authority to create/delete collections and entries, append drafts, and publish content. Bound to a `holder` address. Issued by the owner; revocable by the owner.
 
-**PTB** — Programmable Transaction Block - Sui's composable transaction format. Multiple operations can be combined into a single atomic transaction. The Morse protocol uses pure creation functions that return objects for callers to compose in PTBs.
+**PTB** — Programmable Transaction Block, Sui's composable transaction format. Multiple operations can be combined into a single atomic transaction. The Morse protocol uses pure creation functions that return objects for callers to compose in PTBs.
 
 **[Policy Tag](https://docs.morsecms.xyz/access-control.html#seal-identity-format)** — A single byte in a Seal identity that identifies which access policy the identity targets. Currently only `0x01` (publisher) is defined. Allows future policy types to coexist within the same publication namespace.
 
@@ -93,11 +93,11 @@
 
 ## R
 
-**[Revision](https://docs.morsecms.xyz/entries.html#revisions)** — An immutable version of an entry at a point in time. Stored in the entry's `revisions: vector<EntryRevision>`. Each revision records a `BlobRef`, content type, encryption state, access policy, optional Seal identity, and author address. Revisions are never mutated - edits append new ones.
+**[Revision](https://docs.morsecms.xyz/entries.html#revisions)** — An immutable version of an entry at a point in time. Stored in the entry's `revisions: vector<EntryRevision>`. Each revision records a `BlobRef`, content type, encryption state, access policy, optional Seal identity, and author address. Revisions are never mutated; edits append new ones.
 
 **[Revision ID](https://docs.morsecms.xyz/entries.html#revisions)** — The index of a revision within an entry's `revisions` vector. Starts at `0`. Returned by all revision-appending functions. Used to reference a specific revision in `publish_collection_entry_from_draft`.
 
-**[Revocation](https://docs.morsecms.xyz/access-control.html#revoking-publisher-caps)** — The act of adding a `PublisherCap`'s object ID to a publication's denylist via `revoke_publisher_cap`. Immediate effect - the next write attempt using the revoked cap will abort. Historical content is unaffected.
+**[Revocation](https://docs.morsecms.xyz/access-control.html#revoking-publisher-caps)** — The act of adding a `PublisherCap`'s object ID to a publication's denylist via `revoke_publisher_cap`. Immediate effect: the next write attempt using the revoked cap will abort. Historical content is unaffected.
 
 ## S
 
@@ -121,6 +121,6 @@
 
 **WAL** — The utility token of the Walrus decentralized storage network. WAL is used to pay for blob storage and is separate from SUI (the gas token for Sui transactions).
 
-**Walrus** — MystenLabs' decentralized blob storage network integrated with Sui. Morse stores all content payloads in Walrus - the contracts hold references (`BlobRef`), not the raw bytes. Walrus is format-agnostic; payload interpretation is the client's responsibility.
+**Walrus** — MystenLabs' decentralized blob storage network integrated with Sui. Morse stores all content payloads in Walrus; the contracts hold references (`BlobRef`), not the raw bytes. Walrus is format-agnostic; payload interpretation is the client's responsibility.
 
 **[Walrus Blob](https://docs.morsecms.xyz/entries.html#walrus-blob-requirements)** — A Sui object (`walrus::blob::Blob`) representing a payload stored in the Walrus network. Production Morse write paths require a reference to this object (not just the blob ID) so the contract can verify the blob is deletable.

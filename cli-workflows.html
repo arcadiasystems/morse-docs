@@ -76,17 +76,17 @@
           <table>
             <thead><tr><th>Requirement</th><th>Details</th><th>Purpose</th></tr></thead>
             <tbody>
-              <tr><td>Bun or Node</td><td>v1.2+ / >= 18</td><td>JavaScript runtime</td></tr>
+              <tr><td>Bun or Node</td><td>v1.2+ / ≥ 18</td><td>JavaScript runtime</td></tr>
               <tr><td>Sui wallet</td><td>Sui Wallet, Suiet, or any Sui-compatible wallet</td><td>Signing transactions on testnet</td></tr>
-              <tr><td>SUI + WAL tokens</td><td><a href="https://faucet.sui.io/" target="_blank">SUI faucet</a> / <a href="https://stake-wal.wal.app/?network=testnet" target="_blank">Swap SUI for WAL</a></td><td>Gas fees (SUI) and Walrus storage fees (WAL)</td></tr>
-              <tr><td>Bech32 private key</td><td>A <code>suiprivkey1...</code> string</td><td>CLI authentication - export from your wallet's settings</td></tr>
+              <tr><td>SUI + WAL tokens</td><td><a href="https://faucet.sui.io/" target="_blank">SUI faucet</a> · <a href="https://stake-wal.wal.app/?network=testnet" target="_blank">Swap SUI for WAL</a></td><td>Gas fees (SUI) and Walrus storage fees (WAL)</td></tr>
+              <tr><td>Bech32 private key</td><td>A <code>suiprivkey1...</code> string</td><td>CLI authentication. Export from your wallet's settings</td></tr>
             </tbody>
           </table>
         </div>
 
         <p>Make sure the CLI is installed and your account is imported before continuing. See <a href="cli-overview.html">CLI Overview</a> for setup.</p>
 
-        <h2 id="publishing-your-first-entry">Publishing Your First Entry</h2>
+        <h2 id="publishing-your-first-entry">Publishing your first entry</h2>
         <p>Create a profile, import a key, then create a publication and a collection. Each <code>create</code> command selects the new object as the active one, so the steps after require no IDs. <br><code>account import</code> will prompt for your private key and a keystore password. The collection defaults to <code>blob</code> mode when <code>--mode</code> is omitted.</p>
 
         <div class="code-block">
@@ -108,17 +108,17 @@ morse entry add hello --file post.md</pre>
             <span class="code-lang">output</span>
           </div>
           <pre>Uploading 12 bytes to Walrus...
-Added entry #0 "hello". (tx: D9Yfjk...)
-  view: https://aggregator.walrus-testnet.walrus.space/v1/blobs/0iKeii...</pre>
+<span class="ok">Added entry #0 "hello".</span> <span class="m">(tx: D9Yfjk...)</span>
+  <span class="m">view: https://aggregator.walrus-testnet.walrus.space/v1/blobs/0iKeii...</span></pre>
         </div>
 
         <p>A publication's name and slug are immutable on-chain (the slug is the registry's unique key), so there is no rename command.</p>
 
         <p>Check the active context any time with <code>morse status</code>; switch the active publication (and collection) with <code>morse use &lt;slug&gt; [collection]</code>.</p>
 
-        <p class="see-also">See also: <a href="sdk-workflows.html#creating-a-publication">SDK Cookbooks &rarr; Creating a Publication</a></p>
+        <p class="see-also">See also: <a href="sdk-workflows.html#creating-a-publication">SDK Cookbooks &rarr; Creating a publication</a></p>
 
-        <h2 id="reading-it-back">Reading It Back</h2>
+        <h2 id="reading-it-back">Reading it back</h2>
         <p><code>entry get</code> shows metadata; <code>entry read</code> fetches the public content itself. The <code>view</code> link printed by <code>entry add</code> opens the same bytes in a browser.</p>
 
         <div class="code-block">
@@ -135,13 +135,13 @@ morse entry read 0 --via-aggregator --out got.md</pre>
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">Use <code>--via-aggregator</code> for reads on testnet</div>
-            <div class="callout-text">On testnet, the default direct-node read path frequently fails right after an upload with <code>No valid blob metadata could be retrieved from any storage node</code>, even though the blob is healthy - on both plain reads and encrypted decrypts. Add <code>--via-aggregator</code> to <code>entry read</code> and <code>entry decrypt</code> to route through the Walrus aggregator, which succeeds against the same blobs. The tradeoff: the aggregator path skips client-side blob verification, so you trust the operator's bytes. This applies to testnet only; mainnet storage nodes are expected to be more reliable.</div>
+            <div class="callout-text">On testnet, the default direct-node read path frequently fails right after an upload with <code>No valid blob metadata could be retrieved from any storage node</code>, even though the blob is healthy, on both plain reads and encrypted decrypts. Add <code>--via-aggregator</code> to <code>entry read</code> and <code>entry decrypt</code> to route through the Walrus aggregator, which succeeds against the same blobs. The tradeoff: the aggregator path skips client-side blob verification, so you trust the operator's bytes. This applies to testnet only; mainnet storage nodes are expected to be more reliable.</div>
           </div>
         </div>
 
-        <p class="see-also">See also: <a href="sdk-workflows.html#reading-it-back">SDK Cookbooks &rarr; Reading It Back</a></p>
+        <p class="see-also">See also: <a href="sdk-workflows.html#reading-it-back">SDK Cookbooks &rarr; Reading it back</a></p>
 
-        <h2 id="listing-your-content">Listing Your Content</h2>
+        <h2 id="listing-your-content">Listing your content</h2>
         <p>List your publications, collections, and entries in the active context.</p>
 
         <div class="code-block">
@@ -155,10 +155,10 @@ morse entry list
 morse status</pre>
         </div>
 
-        <h2 id="publishing-a-new-revision">Publishing a New Revision</h2>
-        <p>Append a new public revision directly, or stage a draft first and promote it. Revisions are append-only - existing revisions are never edited in place. Two heads track progress: <code>draftHead</code> (work in progress) and <code>publicHead</code> (the live version).</p>
+        <h2 id="publishing-a-new-revision">Publishing a new revision</h2>
+        <p>Append a new public revision directly, or stage a draft first and promote it. Revisions are append-only; existing revisions are never edited in place. Two heads track progress: <code>draftHead</code> (work in progress) and <code>publicHead</code> (the live version).</p>
 
-        <h3 id="publish-direct">Option A: Publish direct</h3>
+        <h3 id="publish-direct">Option A: publish direct</h3>
         <p>Skip the draft stage and append a new public revision in one step. This updates <code>publicHead</code> immediately.</p>
 
         <div class="code-block">
@@ -170,7 +170,7 @@ morse status</pre>
 morse revision publish-direct 0 --file post.md</pre>
         </div>
 
-        <h3 id="draft-then-publish">Option B: Draft then publish</h3>
+        <h3 id="draft-then-publish">Option B: draft then publish</h3>
         <p>Stage a draft revision first (updates <code>draftHead</code> only), then promote it to a public revision. By default, <code>publish-from-draft</code> reuses the draft's content; pass <code>--file</code> to replace it with new content. Useful when you want to review before going live.</p>
 
         <div class="code-block">
@@ -196,9 +196,9 @@ morse revision publish-from-draft 0 1</pre>
           </details>
         </div> -->
 
-        <p class="see-also">See also: <a href="sdk-workflows.html#publishing-a-new-revision">SDK Cookbooks &rarr; Publishing a New Revision</a></p>
+        <p class="see-also">See also: <a href="sdk-workflows.html#publishing-a-new-revision">SDK Cookbooks &rarr; Publishing a new revision</a></p>
 
-        <h2 id="encrypted-content">Encrypted Content</h2>
+        <h2 id="encrypted-content">Encrypted content</h2>
         <p>Morse uses <a href="access-control.html#seal-integration">Seal</a> for on-chain access control over encrypted content. When you add an encrypted entry, the CLI handles Seal key negotiation automatically.</p>
 
         <div class="code-block">
@@ -232,10 +232,10 @@ morse entry decrypt 1 --via-aggregator --out recovered.txt</pre>
           </details>
         </div> -->
 
-        <p class="see-also">See also: <a href="sdk-workflows.html#encrypted-content">SDK Cookbooks &rarr; Encrypted Content</a></p>
+        <p class="see-also">See also: <a href="sdk-workflows.html#encrypted-content">SDK Cookbooks &rarr; Encrypted content</a></p>
 
-        <h2 id="delegating-write-access">Delegating Write Access</h2>
-        <p>Morse separates ownership (<code>OwnerCap</code>) from publishing (<code>PublisherCap</code>). The owner issues a cap bound to a co-author's address, granting them write access. Once issued, the co-author can publish entries using their own key. Revoking the cap causes further writes to abort on-chain. See <a href="access-control.html#issuing-publisher-caps">Access Control -> Issuing Publisher Caps</a> for details.</p>
+        <h2 id="delegating-write-access">Delegating write access</h2>
+        <p>Morse separates ownership (<code>OwnerCap</code>) from publishing (<code>PublisherCap</code>). The owner issues a cap bound to a co-author's address, granting them write access. Once issued, the co-author can publish entries using their own key. Revoking the cap causes further writes to abort on-chain. See <a href="access-control.html#issuing-publisher-caps">Access Control &rarr; Issuing publisher caps</a> for details.</p>
 
         <p>As the <strong>owner</strong>, issue a cap to grant write access and revoke it to remove access:</p>
         <div class="code-block">
@@ -258,7 +258,7 @@ morse cap revoke 0xCAP_ID</pre>
 morse cap destroy 0xCAP_ID</pre>
         </div>
 
-        <p>To rotate a cap to a different address, destroy the old one and have the owner issue a new cap to the new address. Do not use <code>morse cap transfer</code> to send a cap to a different holder - the on-chain <code>holder</code> binding is immutable, so the recipient would own the object but be unable to use or destroy it.</p>
+        <p>To rotate a cap to a different address, destroy the old one and have the owner issue a new cap to the new address. Do not use <code>morse cap transfer</code> to send a cap to a different holder. The on-chain <code>holder</code> binding is immutable, so the recipient would own the object but be unable to use or destroy it.</p>
 <!-- <div class="ai-prompt">
           <details>
             <summary>Build with AI</summary>
@@ -273,9 +273,9 @@ morse cap destroy 0xCAP_ID</pre>
           </details>
         </div> -->
 
-        <p class="see-also">See also: <a href="sdk-workflows.html#delegating-write-access">SDK Cookbooks &rarr; Delegating Write Access</a></p>
+        <p class="see-also">See also: <a href="sdk-workflows.html#delegating-write-access">SDK Cookbooks &rarr; Delegating write access</a></p>
 
-        <h2 id="transferring-ownership">Transferring Ownership</h2>
+        <h2 id="transferring-ownership">Transferring ownership</h2>
         <p>The owner can transfer the publication's <code>OwnerCap</code> to another address, handing over full governance: the recipient becomes the new owner and can issue, revoke, and manage caps.</p>
 
         <div class="code-block">
@@ -294,10 +294,10 @@ morse cap destroy 0xCAP_ID</pre>
           </div>
         </div>
 
-        <p class="see-also">See also: <a href="sdk-workflows.html#transferring-ownership">SDK Cookbooks &rarr; Transferring Ownership</a></p>
+        <p class="see-also">See also: <a href="sdk-workflows.html#transferring-ownership">SDK Cookbooks &rarr; Transferring ownership</a></p>
 
-        <h2 id="deleting-and-tearing-down">Deleting and Tearing Down</h2>
-        <p>Deletion is bottom-up: remove entries first, then collections, then the publication. Each container must be empty before it can be deleted. Entry IDs are permanently retired on deletion and never reused. See <a href="entries.html#deleting-an-entry">Entries &rarr; Deleting an Entry</a> for details.</p>
+        <h2 id="deleting-and-tearing-down">Deleting and tearing down</h2>
+        <p>Deletion is bottom-up: remove entries first, then collections, then the publication. Each container must be empty before it can be deleted. Entry IDs are permanently retired on deletion and never reused. See <a href="entries.html#deleting-an-entry">Entries &rarr; Deleting an entry</a> for details.</p>
 
         <div class="code-block">
           <div class="code-header">
@@ -310,7 +310,7 @@ morse collection delete posts
 morse publication delete</pre>
         </div>
 
-        <p class="see-also">See also: <a href="sdk-workflows.html#deleting-and-tearing-down">SDK Cookbooks &rarr; Deleting and Tearing Down</a></p>
+        <p class="see-also">See also: <a href="sdk-workflows.html#deleting-and-tearing-down">SDK Cookbooks &rarr; Deleting and tearing down</a></p>
 
         <h2 id="scripting-and-ci">Scripting and CI</h2>
         <p>Authenticate with env vars (no prompts), skip confirmations with <code>--yes</code>, and parse <code>--json</code> on stdout. Reads by object ID never need a key; slug-based reads still require an account address for resolution.</p>
@@ -352,18 +352,18 @@ morse publication get 0x00 || echo "exit $?"</pre>
               <tr><td><code>4</code></td><td>Incorrect password or corrupted keystore</td><td>Wrong keystore password (GCM auth-tag mismatch).</td></tr>
               <tr><td><code>2</code></td><td>No publication selected</td><td>No active publication. Pass <code>-P &lt;slug|id&gt;</code> or run <code>morse use</code>.</td></tr>
               <tr><td><code>3</code></td><td>No publication at 0x…</td><td>The ID does not exist on this network.</td></tr>
-              <tr><td><code>5</code></td><td>Move abort <code>ESlugAlreadyExists</code></td><td>The slug is already registered - slugs are globally unique on the network. Re-run with a different slug (e.g. append a timestamp).</td></tr>
+              <tr><td><code>5</code></td><td>Move abort <code>ESlugAlreadyExists</code></td><td>The slug is already registered; slugs are globally unique on the network. Re-run with a different slug (e.g. append a timestamp).</td></tr>
               <tr><td><code>5</code></td><td>Too many failures while writing blob to nodes</td><td>Walrus storage nodes are degraded. Retry; check WAL balance.</td></tr>
               <tr><td><code>2</code></td><td>Morse is not yet deployed on mainnet</td><td>Use <code>--network testnet</code>.</td></tr>
               <tr><td><code>5</code></td><td>InsufficientGas / out of SUI gas</td><td>The active account does not have enough SUI for gas fees. Run <code>sui client faucet</code> to request testnet SUI.</td></tr>
               <tr><td><code>5</code></td><td>Insufficient WAL balance</td><td>Walrus storage requires WAL tokens. Get WAL from the <a href="https://stake-wal.wal.app/?network=testnet" target="_blank" rel="noopener">Walrus testnet faucet</a>.</td></tr>
-              <tr><td><code>5</code></td><td>No valid blob metadata could be retrieved from any storage node</td><td>Common on testnet, especially right after an upload - the default direct-node read path fails even for healthy blobs. Re-run with <code>--via-aggregator</code>. See <a href="#reading-it-back">Reading It Back</a>.</td></tr>
+              <tr><td><code>5</code></td><td>No valid blob metadata could be retrieved from any storage node</td><td>Common on testnet, especially right after an upload. The default direct-node read path fails even for healthy blobs. Re-run with <code>--via-aggregator</code>. See <a href="#reading-it-back">Reading It Back</a>.</td></tr>
               <tr><td><code>5</code></td><td>Walrus blob not retrievable / blob expired</td><td>The blob's storage epoch has ended and it is no longer available on Walrus storage nodes. Re-upload the content and create a new revision with a longer <code>--epochs</code> value.</td></tr>
             </tbody>
           </table>
         </div>
 
-        <h2 id="next-steps">Next Steps</h2>
+        <h2 id="next-steps">Next steps</h2>
         <div class="card-grid">
           <a href="sdk-overview.html" class="card">
             <div class="card-title">SDK: Overview</div>
@@ -379,7 +379,7 @@ morse publication get 0x00 || echo "exit $?"</pre>
     <div class="feedback">
       <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
       <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20cli-workflows.html" target="_blank" rel="noopener">Report an issue</a>
-      <span class="feedback__upd">Updated 2026-06-19</span>
+      <span class="feedback__upd">Updated 2026-10-15</span>
     </div>
     <nav class="pager" aria-label="Previous and next">
       <a href="cli-commands.html" rel="prev"><small>Previous</small><b>← CLI: Command Reference</b></a>

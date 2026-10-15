@@ -1,6 +1,6 @@
 /* Sidebar tree for every docs page. Order mirrors PAGES in scripts/build.mjs. */
 const NAV_SECTIONS = [
-  { title: 'Getting Started', items: [
+  { title: 'Getting started', items: [
     { page: 'index.html', label: 'Introduction' },
     { page: 'core-concepts.html', label: 'Core Concepts' },
     { page: 'quick-start.html', label: 'Quick Start', children: [
@@ -26,7 +26,7 @@ const NAV_SECTIONS = [
     { page: 'sdk-client-setup.html', label: 'Setup' },
     { page: 'sdk-workflows.html', label: 'Cookbooks' },
   ] },
-  { title: 'Smart Contracts', items: [
+  { title: 'Smart contracts', items: [
     { page: 'contracts-overview.html', label: 'Overview' },
     { page: 'contracts-reference.html', label: 'Reference' },
     { page: 'contracts-workflows.html', label: 'Cookbooks' },

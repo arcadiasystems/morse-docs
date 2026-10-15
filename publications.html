@@ -12,10 +12,10 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <meta name="description" content="A publication is the top-level permission management and identity boundary for a content domain in Morse. Everything - collections, entries, permissions - lives inside a publication.">
+  <meta name="description" content="A publication is the top-level permission management and identity boundary for a content domain in Morse. Everything (collections, entries, permissions) lives inside a publication.">
   <link rel="canonical" href="https://docs.morsecms.xyz/publications.html">
   <meta property="og:title" content="Publications · Morse Docs">
-  <meta property="og:description" content="A publication is the top-level permission management and identity boundary for a content domain in Morse. Everything - collections, entries, permissions - lives inside a publication.">
+  <meta property="og:description" content="A publication is the top-level permission management and identity boundary for a content domain in Morse. Everything (collections, entries, permissions) lives inside a publication.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://docs.morsecms.xyz/publications.html">
   <meta property="og:site_name" content="Morse Docs">
@@ -55,7 +55,7 @@
 
     <article class="article">
       <h1>Publications</h1>
-      <p class="article-lead">A publication is the top-level permission management and identity boundary for a content domain in Morse. Everything - collections, entries, permissions - lives inside a publication.</p>
+      <p class="article-lead">A publication is the top-level permission management and identity boundary for a content domain in Morse. Everything (collections, entries, permissions) lives inside a publication.</p>
         <div class="page-actions">
           <div class="copybtn-group">
             <button class="copybtn" type="button" id="copy-page"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-flash-label>Copy page</span></button>
@@ -69,7 +69,7 @@
           </div>
         </div>
 
-      <h2 id="what-is-a-publication">What is a Publication?</h2>
+      <h2 id="what-is-a-publication">What is a publication?</h2>
       <p>A <code>Publication</code> is a shared Sui object that acts as the root container for one content brand or site. It bundles:</p>
       <ul>
         <li>A human-readable <strong>name</strong> (display label)</li>
@@ -91,12 +91,12 @@
 }</pre>
       </div>
 
-      <p>The <code>Publication</code> type has <code>key</code> ability but no <code>store</code>. Sharing and transfer are gated through this module's own functions, enforced by the Sui type system. You cannot wrap or freely transfer a publication - you must call <code>share_publication</code>.</p>
+      <p>The <code>Publication</code> type has <code>key</code> ability but no <code>store</code>. Sharing and transfer are gated through this module's own functions, enforced by the Sui type system. You cannot wrap or freely transfer a publication; you must call <code>share_publication</code>.</p>
 
-      <h2 id="the-slug-system">The Slug System</h2>
-      <p>Every publication is identified by a <strong>slug</strong> - a short, lowercase string that becomes its canonical identifier across the protocol. Slugs are enforced to be globally unique by the <code>PublicationRegistry</code>.</p>
+      <h2 id="the-slug-system">The slug system</h2>
+      <p>Every publication is identified by a <strong>slug</strong>: a short, lowercase string that becomes its canonical identifier across the protocol. Slugs are enforced to be globally unique by the <code>PublicationRegistry</code>.</p>
 
-      <h3 id="slug-rules">Slug Rules</h3>
+      <h3 id="slug-rules">Slug rules</h3>
       <div class="table-wrap"><table>
         <thead><tr><th>Rule</th><th>Constraint</th></tr></thead>
         <tbody>
@@ -125,8 +125,8 @@
 <span class="st">""</span>                   <span class="cm">// ESlugEmpty</span></pre>
       </div>
 
-      <h3 id="slug-reuse-after-deletion">Slug Reuse After Deletion</h3>
-      <p>When a publication is deleted, its slug is released from the registry and becomes available again. This is a deliberate tradeoff - it gives publishers flexibility to re-register slugs - but teams should be aware that a released slug can be re-claimed by anyone.</p>
+      <h3 id="slug-reuse-after-deletion">Slug reuse after deletion</h3>
+      <p>When a publication is deleted, its slug is released from the registry and becomes available again. This is a deliberate tradeoff: it gives publishers flexibility to re-register slugs, but teams should be aware that a released slug can be re-claimed by anyone.</p>
 
       <h2 id="publication-registry">PublicationRegistry</h2>
       <p>The <code>PublicationRegistry</code> is a <strong>shared singleton</strong> object created once in the package <code>init</code> function. It maintains a global <code>Table&lt;String, ID&gt;</code> mapping slugs to publication IDs, enforcing uniqueness across all publications.</p>
@@ -152,7 +152,7 @@
       <p>To list publications owned by your account, use the CLI: <code>morse publication list</code>. You can also fetch a specific publication by slug with <code>morse publication get &lt;slug&gt;</code>.</p>
       <p>See <a href="cli-commands.html#publication">CLI Commands &rarr; Publication</a> for the full syntax.</p>
 
-      <h2 id="creating-a-publication">Creating a Publication</h2>
+      <h2 id="creating-a-publication">Creating a publication</h2>
       <p>Publication creation follows the <strong>pure-function pattern</strong>: <code>new_publication</code> returns objects without performing any transfers. The caller decides what to do with them in a Programmable Transaction Block (PTB).</p>
 
       <div class="code-tabs">
@@ -181,10 +181,10 @@
             <div class="code-header">
               <span class="code-lang">output</span>
             </div>
-            <pre>Created "My Blog" (0x1a2b...3c4d)
-  ownerCap:     0x5e6f...
+            <pre><span class="ok">Created "My Blog" (0x1a2b...3c4d)</span>
+  <span class="m">ownerCap:     0x5e6f...
   publisherCap: 0x7a8b...
-  tx:           AbCdEf...
+  tx:           AbCdEf...</span>
 Selected as the active publication.</pre>
           </div>
         </div>
@@ -224,18 +224,18 @@ Selected as the active publication.</pre>
 <span class="kw">public fun</span> <span class="fn">transfer_owner_cap</span>(owner_cap: <span class="ty">OwnerCap</span>, recipient: <span class="ty">address</span>)
 <span class="kw">public fun</span> <span class="fn">transfer_publisher_cap</span>(cap: <span class="ty">PublisherCap</span>, recipient: <span class="ty">address</span>)</pre>
           </div>
-          <p>Use <a href="sdk-client-setup.html#morse-config">SDK Setup &rarr; morseConfig()</a> to get the package ID and registry ID, <a href="sdk-client-setup.html#server-setup">SDK Setup &rarr; Server Setup</a> to initialize the client, and <a href="contracts-workflows.html">Contract Cookbooks</a> for complete PTB examples.</p>
+          <p>Use <a href="sdk-client-setup.html#morse-config">SDK Setup &rarr; morseConfig()</a> to get the package ID and registry ID, <a href="sdk-client-setup.html#server-setup">SDK Setup &rarr; Server setup</a> to initialize the client, and <a href="contracts-workflows.html">Contract Cookbooks</a> for complete PTB examples.</p>
         </div>
       </div>
 
       <p><code>new_publication</code> returns three objects in a tuple:</p>
       <ul>
-        <li><strong>Publication</strong> - the shared content container</li>
-        <li><code>OwnerCap</code> - admin authority over the publication (one per publication, held by the owner wallet). See <a href="access-control.html#ownercap">Access Control &rarr; OwnerCap</a></li>
-        <li><code>PublisherCap</code> - write authority for content operations, bound to the transaction sender. See <a href="access-control.html#publishercap">Access Control &rarr; PublisherCap</a></li>
+        <li><strong>Publication</strong>: the shared content container</li>
+        <li><code>OwnerCap</code>: admin authority over the publication (one per publication, held by the owner wallet). See <a href="access-control.html#ownercap">Access Control &rarr; OwnerCap</a></li>
+        <li><code>PublisherCap</code>: write authority for content operations, bound to the transaction sender. See <a href="access-control.html#publishercap">Access Control &rarr; PublisherCap</a></li>
       </ul>
 
-      <h2 id="deleting-a-publication">Deleting a Publication</h2>
+      <h2 id="deleting-a-publication">Deleting a publication</h2>
       <p>Publications can be deleted, but only when <strong>all collections have been removed first</strong>. Attempting to delete a publication with remaining collections aborts with an error.</p>
 
       <div class="code-tabs">
@@ -317,11 +317,11 @@ Selected as the active publication.</pre>
         </div>
         <div class="callout-body">
           <div class="callout-title"><code>PublisherCap</code>s are orphaned on deletion</div>
-          <div class="callout-text">Deleting a publication does not destroy outstanding <code>PublisherCap</code> objects. Any caps issued to other addresses remain as owned Sui objects, but they become permanently unusable - the publication they reference no longer exists, so all write operations will fail. Revoke or destroy caps before deleting the publication if you want a clean teardown.</div>
+          <div class="callout-text">Deleting a publication does not destroy outstanding <code>PublisherCap</code> objects. Any caps issued to other addresses remain as owned Sui objects, but they become permanently unusable. The publication they reference no longer exists, so all write operations will fail. Revoke or destroy caps before deleting the publication if you want a clean teardown.</div>
         </div>
       </div>
 
-      <h2 id="ownership-transfer">Ownership Transfer</h2>
+      <h2 id="ownership-transfer">Ownership transfer</h2>
       <p>Publication ownership can be transferred by transferring the <code>OwnerCap</code> to a new address. Since <code>OwnerCap</code> has only the <code>key</code> ability, transfer is handled by the module:</p>
 
       <div class="code-tabs">
@@ -371,11 +371,11 @@ Selected as the active publication.</pre>
         </div>
       </div>
 
-      <p>The recipient immediately gains full admin authority - the ability to issue/revoke publisher caps and delete the publication. Existing publisher caps remain valid until individually revoked.</p>
+      <p>The recipient immediately gains full admin authority: the ability to issue/revoke publisher caps and delete the publication. Existing publisher caps remain valid until individually revoked.</p>
 
       <p>After receiving the <code>OwnerCap</code>, the recipient must set the publication as active in their CLI before they can manage it: <code>morse use &lt;slug&gt;</code>.</p>
 
-      <h2 id="publisher-cap-management">Publisher Cap Management</h2>
+      <h2 id="publisher-cap-management">Publisher cap management</h2>
       <p>Publishers are managed through capability tokens. An owner can issue, revoke, and destroy publisher caps. Revoked caps are added to the publication's denylist, and any future operation attempted with a revoked cap aborts with <code>EPublisherCapRevoked</code>.</p>
       <p>See <a href="access-control.html#publishercap">Access Control &rarr; PublisherCap</a> for the full API with Move, CLI, and SDK examples.</p><!-- 
 
@@ -434,7 +434,7 @@ Selected as the active publication.</pre>
         </tbody>
       </table></div>
 
-      <h2 id="error-codes">Error Codes</h2>
+      <h2 id="error-codes">Error codes</h2>
       <p>For more error codes, see: <a href="collections.html#error-codes">Collections</a>, <a href="entries.html#error-codes">Entries</a>, <a href="access-control.html#error-codes">Access Control</a>.</p>
       <div class="table-wrap"><table>
         <thead><tr><th>Code</th><th>Constant</th><th>Meaning</th></tr></thead>
@@ -455,7 +455,7 @@ Selected as the active publication.</pre>
     <div class="feedback">
       <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
       <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20publications.html" target="_blank" rel="noopener">Report an issue</a>
-      <span class="feedback__upd">Updated 2026-06-19</span>
+      <span class="feedback__upd">Updated 2026-10-15</span>
     </div>
     <nav class="pager" aria-label="Previous and next">
       <a href="quick-start-contracts.html" rel="prev"><small>Previous</small><b>← Quick Start: Smart Contracts</b></a>

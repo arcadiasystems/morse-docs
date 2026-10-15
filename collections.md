@@ -5,7 +5,7 @@
 
 > A collection is a named content lane inside a publication. It groups related entries together and determines how their Walrus payload references are stored.
 
-## What is a Collection?
+## What is a collection?
 
 Collections organize entries into predictable buckets for editorial workflows and API consumers. A publication holds collections in a `VecMap<String, Collection>` keyed by name. The choice of `VecMap` reflects the expectation that a publication will have only a small number of named collections.
 
@@ -18,13 +18,13 @@ public struct Collection has store {
 }
 ```
 
-## Storage Modes
+## Storage modes
 
 Every collection has a `storage_mode` set at creation that controls how entry revisions reference Walrus content.
 
-### Blob Mode
+### Blob mode
 
-In blob mode, every revision stores a `BlobRef::Blob(ID)` - the Sui object ID of a standalone Walrus `Blob`. Each entry revision is fully independent: uploading new content creates a new blob, and the old blobs remain accessible by their IDs.
+In blob mode, every revision stores a `BlobRef::Blob(ID)`, the Sui object ID of a standalone Walrus `Blob`. Each entry revision is fully independent: uploading new content creates a new blob, and the old blobs remain accessible by their IDs.
 
 **Best for:**
 
@@ -33,9 +33,9 @@ In blob mode, every revision stores a `BlobRef::Blob(ID)` - the Sui object ID of
 - Any collection where entries change independently and frequently
 - Situations where you want maximum operational simplicity
 
-### Quilt Mode
+### Quilt mode
 
-In quilt mode, every revision stores a `BlobRef::QuiltPatch(vector<u8>)` - a 37-byte identifier that locates a patch within a shared Walrus Quilt blob. This is more compact and efficient when updating small parts of a grouped content set.
+In quilt mode, every revision stores a `BlobRef::QuiltPatch(vector<u8>)`, a 37-byte identifier that locates a patch within a shared Walrus Quilt blob. This is more compact and efficient when updating small parts of a grouped content set.
 
 ```
 ┌─────────────────────────────────┬─────────┬───────────────┬─────────────┐
@@ -54,7 +54,7 @@ The contract validates that every `QuiltPatchId` is exactly 37 bytes. Shorter or
 - Compact content sets updated in place (e.g. featured banners, site metadata)
 - Stable grouped content with targeted patch updates
 
-### Choosing a Storage Mode
+### Choosing a storage mode
 
 | Scenario | Recommended mode |
 | --- | --- |
@@ -69,11 +69,11 @@ The contract validates that every `QuiltPatchId` is exactly 37 bytes. Shorter or
 >
 > Once a collection is created with a given `storage_mode`, it cannot be changed. All entries in the collection must use references that match the collection's storage mode. The contract enforces this on every write.
 
-## Creating a Collection
+## Creating a collection
 
 Collections are created through the publication module's `create_collection` function, which requires a valid [PublisherCap](https://docs.morsecms.xyz/access-control.html#publishercap).
 
-A collection cannot exist outside of a [publication](https://docs.morsecms.xyz/publications.html) - every collection is scoped to exactly one.
+A collection cannot exist outside of a [publication](https://docs.morsecms.xyz/publications.html); every collection is scoped to exactly one.
 
 **CLI:**
 
@@ -123,7 +123,7 @@ public fun create_collection(
 )
 ```
 
-Use [SDK Setup → morseConfig()](https://docs.morsecms.xyz/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server Setup](https://docs.morsecms.xyz/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html) for complete PTB examples.
+Use [SDK Setup → morseConfig()](https://docs.morsecms.xyz/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server setup](https://docs.morsecms.xyz/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html) for complete PTB examples.
 
 Collection names must be unique within a publication. Creating a collection with a name that already exists aborts with `ECollectionAlreadyExists`.
 
@@ -135,7 +135,7 @@ To list collections in a publication, use the CLI: `morse collection list`.
 
 See [CLI Commands → Collection](https://docs.morsecms.xyz/cli-commands.html#collection) for the full syntax.
 
-## Deleting a Collection
+## Deleting a collection
 
 Collections can be deleted, but only when **all entries have been removed first**.
 
@@ -174,7 +174,7 @@ public fun delete_collection(
 )
 ```
 
-Entries must be removed first because the `Table<u64, Entry>` that holds them requires an explicit `destroy_empty` - Sui's type system does not allow dropping a non-empty table. Delete entries individually with `delete_entry_from_collection` before removing the collection.
+Entries must be removed first because the `Table<u64, Entry>` that holds them requires an explicit `destroy_empty`. Sui's type system does not allow dropping a non-empty table. Delete entries individually with `delete_entry_from_collection` before removing the collection.
 
 ## Events
 
@@ -185,7 +185,7 @@ Collection lifecycle events are emitted by the `publication` module.
 | `CollectionAdded` | Collection created in a publication | `publication: ID`, `name: String` |
 | `CollectionRemoved` | Collection deleted from a publication | `publication: ID`, `name: String` |
 
-## Error Codes
+## Error codes
 
 For more error codes, see: [Publications](https://docs.morsecms.xyz/publications.html#error-codes), [Entries](https://docs.morsecms.xyz/entries.html#error-codes), [Access Control](https://docs.morsecms.xyz/access-control.html#error-codes).
 

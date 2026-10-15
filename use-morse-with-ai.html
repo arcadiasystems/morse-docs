@@ -12,10 +12,10 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <meta name="description" content="Connect AI coding agents to the Morse docs and operate the entire protocol — publications, entries, access control — from an agent.">
+  <meta name="description" content="Connect AI coding agents to the Morse docs and operate the entire protocol (publications, entries, access control) from an agent.">
   <link rel="canonical" href="https://docs.morsecms.xyz/use-morse-with-ai.html">
   <meta property="og:title" content="Use Morse with AI · Morse Docs">
-  <meta property="og:description" content="Connect AI coding agents to the Morse docs and operate the entire protocol — publications, entries, access control — from an agent.">
+  <meta property="og:description" content="Connect AI coding agents to the Morse docs and operate the entire protocol (publications, entries, access control) from an agent.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://docs.morsecms.xyz/use-morse-with-ai.html">
   <meta property="og:site_name" content="Morse Docs">
@@ -55,7 +55,7 @@
 
     <article class="article">
       <h1>Use Morse with AI</h1>
-      <p class="article-lead">Morse publishes its documentation in machine-readable formats and ships agent-operable tooling, so AI coding agents can learn the protocol from current context — and then run the entire backend themselves.</p>
+      <p class="article-lead">Morse publishes its documentation in machine-readable formats and ships agent-operable tooling, so AI coding agents can learn the protocol from current context, and then run the entire backend themselves.</p>
         <div class="page-actions">
           <div class="copybtn-group">
             <button class="copybtn" type="button" id="copy-page"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-flash-label>Copy page</span></button>
@@ -69,8 +69,8 @@
           </div>
         </div>
 
-      <h2 id="machine-readable-docs">Machine-Readable Docs</h2>
-      <p>Every page on this site is available in three agent-friendly forms. No scraping, no HTML parsing — just Markdown.</p>
+      <h2 id="machine-readable-docs">Machine-readable docs</h2>
+      <p>Every page on this site is available in three agent-friendly forms. No scraping, no HTML parsing, just Markdown.</p>
 
       <div class="table-wrap">
         <table>
@@ -95,13 +95,13 @@
             <tr>
               <td><strong>Markdown twins</strong></td>
               <td><code>/&lt;page&gt;.md</code></td>
-              <td>Every page has a Markdown version at the same URL with <code>.md</code> instead of <code>.html</code> — e.g. <a href="entries.md"><code>/entries.md</code></a>.</td>
+              <td>Every page has a Markdown version at the same URL with <code>.md</code> instead of <code>.html</code> (e.g. <a href="entries.md"><code>/entries.md</code></a>).</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <h2 id="prime-a-coding-agent">Prime a Coding Agent</h2>
+      <h2 id="prime-a-coding-agent">Prime a coding agent</h2>
       <p>Paste one line into your agent to load the full Morse context:</p>
 
       <div class="code-block">
@@ -139,23 +139,23 @@ curl -s https://docs.morsecms.xyz/llms-full.txt</pre>
         </div>
       </div>
 
-      <h2 id="copy-any-page-for-ai">Copy Any Page for AI</h2>
+      <h2 id="copy-any-page-for-ai">Copy any page for AI</h2>
       <p>Each docs page has a <strong>Copy page</strong> button (top right of the content area) with four actions:</p>
       <ul>
-        <li><strong>Copy page as Markdown</strong> — puts the page's Markdown twin on your clipboard, ready to paste into any assistant.</li>
-        <li><strong>View as Markdown</strong> — opens the raw <code>.md</code> version in a new tab.</li>
-        <li><strong>Open in ChatGPT / Open in Claude</strong> — opens the assistant with a prompt that references this page and the full docs.</li>
+        <li><strong>Copy page as Markdown</strong>: puts the page's Markdown twin on your clipboard, ready to paste into any assistant.</li>
+        <li><strong>View as Markdown</strong>: opens the raw <code>.md</code> version in a new tab.</li>
+        <li><strong>Open in ChatGPT / Open in Claude</strong>: opens the assistant with a prompt that references this page and the full docs.</li>
       </ul>
       <p>There is also <strong>Ask AI</strong> in the header (or press <code>⌘I</code>): type a question and it opens Claude or ChatGPT pre-loaded with the entire Morse documentation as context.</p>
 
-      <h2 id="agent-first-by-design">Agent-First by Design</h2>
-      <p>Morse isn't just documented for agents — it is <em>operable</em> by them. There is no dashboard signup, no API-key console, no human-only provisioning step anywhere in the protocol. Everything is a CLI command, an SDK call, or a transaction:</p>
+      <h2 id="agent-first-by-design">Agent-first by design</h2>
+      <p>Morse is not just documented for agents; it is <em>operable</em> by them. There is no dashboard signup, no API-key console, no human-only provisioning step anywhere in the protocol. Everything is a CLI command, an SDK call, or a transaction:</p>
 
       <ul>
-        <li><strong>Provision from the terminal</strong> — <code>morse init</code>, <code>morse publication create</code>, <code>morse entry add</code>: a coding agent can go from nothing to published content without leaving the shell. See the <a href="quick-start-cli.html">CLI quick start</a>.</li>
-        <li><strong>Script it with the SDK</strong> — <code>@arcadiasystems/morse-sdk</code> exposes the same operations as typed TypeScript with structured errors, ideal for agent-authored automation. See the <a href="quick-start-sdk.html">SDK quick start</a>.</li>
-        <li><strong>Verify on-chain</strong> — every mutation returns a transaction digest an agent can check. State is queryable from the contracts directly; no opaque backend to trust. See <a href="contracts-overview.html">Smart Contracts</a>.</li>
-        <li><strong>Deterministic auth</strong> — capability objects (<code>OwnerCap</code>, <code>PublisherCap</code>) make permissions explicit and inspectable, so an agent always knows what it is allowed to do. See <a href="access-control.html">Access Control</a>.</li>
+        <li><strong>Provision from the terminal</strong>: with <code>morse init</code>, <code>morse publication create</code> and <code>morse entry add</code>, a coding agent can go from nothing to published content without leaving the shell. See the <a href="quick-start-cli.html">CLI quick start</a>.</li>
+        <li><strong>Script it with the SDK</strong>: <code>@arcadiasystems/morse-sdk</code> exposes the same operations as typed TypeScript with structured errors, ideal for agent-authored automation. See the <a href="quick-start-sdk.html">SDK quick start</a>.</li>
+        <li><strong>Verify on-chain</strong>: every mutation returns a transaction digest an agent can check. State is queryable from the contracts directly; no opaque backend to trust. See <a href="contracts-overview.html">Smart Contracts</a>.</li>
+        <li><strong>Deterministic auth</strong>: capability objects (<code>OwnerCap</code>, <code>PublisherCap</code>) make permissions explicit and inspectable, so an agent always knows what it is allowed to do. See <a href="access-control.html">Access Control</a>.</li>
       </ul>
 
       <div class="code-block">
@@ -174,11 +174,11 @@ morse entry add "hello" --file ./post.json  # payload to Walrus, proof on Sui
 morse entry get "hello"                     # read it back, verified</pre>
       </div>
 
-      <h2 id="feedback-loop">Feedback Loop</h2>
-      <p>If these docs are stale, missing, or confusing — for you or your agent — use the <strong>Was this helpful?</strong> control at the bottom of any page, or open an issue directly:</p>
+      <h2 id="feedback-loop">Feedback loop</h2>
+      <p>If these docs are stale, missing, or confusing (for you or your agent), use the <strong>Was this helpful?</strong> control at the bottom of any page, or open an issue directly:</p>
       <ul>
-        <li><a href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs-feedback" target="_blank" rel="noopener">File docs feedback</a> — include the page URL and what was wrong.</li>
-        <li><a href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener">Suggest changes</a> — every page footer links to its source for direct edits.</li>
+        <li><a href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs-feedback" target="_blank" rel="noopener">File docs feedback</a>: include the page URL and what was wrong.</li>
+        <li><a href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener">Suggest changes</a>: every page footer links to its source for direct edits.</li>
       </ul>
 
       </article>
@@ -186,7 +186,7 @@ morse entry get "hello"                     # read it back, verified</pre>
     <div class="feedback">
       <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
       <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20use-morse-with-ai.html" target="_blank" rel="noopener">Report an issue</a>
-      <span class="feedback__upd">Updated 2026-07-07</span>
+      <span class="feedback__upd">Updated 2026-10-15</span>
     </div>
     <nav class="pager" aria-label="Previous and next">
       <a href="glossary.html" rel="prev"><small>Previous</small><b>← Glossary</b></a>

@@ -51,12 +51,12 @@
   <aside class="side" id="side"></aside>
 
   <main class="main">
-    <nav class="crumbs" aria-label="Breadcrumb"><span>Smart Contracts</span><span class="crumbs__sep" aria-hidden="true">/</span><span aria-current="page">Reference</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><span>Smart contracts</span><span class="crumbs__sep" aria-hidden="true">/</span><span aria-current="page">Reference</span></nav>
 
     <article class="article">
         <h1>Contract Reference</h1>
         <p class="article-lead">
-          Complete reference for the Morse Move package  - function signatures, struct definitions, events, error codes, and constants for the <code>publication</code>, <code>collection</code>, and <code>entry</code> modules.
+          Complete reference for the Morse Move package: function signatures, struct definitions, events, error codes, and constants for the <code>publication</code>, <code>collection</code>, and <code>entry</code> modules.
         </p>
         <div class="page-actions">
           <div class="copybtn-group">
@@ -74,7 +74,7 @@
         <h2 id="publication-functions">Publication module</h2>
         <p>All functions live in <code>publication::publication</code>. Functions that accept a <code>&amp;PublisherCap</code> also validate that the cap is not revoked and that <code>cap.holder == ctx.sender()</code>.</p>
 
-        <h3 id="publication-lifecycle">Publication Lifecycle</h3>
+        <h3 id="publication-lifecycle">Publication lifecycle</h3>
         <div class="table-wrap">
           <table>
             <thead>
@@ -97,7 +97,7 @@
           </table>
         </div>
 
-        <h3 id="registry-queries">Registry Queries</h3>
+        <h3 id="registry-queries">Registry queries</h3>
         <div class="table-wrap">
           <table>
             <thead>
@@ -116,7 +116,7 @@
           </table>
         </div>
 
-        <h3 id="cap-management">Capability Management</h3>
+        <h3 id="cap-management">Capability management</h3>
         <div class="table-wrap">
           <table>
             <thead>
@@ -147,7 +147,7 @@
           </table>
         </div>
 
-        <h3 id="collection-management">Collection Management</h3>
+        <h3 id="collection-management">Collection management</h3>
         <div class="table-wrap">
           <table>
             <thead>
@@ -166,7 +166,7 @@
           </table>
         </div>
 
-        <h3 id="entry-management">Entry Management</h3>
+        <h3 id="entry-management">Entry management</h3>
         <div class="table-wrap">
           <table>
             <thead>
@@ -197,8 +197,8 @@
           </table>
         </div>
 
-        <h2 id="seal-function">Seal Function</h2>
-        <p>The Seal approval entry point is called by the Seal network during decryption  - not by end users directly. It is declared as an <code>entry</code> function (not <code>public fun</code>).</p>
+        <h2 id="seal-function">Seal function</h2>
+        <p>The Seal approval entry point is called by the Seal network during decryption, not by end users directly. It is declared as an <code>entry</code> function (not <code>public fun</code>).</p>
         <div class="table-wrap">
           <table>
             <thead>
@@ -295,7 +295,7 @@
               </tr>
               <tr>
                 <td><code>access_policy_subscription()</code></td>
-                <td>Returns <code>u8</code> (<code>2</code>). The <code>ACCESS_SUBSCRIPTION</code> constant. Reserved  - not yet implemented.</td>
+                <td>Returns <code>u8</code> (<code>2</code>). The <code>ACCESS_SUBSCRIPTION</code> constant. Reserved, not yet implemented.</td>
               </tr>
             </tbody>
           </table>
@@ -320,24 +320,24 @@
           </table>
         </div>
 
-        <h2 id="object-abilities">Object Abilities</h2>
+        <h2 id="object-abilities">Object abilities</h2>
         <div class="table-wrap">
           <table>
             <thead><tr><th>Type</th><th>Abilities</th><th>Notes</th></tr></thead>
             <tbody>
-              <tr><td><code>Publication</code></td><td><code>key</code></td><td>Shared object. No <code>store</code>  - prevents wrapping outside this module.</td></tr>
+              <tr><td><code>Publication</code></td><td><code>key</code></td><td>Shared object. No <code>store</code>: prevents wrapping outside this module.</td></tr>
               <tr><td><code>PublicationRegistry</code></td><td><code>key</code></td><td>Shared singleton. Created by the package <code>init()</code> function at publish time.</td></tr>
               <tr><td><code>OwnerCap</code></td><td><code>key</code></td><td>Owned object. Transferable. Exactly one exists per publication.</td></tr>
-              <tr><td><code>PublisherCap</code></td><td><code>key</code></td><td>Owned object. Holder-bound. Multiple can exist per publication. No <code>store</code>  - cannot be fabricated externally.</td></tr>
+              <tr><td><code>PublisherCap</code></td><td><code>key</code></td><td>Owned object. Holder-bound. Multiple can exist per publication. No <code>store</code>: cannot be fabricated externally.</td></tr>
               <tr><td><code>Collection</code></td><td><code>store</code></td><td>Wrapped value inside <code>Publication.collections</code> VecMap.</td></tr>
               <tr><td><code>Entry</code></td><td><code>store, drop</code></td><td>Wrapped value inside <code>Collection.entries</code> Table. Dropped automatically on deletion.</td></tr>
               <tr><td><code>EntryRevision</code></td><td><code>store, drop</code></td><td>Element of the <code>Entry.revisions</code> vector. Immutable after creation.</td></tr>
-              <tr><td><code>BlobRef</code></td><td><code>copy, drop, store</code></td><td>Enum  - either <code>Blob(ID)</code> or <code>QuiltPatch(vector&lt;u8&gt;)</code>. Copyable because it is a reference, not the blob itself.</td></tr>
+              <tr><td><code>BlobRef</code></td><td><code>copy, drop, store</code></td><td>Enum: either <code>Blob(ID)</code> or <code>QuiltPatch(vector&lt;u8&gt;)</code>. Copyable because it is a reference, not the blob itself.</td></tr>
             </tbody>
           </table>
         </div>
 
-        <h2 id="next-steps">Next Steps</h2>
+        <h2 id="next-steps">Next steps</h2>
         <div class="card-grid">
           <a href="contracts-overview.html" class="card">
             <div class="card-title">Smart Contracts: Overview</div>
@@ -353,7 +353,7 @@
     <div class="feedback">
       <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
       <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20contracts-reference.html" target="_blank" rel="noopener">Report an issue</a>
-      <span class="feedback__upd">Updated 2026-06-19</span>
+      <span class="feedback__upd">Updated 2026-10-15</span>
     </div>
     <nav class="pager" aria-label="Previous and next">
       <a href="contracts-overview.html" rel="prev"><small>Previous</small><b>← Smart Contracts: Overview</b></a>

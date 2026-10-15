@@ -85,9 +85,9 @@
             </thead>
             <tbody>
               <tr><td><code>@arcadiasystems/morse-sdk</code></td><td>0.4.x</td><td>(this package)</td></tr>
-              <tr><td><code>@mysten/sui</code></td><td>&gt;=2.16.2 &lt;2.17.0</td><td>Yes - types, gRPC client, keypairs</td></tr>
-              <tr><td><code>@mysten/walrus</code></td><td>&gt;=1.1.6 &lt;1.2.0</td><td>Optional - for default Walrus adapters (read + write)</td></tr>
-              <tr><td><code>@mysten/seal</code></td><td>&gt;=1.1.3 &lt;1.2.0</td><td>Optional - for encryption</td></tr>
+              <tr><td><code>@mysten/sui</code></td><td>&gt;=2.16.2 &lt;2.17.0</td><td>Yes: types, gRPC client, keypairs</td></tr>
+              <tr><td><code>@mysten/walrus</code></td><td>&gt;=1.1.6 &lt;1.2.0</td><td>Optional: for default Walrus adapters (read + write)</td></tr>
+              <tr><td><code>@mysten/seal</code></td><td>&gt;=1.1.3 &lt;1.2.0</td><td>Optional: for encryption</td></tr>
             </tbody>
           </table>
         </div>
@@ -100,7 +100,7 @@
           </div>
         </div>
 
-        <p>The verified matrix is also exported programmatically as <code>TESTED_SUBSTRATE</code> - a frozen record of the tested <code>@mysten/sui</code>, <code>@mysten/seal</code>, and <code>@mysten/walrus</code> versions plus <code>verifiedOn</code> and <code>suiNetwork</code>. Log it during initialization or compare it against bundler-resolved versions in CI:</p>
+        <p>The verified matrix is also exported programmatically as <code>TESTED_SUBSTRATE</code>, a frozen record of the tested <code>@mysten/sui</code>, <code>@mysten/seal</code>, and <code>@mysten/walrus</code> versions plus <code>verifiedOn</code> and <code>suiNetwork</code>. Log it during initialization or compare it against bundler-resolved versions in CI:</p>
 
         <div class="code-block">
           <div class="code-header">
@@ -112,7 +112,7 @@
 console.<span class="fn">log</span>(TESTED_SUBSTRATE[<span class="st">"@mysten/walrus"</span>]);  <span class="cm">// "1.1.6"</span></pre>
         </div>
 
-        <h2 id="runtime">Runtime Requirements</h2>
+        <h2 id="runtime">Runtime requirements</h2>
         <p>ESM-only (<code>"type": "module"</code>). CommonJS <code>require</code> is not supported.</p>
 
         <div class="table-wrap">
@@ -121,14 +121,14 @@ console.<span class="fn">log</span>(TESTED_SUBSTRATE[<span class="st">"@mysten/w
               <tr><th>Runtime</th><th>Supported</th><th>Notes</th></tr>
             </thead>
             <tbody>
-              <tr><td>Bun</td><td>&gt;= 1.2.0</td><td>Primary development runtime. End-to-end test scripts use Bun.</td></tr>
-              <tr><td>Node</td><td>&gt;= 18.0</td><td>Uses ES2022 (private fields, <code>Error.cause</code>), <code>TextEncoder</code>, <code>crypto.getRandomValues</code>, <code>BigInt</code>.</td></tr>
+              <tr><td>Bun</td><td>≥ 1.2.0</td><td>Primary development runtime. End-to-end test scripts use Bun.</td></tr>
+              <tr><td>Node</td><td>≥ 18.0</td><td>Uses ES2022 (private fields, <code>Error.cause</code>), <code>TextEncoder</code>, <code>crypto.getRandomValues</code>, <code>BigInt</code>.</td></tr>
               <tr><td>Browser</td><td>Evergreen</td><td>Chrome / Edge / Firefox / Safari recent stable. Vite, Webpack, esbuild bundlers all handle the SDK with zero polyfills.</td></tr>
             </tbody>
           </table>
         </div>
 
-        <p>The SDK works in both Node and browser environments. It does not depend on Node-specific APIs like <code>fs</code>, <code>path</code>, <code>process</code>, or <code>node:crypto</code>. Some <code>@mysten/*</code> packages may need polyfills in the browser - check their docs if needed, though modern bundlers usually handle this automatically.</p>
+        <p>The SDK works in both Node and browser environments. It does not depend on Node-specific APIs like <code>fs</code>, <code>path</code>, <code>process</code>, or <code>node:crypto</code>. Some <code>@mysten/*</code> packages may need polyfills in the browser. Check their docs if needed, though modern bundlers usually handle this automatically.</p>
 
         <h2 id="installing">Installing</h2>
         <p><code>@mysten/sui</code> is a required peer dependency. <code>@mysten/walrus</code> is needed for the <code>DefaultWalrusWriteAdapter</code>. <code>@mysten/seal</code> is required at runtime even for non-encrypted workflows.</p>
@@ -141,7 +141,7 @@ console.<span class="fn">log</span>(TESTED_SUBSTRATE[<span class="st">"@mysten/w
           <pre>bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3</pre>
         </div>
 
-        <h2 id="morse-config">morseConfig() Shape</h2>
+        <h2 id="morse-config">morseConfig() shape</h2>
         <p><code>morseConfig({ network })</code> takes the target network (<code>"testnet"</code> or <code>"localnet"</code>) and returns a read-only object with the contract addresses and endpoints the SDK needs. Mainnet is not yet supported. All other fields have built-in defaults but can be overridden for custom deployments. Every SDK function takes this object as its <code>config</code> argument.</p>
         <p>The returned object contains the following fields:</p>
         <div class="table-wrap">
@@ -154,19 +154,19 @@ console.<span class="fn">log</span>(TESTED_SUBSTRATE[<span class="st">"@mysten/w
               <tr><td><code>originalPackageId</code></td><td><code>PackageId | undefined</code></td><td>Genesis publish address (<code>original-id</code>). Sui uses this in <code>objectType</code> strings and type filters. Defaults to <code>packageId</code> when the package has never been upgraded.</td></tr>
               <tr><td><code>registryId</code></td><td><code>RegistryId</code></td><td>Sui object ID of the shared <code>PublicationRegistry</code>. Required for publication creation and deletion.</td></tr>
               <tr><td><code>sealKeyServers</code></td><td><code>readonly KeyServerConfig[]</code></td><td>Seal threshold-encryption key servers for the network. Each entry has an <code>objectId</code> and <code>weight</code>. Used by <code>DefaultSealAdapter</code> when no explicit server list is provided.</td></tr>
-              <tr><td><code>walrusEndpoints</code></td><td><code>WalrusEndpoints</code></td><td>Walrus HTTP endpoints. Contains <code>aggregator</code> (base URL for reads) and an optional <code>publisher</code> (base URL for HTTP-publisher writes). The publisher is intentionally unset by default - supply it explicitly for your operator.</td></tr>
+              <tr><td><code>walrusEndpoints</code></td><td><code>WalrusEndpoints</code></td><td>Walrus HTTP endpoints. Contains <code>aggregator</code> (base URL for reads) and an optional <code>publisher</code> (base URL for HTTP-publisher writes). The publisher is intentionally unset by default; supply it explicitly for your operator.</td></tr>
             </tbody>
           </table>
         </div>
 
-        <p>The options shape is exported as <code>MorseConfigOptions</code>, the accepted network names as the <code>Network</code> constant, and the per-network public fullnode defaults as <code>DEFAULT_RPC_URLS</code> - useful when you need the default endpoint without building a full config.</p>
+        <p>The options shape is exported as <code>MorseConfigOptions</code>, the accepted network names as the <code>Network</code> constant, and the per-network public fullnode defaults as <code>DEFAULT_RPC_URLS</code> (useful when you need the default endpoint without building a full config).</p>
 
-        <p><code>PackageId</code> and <code>RegistryId</code> are branded <code>string</code> types - compile-time guards that prevent passing one kind of Sui address where another is expected. Cast a raw hex string with the <code>toPackageId()</code> / <code>toRegistryId()</code> codec helpers.</p>
+        <p><code>PackageId</code> and <code>RegistryId</code> are branded <code>string</code> types: compile-time guards that prevent passing one kind of Sui address where another is expected. Cast a raw hex string with the <code>toPackageId()</code> / <code>toRegistryId()</code> codec helpers.</p>
 
-        <p>For quilt-mode collections, the SDK also ships codecs for the 37-byte <code>QuiltPatchId</code> (<code>QUILT_PATCH_ID_LENGTH</code> = 37): <code>quiltPatchIdFromString</code> / <code>quiltPatchIdToString</code> convert between the URL-safe base64 string Walrus emits and the branded bytes, and <code>encodeQuiltPatchId</code> / <code>decodeQuiltPatchId</code> convert between the bytes and their structured parts (<code>quiltBlobId</code>, <code>version</code>, <code>startIndex</code>, <code>endIndex</code> - the <code>QuiltPatchIdParts</code> type).</p>
+        <p>For quilt-mode collections, the SDK also ships codecs for the 37-byte <code>QuiltPatchId</code> (<code>QUILT_PATCH_ID_LENGTH</code> = 37): <code>quiltPatchIdFromString</code> / <code>quiltPatchIdToString</code> convert between the URL-safe base64 string Walrus emits and the branded bytes, and <code>encodeQuiltPatchId</code> / <code>decodeQuiltPatchId</code> convert between the bytes and their structured parts (<code>quiltBlobId</code>, <code>version</code>, <code>startIndex</code>, <code>endIndex</code>; the <code>QuiltPatchIdParts</code> type).</p>
 
-        <h2 id="server-setup">Server Setup</h2>
-        <p><code>RpcPublicationReader</code> provides read-only access to publications, collections, and entries via RPC - no keypair required.</p>
+        <h2 id="server-setup">Server setup</h2>
+        <p><code>RpcPublicationReader</code> provides read-only access to publications, collections, and entries via RPC. No keypair required.</p>
         <p>To set up a server-side client, create a testnet config, a gRPC client, a <code>KeypairAdapter</code> for signing transactions, and an <code>RpcPublicationReader</code> for querying on-chain data.</p>
 
         <div class="code-block">
@@ -196,7 +196,7 @@ console.<span class="fn">log</span>(TESTED_SUBSTRATE[<span class="st">"@mysten/w
 
         <p><code>PRIVATE_KEY</code> must be a Bech32 <code>suiprivkey1...</code> string. Export it from your wallet's settings. Hex keys are not supported by <code>Ed25519Keypair.fromSecretKey</code>.</p>
 
-        <h2 id="browser-setup">Browser Setup</h2>
+        <h2 id="browser-setup">Browser setup</h2>
         <p>For browser apps, the SDK connects to the user's wallet extension (e.g. Slush, Suiet) instead of <code>KeypairAdapter</code>. The private key stays in the wallet and is never exposed to the SDK.</p>
 
         <h3 id="providers">Providers</h3>
@@ -231,7 +231,7 @@ console.<span class="fn">log</span>(TESTED_SUBSTRATE[<span class="st">"@mysten/w
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">gRPC transport required</div>
-            <div class="callout-text">The SDK is typed against <code>SuiGrpcClient</code> from <code>@mysten/sui/grpc</code>, not the JSON-RPC <code>SuiClient</code> used by most Sui browser apps. <code>SuiGrpcClient</code> works in modern evergreen browsers without a proxy. JSON-RPC fallback is planned but has not shipped yet - environments that block gRPC must proxy through a gRPC-compatible RPC endpoint until then.</div>
+            <div class="callout-text">The SDK is typed against <code>SuiGrpcClient</code> from <code>@mysten/sui/grpc</code>, not the JSON-RPC <code>SuiClient</code> used by most Sui browser apps. <code>SuiGrpcClient</code> works in modern evergreen browsers without a proxy. JSON-RPC fallback is planned but has not shipped yet; environments that block gRPC must proxy through a gRPC-compatible RPC endpoint until then.</div>
           </div>
         </div>
 
@@ -445,10 +445,10 @@ console.<span class="fn">log</span>(TESTED_SUBSTRATE[<span class="st">"@mysten/w
 }</pre>
         </div>
 
-        <p>Slush, Suiet, and Sui Wallet (Ed25519) are verified. Secp256k1, Secp256r1, and Passkey decoders ship but Walrus + Seal end-to-end behavior is unverified - fall back to Ed25519 if you see scheme-specific errors. ZkLogin is decoded but unverified; MultiSig is refused with <code>ConfigurationError</code> at <code>fromAccount</code> time. Wrap the call in try/catch and render unsupported accounts as product copy. <br>See the full table in the <a href="https://github.com/arcadiasystems/morse-dcms/blob/main/morse-sdk/README.md#wallet-scheme-support" target="_blank" rel="noopener">SDK README compatibility section</a>.</p>
+        <p>Slush, Suiet, and Sui Wallet (Ed25519) are verified. Secp256k1, Secp256r1, and Passkey decoders ship but Walrus + Seal end-to-end behavior is unverified. Fall back to Ed25519 if you see scheme-specific errors. ZkLogin is decoded but unverified; MultiSig is refused with <code>ConfigurationError</code> at <code>fromAccount</code> time. Wrap the call in try/catch and render unsupported accounts as product copy. <br>See the full table in the <a href="https://github.com/arcadiasystems/morse-dcms/blob/main/morse-sdk/README.md#wallet-scheme-support" target="_blank" rel="noopener">SDK README compatibility section</a>.</p>
 
-        <h2 id="picking-a-walrus-adapter">Picking a Walrus Adapter</h2>
-        <p>The SDK ships two Walrus read adapters and two write adapters with different trade-offs. Read and write adapters can be mixed independently - for example, <code>DefaultWalrusWriteAdapter</code> (for the <code>addEntryFromBytes</code> optimization) with <code>HttpAggregatorReadAdapter</code> (for reliable testnet reads).</p>
+        <h2 id="picking-a-walrus-adapter">Picking a Walrus adapter</h2>
+        <p>The SDK ships two Walrus read adapters and two write adapters with different trade-offs. Read and write adapters can be mixed independently; for example, <code>DefaultWalrusWriteAdapter</code> (for the <code>addEntryFromBytes</code> optimization) with <code>HttpAggregatorReadAdapter</code> (for reliable testnet reads).</p>
 
         <div class="table-wrap">
           <table>
@@ -480,8 +480,8 @@ console.<span class="fn">log</span>(TESTED_SUBSTRATE[<span class="st">"@mysten/w
           </table>
         </div>
 
-        <h3 id="default-walrus-adapter">Default Adapter</h3>
-        <p>Best for CLI scripts, server-side dapps, and browser dapps that don't hit testnet CORS gaps. The flow-aware optimization (<code>addEntryFromBytes</code>) cuts transactions from 3 to 2.</p>
+        <h3 id="default-walrus-adapter">Default adapter</h3>
+        <p>Best for CLI scripts, server-side dapps, and browser dapps that do not hit testnet CORS gaps. The flow-aware optimization (<code>addEntryFromBytes</code>) cuts transactions from 3 to 2.</p>
 
         <div class="code-block">
           <div class="code-header">
@@ -503,8 +503,8 @@ console.<span class="fn">log</span>(TESTED_SUBSTRATE[<span class="st">"@mysten/w
 );</pre>
         </div>
 
-        <h3 id="http-walrus-adapter">HTTP Adapter</h3>
-        <p>Best for browser dapps that need reliable CORS-friendly reads (one endpoint instead of ~30 nodes) and a "publisher pays storage" model where the user only signs the on-chain <code>addEntry</code>. Reads go through a trusted operator. To trust-but-verify, pass a <code>verifyBlobIntegrity</code> callback (type <code>WalrusBlobIntegrityCheck</code>) as a construction option - the adapter invokes it with the fetched bytes and the expected blob ID after every successful blob fetch, and it must throw on a mismatch (rewrapped as <code>TransportError</code>). Quilt patch reads are not verified.</p>
+        <h3 id="http-walrus-adapter">HTTP adapter</h3>
+        <p>Best for browser dapps that need reliable CORS-friendly reads (one endpoint instead of ~30 nodes) and a "publisher pays storage" model where the user only signs the on-chain <code>addEntry</code>. Reads go through a trusted operator. To trust-but-verify, pass a <code>verifyBlobIntegrity</code> callback (type <code>WalrusBlobIntegrityCheck</code>) as a construction option. The adapter invokes it with the fetched bytes and the expected blob ID after every successful blob fetch, and it must throw on a mismatch (rewrapped as <code>TransportError</code>). Quilt patch reads are not verified.</p>
 
         <div class="code-block">
           <div class="code-header">
@@ -540,11 +540,11 @@ console.<span class="fn">log</span>(TESTED_SUBSTRATE[<span class="st">"@mysten/w
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">Use <code>HttpAggregatorReadAdapter</code> for reads on testnet</div>
-            <div class="callout-text">On testnet, <code>DefaultWalrusReadAdapter</code> (direct-node fanout with client-side verification) frequently fails right after an upload with <code>No valid blob metadata could be retrieved from any storage node</code>, even for healthy blobs - on both plain and encrypted reads. <code>HttpAggregatorReadAdapter</code> succeeds against the same blobs: it fetches from a single aggregator endpoint and skips client-side blob verification, so you trust the operator's bytes (pass <code>verifyBlobIntegrity</code> to add a check). Mainnet storage nodes are expected to be more reliable.</div>
+            <div class="callout-text">On testnet, <code>DefaultWalrusReadAdapter</code> (direct-node fanout with client-side verification) frequently fails right after an upload with <code>No valid blob metadata could be retrieved from any storage node</code>, even for healthy blobs, on both plain and encrypted reads. <code>HttpAggregatorReadAdapter</code> succeeds against the same blobs: it fetches from a single aggregator endpoint and skips client-side blob verification, so you trust the operator's bytes (pass <code>verifyBlobIntegrity</code> to add a check). Mainnet storage nodes are expected to be more reliable.</div>
           </div>
         </div>
 
-        <h2 id="verify-your-setup">Verifying Setup</h2>
+        <h2 id="verify-your-setup">Verifying setup</h2>
         <p>After completing either the server or browser setup above, confirm your connection works by listing publications owned by your address:</p>
 
         <div class="code-block">
@@ -556,10 +556,10 @@ console.<span class="fn">log</span>(TESTED_SUBSTRATE[<span class="st">"@mysten/w
 console.<span class="fn">log</span>(<span class="st">`Connected! Found </span>${results.length}<span class="st"> publication(s).`</span>);</pre>
         </div>
 
-        <p>A successful call confirms the client, config, and RPC endpoint are wired correctly - even if the count is 0. Follow the <a href="sdk-workflows.html">SDK Cookbooks</a> to create your first publication.</p>
+        <p>A successful call confirms the client, config, and RPC endpoint are wired correctly, even if the count is 0. Follow the <a href="sdk-workflows.html">SDK Cookbooks</a> to create your first publication.</p>
 
-        <h2 id="error-handling">Error Handling</h2>
-        <p>Every error thrown by the SDK extends <code>MorseError</code>. Each error class carries structured properties, so errors can be handled by type without parsing message strings. All error classes are listed below - the first four are the most common.</p>
+        <h2 id="error-handling">Error handling</h2>
+        <p>Every error thrown by the SDK extends <code>MorseError</code>. Each error class carries structured properties, so errors can be handled by type without parsing message strings. All error classes are listed below; the first four are the most common.</p>
 
         <div class="table-wrap">
           <table>
@@ -613,8 +613,8 @@ console.<span class="fn">log</span>(<span class="st">`Connected! Found </span>${
 }</pre>
         </div>
 
-        <h3 id="formatting-errors">Formatting Errors for UI</h3>
-        <p>For end-user surfaces (toasts, dialogs, banners), <code>formatUserMessage(err)</code> translates any thrown value into a <code>FormattedError</code> - <code>{ title, description, cause }</code>. It accepts <code>unknown</code>, so it works directly in a catch block without narrowing first; non-<code>MorseError</code> throws fall back to a generic message, and the original error is preserved in <code>cause</code>.</p>
+        <h3 id="formatting-errors">Formatting errors for UI</h3>
+        <p>For end-user surfaces (toasts, dialogs, banners), <code>formatUserMessage(err)</code> translates any thrown value into a <code>FormattedError</code>: <code>{ title, description, cause }</code>. It accepts <code>unknown</code>, so it works directly in a catch block without narrowing first; non-<code>MorseError</code> throws fall back to a generic message, and the original error is preserved in <code>cause</code>.</p>
 
         <div class="code-block">
           <div class="code-header">
@@ -649,7 +649,7 @@ console.<span class="fn">log</span>(<span class="st">`Connected! Found </span>${
           </details>
         </div> -->
 
-        <h2 id="next-steps">Next Steps</h2>
+        <h2 id="next-steps">Next steps</h2>
         <div class="card-grid">
           <a href="sdk-workflows.html" class="card">
             <div class="card-title">SDK: Cookbooks</div>
@@ -665,7 +665,7 @@ console.<span class="fn">log</span>(<span class="st">`Connected! Found </span>${
     <div class="feedback">
       <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
       <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20sdk-client-setup.html" target="_blank" rel="noopener">Report an issue</a>
-      <span class="feedback__upd">Updated 2026-06-19</span>
+      <span class="feedback__upd">Updated 2026-10-15</span>
     </div>
     <nav class="pager" aria-label="Previous and next">
       <a href="sdk-overview.html" rel="prev"><small>Previous</small><b>← SDK: Overview</b></a>

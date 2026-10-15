@@ -9,9 +9,9 @@
 
 | Requirement | Details | Purpose |
 | --- | --- | --- |
-| Bun or Node | v1.2+ / >= 18 | JavaScript runtime |
-| SUI + WAL tokens | [SUI faucet](https://faucet.sui.io/) / [Swap SUI for WAL](https://stake-wal.wal.app/?network=testnet) | Gas fees (SUI) and Walrus storage fees (WAL) |
-| Bech32 private key | A `suiprivkey1...` string | Transaction signing - export from your wallet's settings |
+| Bun or Node | v1.2+ / ≥ 18 | JavaScript runtime |
+| SUI + WAL tokens | [SUI faucet](https://faucet.sui.io/) · [Swap SUI for WAL](https://stake-wal.wal.app/?network=testnet) | Gas fees (SUI) and Walrus storage fees (WAL) |
+| Bech32 private key | A `suiprivkey1...` string | Transaction signing. Export from your wallet's settings |
 | Morse SDK | `@arcadiasystems/morse-sdk` | Provides `morseConfig()` for package ID, registry ID, and RPC URL |
 
 Make sure the SDK and its peer dependencies are installed before continuing. See [SDK Setup](https://docs.morsecms.xyz/sdk-client-setup.html) for the install command.
@@ -55,9 +55,9 @@ const seal = DefaultSealAdapter.fromMorseConfig(config, {}, client);
 >
 > Each code block is a standalone script. Running multiple blocks in the same process can cause stale object version errors because the SDK caches object versions between transactions. To avoid this, run each block as its own script or combine operations into a single PTB.
 
-## Creating a Publication
+## Creating a publication
 
-Creates a publication, shares it, and transfers the resulting capabilities to the caller in one atomic PTB. `new_publication` returns a tuple - destructure it as three separate transaction results. The slug is globally unique and immutable after creation.
+Creates a publication, shares it, and transfers the resulting capabilities to the caller in one atomic PTB. `new_publication` returns a tuple; destructure it as three separate transaction results. The slug is globally unique and immutable after creation.
 
 > **WARNING: OwnerCap and PublisherCap are `key`-only**
 >
@@ -110,9 +110,9 @@ const createdObjects = effects.changedObjects
 console.log("Created objects:", createdObjects);
 ```
 
-See also: [SDK Cookbooks → Creating a Publication](https://docs.morsecms.xyz/sdk-workflows.html#creating-a-publication)
+See also: [SDK Cookbooks → Creating a publication](https://docs.morsecms.xyz/sdk-workflows.html#creating-a-publication)
 
-## Adding a Collection
+## Adding a collection
 
 Collections are added to an existing publication. The storage mode is immutable after creation: `0` for blob mode and `1` for quilt mode. Use blob mode for growing content like posts; use quilt mode for small, rarely-changing content like config files.
 
@@ -157,9 +157,9 @@ tx.moveCall({
 await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 ```
 
-See also: [SDK Cookbooks → Adding a Collection](https://docs.morsecms.xyz/sdk-workflows.html#adding-a-collection)
+See also: [SDK Cookbooks → Adding a collection](https://docs.morsecms.xyz/sdk-workflows.html#adding-a-collection)
 
-## Adding an Entry
+## Adding an entry
 
 Upload content to Walrus first, then pass the resulting Blob object ID to `add_entry_to_collection`. The `blob` argument is a reference to a Walrus Blob Sui object (`&Blob`), not a blob ID hash. Only deletable blobs are accepted. For blob-mode collections, pass `None` for `quilt_patch_id` using BCS serialization as shown below.
 
@@ -199,13 +199,13 @@ await client.signAndExecuteTransaction({
 });
 ```
 
-See also: [SDK Cookbooks → Adding an Entry](https://docs.morsecms.xyz/sdk-workflows.html#adding-an-entry)
+See also: [SDK Cookbooks → Adding an entry](https://docs.morsecms.xyz/sdk-workflows.html#adding-an-entry)
 
-## Publishing a New Revision
+## Publishing a new revision
 
 Revisions are appended to an existing entry. Two paths are available: publish directly in one call, or stage a draft first and promote it.
 
-### Option A: Publish Direct
+### Option A: publish direct
 
 Append a non-encrypted public revision in a single call, bypassing the draft stage. Advances `public_head` immediately.
 
@@ -237,9 +237,9 @@ tx.moveCall({
 await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 ```
 
-### Option B: Draft Then Publish
+### Option B: draft then publish
 
-Stage a draft revision first (advances `draft_head` only), then promote it to a public revision. The published revision takes a fresh blob - `draft_revision_id` is used only to validate the draft exists on-chain.
+Stage a draft revision first (advances `draft_head` only), then promote it to a public revision. The published revision takes a fresh blob; `draft_revision_id` is used only to validate the draft exists on-chain.
 
 ```typescript
 const ENTRY_ID = 0; // u64 entry ID returned by add_entry_to_collection
@@ -293,9 +293,9 @@ tx.moveCall({
 await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 ```
 
-See also: [SDK Cookbooks → Publishing a New Revision](https://docs.morsecms.xyz/sdk-workflows.html#publishing-a-new-revision)
+See also: [SDK Cookbooks → Publishing a new revision](https://docs.morsecms.xyz/sdk-workflows.html#publishing-a-new-revision)
 
-## Encrypted Content
+## Encrypted content
 
 Encrypted entries require `encrypted=true`, `access_policy=1` (Publisher), and a Seal identity in `seal_id`. Encrypt content with [Seal](https://docs.seal.mystenlabs.com/) first, then upload the ciphertext to Walrus. The Seal identity is a `vector<u8>`: `[publication_id_bytes (32)] || [0x01] || [nonce]`. Each entry should use a fresh nonce.
 
@@ -347,17 +347,17 @@ await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 
 > **WARNING: Encrypted entries are always created as drafts**
 >
-> The publish functions hardcode `encrypted=false` on the public path - they cannot promote encrypted content to a public head. Read encrypted entries via `seal.decrypt` using the `sealId` stored in the revision metadata.
+> The publish functions hardcode `encrypted=false` on the public path; they cannot promote encrypted content to a public head. Read encrypted entries via `seal.decrypt` using the `sealId` stored in the revision metadata.
 
-See also: [SDK Cookbooks → Encrypted Content](https://docs.morsecms.xyz/sdk-workflows.html#encrypted-content)
+See also: [SDK Cookbooks → Encrypted content](https://docs.morsecms.xyz/sdk-workflows.html#encrypted-content)
 
-## Delegating Write Access
+## Delegating write access
 
 The owner issues `PublisherCap` objects to grant write access to co-authors. Revocation adds the cap ID to an on-chain denylist; all subsequent writes using that cap abort with `EPublisherCapRevoked`. See [Access Control](https://docs.morsecms.xyz/access-control.html) for the full capability model.
 
 ### Issuing a PublisherCap
 
-Only the `OwnerCap` holder can issue new caps. The cap's `holder` field is fixed at issuance - the bound address is what grants write rights, not object ownership.
+Only the `OwnerCap` holder can issue new caps. The cap's `holder` field is fixed at issuance; the bound address is what grants write rights, not object ownership.
 
 ```typescript
 const PUBLICATION_ID = "0xPUBLICATION_ID";
@@ -402,7 +402,7 @@ console.log("Issued PublisherCap:", publisherCapId);
 
 ### Revoking a PublisherCap
 
-Revocation adds the cap's ID to an on-chain denylist. The physical object is not consumed - only the cap's ID is passed via `tx.pure.id`. The holder retains the object but any subsequent write attempt aborts with `EPublisherCapRevoked`.
+Revocation adds the cap's ID to an on-chain denylist. The physical object is not consumed; only the cap's ID is passed via `tx.pure.id`. The holder retains the object but any subsequent write attempt aborts with `EPublisherCapRevoked`.
 
 ```typescript
 const PUBLISHER_CAP_ID_TO_REVOKE = "0xCAP_ID";
@@ -438,11 +438,11 @@ tx.moveCall({
 await client.signAndExecuteTransaction({ transaction: tx, signer: coAuthorKeypair });
 ```
 
-See also: [SDK Cookbooks → Delegating Write Access](https://docs.morsecms.xyz/sdk-workflows.html#delegating-write-access)
+See also: [SDK Cookbooks → Delegating write access](https://docs.morsecms.xyz/sdk-workflows.html#delegating-write-access)
 
-## Transferring Ownership
+## Transferring ownership
 
-Transfer the `OwnerCap` to a new address. The recipient gains full governance rights: issuing and revoking publisher caps, deleting the publication, and transferring ownership again. Because `OwnerCap` is `key`-only (no `store`), you must use the typed `transfer_owner_cap` wrapper - `tx.transferObjects` will not work.
+Transfer the `OwnerCap` to a new address. The recipient gains full governance rights: issuing and revoking publisher caps, deleting the publication, and transferring ownership again. Because `OwnerCap` is `key`-only (no `store`), you must use the typed `transfer_owner_cap` wrapper; `tx.transferObjects` will not work.
 
 ```typescript
 const NEW_OWNER = "0xNEW_OWNER_ADDRESS";
@@ -462,13 +462,13 @@ await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 >
 > Once transferred, the original owner loses all governance rights immediately. The new owner could transfer back, but there is no built-in undo.
 
-See also: [SDK Cookbooks → Transferring Ownership](https://docs.morsecms.xyz/sdk-workflows.html#transferring-ownership)
+See also: [SDK Cookbooks → Transferring ownership](https://docs.morsecms.xyz/sdk-workflows.html#transferring-ownership)
 
-## Deleting and Tearing Down
+## Deleting and tearing down
 
 Deletion is strictly bottom-up. The Move layer enforces this: `delete_collection` calls `table::destroy_empty` on the entries table and aborts if any entries remain. `delete_publication` calls `collections.destroy_empty()` and aborts if any collections remain. Entry IDs are permanently retired on deletion and never reused.
 
-### Delete Entries
+### Delete entries
 
 ```typescript
 // Delete all entries from both collections in a single PTB.
@@ -494,7 +494,7 @@ tx.moveCall({
 await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 ```
 
-### Delete a Collection
+### Delete a collection
 
 The collection must be empty (all entries deleted) before this call succeeds.
 
@@ -527,7 +527,7 @@ tx.moveCall({
 await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 ```
 
-### Delete a Publication
+### Delete a publication
 
 Requires the `OwnerCap`. All collections must be deleted first. Both the publication object and the `OwnerCap` are consumed. The slug is released from the registry and becomes available for reuse.
 
@@ -544,7 +544,7 @@ tx.moveCall({
 await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 ```
 
-See also: [SDK Cookbooks → Deleting and Tearing Down](https://docs.morsecms.xyz/sdk-workflows.html#deleting-and-tearing-down)
+See also: [SDK Cookbooks → Deleting and tearing down](https://docs.morsecms.xyz/sdk-workflows.html#deleting-and-tearing-down)
 
 ## Troubleshooting
 
@@ -563,7 +563,7 @@ Move aborts surface as `MoveAbort` errors in the RPC response with a module name
 | `12` | `ESealInvalidId` | `publication` | The Seal identity prefix does not match the publication's on-chain ID bytes. |
 | `13` | `ESealWrongPolicyTag` | `publication` | The byte at position 32 of the Seal identity is not `0x01` (the publisher policy tag). |
 
-## Next Steps
+## Next steps
 
 - [CLI: Overview](https://docs.morsecms.xyz/cli-overview.html): Install the CLI and manage publications, collections, and entries from the terminal.
 - [SDK: Overview](https://docs.morsecms.xyz/sdk-overview.html): TypeScript client for building custom integrations and automating Morse operations.

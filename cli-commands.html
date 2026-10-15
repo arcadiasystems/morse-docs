@@ -71,7 +71,7 @@
           </div>
         </div>
 
-        <h2 id="global-options">Global Options</h2>
+        <h2 id="global-options">Global options</h2>
         <p>Global options apply to every command and must appear before the subcommand (e.g. <code>morse --json publication list</code>).</p>
         <div class="table-wrap">
           <table>
@@ -90,7 +90,7 @@
           </table>
         </div>
 
-        <h2 id="shared-command-flags">Shared Command Flags</h2>
+        <h2 id="shared-command-flags">Shared command flags</h2>
         <p>These flags appear across multiple command groups. Command-specific flags are shown inline in each category below.</p>
         <div class="table-wrap">
           <table>
@@ -105,7 +105,7 @@
           </table>
         </div>
 
-        <h2 id="argument-notation">Argument Notation</h2>
+        <h2 id="argument-notation">Argument notation</h2>
         <p>Values in <code>&lt;angle brackets&gt;</code> are required; values in <code>[square brackets]</code> are optional; <code>(a | b)</code> means one of the two is required.</p>
         <div class="table-wrap">
           <table>
@@ -136,10 +136,10 @@
         </div>
         <div class="code-block code-block-output">
           <div class="code-header"><span class="code-lang">example</span></div>
-          <pre>$ morse use my-blog posts
-Switched to publication "my-blog", collection "posts".
+          <pre><span class="p" aria-hidden="true">$ </span>morse use my-blog posts
+<span class="ok">Switched to publication "my-blog", collection "posts".</span>
 
-$ morse status
+<span class="p" aria-hidden="true">$ </span>morse status
   profile:     testnet
   network:     testnet
   account:     0x71a3...9f2b
@@ -163,8 +163,8 @@ $ morse status
         </div>
         <div class="code-block code-block-output">
           <div class="code-header"><span class="code-lang">example</span></div>
-          <pre>$ morse config add testnet --network testnet
-Profile "testnet" created and set as default.</pre>
+          <pre><span class="p" aria-hidden="true">$ </span>morse config add testnet --network testnet
+<span class="ok">Profile "testnet" created and set as default.</span></pre>
         </div>
 
         <h2 id="account">Account</h2>
@@ -183,13 +183,13 @@ Profile "testnet" created and set as default.</pre>
         </div>
         <div class="code-block code-block-output">
           <div class="code-header"><span class="code-lang">example</span></div>
-          <pre>$ morse account list
+          <pre><span class="p" aria-hidden="true">$ </span>morse account list
 * 0x71a3...9f2b
   0xd4e5...6f7a</pre>
         </div>
 
         <h2 id="publication">Publication</h2>
-        <p>Create and manage publications - the top-level content containers.</p>
+        <p>Create and manage publications, the top-level content containers.</p>
         <div class="table-wrap">
           <table>
             <thead><tr><th>Command</th><th>Purpose</th></tr></thead>
@@ -204,11 +204,11 @@ Profile "testnet" created and set as default.</pre>
         </div>
         <div class="code-block code-block-output">
           <div class="code-header"><span class="code-lang">example</span></div>
-          <pre>$ morse publication create --name "My Blog" --slug my-blog
-Created publication "My Blog".
-  slug:          my-blog
+          <pre><span class="p" aria-hidden="true">$ </span>morse publication create --name "My Blog" --slug my-blog
+<span class="ok">Created publication "My Blog".</span>
+  <span class="m">slug:          my-blog
   publicationId: 0x1a2b...3c4d
-  ownerCapId:    0x5e6f...7a8b</pre>
+  ownerCapId:    0x5e6f...7a8b</span></pre>
         </div>
 
         <h2 id="collection">Collection</h2>
@@ -225,8 +225,8 @@ Created publication "My Blog".
         </div>
         <div class="code-block code-block-output">
           <div class="code-header"><span class="code-lang">example</span></div>
-          <pre>$ morse collection create posts --mode blob
-Created collection "posts". Selected as the active collection. (tx: AbCdEf...)</pre>
+          <pre><span class="p" aria-hidden="true">$ </span>morse collection create posts --mode blob
+<span class="ok">Created collection "posts".</span> Selected as the active collection. <span class="m">(tx: AbCdEf...)</span></pre>
         </div>
 
         <h2 id="entry">Entry</h2>
@@ -236,10 +236,10 @@ Created collection "posts". Selected as the active collection. (tx: AbCdEf...)</
             <thead><tr><th>Command</th><th>Purpose</th></tr></thead>
             <tbody>
               <tr><td><code>entry get &lt;entryId&gt;</code></td><td>Fetch a single entry's metadata.</td></tr>
-              <tr><td><code>entry read &lt;entryId&gt; [&lt;revisionIndex&gt;] [--out &lt;path&gt;] [--via-aggregator]</code></td><td>Fetch a public entry's content to stdout or a file. Reads the latest revision unless <code>revisionIndex</code> is specified; <code>--via-aggregator</code> fetches through a Walrus aggregator instead of directly - recommended on testnet, where direct reads frequently fail right after an upload (see <a href="cli-workflows.html#reading-it-back">CLI Cookbooks &rarr; Reading It Back</a>).</td></tr>
+              <tr><td><code>entry read &lt;entryId&gt; [&lt;revisionIndex&gt;] [--out &lt;path&gt;] [--via-aggregator]</code></td><td>Fetch a public entry's content to stdout or a file. Reads the latest revision unless <code>revisionIndex</code> is specified; <code>--via-aggregator</code> fetches through a Walrus aggregator instead of directly. Recommended on testnet, where direct reads frequently fail right after an upload (see <a href="cli-workflows.html#reading-it-back">CLI Cookbooks &rarr; Reading it back</a>).</td></tr>
               <tr><td><code>entry list [--limit &lt;n&gt;] [--cursor &lt;cursor&gt;] [--drafts-only]</code></td><td>List entries. <code>--drafts-only</code> filters to unpublished entries.</td></tr>
               <tr><td><code>entry scan [--drafts-only]</code></td><td>List every entry (auto-paginated). <code>--drafts-only</code> filters to unpublished entries.</td></tr>
-              <tr><td><code>entry add &lt;name&gt; (--file &lt;path&gt; | --stdin) [--content-type &lt;type&gt;] [--epochs &lt;n&gt;] [--publisher-cap &lt;id&gt;]</code></td><td>Upload content and add a new entry. <code>--file</code> reads from a file path, <code>--stdin</code> reads from standard input; <code>--content-type</code> is inferred from file extension when omitted; <code>--epochs</code> sets Walrus storage duration (default 3 - roughly 3 days on testnet; renew or re-upload before expiry for longer-lived content).</td></tr>
+              <tr><td><code>entry add &lt;name&gt; (--file &lt;path&gt; | --stdin) [--content-type &lt;type&gt;] [--epochs &lt;n&gt;] [--publisher-cap &lt;id&gt;]</code></td><td>Upload content and add a new entry. <code>--file</code> reads from a file path, <code>--stdin</code> reads from standard input; <code>--content-type</code> is inferred from file extension when omitted; <code>--epochs</code> sets Walrus storage duration (default 3, roughly 3 days on testnet; renew or re-upload before expiry for longer-lived content).</td></tr>
               <tr><td><code>entry delete &lt;entryId&gt; [--publisher-cap &lt;id&gt;]</code></td><td>Delete an entry and its revisions.</td></tr>
               <tr><td><code>entry add-encrypted &lt;name&gt; (--file &lt;path&gt; | --stdin) [--content-type &lt;type&gt;] [--epochs &lt;n&gt;] [--publisher-cap &lt;id&gt;]</code></td><td>Encrypt with Seal, upload, and add a new entry.</td></tr>
               <tr><td><code>entry decrypt &lt;entryId&gt; [&lt;revisionIndex&gt;] [--out &lt;path&gt;] [--publisher-cap &lt;id&gt;] [--via-aggregator]</code></td><td>Decrypt an encrypted revision; reads the latest unless <code>revisionIndex</code> is specified. Signs a SessionKey with the active account.</td></tr>
@@ -250,14 +250,14 @@ Created collection "posts". Selected as the active collection. (tx: AbCdEf...)</
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">Encrypted entries are always created as drafts</div>
-            <div class="callout-text">Encrypted entries are always created as drafts - there is no public head yet. Published revisions are always unencrypted and public, so to publish an encrypted entry you must supply a new unencrypted blob. A revision cannot be both published and encrypted. See <a href="entries.html#adding-an-entry">Entries -> Adding an Entry</a> for the full explanation.</div>
+            <div class="callout-text">Encrypted entries are always created as drafts; there is no public head yet. Published revisions are always unencrypted and public, so to publish an encrypted entry you must supply a new unencrypted blob. A revision cannot be both published and encrypted. See <a href="entries.html#adding-an-entry">Entries &rarr; Adding an entry</a> for the full explanation.</div>
           </div>
         </div>
         <div class="code-block code-block-output">
           <div class="code-header"><span class="code-lang">example</span></div>
-          <pre>$ morse entry add welcome-post --file ./welcome.json
-Added entry #0 "welcome-post". (tx: AbCdEf...)
-  https://aggregator.walrus-testnet.walrus.space/v1/blobs/...</pre>
+          <pre><span class="p" aria-hidden="true">$ </span>morse entry add welcome-post --file ./welcome.json
+<span class="ok">Added entry #0 "welcome-post".</span> <span class="m">(tx: AbCdEf...)</span>
+  <span class="m">https://aggregator.walrus-testnet.walrus.space/v1/blobs/...</span></pre>
         </div>
 
         <h2 id="revision">Revision</h2>
@@ -274,8 +274,8 @@ Added entry #0 "welcome-post". (tx: AbCdEf...)
         </div>
         <div class="code-block code-block-output">
           <div class="code-header"><span class="code-lang">example</span></div>
-          <pre>$ morse revision publish-direct 0 --file ./welcome-v2.json
-Published revision #1 on entry #0. (tx: AbCdEf...)</pre>
+          <pre><span class="p" aria-hidden="true">$ </span>morse revision publish-direct 0 --file ./welcome-v2.json
+<span class="ok">Published revision #1 on entry #0.</span> <span class="m">(tx: AbCdEf...)</span></pre>
         </div>
 
         <h2 id="cap">Cap</h2>
@@ -288,18 +288,18 @@ Published revision #1 on entry #0. (tx: AbCdEf...)</pre>
               <tr><td><code>cap issue &lt;holder&gt; [-P &lt;slug|id&gt;] [--owner-cap &lt;id&gt;]</code></td><td>Issue a PublisherCap bound to an address.</td></tr>
               <tr><td><code>cap revoke &lt;publisherCapId&gt; [-P &lt;slug|id&gt;] [--owner-cap &lt;id&gt;]</code></td><td>Revoke a PublisherCap.</td></tr>
               <tr><td><code>cap destroy &lt;publisherCapId&gt; [-P &lt;slug|id&gt;]</code></td><td>Destroy a PublisherCap you hold.</td></tr>
-              <tr><td><code>cap transfer &lt;publisherCapId&gt; &lt;recipient&gt;</code></td><td>Transfer a PublisherCap object. Does not change the <code>holder</code> binding  - the recipient cannot use or destroy the cap unless they are the bound holder. To rotate access, destroy the old cap and issue a new one.</td></tr>
+              <tr><td><code>cap transfer &lt;publisherCapId&gt; &lt;recipient&gt;</code></td><td>Transfer a PublisherCap object. Does not change the <code>holder</code> binding; the recipient cannot use or destroy the cap unless they are the bound holder. To rotate access, destroy the old cap and issue a new one.</td></tr>
             </tbody>
           </table>
         </div>
         <div class="code-block code-block-output">
           <div class="code-header"><span class="code-lang">example</span></div>
-          <pre>$ morse cap issue 0x71a3...9f2b
-Issued PublisherCap 0xCAP_ID to 0x71a3...9f2b. (tx: AbCdEf...)</pre>
+          <pre><span class="p" aria-hidden="true">$ </span>morse cap issue 0x71a3...9f2b
+<span class="ok">Issued PublisherCap 0xCAP_ID to 0x71a3...9f2b.</span> <span class="m">(tx: AbCdEf...)</span></pre>
         </div>
-        <p><code>OwnerCap</code> and <code>PublisherCap</code> IDs are auto-resolved from the active account when the <code>--owner-cap</code> / <code>--publisher-cap</code> override is omitted. Morse separates ownership from publishing. <br>See <a href="access-control.html#ownercap">Access Control -> OwnerCap</a> and <a href="access-control.html#publishercap">Access Control -> PublisherCap</a> for how capability-based authorization works.</p>
+        <p><code>OwnerCap</code> and <code>PublisherCap</code> IDs are auto-resolved from the active account when the <code>--owner-cap</code> / <code>--publisher-cap</code> override is omitted. Morse separates ownership from publishing. <br>See <a href="access-control.html#ownercap">Access Control &rarr; OwnerCap</a> and <a href="access-control.html#publishercap">Access Control &rarr; PublisherCap</a> for how capability-based authorization works.</p>
 
-        <h2 id="next-steps">Next Steps</h2>
+        <h2 id="next-steps">Next steps</h2>
         <div class="card-grid">
           <a href="cli-workflows.html" class="card">
             <div class="card-title">CLI: Cookbooks</div>
@@ -315,7 +315,7 @@ Issued PublisherCap 0xCAP_ID to 0x71a3...9f2b. (tx: AbCdEf...)</pre>
     <div class="feedback">
       <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
       <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20cli-commands.html" target="_blank" rel="noopener">Report an issue</a>
-      <span class="feedback__upd">Updated 2026-06-19</span>
+      <span class="feedback__upd">Updated 2026-10-15</span>
     </div>
     <nav class="pager" aria-label="Previous and next">
       <a href="cli-overview.html" rel="prev"><small>Previous</small><b>← CLI: Overview</b></a>

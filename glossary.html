@@ -93,7 +93,7 @@
       <dl class="glossary">
         <div class="glossary-entry">
           <dt><a href="access-control.html">Capability</a></dt>
-          <dd>A Move object that proves authorization to perform a specific action. Morse has two capability types: <code>OwnerCap</code> (admin authority) and <code>PublisherCap</code> (write authority). Capabilities cannot be fabricated - they can only be issued by the protocol.</dd>
+          <dd>A Move object that proves authorization to perform a specific action. Morse has two capability types: <code>OwnerCap</code> (admin authority) and <code>PublisherCap</code> (write authority). Capabilities cannot be fabricated; they can only be issued by the protocol.</dd>
         </div>
         <div class="glossary-entry">
           <dt>CMS</dt>
@@ -113,7 +113,7 @@
       <dl class="glossary">
         <div class="glossary-entry">
           <dt>dCMS</dt>
-          <dd>Decentralized Content Management System - the category Morse belongs to. Publication identity, authorization, and state transitions are governed on-chain; payloads are stored off-chain in decentralized storage (Walrus).</dd>
+          <dd>Decentralized Content Management System, the category Morse belongs to. Publication identity, authorization, and state transitions are governed on-chain; payloads are stored off-chain in decentralized storage (Walrus).</dd>
         </div>
         <div class="glossary-entry">
           <dt><a href="access-control.html#the-denylist-model">Denylist</a></dt>
@@ -137,7 +137,7 @@
         </div>
         <div class="glossary-entry">
           <dt><a href="entries.html#entry-ids">Entry ID</a></dt>
-          <dd>A <code>u64</code> assigned to an entry when added to a collection. Values start at <code>0</code> and increment monotonically. IDs are never reused after deletion - stable for external references.</dd>
+          <dd>A <code>u64</code> assigned to an entry when added to a collection. Values start at <code>0</code> and increment monotonically. IDs are never reused after deletion (stable for external references).</dd>
         </div>
         <div class="glossary-entry">
           <dt><a href="entries.html#revisions">EntryRevision</a></dt>
@@ -145,7 +145,7 @@
         </div>
         <div class="glossary-entry">
           <dt>Epoch</dt>
-          <dd>A Walrus storage duration unit - roughly <strong>one day on testnet</strong> (two weeks on mainnet). When uploading a blob, the <code>epochs</code> parameter controls how long the data is available on the Walrus network; expired blobs can be renewed before their deadline. Passed as <code>--epochs &lt;n&gt;</code> in the CLI or <code>epochs: number</code> in the SDK.</dd>
+          <dd>A Walrus storage duration unit, roughly <strong>one day on testnet</strong> (two weeks on mainnet). When uploading a blob, the <code>epochs</code> parameter controls how long the data is available on the Walrus network; expired blobs can be renewed before their deadline. Passed as <code>--epochs &lt;n&gt;</code> in the CLI or <code>epochs: number</code> in the SDK.</dd>
         </div>
         <div class="glossary-entry">
           <dt>Events</dt>
@@ -157,7 +157,7 @@
       <dl class="glossary">
         <div class="glossary-entry">
           <dt>gRPC</dt>
-          <dd>A high-performance RPC framework used by <code>SuiGrpcClient</code> from <code>@mysten/sui/grpc</code>. The Morse SDK requires gRPC transport for all Sui interactions. Works in modern browsers without a proxy. See <a href="sdk-overview.html#known-limitations">SDK Overview &rarr; Known Limitations</a> for JSON-RPC fallback status.</dd>
+          <dd>A high-performance RPC framework used by <code>SuiGrpcClient</code> from <code>@mysten/sui/grpc</code>. The Morse SDK requires gRPC transport for all Sui interactions. Works in modern browsers without a proxy. See <a href="sdk-overview.html#known-limitations">SDK Overview &rarr; Known limitations</a> for JSON-RPC fallback status.</dd>
         </div>
       </dl>
 
@@ -177,7 +177,7 @@
       <dl class="glossary">
         <div class="glossary-entry">
           <dt>Indexer</dt>
-          <dd>The off-chain service that listens to on-chain events and builds a read-optimized index of publications, collections, and entries. Currently planned. See <a href="core-concepts.html#off-chain-services">How Morse Works &rarr; Off-Chain Services</a>.</dd>
+          <dd>The off-chain service that listens to on-chain events and builds a read-optimized index of publications, collections, and entries. Currently planned. See <a href="core-concepts.html#off-chain-services">How Morse Works &rarr; Off-chain services</a>.</dd>
         </div>
       </dl>
 
@@ -197,7 +197,7 @@
       <dl class="glossary">
         <div class="glossary-entry">
           <dt><a href="access-control.html#ownercap">OwnerCap</a></dt>
-          <dd>The admin capability for a publication. Exactly one exists per publication. Grants authority to issue and revoke publisher caps, delete the publication, and transfer ownership. Has <code>key</code> ability only - transferable via <code>transfer_owner_cap</code>.</dd>
+          <dd>The admin capability for a publication. Exactly one exists per publication. Grants authority to issue and revoke publisher caps, delete the publication, and transfer ownership. Has <code>key</code> ability only. Transferable via <code>transfer_owner_cap</code>.</dd>
         </div>
       </dl>
 
@@ -221,7 +221,7 @@
         </div>
         <div class="glossary-entry">
           <dt>PTB</dt>
-          <dd>Programmable Transaction Block - Sui's composable transaction format. Multiple operations can be combined into a single atomic transaction. The Morse protocol uses pure creation functions that return objects for callers to compose in PTBs.</dd>
+          <dd>Programmable Transaction Block, Sui's composable transaction format. Multiple operations can be combined into a single atomic transaction. The Morse protocol uses pure creation functions that return objects for callers to compose in PTBs.</dd>
         </div>
         <div class="glossary-entry">
           <dt><a href="access-control.html#seal-identity-format">Policy Tag</a></dt>
@@ -245,7 +245,7 @@
       <dl class="glossary">
         <div class="glossary-entry">
           <dt><a href="entries.html#revisions">Revision</a></dt>
-          <dd>An immutable version of an entry at a point in time. Stored in the entry's <code>revisions: vector&lt;EntryRevision&gt;</code>. Each revision records a <code>BlobRef</code>, content type, encryption state, access policy, optional Seal identity, and author address. Revisions are never mutated - edits append new ones.</dd>
+          <dd>An immutable version of an entry at a point in time. Stored in the entry's <code>revisions: vector&lt;EntryRevision&gt;</code>. Each revision records a <code>BlobRef</code>, content type, encryption state, access policy, optional Seal identity, and author address. Revisions are never mutated; edits append new ones.</dd>
         </div>
         <div class="glossary-entry">
           <dt><a href="entries.html#revisions">Revision ID</a></dt>
@@ -253,7 +253,7 @@
         </div>
         <div class="glossary-entry">
           <dt><a href="access-control.html#revoking-publisher-caps">Revocation</a></dt>
-          <dd>The act of adding a <code>PublisherCap</code>'s object ID to a publication's denylist via <code>revoke_publisher_cap</code>. Immediate effect - the next write attempt using the revoked cap will abort. Historical content is unaffected.</dd>
+          <dd>The act of adding a <code>PublisherCap</code>'s object ID to a publication's denylist via <code>revoke_publisher_cap</code>. Immediate effect: the next write attempt using the revoked cap will abort. Historical content is unaffected.</dd>
         </div>
       </dl>
 
@@ -301,7 +301,7 @@
         </div>
         <div class="glossary-entry">
           <dt>Walrus</dt>
-          <dd>MystenLabs' decentralized blob storage network integrated with Sui. Morse stores all content payloads in Walrus - the contracts hold references (<code>BlobRef</code>), not the raw bytes. Walrus is format-agnostic; payload interpretation is the client's responsibility.</dd>
+          <dd>MystenLabs' decentralized blob storage network integrated with Sui. Morse stores all content payloads in Walrus; the contracts hold references (<code>BlobRef</code>), not the raw bytes. Walrus is format-agnostic; payload interpretation is the client's responsibility.</dd>
         </div>
         <div class="glossary-entry">
           <dt><a href="entries.html#walrus-blob-requirements">Walrus Blob</a></dt>
@@ -313,7 +313,7 @@
     <div class="feedback">
       <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
       <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20glossary.html" target="_blank" rel="noopener">Report an issue</a>
-      <span class="feedback__upd">Updated 2026-06-19</span>
+      <span class="feedback__upd">Updated 2026-10-15</span>
     </div>
     <nav class="pager" aria-label="Previous and next">
       <a href="contracts-workflows.html" rel="prev"><small>Previous</small><b>← Smart Contracts: Cookbooks</b></a>

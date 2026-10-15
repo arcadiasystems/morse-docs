@@ -77,18 +77,18 @@
           </div>
           <div class="callout-body">
             <div class="callout-title">When contract addresses change</div>
-            <div class="callout-text">During the pre-release phase, contract addresses change on every redeployment. To pick up the new addresses, bump your <code>morse-sdk</code> version - each release pins the latest <code>packageId</code> and <code>originalPackageId</code> into <code>morseConfig()</code>. Publications and other objects created under a previous contract instance remain on-chain but belong to the old package; they are <strong>not</strong> migrated to the new deployment.</div>
+            <div class="callout-text">During the pre-release phase, contract addresses change on every redeployment. To pick up the new addresses, bump your <code>morse-sdk</code> version. Each release pins the latest <code>packageId</code> and <code>originalPackageId</code> into <code>morseConfig()</code>. Publications and other objects created under a previous contract instance remain on-chain but belong to the old package; they are <strong>not</strong> migrated to the new deployment.</div>
           </div>
         </div>
 
-        <h2 id="getting-started">Getting Started</h2>
+        <h2 id="getting-started">Getting started</h2>
         <p>Install the SDK and its peer dependencies, then wire a wallet adapter and Walrus configuration for your environment. See <a href="sdk-client-setup.html">SDK Setup</a> for installation and configuration, and <a href="sdk-workflows.html">SDK Cookbooks</a> for step-by-step guides.</p>
 
         <h2 id="capabilities">Capabilities</h2>
         <div class="feature-grid">
           <div class="feature-item">
             <div class="feature-title">Adapter pattern</div>
-            <div class="feature-desc">Four swappable adapters - wallet, Walrus write, Walrus read, Seal - with shipped defaults and easy substitution for custom flows.</div>
+            <div class="feature-desc">Four swappable adapters (wallet, Walrus write, Walrus read, Seal) with shipped defaults and easy substitution for custom flows.</div>
           </div>
           <div class="feature-item">
             <div class="feature-title">Branded ID types</div>
@@ -112,7 +112,7 @@
           </div>
         </div>
 
-        <h2 id="adapter-architecture">Adapter Architecture</h2>
+        <h2 id="adapter-architecture">Adapter architecture</h2>
         <p>The SDK is built around four swappable abstractions. Pick the shipped default or implement the interface against whatever signing / storage / encryption stack you already have.</p>
 
         <div class="arch">
@@ -149,13 +149,13 @@
           </div>
         </div>
 
-        <p style="margin-top:24px;">The rest of the SDK - functions like <code>createPublication</code>, <code>addEntryFromBytes</code>, the <code>RpcPublicationReader</code> - composes these adapters. Swapping an adapter requires no changes to call sites.</p>
+        <p style="margin-top:24px;">The rest of the SDK (functions like <code>createPublication</code>, <code>addEntryFromBytes</code>, the <code>RpcPublicationReader</code>) composes these adapters. Swapping an adapter requires no changes to call sites.</p>
 
-        <h2 id="known-limitations">Known Limitations</h2>
+        <h2 id="known-limitations">Known limitations</h2>
         <ul>
           <li><strong>Testnet only at v0.x.</strong> Mainnet config is released once the contracts are stable.</li>
           <li><strong>gRPC client only.</strong> Reader and adapter interfaces are typed against <code>SuiGrpcClient</code> from <code>@mysten/sui/grpc</code>. JSON-RPC fallback is planned.</li>
-          <li><strong>No encrypted publish path.</strong> The Move contract hardcodes <code>encrypted=false</code> on <code>publish_from_draft</code> and <code>publish_direct</code>. Encrypted content stays as drafts - see <a href="sdk-workflows.html#encrypted-content">SDK Cookbooks → Encrypted content</a> for the full lifecycle.</li>
+          <li><strong>No encrypted publish path.</strong> The Move contract hardcodes <code>encrypted=false</code> on <code>publish_from_draft</code> and <code>publish_direct</code>. Encrypted content stays as drafts. See <a href="sdk-workflows.html#encrypted-content">SDK Cookbooks → Encrypted content</a> for the full lifecycle.</li>
           <li><strong>Only the <code>Publisher</code> access policy is enforced.</strong> The <code>Subscription</code> policy is not yet active.</li>
           <li><strong><code>listEntries</code> is not sorted chronologically.</strong> Results follow on-chain storage order. Sort by <code>entry.id</code> for insertion order.</li>
           <li><strong>zkLogin support is untested.</strong> The decoder is included, but Walrus and Seal <code>SessionKey</code> flows have not been verified with zkLogin signatures. Use keypair or passkey accounts until you have tested your setup.</li>
@@ -165,11 +165,11 @@
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">Encrypted entries are always created as drafts</div>
-            <div class="callout-text">Encrypted entries are always created as drafts. You must explicitly publish them with a separate transaction after adding. The Move contract hardcodes <code>encrypted=false</code> on <code>publish_from_draft</code> and <code>publish_direct</code>, so published revisions are always unencrypted and public. See <a href="entries.html#adding-an-entry">Entries -> Adding an Entry</a> for the full explanation.</div>
+            <div class="callout-text">Encrypted entries are always created as drafts. You must explicitly publish them with a separate transaction after adding. The Move contract hardcodes <code>encrypted=false</code> on <code>publish_from_draft</code> and <code>publish_direct</code>, so published revisions are always unencrypted and public. See <a href="entries.html#adding-an-entry">Entries &rarr; Adding an entry</a> for the full explanation.</div>
           </div>
         </div>
 
-        <h2 id="next-steps">Next Steps</h2>
+        <h2 id="next-steps">Next steps</h2>
         <div class="card-grid">
           <a href="sdk-client-setup.html" class="card">
             <div class="card-title">SDK: Setup</div>
@@ -185,7 +185,7 @@
     <div class="feedback">
       <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
       <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20sdk-overview.html" target="_blank" rel="noopener">Report an issue</a>
-      <span class="feedback__upd">Updated 2026-06-19</span>
+      <span class="feedback__upd">Updated 2026-10-15</span>
     </div>
     <nav class="pager" aria-label="Previous and next">
       <a href="cli-workflows.html" rel="prev"><small>Previous</small><b>← CLI: Cookbooks</b></a>

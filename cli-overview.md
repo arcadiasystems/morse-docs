@@ -11,7 +11,7 @@
 
 ## Installing
 
-The published binary is a Node-targeted bundle. You need Node (>= 18) or Bun (>= 1.2) to run it.
+The published binary is a Node-targeted bundle. You need Node (≥ 18) or Bun (≥ 1.2) to run it.
 
 ```bash
 npm i -g @arcadiasystems/morse-cli
@@ -26,13 +26,13 @@ Also available via `bun add -g` or `pnpm add -g`.
 npx @arcadiasystems/morse-cli --help
 ```
 
-## Getting Started
+## Getting started
 
-Select an active publication and collection once - all subsequent commands will use them automatically, so you never have to paste a 64-character object ID. `publication create` and `collection create` auto-select the new object. 
+Select an active publication and collection once. All subsequent commands will use them automatically, so you never have to paste a 64-character object ID. `publication create` and `collection create` auto-select the new object. 
 
 See [CLI Cookbooks](https://docs.morsecms.xyz/cli-workflows.html) for step-by-step guides.
 
-## Active Context
+## Active context
 
 The active publication and collection live in the current profile. Override per command with `-P, --publication <slug|id>` and `-C, --collection <name>`. Slugs resolve against publications owned by the active account.
 
@@ -40,7 +40,7 @@ The active publication and collection live in the current profile. Override per 
 - `morse use --clear`: clear the active context
 - `morse status`: show the active profile, account, publication, and collection
 
-## Security Model
+## Security model
 
 Private keys are stored in an encrypted keystore (scrypt + AES-256-GCM) and unlocked by a password.
 
@@ -64,15 +64,15 @@ Settings resolve with the precedence `flags` > `MORSE_* env` > `config file` > `
 | `MORSE_PRIVATE_KEY` | (no flag) | Raw Bech32 secret key. Highest-priority key source; never persisted. |
 | `MORSE_KEYSTORE_PASSWORD` | (no flag) | Keystore password for non-interactive unlock. |
 
-## Output & Scripting
+## Output & scripting
 
 - Human-readable output goes to **stdout**; progress, warnings, and prompts go to **stderr**. Redirecting stdout yields only the result.
 - In `--json` mode, `bigint` values (e.g. `gasUsedMist`) are encoded as decimal strings and byte arrays (`sealId`, quilt patch IDs) as `0x`-hex.
 - Color is emitted only to a TTY and honors `NO_COLOR` / `FORCE_COLOR`.
 
-See [CLI Command Reference → Global Options](https://docs.morsecms.xyz/cli-commands.html#global-options) for a full list of global flags (`--json`, `--quiet`, `--yes`, and more).
+See [CLI Command Reference → Global options](https://docs.morsecms.xyz/cli-commands.html#global-options) for a full list of global flags (`--json`, `--quiet`, `--yes`, and more).
 
-## Exit Codes
+## Exit codes
 
 | Code | Meaning |
 | --- | --- |
@@ -83,7 +83,7 @@ See [CLI Command Reference → Global Options](https://docs.morsecms.xyz/cli-com
 | `4` | Auth or permission failure (keystore unlock, unauthorized, no-access) |
 | `5` | Network or transport failure |
 
-## Next Steps
+## Next steps
 
 - [CLI: Command Reference](https://docs.morsecms.xyz/cli-commands.html): Every command and flag: config, account, publication, collection, entry, revision, cap.
 - [CLI: Cookbooks](https://docs.morsecms.xyz/cli-workflows.html): Step-by-step recipes: publishing, encrypted entries, multi-writer setups, CI/CD scripting.

@@ -5,30 +5,30 @@
 
 <!-- Source: https://docs.morsecms.xyz/index.html -->
 
-# Morse - The Decentralized Headless CMS Protocol
+# Morse: The Decentralized Headless CMS Protocol
 
 > A headless CMS protocol built on Sui and Walrus, for developers building content applications with on-chain ownership and decentralized storage.
 
 > **WARNING: Testnet status**
 >
-> Morse runs on **Sui testnet only** and the contracts are **unaudited**. Sui and Walrus testnets reset periodically (Walrus wipes every few months) - stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Don't publish anything you can't afford to lose.
+> Morse runs on **Sui testnet only** and the contracts are **unaudited**. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Do not publish anything you cannot afford to lose.
 
 ## What is Morse?
 
-Morse lets developers build content applications - blogs, knowledge bases, gated media platforms - where the backend is an open protocol instead of a vendor service. You define content structures, set access policies, and publish through a CLI or TypeScript SDK; the contracts handle identity, permissions, and revision history so there is no central point of failure to trust or migrate away from.
+Morse lets developers build content applications (blogs, knowledge bases, gated media platforms) where the backend is an open protocol instead of a vendor service. You define content structures, set access policies, and publish through a CLI or TypeScript SDK; the contracts handle identity, permissions, and revision history so there is no central point of failure to trust or migrate away from.
 
 ## Why Morse?
 
 Traditional headless CMSs create several long-term constraints:
 
-- **Trust concentration** - one vendor backend controls all identity and data
-- **Weak portability** - publication identity and permissions don't travel with you
-- **Opaque history** - change and authorization history is hidden inside a closed system
-- **Vendor lock-in** - migrating requires re-building your backend from scratch
+- **Trust concentration**: one vendor backend controls all identity and data
+- **Weak portability**: publication identity and permissions do not travel with you
+- **Opaque history**: change and authorization history is hidden inside a closed system
+- **Vendor lock-in**: migrating requires re-building your backend from scratch
 
 Morse solves these while keeping the ergonomics of headless CMS architecture. Publication identity is canonical on-chain. Write permissions are capability-based and verifiable. Every revision is auditable. And any team can integrate directly with the contracts, bypassing any specific service provider.
 
-## System Architecture
+## System architecture
 
 Morse is composed of five layers. Only the contracts are the source of truth; all other layers are replaceable.
 
@@ -38,17 +38,17 @@ Morse is composed of five layers. Only the contracts are the source of truth; al
 - **Query**: Indexer · Content API
 - **Develop**: TypeScript SDK · CLI
 
-## Key Features
+## Key features
 
-- **On-chain Permission Management** — Publication identity, write permissions, and state transitions are enforced by Move smart contracts - transparent and auditable.
+- **On-chain Permission Management** — Publication identity, write permissions, and state transitions are enforced by Move smart contracts: transparent and auditable.
 - **Walrus Storage** — Content payloads and assets live in Walrus decentralized storage. Contracts store verifiable references, not bytes.
 - **Capability-Based Auth** — OwnerCap and PublisherCap separate permission management from publishing. Revocation is instant and denylist-based.
 - **Immutable Revisions** — Every content change is an appended revision. Draft and public heads enable editorial workflows without losing history.
 - **Access Policies** — Public, publisher-gated, and subscription access policies control payload retrieval via Seal encryption.
 - **Open Protocol** — Anyone can build integrations directly on contracts. Off-chain services are optional ergonomics, not gatekeepers.
-- **Agent-First by Design** — A coding agent can provision publications, publish content, and operate the entire backend via CLI or SDK - no centralized provisioning required.
+- **Agent-First by Design** — A coding agent can provision publications, publish content, and operate the entire backend via CLI or SDK. No centralized provisioning required.
 
-## Component Status
+## Component status
 
 | Component | Status | Description |
 | --- | --- | --- |
@@ -58,10 +58,10 @@ Morse is composed of five layers. Only the contracts are the source of truth; al
 | **Indexer** | Planned | Listens to on-chain events and builds read-optimized state. |
 | **Content API** | Planned | REST API for querying publications, collections, and entries. |
 
-## Next Steps
+## Next steps
 
-- [Quick Start](https://docs.morsecms.xyz/quick-start.html): Choose your path - CLI, SDK, or contracts - and go from zero to published content on testnet.
-- [Live Demo](https://morse-blog-demo.vercel.app): A working blog running on Morse - wallet-native publishing, on-chain revisions, Seal-gated premium posts. No wallet needed to read.
+- [Quick Start](https://docs.morsecms.xyz/quick-start.html): Choose your path (CLI, SDK, or contracts) and go from zero to published content on testnet.
+- [Live Demo](https://morse-blog-demo.vercel.app): A working blog running on Morse: wallet-native publishing, on-chain revisions, Seal-gated premium posts. No wallet needed to read.
 - [Core Concepts](https://docs.morsecms.xyz/core-concepts.html): Understand the Publication → Collection → Entry model.
 - [CLI](https://docs.morsecms.xyz/cli-overview.html): Manage publications and content from your terminal. Encrypted keystore, active context, no IDs to paste.
 - [SDK](https://docs.morsecms.xyz/sdk-overview.html): Build on Morse from Node or the browser. Adapter pattern, branded IDs, structured errors.
@@ -73,9 +73,9 @@ Morse is composed of five layers. Only the contracts are the source of truth; al
 
 # Core Concepts
 
-> Understand the fundamental building blocks of the Morse protocol - the data model, authorization system, storage strategy, and how on-chain and off-chain components interact.
+> Understand the fundamental building blocks of the Morse protocol: the data model, authorization system, storage strategy, and how on-chain and off-chain components interact.
 
-## The Data Model
+## The data model
 
 Morse organizes content in a four-level hierarchy. Each level is stored on-chain and has a clear responsibility:
 
@@ -84,78 +84,78 @@ Morse organizes content in a four-level hierarchy. Each level is stored on-chain
 - **Level 3**: Entry
 - **Level 4**: Revision
 
-### A Concrete Example
+### A concrete example
 
-Imagine you run a team blog. Here's how it maps to the Morse data model:
+Imagine you run a team blog. Here is how it maps to the Morse data model:
 
-- **Publication** `team-blog` - your brand-level content domain, registered with a unique slug
-- **Collection** `articles` - one content lane for blog posts (blob mode, since each post is independent)
-- **Entry #0** `welcome-post` - your first blog post, assigned the monotonic ID `0`
-- **Revision 0** - the initial published version. `public_head` points here, so readers see it immediately
-- **Revision 1** - an updated draft. `draft_head` points here, but `public_head` still points to revision 0 - readers see the original until you explicitly promote the draft
+- **Publication** `team-blog`: your brand-level content domain, registered with a unique slug
+- **Collection** `articles`: one content lane for blog posts (blob mode, since each post is independent)
+- **Entry #0** `welcome-post`: your first blog post, assigned the monotonic ID `0`
+- **Revision 0**: the initial published version. `public_head` points here, so readers see it immediately
+- **Revision 1**: an updated draft. `draft_head` points here, but `public_head` still points to revision 0; readers see the original until you explicitly promote the draft
 
 Editors operate mostly at the **Entry / Revision** level. Owners operate mostly at the **Publication / Authorization** level.
 
 ## Publications
 
-Think of a publication as your project or site - it is the top-level namespace that groups all your content together. Every publication gets a unique slug (like `my-blog`) that acts as a human-readable identifier across the protocol. All collections, entries, and permissions live under this single umbrella.
+Think of a publication as your project or site. It is the top-level namespace that groups all your content together. Every publication gets a unique slug (like `my-blog`) that acts as a human-readable identifier across the protocol. All collections, entries, and permissions live under this single umbrella.
 
 [See Publications for the full reference →](https://docs.morsecms.xyz/publications.html)
 
 ## Collections
 
-Collections are how you organize entries within a publication - similar to folders or content types. For example, a blog might have an `articles` collection and a `site-pages` collection. When you create a collection, you choose how its content is stored: individually as separate blobs (good for standalone posts or images) or as a shared document that can be patched in place (good for structured data like settings or configuration).
+Collections are how you organize entries within a publication, similar to folders or content types. For example, a blog might have an `articles` collection and a `site-pages` collection. When you create a collection, you choose how its content is stored: individually as separate blobs (good for standalone posts or images) or as a shared document that can be patched in place (good for structured data like settings or configuration).
 
 [See Collections for the full reference →](https://docs.morsecms.xyz/collections.html)
 
-## Entries & Revisions
+## Entries & revisions
 
-Entries are the actual content pieces - a blog post, an image, a page. Every edit creates a new revision rather than overwriting the previous one, giving you a complete version history whose on-chain record is immutable. The system tracks two pointers for each entry: a draft head for work-in-progress and a public head that readers see. This lets drafts evolve privately while production clients serve stable published content.
+Entries are the actual content pieces: a blog post, an image, a page. Every edit creates a new revision rather than overwriting the previous one, giving you a complete version history whose on-chain record is immutable. The system tracks two pointers for each entry: a draft head for work-in-progress and a public head that readers see. This lets drafts evolve privately while production clients serve stable published content.
 
 [See Entries for the full reference →](https://docs.morsecms.xyz/entries.html)
 
-## How Publishing Works
+## How publishing works
 
 End-to-end flow when you publish content:
 
-1. **Authenticate** - hold a `PublisherCap` for the target publication
-2. **Upload** - upload content bytes to Walrus, get a blob reference
-3. **Register** - create an entry on-chain storing the blob reference, content type, and access policy
-4. **Heads update** - public_head and/or draft_head update based on encryption status
-5. **Read** - any client resolves the entry and fetches the payload from Walrus
+1. **Authenticate**: hold a `PublisherCap` for the target publication
+2. **Upload**: upload content bytes to Walrus, get a blob reference
+3. **Register**: create an entry on-chain storing the blob reference, content type, and access policy
+4. **Heads update**: public_head and/or draft_head update based on encryption status
+5. **Read**: any client resolves the entry and fetches the payload from Walrus
 
-## Capability-Based Authorization
+## Capability-based authorization
 
-Instead of usernames and passwords, Morse uses on-chain capability objects to manage permissions. Owning the right object in your wallet proves you have permission to act - no login server required. Morse separates ownership from publishing using two types of capability tokens. An `OwnerCap` (one per publication) controls administrative operations like issuing permissions and deleting the publication. `PublisherCap`s (many per publication) grant write access and are bound to a specific holder address.
+Instead of usernames and passwords, Morse uses on-chain capability objects to manage permissions. Owning the right object in your wallet proves you have permission to act. No login server required. Morse separates ownership from publishing using two types of capability tokens. An `OwnerCap` (one per publication) controls administrative operations like issuing permissions and deleting the publication. `PublisherCap`s (many per publication) grant write access and are bound to a specific holder address.
 
-Revocation uses a denylist-based model - issuing caps is cheap (zero table writes), and only revocations write to the denylist. Once revoked, all future writes using that cap are immediately rejected.
+Revocation uses a denylist-based model: issuing caps is cheap (zero table writes), and only revocations write to the denylist. Once revoked, all future writes using that cap are immediately rejected.
 
 [See Access Control for the full reference →](https://docs.morsecms.xyz/access-control.html)
 
-## Walrus Storage
+## Walrus storage
 
 The Sui blockchain only stores references (pointers) to your content, not the content bytes themselves. The actual payloads live on Walrus, a decentralized storage network designed for large data. This separation keeps on-chain costs low while keeping your content verifiable: payloads stay available for the storage period you fund (measured in Walrus epochs) and can be renewed at any time. Walrus is format-agnostic, so Morse can support JSON, Markdown, images, video, or any custom schema.
 
-[See Collections → Storage Modes for storage mode details →](https://docs.morsecms.xyz/collections.html#storage-modes)
+[See Collections → Storage modes for storage mode details →](https://docs.morsecms.xyz/collections.html#storage-modes)
 
-## Access Control
+## Access control
 
-Morse can gate content behind on-chain encryption using Seal. Only users who meet specific on-chain conditions can decrypt and read the content. This means access rules are enforced by the blockchain itself, not by a server you have to trust. This approach enables paid subscriptions, token-gated access, team-only content, and other models - all without a centralized gatekeeper.
+Morse can gate content behind on-chain encryption using Seal. Only users who meet specific on-chain conditions can decrypt and read the content. This means access rules are enforced by the blockchain itself, not by a server you have to trust. This approach enables paid subscriptions, token-gated access, team-only content, and other models, all without a centralized gatekeeper.
 
 [See Access Control for the full reference →](https://docs.morsecms.xyz/access-control.html)
 
-## Off-Chain Services
+## Off-chain services
 
 The blockchain is the canonical source of truth, but off-chain services improve the developer experience. Morse provides optional infrastructure like an indexer (for fast search and queries) and a content API (for read access) so you do not have to query the chain directly. These services make building apps on Morse faster and simpler, but they are not required.
 
-- **Indexer** - listens to on-chain events and builds a read-optimized state database
-- **Content API** - serves fast queries for listings, slug resolution, and payload references
-- **SDK** - TypeScript package that wraps Sui/Walrus/Seal interactions for app developers
-- **CLI** - command-line tool for scripted automation, CI, and agent-native workflows
+- **Indexer**: listens to on-chain events and builds a read-optimized state database
+- **Content API**: serves fast queries for listings, slug resolution, and payload references
+- **SDK**: TypeScript package that wraps Sui/Walrus/Seal interactions for app developers
+- **CLI**: command-line tool for scripted automation, CI, and agent-native workflows
 
 Importantly, all off-chain services are replaceable. Any team can run their own indexer, API, or integrate directly with the contracts via the SDK. Protocol access is never gated by a single service provider.
 
-## Next Steps
+## Next steps
 
 - [Quick Start](https://docs.morsecms.xyz/quick-start.html): Choose CLI, SDK, or Smart Contracts and go from zero to published content on testnet.
 - [Publications](https://docs.morsecms.xyz/publications.html): Full reference for the top-level content container: slugs, capabilities, and lifecycle.
@@ -335,7 +335,7 @@ Fetch the entry content by its ID. Entry IDs are monotonic; your first entry is 
 morse entry read 0 --via-aggregator
 ```
 
-The optional `--via-aggregator` flag routes reads through the Walrus aggregator, which is more reliable on testnet. Without it, testnet reads frequently fail with `No valid blob metadata could be retrieved from any storage node`, especially right after an upload. See [CLI Cookbooks → Reading It Back](https://docs.morsecms.xyz/cli-workflows.html#reading-it-back).
+The optional `--via-aggregator` flag routes reads through the Walrus aggregator, which is more reliable on testnet. Without it, testnet reads frequently fail with `No valid blob metadata could be retrieved from any storage node`, especially right after an upload. See [CLI Cookbooks → Reading it back](https://docs.morsecms.xyz/cli-workflows.html#reading-it-back).
 
 ```output
 {"title": "Hello World", "body": "My first post on Morse."}
@@ -358,37 +358,31 @@ The optional `--via-aggregator` flag routes reads through the Walrus aggregator,
 
 # Quick Start: SDK
 
-> Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter - no browser, no wallet popups. Want to see the result first? Browse the [live demo blog](https://morse-blog-demo.vercel.app) built on this SDK.
+> Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter: no browser, no wallet popups. Want to see the result first? Browse the [live demo blog](https://morse-blog-demo.vercel.app) built on this SDK.
 
 > **WARNING: Testnet status**
 >
-> Morse runs on **Sui testnet only** and the contracts are **unaudited**. Sui and Walrus testnets reset periodically (Walrus wipes every few months) - stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Don't publish anything you can't afford to lose.
+> Morse runs on **Sui testnet only** and the contracts are **unaudited**. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Do not publish anything you cannot afford to lose.
 
 ## Prerequisites
 
 | Requirement | Details | Purpose |
 | --- | --- | --- |
-| Bun or Node | v1.2+ / >= 18 | JavaScript runtime |
-| SUI + WAL tokens | [SUI faucet](https://faucet.sui.io/) / [Swap SUI for WAL](https://stake-wal.wal.app/?network=testnet) | Gas fees (SUI) and Walrus storage fees (WAL) |
-| Bech32 private key | A `suiprivkey1...` string | SDK authentication - export from your wallet's settings |
+| Bun or Node | v1.2+ / ≥ 18 | JavaScript runtime |
+| SUI + WAL tokens | [SUI faucet](https://faucet.sui.io/) · [Swap SUI for WAL](https://stake-wal.wal.app/?network=testnet) | Gas fees (SUI) and Walrus storage fees (WAL) |
+| Bech32 private key | A `suiprivkey1...` string | SDK authentication. Export from your wallet's settings |
 
 ## Installing
 
 Install the SDK and its peer dependencies using your preferred package manager. See [SDK Client Setup → Compatibility](https://docs.morsecms.xyz/sdk-client-setup.html#compatibility) for compatible dependency versions.
 
-With Bun:
-
 ```bash
 bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3
 ```
 
-Or with npm:
-
 ```bash
 npm install @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3
 ```
-
-Or with Yarn:
 
 ```bash
 yarn add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3
@@ -396,13 +390,13 @@ yarn add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @myst
 
 `@mysten/sui` is a required peer dependency. `@mysten/walrus` is needed for the `DefaultWalrusWriteAdapter` used below. `@mysten/seal` is required at runtime even for non-encrypted workflows.
 
-## Writing the Script
+## Writing the script
 
 Save this as `quickstart.ts`. It creates a publication, adds a collection, uploads an entry, and reads it back.
 
 > **INFO: Transport: gRPC**
 >
-> This guide uses `SuiGrpcClient` from `@mysten/sui/grpc` - the SDK's client interfaces are typed against it. The JSON-RPC `SuiClient` from `@mysten/sui/client` is not supported; a JSON-RPC fallback is planned but has not shipped yet. See [SDK Client Setup](https://docs.morsecms.xyz/sdk-client-setup.html) for details.
+> This guide uses `SuiGrpcClient` from `@mysten/sui/grpc`; the SDK's client interfaces are typed against it. The JSON-RPC `SuiClient` from `@mysten/sui/client` is not supported; a JSON-RPC fallback is planned but has not shipped yet. See [SDK Client Setup](https://docs.morsecms.xyz/sdk-client-setup.html) for details.
 
 ```typescript
 import { SuiGrpcClient } from "@mysten/sui/grpc";
@@ -481,15 +475,13 @@ const content = await walrusReader.readBlobRef(fetched.revisions[0].blobRef);
 console.log(new TextDecoder().decode(content));
 ```
 
-`HttpAggregatorReadAdapter` routes content reads through the Walrus aggregator, which is more reliable on testnet. See [SDK Client Setup → Picking a Walrus Adapter](https://docs.morsecms.xyz/sdk-client-setup.html#picking-a-walrus-adapter) for alternatives.
+`HttpAggregatorReadAdapter` routes content reads through the Walrus aggregator, which is more reliable on testnet. See [SDK Client Setup → Picking a Walrus adapter](https://docs.morsecms.xyz/sdk-client-setup.html#picking-a-walrus-adapter) for alternatives.
 
 > **TIP: Which IDs to save**
 >
 > The return values (`pub.publicationId`, `pub.publisherCapId`, `entry.entryId`) contain everything you need for subsequent calls. Log them or store them in your app's config.
 
-## Running It
-
-With Bun:
+## Running it
 
 ```bash
 PRIVATE_KEY="suiprivkey1..." bun run quickstart.ts
@@ -509,15 +501,15 @@ Entry name: first-post
 Revisions: 1
 ```
 
-> **TIP: You're live on-chain**
+> **TIP: You are live on-chain**
 >
-> Your publication, collection, and entry are on Sui testnet. The entry content is stored on Walrus. For browser integration with wallet popups, see [SDK Client Setup -> Browser](https://docs.morsecms.xyz/sdk-client-setup.html#browser-setup).
+> Your publication, collection, and entry are on Sui testnet. The entry content is stored on Walrus. For browser integration with wallet popups, see [SDK Client Setup → Browser](https://docs.morsecms.xyz/sdk-client-setup.html#browser-setup).
 
-## Next Steps
+## Next steps
 
 - [SDK: Client Setup](https://docs.morsecms.xyz/sdk-client-setup.html): Browser setup, wallet adapters, Walrus adapter options, and error handling.
 - [SDK: Cookbooks](https://docs.morsecms.xyz/sdk-workflows.html): Encrypted entries, revisions, reading content, and the full publishing API.
-- [Core Concepts](https://docs.morsecms.xyz/core-concepts.html): Understand the data model - publications, collections, entries, and revisions.
+- [Core Concepts](https://docs.morsecms.xyz/core-concepts.html): Understand the data model: publications, collections, entries, and revisions.
 
 
 ---
@@ -526,47 +518,43 @@ Revisions: 1
 
 # Quick Start: Smart Contracts
 
-> Create a publication, add a collection, and publish an entry using raw Programmable Transaction Blocks against the deployed Morse contracts on testnet. No SDK wrappers - just `tx.moveCall`.
+> Create a publication, add a collection, and publish an entry using raw Programmable Transaction Blocks against the deployed Morse contracts on testnet. No SDK wrappers, just `tx.moveCall`.
 
 > **WARNING: Testnet status**
 >
-> Morse runs on **Sui testnet only** and the contracts are **unaudited**. Sui and Walrus testnets reset periodically (Walrus wipes every few months) - stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Don't publish anything you can't afford to lose.
+> Morse runs on **Sui testnet only** and the contracts are **unaudited**. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Do not publish anything you cannot afford to lose.
 
 ## Prerequisites
 
 | Requirement | Details | Purpose |
 | --- | --- | --- |
-| Bun or Node | v1.2+ / >= 18 | JavaScript runtime |
-| SUI + WAL tokens | [SUI faucet](https://faucet.sui.io/) / [Swap SUI for WAL](https://stake-wal.wal.app/?network=testnet) | Gas fees (SUI) and Walrus storage fees (WAL) |
-| Bech32 private key | A `suiprivkey1...` string | Transaction signing - export from your wallet's settings |
+| Bun or Node | v1.2+ / ≥ 18 | JavaScript runtime |
+| SUI + WAL tokens | [SUI faucet](https://faucet.sui.io/) · [Swap SUI for WAL](https://stake-wal.wal.app/?network=testnet) | Gas fees (SUI) and Walrus storage fees (WAL) |
+| Bech32 private key | A `suiprivkey1...` string | Transaction signing. Export from your wallet's settings |
 
 ## Installing
 
 Install the Morse SDK (for network configuration and Walrus uploads) and the Sui SDK (for transaction construction and signing).
 
-With Bun:
-
 ```bash
 bun add @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal
 ```
-
-Or with npm:
 
 ```bash
 npm install @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal
 ```
 
-> **INFO: Why the SDK if we're using raw PTBs?**
+> **INFO: Why the SDK if we are using raw PTBs?**
 >
-> This guide uses raw `tx.moveCall` - no SDK wrappers for contract calls. The SDK packages provide three things:  `morseConfig` - resolves the deployed package ID, registry ID, and RPC URL so you don't hard-code addresses `DefaultWalrusWriteAdapter` - handles blob uploads to Walrus (requires `@mysten/walrus`) `DefaultSealAdapter` - handles Seal encryption (requires `@mysten/seal`, loaded at runtime even for non-encrypted workflows)  For the high-level wrapper approach, see the [SDK Quick Start](https://docs.morsecms.xyz/quick-start-sdk.html).
+> This guide uses raw `tx.moveCall`. No SDK wrappers for contract calls. The SDK packages provide three things:  `morseConfig`: resolves the deployed package ID, registry ID, and RPC URL so you do not hard-code addresses `DefaultWalrusWriteAdapter`: handles blob uploads to Walrus (requires `@mysten/walrus`) `DefaultSealAdapter`: handles Seal encryption (requires `@mysten/seal`, loaded at runtime even for non-encrypted workflows)  For the high-level wrapper approach, see the [SDK Quick Start](https://docs.morsecms.xyz/quick-start-sdk.html).
 
-## Writing the Script
+## Writing the script
 
-Save this as `quickstart-contracts.ts`. It creates a publication, adds a collection, uploads content to Walrus, and registers an on-chain entry - all using raw PTBs.
+Save this as `quickstart-contracts.ts`. It creates a publication, adds a collection, uploads content to Walrus, and registers an on-chain entry, all using raw PTBs.
 
 > **INFO: Transport: gRPC**
 >
-> This guide uses `SuiGrpcClient` for its typed interface and lower latency. The Morse SDK also supports JSON-RPC via `SuiHTTPTransport` from `@mysten/sui/client` if your environment requires it - see [SDK Client Setup](https://docs.morsecms.xyz/sdk-client-setup.html) for details.
+> This guide uses `SuiGrpcClient` for its typed interface and lower latency. The Morse SDK also supports JSON-RPC via `SuiHTTPTransport` from `@mysten/sui/client` if your environment requires it. See [SDK Client Setup](https://docs.morsecms.xyz/sdk-client-setup.html) for details.
 
 ```typescript
 import { SuiGrpcClient } from "@mysten/sui/grpc";
@@ -713,9 +701,9 @@ console.log("Entry added: hello-world (ID 0)");
 
 > **TIP: Which IDs to save**
 >
-> Save the Publication, OwnerCap, and PublisherCap object IDs from the output - you need them for all subsequent contract calls. You can also recover the publication ID from its slug using `get_publication_id_by_slug` on the registry.
+> Save the Publication, OwnerCap, and PublisherCap object IDs from the output; you need them for all subsequent contract calls. You can also recover the publication ID from its slug using `get_publication_id_by_slug` on the registry.
 
-## Running It
+## Running it
 
 ```bash
 PRIVATE_KEY="suiprivkey1..." bun run quickstart-contracts.ts
@@ -730,15 +718,15 @@ Blob uploaded: 0x4d5e...6f7a
 Entry added: hello-world (ID 0)
 ```
 
-> **TIP: You're live on-chain**
+> **TIP: You are live on-chain**
 >
 > Your publication, collection, and entry are on Sui testnet. The entry content is stored on Walrus. For a friendlier reading experience, use the [Morse CLI](https://docs.morsecms.xyz/quick-start-cli.html): `morse entry read 0 --via-aggregator`.
 
-## Next Steps
+## Next steps
 
-- [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html): Revisions, drafts, encrypted content, delegating access, and teardown  - all via raw PTBs.
+- [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html): Revisions, drafts, encrypted content, delegating access, and teardown, all via raw PTBs.
 - [Contract Reference](https://docs.morsecms.xyz/contracts-reference.html): Full function signatures, argument types, error codes, and Move struct definitions.
-- [Core Concepts](https://docs.morsecms.xyz/core-concepts.html): Understand the data model  - publications, collections, entries, and revisions.
+- [Core Concepts](https://docs.morsecms.xyz/core-concepts.html): Understand the data model: publications, collections, entries, and revisions.
 
 
 ---
@@ -747,9 +735,9 @@ Entry added: hello-world (ID 0)
 
 # Publications
 
-> A publication is the top-level permission management and identity boundary for a content domain in Morse. Everything - collections, entries, permissions - lives inside a publication.
+> A publication is the top-level permission management and identity boundary for a content domain in Morse. Everything (collections, entries, permissions) lives inside a publication.
 
-## What is a Publication?
+## What is a publication?
 
 A `Publication` is a shared Sui object that acts as the root container for one content brand or site. It bundles:
 
@@ -768,13 +756,13 @@ public struct Publication has key {
 }
 ```
 
-The `Publication` type has `key` ability but no `store`. Sharing and transfer are gated through this module's own functions, enforced by the Sui type system. You cannot wrap or freely transfer a publication - you must call `share_publication`.
+The `Publication` type has `key` ability but no `store`. Sharing and transfer are gated through this module's own functions, enforced by the Sui type system. You cannot wrap or freely transfer a publication; you must call `share_publication`.
 
-## The Slug System
+## The slug system
 
-Every publication is identified by a **slug** - a short, lowercase string that becomes its canonical identifier across the protocol. Slugs are enforced to be globally unique by the `PublicationRegistry`.
+Every publication is identified by a **slug**: a short, lowercase string that becomes its canonical identifier across the protocol. Slugs are enforced to be globally unique by the `PublicationRegistry`.
 
-### Slug Rules
+### Slug rules
 
 | Rule | Constraint |
 | --- | --- |
@@ -798,9 +786,9 @@ Every publication is identified by a **slug** - a short, lowercase string that b
 ""                   // ESlugEmpty
 ```
 
-### Slug Reuse After Deletion
+### Slug reuse after deletion
 
-When a publication is deleted, its slug is released from the registry and becomes available again. This is a deliberate tradeoff - it gives publishers flexibility to re-register slugs - but teams should be aware that a released slug can be re-claimed by anyone.
+When a publication is deleted, its slug is released from the registry and becomes available again. This is a deliberate tradeoff: it gives publishers flexibility to re-register slugs, but teams should be aware that a released slug can be re-claimed by anyone.
 
 ## PublicationRegistry
 
@@ -825,7 +813,7 @@ To list publications owned by your account, use the CLI: `morse publication list
 
 See [CLI Commands → Publication](https://docs.morsecms.xyz/cli-commands.html#publication) for the full syntax.
 
-## Creating a Publication
+## Creating a publication
 
 Publication creation follows the **pure-function pattern**: `new_publication` returns objects without performing any transfers. The caller decides what to do with them in a Programmable Transaction Block (PTB).
 
@@ -880,15 +868,15 @@ public fun transfer_owner_cap(owner_cap: OwnerCap, recipient: address)
 public fun transfer_publisher_cap(cap: PublisherCap, recipient: address)
 ```
 
-Use [SDK Setup → morseConfig()](https://docs.morsecms.xyz/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server Setup](https://docs.morsecms.xyz/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html) for complete PTB examples.
+Use [SDK Setup → morseConfig()](https://docs.morsecms.xyz/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server setup](https://docs.morsecms.xyz/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html) for complete PTB examples.
 
 `new_publication` returns three objects in a tuple:
 
-- **Publication** - the shared content container
-- `OwnerCap` - admin authority over the publication (one per publication, held by the owner wallet). See [Access Control → OwnerCap](https://docs.morsecms.xyz/access-control.html#ownercap)
-- `PublisherCap` - write authority for content operations, bound to the transaction sender. See [Access Control → PublisherCap](https://docs.morsecms.xyz/access-control.html#publishercap)
+- **Publication**: the shared content container
+- `OwnerCap`: admin authority over the publication (one per publication, held by the owner wallet). See [Access Control → OwnerCap](https://docs.morsecms.xyz/access-control.html#ownercap)
+- `PublisherCap`: write authority for content operations, bound to the transaction sender. See [Access Control → PublisherCap](https://docs.morsecms.xyz/access-control.html#publishercap)
 
-## Deleting a Publication
+## Deleting a publication
 
 Publications can be deleted, but only when **all collections have been removed first**. Attempting to delete a publication with remaining collections aborts with an error.
 
@@ -942,9 +930,9 @@ On deletion:
 
 > **INFO: `PublisherCap`s are orphaned on deletion**
 >
-> Deleting a publication does not destroy outstanding `PublisherCap` objects. Any caps issued to other addresses remain as owned Sui objects, but they become permanently unusable - the publication they reference no longer exists, so all write operations will fail. Revoke or destroy caps before deleting the publication if you want a clean teardown.
+> Deleting a publication does not destroy outstanding `PublisherCap` objects. Any caps issued to other addresses remain as owned Sui objects, but they become permanently unusable. The publication they reference no longer exists, so all write operations will fail. Revoke or destroy caps before deleting the publication if you want a clean teardown.
 
-## Ownership Transfer
+## Ownership transfer
 
 Publication ownership can be transferred by transferring the `OwnerCap` to a new address. Since `OwnerCap` has only the `key` ability, transfer is handled by the module:
 
@@ -977,11 +965,11 @@ await transferOwnership(adapter, config, {
 public fun transfer_owner_cap(owner_cap: OwnerCap, recipient: address)
 ```
 
-The recipient immediately gains full admin authority - the ability to issue/revoke publisher caps and delete the publication. Existing publisher caps remain valid until individually revoked.
+The recipient immediately gains full admin authority: the ability to issue/revoke publisher caps and delete the publication. Existing publisher caps remain valid until individually revoked.
 
 After receiving the `OwnerCap`, the recipient must set the publication as active in their CLI before they can manage it: `morse use <slug>`.
 
-## Publisher Cap Management
+## Publisher cap management
 
 Publishers are managed through capability tokens. An owner can issue, revoke, and destroy publisher caps. Revoked caps are added to the publication's denylist, and any future operation attempted with a revoked cap aborts with `EPublisherCapRevoked`.
 
@@ -1000,7 +988,7 @@ The publications module emits the following events. An off-chain indexer can sub
 | `PublisherCapIssued` | New publisher cap minted | `publication: ID`, `cap: ID` |
 | `PublisherCapRevoked` | Publisher cap revoked by owner | `publication: ID`, `cap: ID` |
 
-## Error Codes
+## Error codes
 
 For more error codes, see: [Collections](https://docs.morsecms.xyz/collections.html#error-codes), [Entries](https://docs.morsecms.xyz/entries.html#error-codes), [Access Control](https://docs.morsecms.xyz/access-control.html#error-codes).
 
@@ -1025,7 +1013,7 @@ For more error codes, see: [Collections](https://docs.morsecms.xyz/collections.h
 
 > A collection is a named content lane inside a publication. It groups related entries together and determines how their Walrus payload references are stored.
 
-## What is a Collection?
+## What is a collection?
 
 Collections organize entries into predictable buckets for editorial workflows and API consumers. A publication holds collections in a `VecMap<String, Collection>` keyed by name. The choice of `VecMap` reflects the expectation that a publication will have only a small number of named collections.
 
@@ -1038,13 +1026,13 @@ public struct Collection has store {
 }
 ```
 
-## Storage Modes
+## Storage modes
 
 Every collection has a `storage_mode` set at creation that controls how entry revisions reference Walrus content.
 
-### Blob Mode
+### Blob mode
 
-In blob mode, every revision stores a `BlobRef::Blob(ID)` - the Sui object ID of a standalone Walrus `Blob`. Each entry revision is fully independent: uploading new content creates a new blob, and the old blobs remain accessible by their IDs.
+In blob mode, every revision stores a `BlobRef::Blob(ID)`, the Sui object ID of a standalone Walrus `Blob`. Each entry revision is fully independent: uploading new content creates a new blob, and the old blobs remain accessible by their IDs.
 
 **Best for:**
 
@@ -1053,9 +1041,9 @@ In blob mode, every revision stores a `BlobRef::Blob(ID)` - the Sui object ID of
 - Any collection where entries change independently and frequently
 - Situations where you want maximum operational simplicity
 
-### Quilt Mode
+### Quilt mode
 
-In quilt mode, every revision stores a `BlobRef::QuiltPatch(vector<u8>)` - a 37-byte identifier that locates a patch within a shared Walrus Quilt blob. This is more compact and efficient when updating small parts of a grouped content set.
+In quilt mode, every revision stores a `BlobRef::QuiltPatch(vector<u8>)`, a 37-byte identifier that locates a patch within a shared Walrus Quilt blob. This is more compact and efficient when updating small parts of a grouped content set.
 
 ```
 ┌─────────────────────────────────┬─────────┬───────────────┬─────────────┐
@@ -1074,7 +1062,7 @@ The contract validates that every `QuiltPatchId` is exactly 37 bytes. Shorter or
 - Compact content sets updated in place (e.g. featured banners, site metadata)
 - Stable grouped content with targeted patch updates
 
-### Choosing a Storage Mode
+### Choosing a storage mode
 
 | Scenario | Recommended mode |
 | --- | --- |
@@ -1089,11 +1077,11 @@ The contract validates that every `QuiltPatchId` is exactly 37 bytes. Shorter or
 >
 > Once a collection is created with a given `storage_mode`, it cannot be changed. All entries in the collection must use references that match the collection's storage mode. The contract enforces this on every write.
 
-## Creating a Collection
+## Creating a collection
 
 Collections are created through the publication module's `create_collection` function, which requires a valid [PublisherCap](https://docs.morsecms.xyz/access-control.html#publishercap).
 
-A collection cannot exist outside of a [publication](https://docs.morsecms.xyz/publications.html) - every collection is scoped to exactly one.
+A collection cannot exist outside of a [publication](https://docs.morsecms.xyz/publications.html); every collection is scoped to exactly one.
 
 **CLI:**
 
@@ -1143,7 +1131,7 @@ public fun create_collection(
 )
 ```
 
-Use [SDK Setup → morseConfig()](https://docs.morsecms.xyz/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server Setup](https://docs.morsecms.xyz/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html) for complete PTB examples.
+Use [SDK Setup → morseConfig()](https://docs.morsecms.xyz/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server setup](https://docs.morsecms.xyz/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html) for complete PTB examples.
 
 Collection names must be unique within a publication. Creating a collection with a name that already exists aborts with `ECollectionAlreadyExists`.
 
@@ -1155,7 +1143,7 @@ To list collections in a publication, use the CLI: `morse collection list`.
 
 See [CLI Commands → Collection](https://docs.morsecms.xyz/cli-commands.html#collection) for the full syntax.
 
-## Deleting a Collection
+## Deleting a collection
 
 Collections can be deleted, but only when **all entries have been removed first**.
 
@@ -1194,7 +1182,7 @@ public fun delete_collection(
 )
 ```
 
-Entries must be removed first because the `Table<u64, Entry>` that holds them requires an explicit `destroy_empty` - Sui's type system does not allow dropping a non-empty table. Delete entries individually with `delete_entry_from_collection` before removing the collection.
+Entries must be removed first because the `Table<u64, Entry>` that holds them requires an explicit `destroy_empty`. Sui's type system does not allow dropping a non-empty table. Delete entries individually with `delete_entry_from_collection` before removing the collection.
 
 ## Events
 
@@ -1205,7 +1193,7 @@ Collection lifecycle events are emitted by the `publication` module.
 | `CollectionAdded` | Collection created in a publication | `publication: ID`, `name: String` |
 | `CollectionRemoved` | Collection deleted from a publication | `publication: ID`, `name: String` |
 
-## Error Codes
+## Error codes
 
 For more error codes, see: [Publications](https://docs.morsecms.xyz/publications.html#error-codes), [Entries](https://docs.morsecms.xyz/entries.html#error-codes), [Access Control](https://docs.morsecms.xyz/access-control.html#error-codes).
 
@@ -1225,9 +1213,9 @@ For more error codes, see: [Publications](https://docs.morsecms.xyz/publications
 
 > An entry is a single content unit within a collection. Revisions are its immutable history. The dual-head model lets drafts evolve freely while production readers always see a stable published state.
 
-## Entry Structure
+## Entry structure
 
-Entries live inside collections, stored in a `Table<u64, Entry>`. They have `store` and `drop` abilities - they are values owned by their collection, not independent Sui objects.
+Entries live inside collections, stored in a `Table<u64, Entry>`. They have `store` and `drop` abilities; they are values owned by their collection, not independent Sui objects.
 
 ```move
 public struct Entry has store, drop {
@@ -1242,7 +1230,7 @@ The `name` field must be non-empty and at most 256 characters.
 
 ## Revisions
 
-Each revision is an immutable snapshot of an entry at a point in time. Revisions are never mutated after creation - edits always append new revisions to the vector.
+Each revision is an immutable snapshot of an entry at a point in time. Revisions are never mutated after creation; edits always append new revisions to the vector.
 
 ```move
 public struct EntryRevision has store, drop {
@@ -1257,9 +1245,9 @@ public struct EntryRevision has store, drop {
 
 The `content_type` field must be non-empty and at most 255 characters; standard MIME format is recommended.
 
-### The BlobRef Enum
+### The BlobRef enum
 
-`BlobRef` is a Move enum that abstracts the two storage modes (the SDK surfaces it as a discriminated union - switch on `.kind`):
+`BlobRef` is a Move enum that abstracts the two storage modes (the SDK surfaces it as a discriminated union; switch on `.kind`):
 
 ```move
 public enum BlobRef has copy, drop, store {
@@ -1268,13 +1256,13 @@ public enum BlobRef has copy, drop, store {
 }
 ```
 
-The variant used must match the collection's [storage mode](https://docs.morsecms.xyz/collections.html#storage-modes). The `make_blob_ref` function enforces this - you cannot accidentally mix modes.
+The variant used must match the collection's [storage mode](https://docs.morsecms.xyz/collections.html#storage-modes). The `make_blob_ref` function enforces this; you cannot accidentally mix modes.
 
-## The Dual-Head Model
+## The dual-head model
 
 Every entry maintains two independent head pointers into its revision vector:
 
-- **`draft_head`** — Points to the latest draft revision. Work in progress - not visible to public readers. May be `None` on a freshly-published entry.
+- **`draft_head`** — Points to the latest draft revision. Work in progress, not visible to public readers. May be `None` on a freshly-published entry.
 - **`public_head`** — Points to the currently published revision. Stable for readers. May be `None` on an entry that has only drafts.
 ```
 revisions: [rev0, rev1(draft), rev2(draft), rev3(public), rev4(draft)]
@@ -1283,11 +1271,11 @@ revisions: [rev0, rev1(draft), rev2(draft), rev3(public), rev4(draft)]
 
 This is what makes real editorial workflows possible: editors can keep appending drafts while production clients continuously serve the stable `public_head`.
 
-## Adding an Entry
+## Adding an entry
 
 Create a new entry and add it to a named collection. Requires a valid [PublisherCap](https://docs.morsecms.xyz/publications.html#publisher-cap-management). Returns the assigned `entry_id`.
 
-An entry cannot exist outside of a [collection](https://docs.morsecms.xyz/collections.html) - every entry is scoped to exactly one.
+An entry cannot exist outside of a [collection](https://docs.morsecms.xyz/collections.html); every entry is scoped to exactly one.
 
 **CLI:**
 
@@ -1356,19 +1344,19 @@ public fun add_entry_to_collection(
 ): u64                                   // returns entry_id
 ```
 
-Use [SDK Setup → morseConfig()](https://docs.morsecms.xyz/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server Setup](https://docs.morsecms.xyz/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html) for complete PTB examples.
+Use [SDK Setup → morseConfig()](https://docs.morsecms.xyz/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server setup](https://docs.morsecms.xyz/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html) for complete PTB examples.
 
 For unencrypted public entries: `encrypted = false`, `access_policy = 0`, `seal_id = None`. The initial revision goes directly to `public_head`.
 
 > **WARNING: Encrypted entries are always created as drafts**
 >
-> When `encrypted = true` and `access_policy = 1` (publisher), the initial revision goes to `draft_head` only - there is no `public_head` yet. Published revisions are always unencrypted and public, so to publish an encrypted entry you must supply a new unencrypted blob using `publish_from_draft` or `publish_direct`. A revision cannot be both published and encrypted.
+> When `encrypted = true` and `access_policy = 1` (publisher), the initial revision goes to `draft_head` only; there is no `public_head` yet. Published revisions are always unencrypted and public, so to publish an encrypted entry you must supply a new unencrypted blob using `publish_from_draft` or `publish_direct`. A revision cannot be both published and encrypted.
 
 To list entries in a collection, use the CLI: `morse entry list`. The command supports pagination with `--limit` and `--cursor` flags, and `--drafts-only` to filter for draft entries.
 
 See [CLI Commands → Entry](https://docs.morsecms.xyz/cli-commands.html#entry) for the full syntax.
 
-## Appending a Draft Revision
+## Appending a draft revision
 
 Append a new revision to an existing entry and advance `draft_head`. The previous revisions are untouched.
 
@@ -1441,7 +1429,7 @@ public fun append_collection_entry_draft_revision(
 ): u64                                   // returns new revision_id
 ```
 
-## Publishing from Draft
+## Publishing from draft
 
 Take a specific draft revision and publish it. This appends a new public revision and advances `public_head`. The draft revision is referenced for traceability.
 
@@ -1523,7 +1511,7 @@ public fun publish_collection_entry_from_draft(
 
 The resulting public revision always has `encrypted = false` and `access_policy = ACCESS_PUBLIC`.
 
-## Publishing Direct
+## Publishing direct
 
 Append a new public revision directly, skipping the draft workflow. Advances `public_head` in one step.
 
@@ -1596,7 +1584,7 @@ public fun publish_collection_entry_direct(
 When an entry is added to a collection, it is assigned a stable, monotonically increasing `entry_id: u64`. The counter starts at `0` and increments with each insertion.
 
 - Entry IDs are **never reused** after deletion
-- IDs are **stable** - external systems can safely hold references by ID
+- IDs are **stable**; external systems can safely hold references by ID
 - Gaps in the ID sequence are expected and normal after deletions
 
 ```example id sequence
@@ -1612,7 +1600,7 @@ delete_entry_from_collection(..., entry_id: 1, ...)
 entry_id = add_entry_to_collection(...) // → 3
 ```
 
-## Deleting an Entry
+## Deleting an entry
 
 Remove an entry by ID. Since `Entry` has the `drop` ability, it is simply dropped from the table.
 
@@ -1657,7 +1645,7 @@ public fun delete_entry_from_collection(
 >
 > Deleting an entry removes the on-chain record and the `BlobRef`, but does not delete the underlying Walrus `Blob` object on Sui. Blob lifecycle management (storing, deleting the blob object from Walrus) is the caller's responsibility.
 
-## Typical Editorial Workflow
+## Typical editorial workflow
 
 The workflow below applies to both Blob and Quilt storage modes. In Quilt mode, entries target a specific patch within the shared document rather than a standalone blob, but the revision lifecycle is the same.
 
@@ -1673,36 +1661,36 @@ The workflow below applies to both Blob and Quilt storage modes. In Quilt mode, 
 4. **Continue iterating**
    Append more drafts after publishing. The cycle continues without limit. Every revision is preserved in the immutable history vector.
 
-## Walrus Blob Requirements
+## Walrus blob requirements
 
 All production write paths require a reference to the Walrus `&Blob` object (not just its ID). The contract calls `blob.is_deletable()` and aborts with `EBlobNotDeletable` if the blob is not deletable. This ensures the platform can manage blob lifecycle.
 
-### Blob Lifecycle: Epochs, Expiry, Renewal
+### Blob lifecycle: epochs, expiry, renewal
 
 The on-chain revision history is immutable, but the payloads it points to are not stored "forever" by default: Walrus storage is **funded per epoch** (roughly one day on testnet, two weeks on mainnet). The `epochs` parameter on every upload sets how long the blob stays available; after its final epoch the blob expires and storage nodes drop it, while the on-chain `BlobRef` and revision metadata remain. Renew a blob before expiry (or re-upload and append a new revision) for longer-lived content.
 
-Morse deliberately requires *deletable* blobs rather than Walrus's permanent variant: a CMS needs unpublishing, correction, and takedown paths. Permanence in Morse means the **history is verifiable and tamper-proof** - not that bytes are irrevocable.
+Morse deliberately requires *deletable* blobs rather than Walrus's permanent variant: a CMS needs unpublishing, correction, and takedown paths. Permanence in Morse means the **history is verifiable and tamper-proof**, not that bytes are irrevocable.
 
 > **WARNING: Testnet payloads are disposable**
 >
-> The quick starts upload with `epochs: 3` - about three days on testnet. Walrus testnet is also wiped periodically (every few months). Treat testnet content as throwaway; fund more epochs and set renewal reminders only for things you actually want to keep around.
+> The quick starts upload with `epochs: 3`, about three days on testnet. Walrus testnet is also wiped periodically (every few months). Treat testnet content as throwaway; fund more epochs and set renewal reminders only for things you actually want to keep around.
 
 > **TIP: Testing without Walrus blobs**
 >
-> In Move unit tests, `walrus::blob::Blob` cannot be constructed because its constructor is `public(package)`. Use the `_for_testing` variants (e.g. `add_entry_to_collection_for_testing`) that accept a raw `blob_id: ID` instead of `&Blob`. These bypass only the deletable check - all other logic is identical.
+> In Move unit tests, `walrus::blob::Blob` cannot be constructed because its constructor is `public(package)`. Use the `_for_testing` variants (e.g. `add_entry_to_collection_for_testing`) that accept a raw `blob_id: ID` instead of `&Blob`. These bypass only the deletable check; all other logic is identical.
 
-## Access Policy & Encryption Rules
+## Access policy & encryption rules
 
 The `encrypted` flag and `access_policy` must be consistent. The contract enforces this at every write. See [Access Control](https://docs.morsecms.xyz/access-control.html) for the full permission model.
 
 | encrypted | access_policy | seal_id | Result |
 | --- | --- | --- | --- |
-| `false` | `0` (PUBLIC) | `None` | Valid - unencrypted public revision |
-| `true` | `1` (PUBLISHER) | `Some(<id>)` | Valid - encrypted publisher-gated revision |
-| `true` | `0` | any | Aborts - `EInvalidAccessPolicy` |
-| `false` | `1` | any | Aborts - `EInvalidAccessPolicy` |
-| `true` | `1` | `None` | Aborts - `ESealIdRequired` |
-| `false` | `0` | `Some(<id>)` | Aborts - `ESealIdNotAllowed` |
+| `false` | `0` (PUBLIC) | `None` | Valid: unencrypted public revision |
+| `true` | `1` (PUBLISHER) | `Some(<id>)` | Valid: encrypted publisher-gated revision |
+| `true` | `0` | any | Aborts: `EInvalidAccessPolicy` |
+| `false` | `1` | any | Aborts: `EInvalidAccessPolicy` |
+| `true` | `1` | `None` | Aborts: `ESealIdRequired` |
+| `false` | `0` | `Some(<id>)` | Aborts: `ESealIdNotAllowed` |
 
 `ACCESS_SUBSCRIPTION = 2` is defined in the protocol but reserved for future use.
 
@@ -1710,7 +1698,7 @@ The `encrypted` flag and `access_policy` must be consistent. The contract enforc
 
 Entry and revision operations do not emit on-chain events. Use the transaction log or an indexer to track changes.
 
-## Error Codes
+## Error codes
 
 For more error codes, see: [Publications](https://docs.morsecms.xyz/publications.html#error-codes), [Collections](https://docs.morsecms.xyz/collections.html#error-codes), [Access Control](https://docs.morsecms.xyz/access-control.html#error-codes).
 
@@ -1736,15 +1724,15 @@ For more error codes, see: [Publications](https://docs.morsecms.xyz/publications
 
 # Access Control
 
-> Morse uses a capability-based permission model. Two types of capabilities control who can administer a publication and who can write content - enforced on-chain by the Sui type system, with no off-chain authorization service.
+> Morse uses a capability-based permission model. Two types of capabilities control who can administer a publication and who can write content, enforced on-chain by the Sui type system, with no off-chain authorization service.
 
 ## Overview
 
-Every write operation in Morse requires presenting a valid capability object. Capabilities cannot be fabricated - they can only be created by the protocol through designated functions. The type system itself is the enforcement mechanism.
+Every write operation in Morse requires presenting a valid capability object. Capabilities cannot be fabricated; they can only be created by the protocol through designated functions. The type system itself is the enforcement mechanism.
 
 ## OwnerCap
 
-The `OwnerCap` is the highest-authority object in a publication. Exactly one exists per publication - it is created alongside the publication and transferred to the creator.
+The `OwnerCap` is the highest-authority object in a publication. Exactly one exists per publication; it is created alongside the publication and transferred to the creator.
 
 ```move
 public struct OwnerCap has key {
@@ -1755,14 +1743,14 @@ public struct OwnerCap has key {
 
 Operations that require `OwnerCap`:
 
-- `issue_publisher_cap` - mint a new publisher cap for an address
-- `revoke_publisher_cap` - add a cap ID to the revocation denylist
-- `delete_publication` - delete the publication entirely
-- `transfer_owner_cap` - transfer ownership to a new address
+- `issue_publisher_cap`: mint a new publisher cap for an address
+- `revoke_publisher_cap`: add a cap ID to the revocation denylist
+- `delete_publication`: delete the publication entirely
+- `transfer_owner_cap`: transfer ownership to a new address
 
 > **INFO: `OwnerCap` is transferable by design**
 >
-> Ownership can be sold, transferred to a multisig wallet, or handed to a DAO treasury. This is a protocol-level feature, not a limitation - publication identity lives in the contract, not in a centralized identity system.
+> Ownership can be sold, transferred to a multisig wallet, or handed to a DAO treasury. This is a protocol-level feature, not a limitation: publication identity lives in the contract, not in a centralized identity system.
 
 ## PublisherCap
 
@@ -1778,7 +1766,7 @@ public struct PublisherCap has key {
 
 Every write operation that uses a `PublisherCap` runs three checks internally:
 
-```move - internal validation
+```move
 assert!(cap.publication_id == object::id(publication), EUnauthorized);
 assert!(cap.holder == ctx.sender(), EPublisherCapWrongHolder);
 assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), EPublisherCapRevoked);
@@ -1786,9 +1774,9 @@ assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), EPublishe
 
 The `holder` field is critical: it binds the capability to a specific address. If someone holds the `PublisherCap` object but the transaction is not signed by `holder`, the write is rejected. You cannot use a single publisher cap from multiple wallets.
 
-## Issuing Publisher Caps
+## Issuing publisher caps
 
-Only the owner can issue publisher caps. The owner specifies the target `holder` address - the cap is created and delivered in a single command:
+Only the owner can issue publisher caps. The owner specifies the target `holder` address. The cap is created and delivered in a single command:
 
 **CLI:**
 
@@ -1834,14 +1822,14 @@ public fun issue_publisher_cap(
 public fun transfer_publisher_cap(cap: PublisherCap, recipient: address)
 ```
 
-Use [SDK Setup → morseConfig()](https://docs.morsecms.xyz/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server Setup](https://docs.morsecms.xyz/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html) for complete PTB examples.
+Use [SDK Setup → morseConfig()](https://docs.morsecms.xyz/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server setup](https://docs.morsecms.xyz/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html) for complete PTB examples.
 
 ### Ownership vs holder binding
 
 A `PublisherCap` has two layers of authorization that must both be satisfied:
 
-- **Sui object ownership** - which wallet physically holds the cap object. This determines who can pass it into a transaction.
-- **`holder` binding** - an address set permanently at issuance. The contract checks `cap.holder == ctx.sender()` on every write operation.
+- **Sui object ownership**: which wallet physically holds the cap object. This determines who can pass it into a transaction.
+- **`holder` binding**: an address set permanently at issuance. The contract checks `cap.holder == ctx.sender()` on every write operation.
 
 Both must match for the cap to work. Transferring a cap to someone who is not the bound `holder` gives them the object, but the contract will still reject their writes.
 
@@ -1862,9 +1850,9 @@ When you issue a cap via the CLI or SDK, two Move calls are bundled in a single 
 1. `issue_publisher_cap` creates the cap and binds it to the `holder` address.
 2. `transfer_publisher_cap` delivers the cap object to that address.
 
-**No table write occurs during issuance** - only revocations write to the denylist. This makes issuing caps essentially free beyond the gas cost of object creation.
+**No table write occurs during issuance**; only revocations write to the denylist. This makes issuing caps essentially free beyond the gas cost of object creation.
 
-## Revoking Publisher Caps
+## Revoking publisher caps
 
 When a publisher needs to be removed, the owner calls `revoke_publisher_cap` with the cap's object ID:
 
@@ -1906,13 +1894,13 @@ public fun revoke_publisher_cap(
 )
 ```
 
-This adds the cap ID to the `revoked_publisher_caps: Table<ID, bool>` denylist on the publication. All subsequent writes using that cap will be rejected - the revocation is immediate and requires no cooperation from the cap holder.
+This adds the cap ID to the `revoked_publisher_caps: Table<ID, bool>` denylist on the publication. All subsequent writes using that cap will be rejected. The revocation is immediate and requires no cooperation from the cap holder.
 
 > **WARNING: Double-revoke aborts**
 >
 > Calling `revoke_publisher_cap` on an already-revoked cap ID aborts with `EPublisherCapRevoked`. Check the denylist state before revoking if unsure.
 
-### The Denylist Model
+### The denylist model
 
 Morse uses a **denylist** (blocklist), not an allowlist, for publisher cap tracking. This is a deliberate design choice:
 
@@ -1923,9 +1911,9 @@ Morse uses a **denylist** (blocklist), not an allowlist, for publisher cap track
 | Write validation | One table lookup | One table lookup |
 | Optimized for | Common case (no revocations) | Frequent churn |
 
-This is safe because `PublisherCap` has no `store` ability and no external constructor - caps cannot be forged outside the module. An attacker cannot create a valid-looking cap; they must obtain a real one from the owner.
+This is safe because `PublisherCap` has no `store` ability and no external constructor; caps cannot be forged outside the module. An attacker cannot create a valid-looking cap; they must obtain a real one from the owner.
 
-## Destroying Publisher Caps
+## Destroying publisher caps
 
 A publisher can voluntarily surrender their write access by calling `destroy_publisher_cap`:
 
@@ -1968,22 +1956,22 @@ public fun destroy_publisher_cap(
 
 Only the `holder` can call this. The cap is permanently deleted from Sui and can never be used again. If it was previously revoked, the denylist entry is also removed to free on-chain storage.
 
-## Seal Integration
+## Seal integration
 
-Morse integrates with **Seal** - Mysten's on-chain access control layer - to gate decryption of encrypted entry payloads. The integration is implemented via an `entry fun` that Seal calls during the decryption approval flow.
+Morse integrates with **Seal**, Mysten's on-chain access control layer, to gate decryption of encrypted entry payloads. The integration is implemented via an `entry fun` that Seal calls during the decryption approval flow.
 
-### Decryption Sequence
+### Decryption sequence
 
 When a reader wants to decrypt an encrypted entry, the SDK and Seal key servers coordinate a multi-step flow:
 
-1. **Client creates a `SessionKey`** - the reader's wallet signs a personal message to produce a time-limited `SessionKey` scoped to the contract's `originalPackageId` (the stable genesis address that survives upgrades).
-2. **SDK builds an approval transaction** - `seal.decrypt()` decodes the `sealId` to extract the target `publicationId`, then constructs a Programmable Transaction Block (PTB) that calls `seal_approve_publisher` with the `sealId`, the `Publication` object, and the caller's `PublisherCap`.
-3. **SDK sends the request to Seal key servers** - the serialized PTB bytes, the ciphertext, and the `SessionKey` are sent to the configured Seal key servers.
-4. **Key servers dry-run the approval on-chain** - each key server executes the PTB against the current chain state. The Move function runs two checks (see below). If either check fails the key server refuses to release its share.
-5. **Key servers return threshold decryption shares** - once at least *threshold* servers (default 2) confirm approval, each returns its decryption key share to the client.
-6. **Client decrypts locally** - the `SealClient` combines the shares and decrypts the Walrus blob ciphertext on the reader's device.
+1. **Client creates a `SessionKey`**: the reader's wallet signs a personal message to produce a time-limited `SessionKey` scoped to the contract's `originalPackageId` (the stable genesis address that survives upgrades).
+2. **SDK builds an approval transaction**: `seal.decrypt()` decodes the `sealId` to extract the target `publicationId`, then constructs a Programmable Transaction Block (PTB) that calls `seal_approve_publisher` with the `sealId`, the `Publication` object, and the caller's `PublisherCap`.
+3. **SDK sends the request to Seal key servers**: the serialized PTB bytes, the ciphertext, and the `SessionKey` are sent to the configured Seal key servers.
+4. **Key servers dry-run the approval on-chain**: each key server executes the PTB against the current chain state. The Move function runs two checks (see below). If either check fails the key server refuses to release its share.
+5. **Key servers return threshold decryption shares**: once at least *threshold* servers (default 2) confirm approval, each returns its decryption key share to the client.
+6. **Client decrypts locally**: the `SealClient` combines the shares and decrypts the Walrus blob ciphertext on the reader's device.
 
-### Approval Function
+### Approval function
 
 The on-chain function that Seal key servers dry-run during step 4:
 
@@ -1998,10 +1986,10 @@ entry fun seal_approve_publisher(
 
 The function runs two checks:
 
-1. `assert_active_publisher_cap` - verifies the cap is valid, not revoked, and the sender is the holder
-2. `assert_valid_publisher_seal_id` - verifies the Seal identity is scoped to this publication and policy
+1. `assert_active_publisher_cap`: verifies the cap is valid, not revoked, and the sender is the holder
+2. `assert_valid_publisher_seal_id`: verifies the Seal identity is scoped to this publication and policy
 
-### Seal Identity Format
+### Seal identity format
 
 Seal identities for Morse follow a structured namespace format to prevent cross-publication identity reuse:
 
@@ -2020,9 +2008,9 @@ The `policy_tag = 0x01` is the publisher policy tag. This namespacing ensures:
 - The same publication can host multiple policy types with different tags in the future (e.g. subscription tag)
 - Many unique Seal identities can exist within one publication namespace (via different nonces)
 
-## Access Policies
+## Access policies
 
-Every revision stored on-chain carries an `access_policy` field that determines who can read the content payload. The Move contract validates the policy value, encryption flag, and Seal identity together at write time - invalid combinations abort the transaction.
+Every revision stored on-chain carries an `access_policy` field that determines who can read the content payload. The Move contract validates the policy value, encryption flag, and Seal identity together at write time; invalid combinations abort the transaction.
 
 | Policy | Value | Encrypted | Who can read | Enforcement |
 | --- | --- | --- | --- | --- |
@@ -2032,26 +2020,26 @@ Every revision stored on-chain carries an `access_policy` field that determines 
 
 > **WARNING: Policy and encryption are coupled**
 >
-> Public revisions must be unencrypted; publisher revisions must be encrypted with a Seal identity. The contract rejects mismatches at write time. See [Entries → Error Codes](https://docs.morsecms.xyz/entries.html#error-codes) for the specific error constants.
+> Public revisions must be unencrypted; publisher revisions must be encrypted with a Seal identity. The contract rejects mismatches at write time. See [Entries → Error codes](https://docs.morsecms.xyz/entries.html#error-codes) for the specific error constants.
 
-## Real-World Usage Pattern
+## Real-world usage pattern
 
 1. **Publication created**
    Owner wallet creates the publication. Receives `OwnerCap` (kept in owner wallet) and an initial `PublisherCap` (also kept or immediately transferred).
 
 2. **Onboard editors**
-   For each editor or automation agent, the owner calls `issue_publisher_cap(holder: editor_address)` and transfers the returned cap to that address. Each cap is independent - revoking one does not affect others.
+   For each editor or automation agent, the owner calls `issue_publisher_cap(holder: editor_address)` and transfers the returned cap to that address. Each cap is independent; revoking one does not affect others.
 
 3. **Editors publish content**
    Editors present their `PublisherCap` in PTBs to create collections, add entries, append drafts, and publish. The contract verifies sender matches `holder` on every call.
 
 4. **Offboard editors**
-   When an editor leaves, the owner calls `revoke_publisher_cap(cap_id)`. The revocation is immediate - the next write attempt using that cap aborts. Historical content is unaffected.
+   When an editor leaves, the owner calls `revoke_publisher_cap(cap_id)`. The revocation is immediate; the next write attempt using that cap aborts. Historical content is unaffected.
 
 5. **Transfer ownership (optional)**
-   The owner calls `transfer_owner_cap(owner_cap, new_owner_address)`. The new owner gains full admin authority immediately. The old owner retains only their `PublisherCap` (if any) unless it is revoked by the new owner. See [Publications → Ownership Transfer](https://docs.morsecms.xyz/publications.html#ownership-transfer) for details.
+   The owner calls `transfer_owner_cap(owner_cap, new_owner_address)`. The new owner gains full admin authority immediately. The old owner retains only their `PublisherCap` (if any) unless it is revoked by the new owner. See [Publications → Ownership transfer](https://docs.morsecms.xyz/publications.html#ownership-transfer) for details.
 
-## Error Codes
+## Error codes
 
 For more error codes, see: [Publications](https://docs.morsecms.xyz/publications.html#error-codes), [Collections](https://docs.morsecms.xyz/collections.html#error-codes), [Entries](https://docs.morsecms.xyz/entries.html#error-codes).
 
@@ -2070,27 +2058,27 @@ For more error codes, see: [Publications](https://docs.morsecms.xyz/publications
 
 # Recipient Files
 
-> Recipient files are Morse's second content model: standalone files on Walrus with a per-file recipient list enforced on-chain. Encrypt a file for specific addresses, share it with a single string, and revoke access at decrypt time - no publication required.
+> Recipient files are Morse's second content model: standalone files on Walrus with a per-file recipient list enforced on-chain. Encrypt a file for specific addresses, share it with a single string, and revoke access at decrypt time. No publication required.
 
 ## Overview
 
-Publications, collections, and entries model structured CMS content: a site with editors, drafts, and revision history. Recipient files model something simpler - *"share THIS file with these addresses."* Each file is an independent shared object on Sui (`RecipientFile`, defined in the `recipient_file` Move module) that references a Walrus blob and embeds its own recipient set. There is no shared ACL across files and no capability objects involved.
+Publications, collections, and entries model structured CMS content: a site with editors, drafts, and revision history. Recipient files model something simpler: *"share THIS file with these addresses."* Each file is an independent shared object on Sui (`RecipientFile`, defined in the `recipient_file` Move module) that references a Walrus blob and embeds its own recipient set. There is no shared ACL across files and no capability objects involved.
 
 |  | Publication entries | Recipient files |
 | --- | --- | --- |
-| Container | Publication → Collection → Entry | None - each file stands alone |
+| Container | Publication → Collection → Entry | None: each file stands alone |
 | Write authority | `PublisherCap` (capability object) | `owner` address field on the file |
 | Read gating | Publisher Seal policy (tag `1`): any active cap holder | Recipient-file Seal policy (tag `3`): addresses in the file's `members` set |
-| Revision history | Append-only revisions | None - metadata is mutable, content is fixed at creation |
+| Revision history | Append-only revisions | None: metadata is mutable, content is fixed at creation |
 | Use for | Sites, blogs, structured content | Ad-hoc encrypted file sharing between wallets |
 
 Use recipient files when the unit of sharing is a single file and the audience is a specific list of wallets: contracts, reports, credentials, media handoffs. Use [entries](https://docs.morsecms.xyz/entries.html) when content belongs to a publication and is gated by publisher capabilities.
 
 > **INFO: Supersedes the legacy `file` + `allowlist` modules**
 >
-> Earlier contract versions modeled encrypted files as an `EncryptedFile` paired with a separate `Allowlist` object. The `recipient_file` module embeds the recipient set directly on the file and replaces that pair. The legacy modules remain in the package bytecode for old clients, but all new code - SDK and CLI included - uses `recipient_file`.
+> Earlier contract versions modeled encrypted files as an `EncryptedFile` paired with a separate `Allowlist` object. The `recipient_file` module embeds the recipient set directly on the file and replaces that pair. The legacy modules remain in the package bytecode for old clients, but all new code (SDK and CLI included) uses `recipient_file`.
 
-## The RecipientFile Object
+## The RecipientFile object
 
 A `RecipientFile` is created in the same transaction that certifies its Walrus blob, then immediately shared so Seal key servers can dry-run its approval function regardless of who asks:
 
@@ -2111,12 +2099,12 @@ public struct RecipientFile has key {
 Key semantics, enforced by the contract:
 
 - **The creator is always a member.** `new_recipient_file` auto-inserts the transaction sender into `members`; duplicates in the recipients argument (including a self-reference) are silently deduplicated.
-- **Owner and member are separate roles.** The `owner` field grants mutation rights; `members` grants decrypt access. The owner can remove themselves from `members` - they lose decrypt access but keep mutation rights.
+- **Owner and member are separate roles.** The `owner` field grants mutation rights; `members` grants decrypt access. The owner can remove themselves from `members`; they lose decrypt access but keep mutation rights.
 - **`size` is the plaintext length.** The Walrus blob stores the larger ciphertext (Seal adds an envelope). The field is informational for UIs, not validated against Walrus.
 - **Metadata is mutable, content is not.** Only `name` and `content_type` can change after creation. To change the content, upload a new file.
 - **Shared object.** The creation PTB calls `share_recipient_file`, so the file belongs to no wallet. Anyone can read the record; only `owner` passes the mutation checks.
 
-### Move Operations
+### Move operations
 
 | Function | Authority | Effect |
 | --- | --- | --- |
@@ -2130,11 +2118,11 @@ Key semantics, enforced by the contract:
 | `delete_file` | Owner | Delete the metadata record. The Walrus blob is untouched. |
 | `seal_approve` / `seal_approve_with_prefix` | Seal key servers (dry-run) | Abort unless the sender is a current member and the Seal identity matches the file's namespace. |
 
-Every mutation emits an event (`RecipientFileCreated`, `RecipientAdded`, `RecipientRemoved`, `RecipientFileMetadataUpdated`, `RecipientFileOwnershipTransferred`, `RecipientFileDeleted`, `RecipientFileSealPrefixAttached`). These events are the discovery mechanism - see [Listing & Discovery](#listing-and-discovery).
+Every mutation emits an event (`RecipientFileCreated`, `RecipientAdded`, `RecipientRemoved`, `RecipientFileMetadataUpdated`, `RecipientFileOwnershipTransferred`, `RecipientFileDeleted`, `RecipientFileSealPrefixAttached`). These events are the discovery mechanism. See [Listing & Discovery](#listing-and-discovery).
 
-## Encryption & the Recipient List
+## Encryption & the recipient list
 
-Encrypted recipient files use **Seal** - the same threshold-encryption layer that gates encrypted entries - but under a second, independent policy. Both policies coexist in the same contract package:
+Encrypted recipient files use **Seal**, the same threshold-encryption layer that gates encrypted entries, but under a second, independent policy. Both policies coexist in the same contract package:
 
 |  | Publisher policy | Recipient-file policy |
 | --- | --- | --- |
@@ -2142,9 +2130,9 @@ Encrypted recipient files use **Seal** - the same threshold-encryption layer tha
 | Identity prefix | Publication ID (32 bytes) | Caller-chosen random bytes (32 recommended), bound to the file at creation |
 | Approval function | `publication::seal_approve_publisher` | `recipient_file::seal_approve_with_prefix` (or `seal_approve` for legacy files) |
 | Who may decrypt | Holders of an active `PublisherCap` | Addresses in the file's `members` set |
-| Documented at | [Access Control → Seal Integration](https://docs.morsecms.xyz/access-control.html#seal-integration) | This page |
+| Documented at | [Access Control → Seal integration](https://docs.morsecms.xyz/access-control.html#seal-integration) | This page |
 
-### Seal Identity Format
+### Seal identity format
 
 A recipient-file Seal identity is the byte concatenation of a prefix, the policy tag, and a per-encryption nonce:
 
@@ -2162,24 +2150,24 @@ The prefix solves an ordering problem: a file's Sui object ID does not exist unt
 
 The SDK exposes the recommended sizes as `RECOMMENDED_SEAL_PREFIX_BYTES` (32) and `RECOMMENDED_SEAL_NONCE_BYTES` (16), and generates values with `randomSealPrefix()` / `randomSealNonce()`. Files created via the older `new_recipient_file` path use the file's object ID itself as the prefix and are approved by the plain `seal_approve` entry point; `get_seal_id_prefix` tells clients which variant a file uses.
 
-### Decryption Sequence
+### Decryption sequence
 
 Decryption is gated on-chain, at decrypt time, by the current recipient set:
 
-1. **Recipient creates a `SessionKey`** - their wallet signs a personal message producing a time-limited key scoped to the contract package. The SDK never builds session keys silently; the consumer always signs.
-2. **SDK builds an approval PTB** - `decryptUnderRecipientFile` constructs a transaction calling `recipient_file::seal_approve_with_prefix` with the Seal identity and the shared `RecipientFile` object.
-3. **Seal key servers dry-run it** - each server executes the PTB against current chain state. The Move function checks that the identity starts with the file's bound prefix, carries policy tag `3`, and that the requesting address is in `members`. Any failure and the server refuses its share.
-4. **Threshold shares are returned** - once the threshold (default 2) is met, the client combines shares and decrypts the Walrus ciphertext locally.
+1. **Recipient creates a `SessionKey`**: their wallet signs a personal message producing a time-limited key scoped to the contract package. The SDK never builds session keys silently; the consumer always signs.
+2. **SDK builds an approval PTB**: `decryptUnderRecipientFile` constructs a transaction calling `recipient_file::seal_approve_with_prefix` with the Seal identity and the shared `RecipientFile` object.
+3. **Seal key servers dry-run it**: each server executes the PTB against current chain state. The Move function checks that the identity starts with the file's bound prefix, carries policy tag `3`, and that the requesting address is in `members`. Any failure and the server refuses its share.
+4. **Threshold shares are returned**: once the threshold (default 2) is met, the client combines shares and decrypts the Walrus ciphertext locally.
 
 > **INFO: Revocation is enforced at decrypt time**
 >
-> Because key servers re-check `members` on every request, `remove_recipient` takes effect immediately: the removed address gets `SealError` code `no-access` on its next decrypt attempt (verified on testnet). Revocation cannot claw back plaintext a recipient already decrypted - it stops future key-share requests, nothing more.
+> Because key servers re-check `members` on every request, `remove_recipient` takes effect immediately: the removed address gets `SealError` code `no-access` on its next decrypt attempt (verified on testnet). Revocation cannot claw back plaintext a recipient already decrypted; it stops future key-share requests, nothing more.
 
-## CLI Workflows
+## CLI workflows
 
 The `morse file` command group covers the full lifecycle. See [CLI Overview](https://docs.morsecms.xyz/cli-overview.html) for installation and account setup.
 
-### Upload & Share
+### Upload & share
 
 One command encrypts, uploads to Walrus, and registers the file on-chain. Pass `-r/--recipient` once per recipient; the sender is always added automatically. `--encrypt` is implied when `-r` is given.
 
@@ -2199,9 +2187,9 @@ Uploaded encrypted file 0x5f0a...c37e
 Give the share string to recipients; they need it (plus membership) to decrypt.
 ```
 
-The **share string** (`mf1.<fileId>.<prefix>.<nonce>`, each part base64url) bundles everything a recipient needs to locate and decrypt the file. It survives copy-paste and chat. It is not a secret capability by itself - decryption still requires the recipient's address to be in the on-chain member set - but treat it as sensitive: the prefix and nonce are not recoverable from the ciphertext, so a lost share string means a member cannot decrypt.
+The **share string** (`mf1.<fileId>.<prefix>.<nonce>`, each part base64url) bundles everything a recipient needs to locate and decrypt the file. It survives copy-paste and chat. It is not a secret capability by itself (decryption still requires the recipient's address to be in the on-chain member set), but treat it as sensitive: the prefix and nonce are not recoverable from the ciphertext, so a lost share string means a member cannot decrypt.
 
-For a world-readable file, use `--public` instead of `--encrypt`. The bytes go to Walrus unencrypted and the CLI prints a direct aggregator URL (`<aggregator>/v1/blobs/<blobId>`) - anyone can fetch it without the CLI at all. `--public` and `-r` are mutually exclusive.
+For a world-readable file, use `--public` instead of `--encrypt`. The bytes go to Walrus unencrypted and the CLI prints a direct aggregator URL (`<aggregator>/v1/blobs/<blobId>`). Anyone can fetch it without the CLI at all. `--public` and `-r` are mutually exclusive.
 
 ### Download
 
@@ -2212,16 +2200,16 @@ morse file download --share <string> --out <path> [--via-aggregator]
 ```
 
 - `--share` carries the file ID, prefix, and nonce in one token. Alternatively pass the file ID positionally with `--prefix <hex> --nonce <hex>`.
-- `--raw` writes the stored bytes without decrypting. For a file with a recipient list and no decrypt input, the CLI refuses by default - the ciphertext is unusable - and `--raw` is the explicit opt-in.
+- `--raw` writes the stored bytes without decrypting. For a file with a recipient list and no decrypt input, the CLI refuses by default (the ciphertext is unusable), and `--raw` is the explicit opt-in.
 - `--out` writes to a file; omitting it streams to stdout (not available in `--json` mode).
 
 The encrypted round-trip is byte-for-byte: the downloaded plaintext is identical to the uploaded file (verified on testnet). A non-member running the same command gets `SealError` code `no-access`; a tampered ciphertext fails with `decrypt-failed`.
 
 > **WARNING: Freshly uploaded blobs may fail the default read path on testnet**
 >
-> Right after an upload, the default verifying Walrus read often fails with "No valid blob metadata could be retrieved from any storage node" while testnet storage nodes catch up. Pass `--via-aggregator` to fetch through the Walrus aggregator HTTP service instead - it is reliable immediately, at the cost of client-side blob verification.
+> Right after an upload, the default verifying Walrus read often fails with "No valid blob metadata could be retrieved from any storage node" while testnet storage nodes catch up. Pass `--via-aggregator` to fetch through the Walrus aggregator HTTP service instead; it is reliable immediately, at the cost of client-side blob verification.
 
-### Managing Recipients
+### Managing recipients
 
 The owner can grant and revoke decrypt access at any time; changes take effect on the next decrypt attempt:
 
@@ -2231,9 +2219,9 @@ morse file recipient remove <file> <address>
 morse file recipient list <file>
 ```
 
-A newly added recipient also needs the share string (prefix + nonce) to decrypt - membership alone locates the key shares but not the identity bytes. Send it over any channel; the on-chain member check is what actually gates access.
+A newly added recipient also needs the share string (prefix + nonce) to decrypt; membership alone locates the key shares but not the identity bytes. Send it over any channel; the on-chain member check is what actually gates access.
 
-### Lifecycle Commands
+### Lifecycle commands
 
 | Command | Description |
 | --- | --- |
@@ -2242,19 +2230,19 @@ A newly added recipient also needs the share string (prefix + nonce) to decrypt 
 | `file register --blob-id <id> -n <name> --content-type <mime> --size <bytes> (--public \| --encrypted --seal-prefix <hex>) [-r <addr>]...` | Register on-chain metadata for a blob already on Walrus, e.g. one uploaded out-of-band. |
 | `file update <file> -n <name> --content-type <mime>` | Update name and content type. Owner only. |
 | `file transfer-ownership <file> <newOwner>` | Transfer mutation rights. Recipient access is governed separately by the member list. Prompts; pass `-y` before the subcommand to skip. |
-| `file delete <file>` | Delete the metadata record. The Walrus blob is *not* deleted - it expires on its own storage lease. Prompts; `-y` skips. |
+| `file delete <file>` | Delete the metadata record. The Walrus blob is *not* deleted; it expires on its own storage lease. Prompts; `-y` skips. |
 
 > **WARNING: Ownership transfer does not move decrypt access**
 >
-> `transfer_ownership` changes only the `owner` field. For a full handover - new owner gains decrypt access, old owner loses it - also run `recipient add <file> <newOwner>` and `recipient remove <file> <oldOwner>` (or compose all three calls in one PTB via the SDK).
+> `transfer_ownership` changes only the `owner` field. For a full handover (new owner gains decrypt access, old owner loses it), also run `recipient add <file> <newOwner>` and `recipient remove <file> <oldOwner>` (or compose all three calls in one PTB via the SDK).
 
-## SDK Usage
+## SDK usage
 
 All recipient-file APIs are exported from the `@arcadiasystems/morse-sdk` root. The examples below assume the adapter, config, and client setup from [SDK Setup](https://docs.morsecms.xyz/sdk-client-setup.html).
 
-### Encrypted Upload
+### Encrypted upload
 
-`uploadEncryptedRecipientFileFromBytes` is the one-shot flow: it picks a random Seal prefix and nonce, encrypts, uploads to Walrus, and creates the file - in two wallet interactions (Walrus `register_blob`, then a combined `certify_blob + new_recipient_file_with_seal_prefix + share` PTB):
+`uploadEncryptedRecipientFileFromBytes` is the one-shot flow: it picks a random Seal prefix and nonce, encrypts, uploads to Walrus, and creates the file, in two wallet interactions (Walrus `register_blob`, then a combined `certify_blob + new_recipient_file_with_seal_prefix + share` PTB):
 
 ```typescript
 import {
@@ -2288,7 +2276,7 @@ For an unencrypted file, use `uploadRecipientFileFromBytes` (same shape, no `sea
 
 ### Decrypt with a SessionKey
 
-Decryption needs the file ID, the Seal prefix and nonce, and a `SessionKey`. The SDK never signs on your behalf - creating the session key is an explicit personal-message signature by the consumer:
+Decryption needs the file ID, the Seal prefix and nonce, and a `SessionKey`. The SDK never signs on your behalf; creating the session key is an explicit personal-message signature by the consumer:
 
 ```typescript
 import { SessionKey } from "@mysten/seal";
@@ -2327,9 +2315,9 @@ console.log(new TextDecoder().decode(plaintext));
 
 If the session key's address is not in the file's member set, the key servers refuse and the SDK throws `SealError` with code `no-access`. `decodeRecipientFileSealId(id, prefixLength)` splits an identity back into prefix, tag, and nonce when you need to inspect one.
 
-### Listing & Discovery
+### Listing & discovery
 
-`RecipientFile` objects are *shared*, so they belong to no wallet and never appear in owned-object queries - you cannot enumerate them with `getOwnedObjects`. Discovery is event-based instead: every lifecycle mutation emits an event, and the SDK ships pure reducers that replay an event stream into a current-state list:
+`RecipientFile` objects are *shared*, so they belong to no wallet and never appear in owned-object queries; you cannot enumerate them with `getOwnedObjects`. Discovery is event-based instead: every lifecycle mutation emits an event, and the SDK ships pure reducers that replay an event stream into a current-state list:
 
 ```typescript
 import {
@@ -2352,9 +2340,9 @@ const accessible = reconcileRecipientFilesAccessibleBy(events, myAddress, types)
 // individual files via filesReader.getRecipientFile(summary.id).
 ```
 
-The reducers handle creation, metadata updates, recipient add/remove, ownership transfer, and deletion. One known gap: `reconcileRecipientFilesOwnedBy` does not add files transferred *to* the queried address, because the transfer event does not carry the file's metadata - re-fetch those with `getRecipientFile`. The CLI's `morse file list` uses these same reducers over `suix_queryEvents` (a deprecated Sui RPC endpoint; pass `--indexer-url` to point at your own event source).
+The reducers handle creation, metadata updates, recipient add/remove, ownership transfer, and deletion. One known gap: `reconcileRecipientFilesOwnedBy` does not add files transferred *to* the queried address, because the transfer event does not carry the file's metadata. Re-fetch those with `getRecipientFile`. The CLI's `morse file list` uses these same reducers over `suix_queryEvents` (a deprecated Sui RPC endpoint; pass `--indexer-url` to point at your own event source).
 
-### Types & Config Reference
+### Types & config reference
 
 | Export | What it is |
 | --- | --- |
@@ -2365,7 +2353,7 @@ The reducers handle creation, metadata updates, recipient add/remove, ownership 
 | `MorseRecipientFileConfig` | Config slice for recipient-file ops: `packageId`, `originalPackageId`, `recipientFileEventOriginPackageId`. Satisfied by `morseConfig({ network })`. |
 | `SealPolicyTag` | Policy tag constants: `Publisher = 1`, `RecipientFile = 3`. |
 
-The `recipientFileEventOriginPackageId` field exists because Sui stamps events (and created-object types) with the package address where a struct was *first* defined. The `recipient_file` module arrived in a later upgrade than the publication modules, so it has its own origin address - distinct from both `packageId` (current published-at) and `originalPackageId` (v1 genesis). `morseConfig({ network: "testnet" })` carries the correct value; only custom deployments need to set it.
+The `recipientFileEventOriginPackageId` field exists because Sui stamps events (and created-object types) with the package address where a struct was *first* defined. The `recipient_file` module arrived in a later upgrade than the publication modules, so it has its own origin address, distinct from both `packageId` (current published-at) and `originalPackageId` (v1 genesis). `morseConfig({ network: "testnet" })` carries the correct value; only custom deployments need to set it.
 
 ## Costs
 
@@ -2379,7 +2367,7 @@ Measured on Sui testnet against the production package (2026-07-27, 127-byte fil
 
 Decryption costs no gas: the `seal_approve` dry-run happens on the key servers' side and nothing is executed on-chain.
 
-## Error Codes
+## Error codes
 
 Move abort codes from the `recipient_file` module. The SDK surfaces them as `ContractAbortError`; Seal-side failures surface as `SealError` with codes `no-access`, `decrypt-failed`, `session-expired`, or `rate-limited`.
 
@@ -2412,7 +2400,7 @@ Move abort codes from the `recipient_file` module. The SDK surfaces them as `Con
 
 ## Installing
 
-The published binary is a Node-targeted bundle. You need Node (>= 18) or Bun (>= 1.2) to run it.
+The published binary is a Node-targeted bundle. You need Node (≥ 18) or Bun (≥ 1.2) to run it.
 
 ```bash
 npm i -g @arcadiasystems/morse-cli
@@ -2427,13 +2415,13 @@ Also available via `bun add -g` or `pnpm add -g`.
 npx @arcadiasystems/morse-cli --help
 ```
 
-## Getting Started
+## Getting started
 
-Select an active publication and collection once - all subsequent commands will use them automatically, so you never have to paste a 64-character object ID. `publication create` and `collection create` auto-select the new object. 
+Select an active publication and collection once. All subsequent commands will use them automatically, so you never have to paste a 64-character object ID. `publication create` and `collection create` auto-select the new object. 
 
 See [CLI Cookbooks](https://docs.morsecms.xyz/cli-workflows.html) for step-by-step guides.
 
-## Active Context
+## Active context
 
 The active publication and collection live in the current profile. Override per command with `-P, --publication <slug|id>` and `-C, --collection <name>`. Slugs resolve against publications owned by the active account.
 
@@ -2441,7 +2429,7 @@ The active publication and collection live in the current profile. Override per 
 - `morse use --clear`: clear the active context
 - `morse status`: show the active profile, account, publication, and collection
 
-## Security Model
+## Security model
 
 Private keys are stored in an encrypted keystore (scrypt + AES-256-GCM) and unlocked by a password.
 
@@ -2465,15 +2453,15 @@ Settings resolve with the precedence `flags` > `MORSE_* env` > `config file` > `
 | `MORSE_PRIVATE_KEY` | (no flag) | Raw Bech32 secret key. Highest-priority key source; never persisted. |
 | `MORSE_KEYSTORE_PASSWORD` | (no flag) | Keystore password for non-interactive unlock. |
 
-## Output & Scripting
+## Output & scripting
 
 - Human-readable output goes to **stdout**; progress, warnings, and prompts go to **stderr**. Redirecting stdout yields only the result.
 - In `--json` mode, `bigint` values (e.g. `gasUsedMist`) are encoded as decimal strings and byte arrays (`sealId`, quilt patch IDs) as `0x`-hex.
 - Color is emitted only to a TTY and honors `NO_COLOR` / `FORCE_COLOR`.
 
-See [CLI Command Reference → Global Options](https://docs.morsecms.xyz/cli-commands.html#global-options) for a full list of global flags (`--json`, `--quiet`, `--yes`, and more).
+See [CLI Command Reference → Global options](https://docs.morsecms.xyz/cli-commands.html#global-options) for a full list of global flags (`--json`, `--quiet`, `--yes`, and more).
 
-## Exit Codes
+## Exit codes
 
 | Code | Meaning |
 | --- | --- |
@@ -2484,7 +2472,7 @@ See [CLI Command Reference → Global Options](https://docs.morsecms.xyz/cli-com
 | `4` | Auth or permission failure (keystore unlock, unauthorized, no-access) |
 | `5` | Network or transport failure |
 
-## Next Steps
+## Next steps
 
 - [CLI: Command Reference](https://docs.morsecms.xyz/cli-commands.html): Every command and flag: config, account, publication, collection, entry, revision, cap.
 - [CLI: Cookbooks](https://docs.morsecms.xyz/cli-workflows.html): Step-by-step recipes: publishing, encrypted entries, multi-writer setups, CI/CD scripting.
@@ -2499,7 +2487,7 @@ See [CLI Command Reference → Global Options](https://docs.morsecms.xyz/cli-com
 
 > Complete reference for every `morse-cli` command, organized by resource: context, config, account, publication, collection, entry, revision, and cap.
 
-## Global Options
+## Global options
 
 Global options apply to every command and must appear before the subcommand (e.g. `morse --json publication list`).
 
@@ -2515,7 +2503,7 @@ Global options apply to every command and must appear before the subcommand (e.g
 | `-V, --version` | Print the version. |
 | `-h, --help` | Show help for any command. |
 
-## Shared Command Flags
+## Shared command flags
 
 These flags appear across multiple command groups. Command-specific flags are shown inline in each category below.
 
@@ -2527,7 +2515,7 @@ These flags appear across multiple command groups. Command-specific flags are sh
 | `-n` | `--name <name>` | Publication name (used by `publication create`). |
 | `-s` | `--slug <slug>` | URL slug (used by `publication create`). |
 
-## Argument Notation
+## Argument notation
 
 Values in `<angle brackets>` are required; values in `[square brackets]` are optional; `(a | b)` means one of the two is required.
 
@@ -2599,7 +2587,7 @@ $ morse account list
 
 ## Publication
 
-Create and manage publications - the top-level content containers.
+Create and manage publications, the top-level content containers.
 
 | Command | Purpose |
 | --- | --- |
@@ -2639,17 +2627,17 @@ Add, read, and delete entries within a collection.
 | Command | Purpose |
 | --- | --- |
 | `entry get <entryId>` | Fetch a single entry's metadata. |
-| `entry read <entryId> [<revisionIndex>] [--out <path>] [--via-aggregator]` | Fetch a public entry's content to stdout or a file. Reads the latest revision unless `revisionIndex` is specified; `--via-aggregator` fetches through a Walrus aggregator instead of directly - recommended on testnet, where direct reads frequently fail right after an upload (see [CLI Cookbooks → Reading It Back](https://docs.morsecms.xyz/cli-workflows.html#reading-it-back)). |
+| `entry read <entryId> [<revisionIndex>] [--out <path>] [--via-aggregator]` | Fetch a public entry's content to stdout or a file. Reads the latest revision unless `revisionIndex` is specified; `--via-aggregator` fetches through a Walrus aggregator instead of directly. Recommended on testnet, where direct reads frequently fail right after an upload (see [CLI Cookbooks → Reading it back](https://docs.morsecms.xyz/cli-workflows.html#reading-it-back)). |
 | `entry list [--limit <n>] [--cursor <cursor>] [--drafts-only]` | List entries. `--drafts-only` filters to unpublished entries. |
 | `entry scan [--drafts-only]` | List every entry (auto-paginated). `--drafts-only` filters to unpublished entries. |
-| `entry add <name> (--file <path> \| --stdin) [--content-type <type>] [--epochs <n>] [--publisher-cap <id>]` | Upload content and add a new entry. `--file` reads from a file path, `--stdin` reads from standard input; `--content-type` is inferred from file extension when omitted; `--epochs` sets Walrus storage duration (default 3 - roughly 3 days on testnet; renew or re-upload before expiry for longer-lived content). |
+| `entry add <name> (--file <path> \| --stdin) [--content-type <type>] [--epochs <n>] [--publisher-cap <id>]` | Upload content and add a new entry. `--file` reads from a file path, `--stdin` reads from standard input; `--content-type` is inferred from file extension when omitted; `--epochs` sets Walrus storage duration (default 3, roughly 3 days on testnet; renew or re-upload before expiry for longer-lived content). |
 | `entry delete <entryId> [--publisher-cap <id>]` | Delete an entry and its revisions. |
 | `entry add-encrypted <name> (--file <path> \| --stdin) [--content-type <type>] [--epochs <n>] [--publisher-cap <id>]` | Encrypt with Seal, upload, and add a new entry. |
 | `entry decrypt <entryId> [<revisionIndex>] [--out <path>] [--publisher-cap <id>] [--via-aggregator]` | Decrypt an encrypted revision; reads the latest unless `revisionIndex` is specified. Signs a SessionKey with the active account. |
 
 > **WARNING: Encrypted entries are always created as drafts**
 >
-> Encrypted entries are always created as drafts - there is no public head yet. Published revisions are always unencrypted and public, so to publish an encrypted entry you must supply a new unencrypted blob. A revision cannot be both published and encrypted. See [Entries -> Adding an Entry](https://docs.morsecms.xyz/entries.html#adding-an-entry) for the full explanation.
+> Encrypted entries are always created as drafts; there is no public head yet. Published revisions are always unencrypted and public, so to publish an encrypted entry you must supply a new unencrypted blob. A revision cannot be both published and encrypted. See [Entries → Adding an entry](https://docs.morsecms.xyz/entries.html#adding-an-entry) for the full explanation.
 
 ```example
 $ morse entry add welcome-post --file ./welcome.json
@@ -2682,7 +2670,7 @@ Issue, revoke, and transfer publisher capabilities.
 | `cap issue <holder> [-P <slug\|id>] [--owner-cap <id>]` | Issue a PublisherCap bound to an address. |
 | `cap revoke <publisherCapId> [-P <slug\|id>] [--owner-cap <id>]` | Revoke a PublisherCap. |
 | `cap destroy <publisherCapId> [-P <slug\|id>]` | Destroy a PublisherCap you hold. |
-| `cap transfer <publisherCapId> <recipient>` | Transfer a PublisherCap object. Does not change the `holder` binding - the recipient cannot use or destroy the cap unless they are the bound holder. To rotate access, destroy the old cap and issue a new one. |
+| `cap transfer <publisherCapId> <recipient>` | Transfer a PublisherCap object. Does not change the `holder` binding; the recipient cannot use or destroy the cap unless they are the bound holder. To rotate access, destroy the old cap and issue a new one. |
 
 ```example
 $ morse cap issue 0x71a3...9f2b
@@ -2690,9 +2678,9 @@ Issued PublisherCap 0xCAP_ID to 0x71a3...9f2b. (tx: AbCdEf...)
 ```
 
 `OwnerCap` and `PublisherCap` IDs are auto-resolved from the active account when the `--owner-cap` / `--publisher-cap` override is omitted. Morse separates ownership from publishing. 
-See [Access Control -> OwnerCap](https://docs.morsecms.xyz/access-control.html#ownercap) and [Access Control -> PublisherCap](https://docs.morsecms.xyz/access-control.html#publishercap) for how capability-based authorization works.
+See [Access Control → OwnerCap](https://docs.morsecms.xyz/access-control.html#ownercap) and [Access Control → PublisherCap](https://docs.morsecms.xyz/access-control.html#publishercap) for how capability-based authorization works.
 
-## Next Steps
+## Next steps
 
 - [CLI: Cookbooks](https://docs.morsecms.xyz/cli-workflows.html): Step-by-step recipes: publishing, encrypted entries, multi-writer setups, CI/CD scripting.
 - [Quick Start: CLI](https://docs.morsecms.xyz/quick-start-cli.html): Create your first publication, collection, and entry from the terminal.
@@ -2710,14 +2698,14 @@ See [Access Control -> OwnerCap](https://docs.morsecms.xyz/access-control.html#o
 
 | Requirement | Details | Purpose |
 | --- | --- | --- |
-| Bun or Node | v1.2+ / >= 18 | JavaScript runtime |
+| Bun or Node | v1.2+ / ≥ 18 | JavaScript runtime |
 | Sui wallet | Sui Wallet, Suiet, or any Sui-compatible wallet | Signing transactions on testnet |
-| SUI + WAL tokens | [SUI faucet](https://faucet.sui.io/) / [Swap SUI for WAL](https://stake-wal.wal.app/?network=testnet) | Gas fees (SUI) and Walrus storage fees (WAL) |
-| Bech32 private key | A `suiprivkey1...` string | CLI authentication - export from your wallet's settings |
+| SUI + WAL tokens | [SUI faucet](https://faucet.sui.io/) · [Swap SUI for WAL](https://stake-wal.wal.app/?network=testnet) | Gas fees (SUI) and Walrus storage fees (WAL) |
+| Bech32 private key | A `suiprivkey1...` string | CLI authentication. Export from your wallet's settings |
 
 Make sure the CLI is installed and your account is imported before continuing. See [CLI Overview](https://docs.morsecms.xyz/cli-overview.html) for setup.
 
-## Publishing Your First Entry
+## Publishing your first entry
 
 Create a profile, import a key, then create a publication and a collection. Each `create` command selects the new object as the active one, so the steps after require no IDs. 
 `account import` will prompt for your private key and a keystore password. The collection defaults to `blob` mode when `--mode` is omitted.
@@ -2742,9 +2730,9 @@ A publication's name and slug are immutable on-chain (the slug is the registry's
 
 Check the active context any time with `morse status`; switch the active publication (and collection) with `morse use <slug> [collection]`.
 
-See also: [SDK Cookbooks → Creating a Publication](https://docs.morsecms.xyz/sdk-workflows.html#creating-a-publication)
+See also: [SDK Cookbooks → Creating a publication](https://docs.morsecms.xyz/sdk-workflows.html#creating-a-publication)
 
-## Reading It Back
+## Reading it back
 
 `entry get` shows metadata; `entry read` fetches the public content itself. The `view` link printed by `entry add` opens the same bytes in a browser.
 
@@ -2756,11 +2744,11 @@ morse entry read 0 --via-aggregator --out got.md
 
 > **WARNING: Use `--via-aggregator` for reads on testnet**
 >
-> On testnet, the default direct-node read path frequently fails right after an upload with `No valid blob metadata could be retrieved from any storage node`, even though the blob is healthy - on both plain reads and encrypted decrypts. Add `--via-aggregator` to `entry read` and `entry decrypt` to route through the Walrus aggregator, which succeeds against the same blobs. The tradeoff: the aggregator path skips client-side blob verification, so you trust the operator's bytes. This applies to testnet only; mainnet storage nodes are expected to be more reliable.
+> On testnet, the default direct-node read path frequently fails right after an upload with `No valid blob metadata could be retrieved from any storage node`, even though the blob is healthy, on both plain reads and encrypted decrypts. Add `--via-aggregator` to `entry read` and `entry decrypt` to route through the Walrus aggregator, which succeeds against the same blobs. The tradeoff: the aggregator path skips client-side blob verification, so you trust the operator's bytes. This applies to testnet only; mainnet storage nodes are expected to be more reliable.
 
-See also: [SDK Cookbooks → Reading It Back](https://docs.morsecms.xyz/sdk-workflows.html#reading-it-back)
+See also: [SDK Cookbooks → Reading it back](https://docs.morsecms.xyz/sdk-workflows.html#reading-it-back)
 
-## Listing Your Content
+## Listing your content
 
 List your publications, collections, and entries in the active context.
 
@@ -2771,11 +2759,11 @@ morse entry list
 morse status
 ```
 
-## Publishing a New Revision
+## Publishing a new revision
 
-Append a new public revision directly, or stage a draft first and promote it. Revisions are append-only - existing revisions are never edited in place. Two heads track progress: `draftHead` (work in progress) and `publicHead` (the live version).
+Append a new public revision directly, or stage a draft first and promote it. Revisions are append-only; existing revisions are never edited in place. Two heads track progress: `draftHead` (work in progress) and `publicHead` (the live version).
 
-### Option A: Publish direct
+### Option A: publish direct
 
 Skip the draft stage and append a new public revision in one step. This updates `publicHead` immediately.
 
@@ -2784,7 +2772,7 @@ echo "hello morse, edited" > post.md
 morse revision publish-direct 0 --file post.md
 ```
 
-### Option B: Draft then publish
+### Option B: draft then publish
 
 Stage a draft revision first (updates `draftHead` only), then promote it to a public revision. By default, `publish-from-draft` reuses the draft's content; pass `--file` to replace it with new content. Useful when you want to review before going live.
 
@@ -2794,9 +2782,9 @@ morse revision append-draft 0 --file draft.md
 morse revision publish-from-draft 0 1
 ```
 
-See also: [SDK Cookbooks → Publishing a New Revision](https://docs.morsecms.xyz/sdk-workflows.html#publishing-a-new-revision)
+See also: [SDK Cookbooks → Publishing a new revision](https://docs.morsecms.xyz/sdk-workflows.html#publishing-a-new-revision)
 
-## Encrypted Content
+## Encrypted content
 
 Morse uses [Seal](https://docs.morsecms.xyz/access-control.html#seal-integration) for on-chain access control over encrypted content. When you add an encrypted entry, the CLI handles Seal key negotiation automatically.
 
@@ -2810,11 +2798,11 @@ morse entry decrypt 1 --via-aggregator --out recovered.txt
 >
 > Encrypted entries are always created as drafts. You must explicitly publish them with a separate transaction after adding. Retrieve encrypted content with `entry decrypt` plus a PublisherCap, not `entry read`. See [Entries](https://docs.morsecms.xyz/entries.html#adding-an-entry) for why encrypted entries bypass the public head.
 
-See also: [SDK Cookbooks → Encrypted Content](https://docs.morsecms.xyz/sdk-workflows.html#encrypted-content)
+See also: [SDK Cookbooks → Encrypted content](https://docs.morsecms.xyz/sdk-workflows.html#encrypted-content)
 
-## Delegating Write Access
+## Delegating write access
 
-Morse separates ownership (`OwnerCap`) from publishing (`PublisherCap`). The owner issues a cap bound to a co-author's address, granting them write access. Once issued, the co-author can publish entries using their own key. Revoking the cap causes further writes to abort on-chain. See [Access Control -> Issuing Publisher Caps](https://docs.morsecms.xyz/access-control.html#issuing-publisher-caps) for details.
+Morse separates ownership (`OwnerCap`) from publishing (`PublisherCap`). The owner issues a cap bound to a co-author's address, granting them write access. Once issued, the co-author can publish entries using their own key. Revoking the cap causes further writes to abort on-chain. See [Access Control → Issuing publisher caps](https://docs.morsecms.xyz/access-control.html#issuing-publisher-caps) for details.
 
 As the **owner**, issue a cap to grant write access and revoke it to remove access:
 
@@ -2830,11 +2818,11 @@ morse cap list
 morse cap destroy 0xCAP_ID
 ```
 
-To rotate a cap to a different address, destroy the old one and have the owner issue a new cap to the new address. Do not use `morse cap transfer` to send a cap to a different holder - the on-chain `holder` binding is immutable, so the recipient would own the object but be unable to use or destroy it.
+To rotate a cap to a different address, destroy the old one and have the owner issue a new cap to the new address. Do not use `morse cap transfer` to send a cap to a different holder. The on-chain `holder` binding is immutable, so the recipient would own the object but be unable to use or destroy it.
 
-See also: [SDK Cookbooks → Delegating Write Access](https://docs.morsecms.xyz/sdk-workflows.html#delegating-write-access)
+See also: [SDK Cookbooks → Delegating write access](https://docs.morsecms.xyz/sdk-workflows.html#delegating-write-access)
 
-## Transferring Ownership
+## Transferring ownership
 
 The owner can transfer the publication's `OwnerCap` to another address, handing over full governance: the recipient becomes the new owner and can issue, revoke, and manage caps.
 
@@ -2846,11 +2834,11 @@ morse publication transfer-ownership 0xNEW_OWNER
 >
 > Once transferred, the original owner loses all governance rights immediately. The new owner could transfer back, but there is no built-in undo.
 
-See also: [SDK Cookbooks → Transferring Ownership](https://docs.morsecms.xyz/sdk-workflows.html#transferring-ownership)
+See also: [SDK Cookbooks → Transferring ownership](https://docs.morsecms.xyz/sdk-workflows.html#transferring-ownership)
 
-## Deleting and Tearing Down
+## Deleting and tearing down
 
-Deletion is bottom-up: remove entries first, then collections, then the publication. Each container must be empty before it can be deleted. Entry IDs are permanently retired on deletion and never reused. See [Entries → Deleting an Entry](https://docs.morsecms.xyz/entries.html#deleting-an-entry) for details.
+Deletion is bottom-up: remove entries first, then collections, then the publication. Each container must be empty before it can be deleted. Entry IDs are permanently retired on deletion and never reused. See [Entries → Deleting an entry](https://docs.morsecms.xyz/entries.html#deleting-an-entry) for details.
 
 ```bash
 morse entry delete 0
@@ -2859,7 +2847,7 @@ morse collection delete posts
 morse publication delete
 ```
 
-See also: [SDK Cookbooks → Deleting and Tearing Down](https://docs.morsecms.xyz/sdk-workflows.html#deleting-and-tearing-down)
+See also: [SDK Cookbooks → Deleting and tearing down](https://docs.morsecms.xyz/sdk-workflows.html#deleting-and-tearing-down)
 
 ## Scripting and CI
 
@@ -2884,15 +2872,15 @@ morse publication get 0x00 || echo "exit $?"
 | `4` | Incorrect password or corrupted keystore | Wrong keystore password (GCM auth-tag mismatch). |
 | `2` | No publication selected | No active publication. Pass `-P <slug\|id>` or run `morse use`. |
 | `3` | No publication at 0x… | The ID does not exist on this network. |
-| `5` | Move abort `ESlugAlreadyExists` | The slug is already registered - slugs are globally unique on the network. Re-run with a different slug (e.g. append a timestamp). |
+| `5` | Move abort `ESlugAlreadyExists` | The slug is already registered; slugs are globally unique on the network. Re-run with a different slug (e.g. append a timestamp). |
 | `5` | Too many failures while writing blob to nodes | Walrus storage nodes are degraded. Retry; check WAL balance. |
 | `2` | Morse is not yet deployed on mainnet | Use `--network testnet`. |
 | `5` | InsufficientGas / out of SUI gas | The active account does not have enough SUI for gas fees. Run `sui client faucet` to request testnet SUI. |
 | `5` | Insufficient WAL balance | Walrus storage requires WAL tokens. Get WAL from the [Walrus testnet faucet](https://stake-wal.wal.app/?network=testnet). |
-| `5` | No valid blob metadata could be retrieved from any storage node | Common on testnet, especially right after an upload - the default direct-node read path fails even for healthy blobs. Re-run with `--via-aggregator`. See [Reading It Back](#reading-it-back). |
+| `5` | No valid blob metadata could be retrieved from any storage node | Common on testnet, especially right after an upload. The default direct-node read path fails even for healthy blobs. Re-run with `--via-aggregator`. See [Reading It Back](#reading-it-back). |
 | `5` | Walrus blob not retrievable / blob expired | The blob's storage epoch has ended and it is no longer available on Walrus storage nodes. Re-upload the content and create a new revision with a longer `--epochs` value. |
 
-## Next Steps
+## Next steps
 
 - [SDK: Overview](https://docs.morsecms.xyz/sdk-overview.html): TypeScript client setup, publishing, reading, and encryption via the SDK.
 - [Smart Contracts: Overview](https://docs.morsecms.xyz/contracts-overview.html): On-chain modules, object model, and the Move API behind Morse dCMS.
@@ -2908,22 +2896,22 @@ morse publication get 0x00 || echo "exit $?"
 
 > **WARNING: When contract addresses change**
 >
-> During the pre-release phase, contract addresses change on every redeployment. To pick up the new addresses, bump your `morse-sdk` version - each release pins the latest `packageId` and `originalPackageId` into `morseConfig()`. Publications and other objects created under a previous contract instance remain on-chain but belong to the old package; they are **not** migrated to the new deployment.
+> During the pre-release phase, contract addresses change on every redeployment. To pick up the new addresses, bump your `morse-sdk` version. Each release pins the latest `packageId` and `originalPackageId` into `morseConfig()`. Publications and other objects created under a previous contract instance remain on-chain but belong to the old package; they are **not** migrated to the new deployment.
 
-## Getting Started
+## Getting started
 
 Install the SDK and its peer dependencies, then wire a wallet adapter and Walrus configuration for your environment. See [SDK Setup](https://docs.morsecms.xyz/sdk-client-setup.html) for installation and configuration, and [SDK Cookbooks](https://docs.morsecms.xyz/sdk-workflows.html) for step-by-step guides.
 
 ## Capabilities
 
-- **Adapter pattern** — Four swappable adapters - wallet, Walrus write, Walrus read, Seal - with shipped defaults and easy substitution for custom flows.
+- **Adapter pattern** — Four swappable adapters (wallet, Walrus write, Walrus read, Seal) with shipped defaults and easy substitution for custom flows.
 - **Branded ID types** — PublicationId, PublisherCapId, OwnerCapId, BlobObjectId, WalrusBlobId, QuiltPatchId, and more. Compile-time guards against passing the wrong ID into the wrong call.
 - **Structured errors** — Every throw extends MorseError. Narrow by class + property (e.g. ContractAbortError.reason); no string parsing.
 - **2-transaction uploads** — addEntryFromBytes collapses register + certify + add-entry into 2 transactions instead of 3 via a flow-aware Walrus capability.
 - **End-to-end tests** — End-to-end scripts/phase-N-*.ts run against live testnet (real WAL, real SUI) to verify the public surface on every release.
 - **97% test coverage** — ~97% line / ~96% function coverage. Lint, typecheck, test, build all gate every change.
 
-## Adapter Architecture
+## Adapter architecture
 
 The SDK is built around four swappable abstractions. Pick the shipped default or implement the interface against whatever signing / storage / encryption stack you already have.
 
@@ -2932,22 +2920,22 @@ The SDK is built around four swappable abstractions. Pick the shipped default or
 - **Walrus Read**: WalrusReadAdapter · DefaultWalrusReadAdapter · HttpAggregatorReadAdapter
 - **Encryption**: SealAdapter · DefaultSealAdapter
 
-The rest of the SDK - functions like `createPublication`, `addEntryFromBytes`, the `RpcPublicationReader` - composes these adapters. Swapping an adapter requires no changes to call sites.
+The rest of the SDK (functions like `createPublication`, `addEntryFromBytes`, the `RpcPublicationReader`) composes these adapters. Swapping an adapter requires no changes to call sites.
 
-## Known Limitations
+## Known limitations
 
 - **Testnet only at v0.x.** Mainnet config is released once the contracts are stable.
 - **gRPC client only.** Reader and adapter interfaces are typed against `SuiGrpcClient` from `@mysten/sui/grpc`. JSON-RPC fallback is planned.
-- **No encrypted publish path.** The Move contract hardcodes `encrypted=false` on `publish_from_draft` and `publish_direct`. Encrypted content stays as drafts - see [SDK Cookbooks → Encrypted content](https://docs.morsecms.xyz/sdk-workflows.html#encrypted-content) for the full lifecycle.
+- **No encrypted publish path.** The Move contract hardcodes `encrypted=false` on `publish_from_draft` and `publish_direct`. Encrypted content stays as drafts. See [SDK Cookbooks → Encrypted content](https://docs.morsecms.xyz/sdk-workflows.html#encrypted-content) for the full lifecycle.
 - **Only the `Publisher` access policy is enforced.** The `Subscription` policy is not yet active.
 - **`listEntries` is not sorted chronologically.** Results follow on-chain storage order. Sort by `entry.id` for insertion order.
 - **zkLogin support is untested.** The decoder is included, but Walrus and Seal `SessionKey` flows have not been verified with zkLogin signatures. Use keypair or passkey accounts until you have tested your setup.
 
 > **WARNING: Encrypted entries are always created as drafts**
 >
-> Encrypted entries are always created as drafts. You must explicitly publish them with a separate transaction after adding. The Move contract hardcodes `encrypted=false` on `publish_from_draft` and `publish_direct`, so published revisions are always unencrypted and public. See [Entries -> Adding an Entry](https://docs.morsecms.xyz/entries.html#adding-an-entry) for the full explanation.
+> Encrypted entries are always created as drafts. You must explicitly publish them with a separate transaction after adding. The Move contract hardcodes `encrypted=false` on `publish_from_draft` and `publish_direct`, so published revisions are always unencrypted and public. See [Entries → Adding an entry](https://docs.morsecms.xyz/entries.html#adding-an-entry) for the full explanation.
 
-## Next Steps
+## Next steps
 
 - [SDK: Setup](https://docs.morsecms.xyz/sdk-client-setup.html): Install, wire a wallet, pick a Walrus adapter, handle errors.
 - [SDK: Cookbooks](https://docs.morsecms.xyz/sdk-workflows.html): Create publications and collections, add entries (plain + encrypted), read them back.
@@ -2968,15 +2956,15 @@ The rest of the SDK - functions like `createPublication`, `addEntryFromBytes`, t
 | Package | Version | Required |
 | --- | --- | --- |
 | `@arcadiasystems/morse-sdk` | 0.4.x | (this package) |
-| `@mysten/sui` | >=2.16.2 <2.17.0 | Yes - types, gRPC client, keypairs |
-| `@mysten/walrus` | >=1.1.6 <1.2.0 | Optional - for default Walrus adapters (read + write) |
-| `@mysten/seal` | >=1.1.3 <1.2.0 | Optional - for encryption |
+| `@mysten/sui` | >=2.16.2 <2.17.0 | Yes: types, gRPC client, keypairs |
+| `@mysten/walrus` | >=1.1.6 <1.2.0 | Optional: for default Walrus adapters (read + write) |
+| `@mysten/seal` | >=1.1.3 <1.2.0 | Optional: for encryption |
 
 > **WARNING: Pin to the verified minor version**
 >
 > Mysten packages may ship breaking changes within the same major version. When a new version like `@mysten/walrus@1.2.0` is released, `morse-sdk` needs a coordinated bump and re-verification. Use `bun add @arcadiasystems/morse-sdk@~0.4.0` to lock to patch-level updates only.
 
-The verified matrix is also exported programmatically as `TESTED_SUBSTRATE` - a frozen record of the tested `@mysten/sui`, `@mysten/seal`, and `@mysten/walrus` versions plus `verifiedOn` and `suiNetwork`. Log it during initialization or compare it against bundler-resolved versions in CI:
+The verified matrix is also exported programmatically as `TESTED_SUBSTRATE`, a frozen record of the tested `@mysten/sui`, `@mysten/seal`, and `@mysten/walrus` versions plus `verifiedOn` and `suiNetwork`. Log it during initialization or compare it against bundler-resolved versions in CI:
 
 ```typescript
 import { TESTED_SUBSTRATE } from "@arcadiasystems/morse-sdk";
@@ -2984,17 +2972,17 @@ import { TESTED_SUBSTRATE } from "@arcadiasystems/morse-sdk";
 console.log(TESTED_SUBSTRATE["@mysten/walrus"]);  // "1.1.6"
 ```
 
-## Runtime Requirements
+## Runtime requirements
 
 ESM-only (`"type": "module"`). CommonJS `require` is not supported.
 
 | Runtime | Supported | Notes |
 | --- | --- | --- |
-| Bun | >= 1.2.0 | Primary development runtime. End-to-end test scripts use Bun. |
-| Node | >= 18.0 | Uses ES2022 (private fields, `Error.cause`), `TextEncoder`, `crypto.getRandomValues`, `BigInt`. |
+| Bun | ≥ 1.2.0 | Primary development runtime. End-to-end test scripts use Bun. |
+| Node | ≥ 18.0 | Uses ES2022 (private fields, `Error.cause`), `TextEncoder`, `crypto.getRandomValues`, `BigInt`. |
 | Browser | Evergreen | Chrome / Edge / Firefox / Safari recent stable. Vite, Webpack, esbuild bundlers all handle the SDK with zero polyfills. |
 
-The SDK works in both Node and browser environments. It does not depend on Node-specific APIs like `fs`, `path`, `process`, or `node:crypto`. Some `@mysten/*` packages may need polyfills in the browser - check their docs if needed, though modern bundlers usually handle this automatically.
+The SDK works in both Node and browser environments. It does not depend on Node-specific APIs like `fs`, `path`, `process`, or `node:crypto`. Some `@mysten/*` packages may need polyfills in the browser. Check their docs if needed, though modern bundlers usually handle this automatically.
 
 ## Installing
 
@@ -3004,7 +2992,7 @@ The SDK works in both Node and browser environments. It does not depend on Node-
 bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3
 ```
 
-## morseConfig() Shape
+## morseConfig() shape
 
 `morseConfig({ network })` takes the target network (`"testnet"` or `"localnet"`) and returns a read-only object with the contract addresses and endpoints the SDK needs. Mainnet is not yet supported. All other fields have built-in defaults but can be overridden for custom deployments. Every SDK function takes this object as its `config` argument.
 
@@ -3018,17 +3006,17 @@ The returned object contains the following fields:
 | `originalPackageId` | `PackageId \| undefined` | Genesis publish address (`original-id`). Sui uses this in `objectType` strings and type filters. Defaults to `packageId` when the package has never been upgraded. |
 | `registryId` | `RegistryId` | Sui object ID of the shared `PublicationRegistry`. Required for publication creation and deletion. |
 | `sealKeyServers` | `readonly KeyServerConfig[]` | Seal threshold-encryption key servers for the network. Each entry has an `objectId` and `weight`. Used by `DefaultSealAdapter` when no explicit server list is provided. |
-| `walrusEndpoints` | `WalrusEndpoints` | Walrus HTTP endpoints. Contains `aggregator` (base URL for reads) and an optional `publisher` (base URL for HTTP-publisher writes). The publisher is intentionally unset by default - supply it explicitly for your operator. |
+| `walrusEndpoints` | `WalrusEndpoints` | Walrus HTTP endpoints. Contains `aggregator` (base URL for reads) and an optional `publisher` (base URL for HTTP-publisher writes). The publisher is intentionally unset by default; supply it explicitly for your operator. |
 
-The options shape is exported as `MorseConfigOptions`, the accepted network names as the `Network` constant, and the per-network public fullnode defaults as `DEFAULT_RPC_URLS` - useful when you need the default endpoint without building a full config.
+The options shape is exported as `MorseConfigOptions`, the accepted network names as the `Network` constant, and the per-network public fullnode defaults as `DEFAULT_RPC_URLS` (useful when you need the default endpoint without building a full config).
 
-`PackageId` and `RegistryId` are branded `string` types - compile-time guards that prevent passing one kind of Sui address where another is expected. Cast a raw hex string with the `toPackageId()` / `toRegistryId()` codec helpers.
+`PackageId` and `RegistryId` are branded `string` types: compile-time guards that prevent passing one kind of Sui address where another is expected. Cast a raw hex string with the `toPackageId()` / `toRegistryId()` codec helpers.
 
-For quilt-mode collections, the SDK also ships codecs for the 37-byte `QuiltPatchId` (`QUILT_PATCH_ID_LENGTH` = 37): `quiltPatchIdFromString` / `quiltPatchIdToString` convert between the URL-safe base64 string Walrus emits and the branded bytes, and `encodeQuiltPatchId` / `decodeQuiltPatchId` convert between the bytes and their structured parts (`quiltBlobId`, `version`, `startIndex`, `endIndex` - the `QuiltPatchIdParts` type).
+For quilt-mode collections, the SDK also ships codecs for the 37-byte `QuiltPatchId` (`QUILT_PATCH_ID_LENGTH` = 37): `quiltPatchIdFromString` / `quiltPatchIdToString` convert between the URL-safe base64 string Walrus emits and the branded bytes, and `encodeQuiltPatchId` / `decodeQuiltPatchId` convert between the bytes and their structured parts (`quiltBlobId`, `version`, `startIndex`, `endIndex`; the `QuiltPatchIdParts` type).
 
-## Server Setup
+## Server setup
 
-`RpcPublicationReader` provides read-only access to publications, collections, and entries via RPC - no keypair required.
+`RpcPublicationReader` provides read-only access to publications, collections, and entries via RPC. No keypair required.
 
 To set up a server-side client, create a testnet config, a gRPC client, a `KeypairAdapter` for signing transactions, and an `RpcPublicationReader` for querying on-chain data.
 
@@ -3055,7 +3043,7 @@ const reader = RpcPublicationReader.fromMorseConfig(config, client);
 
 `PRIVATE_KEY` must be a Bech32 `suiprivkey1...` string. Export it from your wallet's settings. Hex keys are not supported by `Ed25519Keypair.fromSecretKey`.
 
-## Browser Setup
+## Browser setup
 
 For browser apps, the SDK connects to the user's wallet extension (e.g. Slush, Suiet) instead of `KeypairAdapter`. The private key stays in the wallet and is never exposed to the SDK.
 
@@ -3087,7 +3075,7 @@ Build the SDK context once per connected account. `WalletStandardSigner.fromAcco
 
 > **WARNING: gRPC transport required**
 >
-> The SDK is typed against `SuiGrpcClient` from `@mysten/sui/grpc`, not the JSON-RPC `SuiClient` used by most Sui browser apps. `SuiGrpcClient` works in modern evergreen browsers without a proxy. JSON-RPC fallback is planned but has not shipped yet - environments that block gRPC must proxy through a gRPC-compatible RPC endpoint until then.
+> The SDK is typed against `SuiGrpcClient` from `@mysten/sui/grpc`, not the JSON-RPC `SuiClient` used by most Sui browser apps. `SuiGrpcClient` works in modern evergreen browsers without a proxy. JSON-RPC fallback is planned but has not shipped yet; environments that block gRPC must proxy through a gRPC-compatible RPC endpoint until then.
 
 ```typescript
 import {
@@ -3291,21 +3279,21 @@ function failedTransactionMessage(
 }
 ```
 
-Slush, Suiet, and Sui Wallet (Ed25519) are verified. Secp256k1, Secp256r1, and Passkey decoders ship but Walrus + Seal end-to-end behavior is unverified - fall back to Ed25519 if you see scheme-specific errors. ZkLogin is decoded but unverified; MultiSig is refused with `ConfigurationError` at `fromAccount` time. Wrap the call in try/catch and render unsupported accounts as product copy. 
+Slush, Suiet, and Sui Wallet (Ed25519) are verified. Secp256k1, Secp256r1, and Passkey decoders ship but Walrus + Seal end-to-end behavior is unverified. Fall back to Ed25519 if you see scheme-specific errors. ZkLogin is decoded but unverified; MultiSig is refused with `ConfigurationError` at `fromAccount` time. Wrap the call in try/catch and render unsupported accounts as product copy. 
 See the full table in the [SDK README compatibility section](https://github.com/arcadiasystems/morse-dcms/blob/main/morse-sdk/README.md#wallet-scheme-support).
 
-## Picking a Walrus Adapter
+## Picking a Walrus adapter
 
-The SDK ships two Walrus read adapters and two write adapters with different trade-offs. Read and write adapters can be mixed independently - for example, `DefaultWalrusWriteAdapter` (for the `addEntryFromBytes` optimization) with `HttpAggregatorReadAdapter` (for reliable testnet reads).
+The SDK ships two Walrus read adapters and two write adapters with different trade-offs. Read and write adapters can be mixed independently; for example, `DefaultWalrusWriteAdapter` (for the `addEntryFromBytes` optimization) with `HttpAggregatorReadAdapter` (for reliable testnet reads).
 
 | Pair | Trust | Transactions (upload + addEntry) | Storage paid by | Browser CORS |
 | --- | --- | --- | --- | --- |
 | `DefaultWalrusReadAdapter` + `DefaultWalrusWriteAdapter` | Trustless (direct fanout to ~30 storage nodes) | **2** with `addEntryFromBytes`, **3** if split | Consumer wallet (WAL + gas) | Spotty on testnet |
 | `HttpAggregatorReadAdapter` + `HttpPublisherWriteAdapter` | Operator-trusted | **1** (publisher uploads server-side; consumer only signs the `addEntry` transaction) | Publisher operator (WAL); consumer pays Sui gas only | Reliable (one endpoint) |
 
-### Default Adapter
+### Default adapter
 
-Best for CLI scripts, server-side dapps, and browser dapps that don't hit testnet CORS gaps. The flow-aware optimization (`addEntryFromBytes`) cuts transactions from 3 to 2.
+Best for CLI scripts, server-side dapps, and browser dapps that do not hit testnet CORS gaps. The flow-aware optimization (`addEntryFromBytes`) cuts transactions from 3 to 2.
 
 ```typescript
 import {
@@ -3323,9 +3311,9 @@ const walrusWriter = DefaultWalrusWriteAdapter.fromConfig(
 );
 ```
 
-### HTTP Adapter
+### HTTP adapter
 
-Best for browser dapps that need reliable CORS-friendly reads (one endpoint instead of ~30 nodes) and a "publisher pays storage" model where the user only signs the on-chain `addEntry`. Reads go through a trusted operator. To trust-but-verify, pass a `verifyBlobIntegrity` callback (type `WalrusBlobIntegrityCheck`) as a construction option - the adapter invokes it with the fetched bytes and the expected blob ID after every successful blob fetch, and it must throw on a mismatch (rewrapped as `TransportError`). Quilt patch reads are not verified.
+Best for browser dapps that need reliable CORS-friendly reads (one endpoint instead of ~30 nodes) and a "publisher pays storage" model where the user only signs the on-chain `addEntry`. Reads go through a trusted operator. To trust-but-verify, pass a `verifyBlobIntegrity` callback (type `WalrusBlobIntegrityCheck`) as a construction option. The adapter invokes it with the fetched bytes and the expected blob ID after every successful blob fetch, and it must throw on a mismatch (rewrapped as `TransportError`). Quilt patch reads are not verified.
 
 ```typescript
 import {
@@ -3351,9 +3339,9 @@ const walrusWriter = HttpPublisherWriteAdapter.fromConfig({
 
 > **WARNING: Use `HttpAggregatorReadAdapter` for reads on testnet**
 >
-> On testnet, `DefaultWalrusReadAdapter` (direct-node fanout with client-side verification) frequently fails right after an upload with `No valid blob metadata could be retrieved from any storage node`, even for healthy blobs - on both plain and encrypted reads. `HttpAggregatorReadAdapter` succeeds against the same blobs: it fetches from a single aggregator endpoint and skips client-side blob verification, so you trust the operator's bytes (pass `verifyBlobIntegrity` to add a check). Mainnet storage nodes are expected to be more reliable.
+> On testnet, `DefaultWalrusReadAdapter` (direct-node fanout with client-side verification) frequently fails right after an upload with `No valid blob metadata could be retrieved from any storage node`, even for healthy blobs, on both plain and encrypted reads. `HttpAggregatorReadAdapter` succeeds against the same blobs: it fetches from a single aggregator endpoint and skips client-side blob verification, so you trust the operator's bytes (pass `verifyBlobIntegrity` to add a check). Mainnet storage nodes are expected to be more reliable.
 
-## Verifying Setup
+## Verifying setup
 
 After completing either the server or browser setup above, confirm your connection works by listing publications owned by your address:
 
@@ -3362,11 +3350,11 @@ const { results } = await reader.listPublicationsOwnedBy(adapter.address);
 console.log(`Connected! Found ${results.length} publication(s).`);
 ```
 
-A successful call confirms the client, config, and RPC endpoint are wired correctly - even if the count is 0. Follow the [SDK Cookbooks](https://docs.morsecms.xyz/sdk-workflows.html) to create your first publication.
+A successful call confirms the client, config, and RPC endpoint are wired correctly, even if the count is 0. Follow the [SDK Cookbooks](https://docs.morsecms.xyz/sdk-workflows.html) to create your first publication.
 
-## Error Handling
+## Error handling
 
-Every error thrown by the SDK extends `MorseError`. Each error class carries structured properties, so errors can be handled by type without parsing message strings. All error classes are listed below - the first four are the most common.
+Every error thrown by the SDK extends `MorseError`. Each error class carries structured properties, so errors can be handled by type without parsing message strings. All error classes are listed below; the first four are the most common.
 
 | Class | Carries | Thrown when |
 | --- | --- | --- |
@@ -3409,9 +3397,9 @@ try {
 }
 ```
 
-### Formatting Errors for UI
+### Formatting errors for UI
 
-For end-user surfaces (toasts, dialogs, banners), `formatUserMessage(err)` translates any thrown value into a `FormattedError` - `{ title, description, cause }`. It accepts `unknown`, so it works directly in a catch block without narrowing first; non-`MorseError` throws fall back to a generic message, and the original error is preserved in `cause`.
+For end-user surfaces (toasts, dialogs, banners), `formatUserMessage(err)` translates any thrown value into a `FormattedError`: `{ title, description, cause }`. It accepts `unknown`, so it works directly in a catch block without narrowing first; non-`MorseError` throws fall back to a generic message, and the original error is preserved in `cause`.
 
 ```typescript
 import { formatUserMessage } from "@arcadiasystems/morse-sdk";
@@ -3426,7 +3414,7 @@ try {
 
 The copy uses the protocol's own terminology ("publication", "entry", "PublisherCap"). To translate into your app's domain (blog → post, gallery → image), narrow on the error class first and write your own message, then fall back to `formatUserMessage` for the rest.
 
-## Next Steps
+## Next steps
 
 - [SDK: Cookbooks](https://docs.morsecms.xyz/sdk-workflows.html): Create publications, add entries (plain + encrypted), read them back.
 - [Quick Start: SDK](https://docs.morsecms.xyz/quick-start-sdk.html): End-to-end script: create a publication, add an entry, and read it back.
@@ -3444,9 +3432,9 @@ The copy uses the protocol's own terminology ("publication", "entry", "Publisher
 
 | Requirement | Details | Purpose |
 | --- | --- | --- |
-| Bun or Node | v1.2+ / >= 18 | JavaScript runtime |
-| SUI + WAL tokens | [SUI faucet](https://faucet.sui.io/) / [Swap SUI for WAL](https://stake-wal.wal.app/?network=testnet) | Gas fees (SUI) and Walrus storage fees (WAL) |
-| Bech32 private key | A `suiprivkey1...` string | SDK authentication - export from your wallet's settings |
+| Bun or Node | v1.2+ / ≥ 18 | JavaScript runtime |
+| SUI + WAL tokens | [SUI faucet](https://faucet.sui.io/) · [Swap SUI for WAL](https://stake-wal.wal.app/?network=testnet) | Gas fees (SUI) and Walrus storage fees (WAL) |
+| Bech32 private key | A `suiprivkey1...` string | SDK authentication. Export from your wallet's settings |
 
 Make sure the SDK is installed and configured before continuing. See [SDK Setup](https://docs.morsecms.xyz/sdk-client-setup.html) for details.
 
@@ -3454,9 +3442,9 @@ Make sure the SDK is installed and configured before continuing. See [SDK Setup]
 
 Publications hold collections; collections hold entries; entries hold an append-only vector of revisions. Permission management lives in Sui; payloads live in Walrus.
 
-The examples below assume you've built a context as shown in [SDK Setup](https://docs.morsecms.xyz/sdk-client-setup.html). Browser flows carry a `signer` (via `WalletStandardSigner.fromAccount`) instead of `keypair`. Walrus adapters (`walrusWriter`, `walrusReader`) are constructed where needed - see [Picking a Walrus Adapter](https://docs.morsecms.xyz/sdk-client-setup.html#picking-a-walrus-adapter) for options.
+The examples below assume you have built a context as shown in [SDK Setup](https://docs.morsecms.xyz/sdk-client-setup.html). Browser flows carry a `signer` (via `WalletStandardSigner.fromAccount`) instead of `keypair`. Walrus adapters (`walrusWriter`, `walrusReader`) are constructed where needed. See [Picking a Walrus Adapter](https://docs.morsecms.xyz/sdk-client-setup.html#picking-a-walrus-adapter) for options.
 
-## Creating a Publication
+## Creating a publication
 
 Returns the publication's ID along with an `OwnerCap` for governance and a `PublisherCap` for write access, both transferred to the caller's address atomically.
 
@@ -3477,7 +3465,7 @@ try {
 }
 ```
 
-## Adding a Collection
+## Adding a collection
 
 `storageMode` is fixed at creation; switching the mode for the same collection name requires deleting and recreating.
 
@@ -3492,7 +3480,7 @@ await createCollection(adapter, config, {
 });
 ```
 
-## Adding an Entry
+## Adding an entry
 
 Uploads bytes to Walrus and attaches them as the first revision of a new entry in 2 transactions. Returns the assigned `entryId` (a monotonic `u64`) used to reference the entry in all subsequent operations.
 
@@ -3526,9 +3514,9 @@ const entry = await addEntryFromBytes(adapter, config, {
 >
 > If transaction 1 (register + upload) succeeds but transaction 2 (certify + add_entry) fails, the SDK throws `UncertifiedBlobError` carrying `blobObjectId` and `blobId`. The blob exists on storage nodes but remains uncertified and is released when the registration expires. Log the IDs or surface the error for debugging.
 
-See also: [CLI Cookbooks → Publishing Your First Entry](https://docs.morsecms.xyz/cli-workflows.html#publishing-your-first-entry)
+See also: [CLI Cookbooks → Publishing your first entry](https://docs.morsecms.xyz/cli-workflows.html#publishing-your-first-entry)
 
-## Encrypted Content
+## Encrypted content
 
 Encrypts content with Seal, uploads ciphertext to Walrus, and attaches it as the first revision of an encrypted entry in 2 transactions. Returns the same `entryId` as the plaintext path. Encrypted entries are always created as drafts and accessed via Seal decryption, not the public read path.
 
@@ -3574,13 +3562,13 @@ const result = await addEncryptedEntryFromBytes(adapter, config, {
 });
 ```
 
-`buildPublisherSealId` constructs the Seal identity from the publication ID and a random nonce. Each entry needs a fresh nonce - reusing a nonce produces the same identity. When creating a `SessionKey`, always pass `config.originalPackageId ?? config.packageId` as the package ID. Seal uses the original (genesis) package address, not the current upgrade address.
+`buildPublisherSealId` constructs the Seal identity from the publication ID and a random nonce. Each entry needs a fresh nonce; reusing a nonce produces the same identity. When creating a `SessionKey`, always pass `config.originalPackageId ?? config.packageId` as the package ID. Seal uses the original (genesis) package address, not the current upgrade address.
 
 > **WARNING: Encrypted entries are always created as drafts**
 >
-> `publishFromDraft` and `publishDirect` always write non-encrypted revisions - the contract hardcodes `encrypted=false` on the public path. For encrypted content, use `addEncryptedEntryFromBytes` / `appendEncryptedDraftRevision` and read via `seal.decrypt`.
+> `publishFromDraft` and `publishDirect` always write non-encrypted revisions; the contract hardcodes `encrypted=false` on the public path. For encrypted content, use `addEncryptedEntryFromBytes` / `appendEncryptedDraftRevision` and read via `seal.decrypt`.
 
-### Reading Encrypted Entries
+### Reading encrypted entries
 
 The full read flow for encrypted content combines entry metadata lookup, Walrus blob fetch, and Seal decryption. Decryption requires three things: a Seal `SessionKey` (built via wallet personal-message signature), the `sealId` bound to the revision, and a non-revoked `PublisherCap` ID.
 
@@ -3624,7 +3612,7 @@ const plaintext = await seal.decrypt(ciphertext, {
 console.log(new TextDecoder().decode(plaintext));
 ```
 
-### Encrypted Draft Revisions
+### Encrypted draft revisions
 
 After creating an encrypted entry with `addEncryptedEntryFromBytes`, use `appendEncryptedDraftRevision` to add subsequent encrypted revisions to the same entry. You encrypt and upload the blob yourself, then pass the `blobObjectId` to the SDK.
 
@@ -3668,9 +3656,9 @@ const revision = await appendEncryptedDraftRevision(adapter, config, {
 console.log("Revision", revision.revisionId, "appended");
 ```
 
-See also: [CLI Cookbooks → Encrypted Content](https://docs.morsecms.xyz/cli-workflows.html#encrypted-content)
+See also: [CLI Cookbooks → Encrypted content](https://docs.morsecms.xyz/cli-workflows.html#encrypted-content)
 
-## Reading It Back
+## Reading it back
 
 Single-object reads, paginated lists, and an async iterator for full-collection scans. The reader is gRPC-backed.
 
@@ -3715,15 +3703,15 @@ const revision = await reader.getRevision(
 
 > **WARNING: Use `HttpAggregatorReadAdapter` for reads on testnet**
 >
-> On testnet, `DefaultWalrusReadAdapter` (direct-node fanout) frequently fails right after an upload with `No valid blob metadata could be retrieved from any storage node`, even for healthy blobs. Use `HttpAggregatorReadAdapter` for reads instead - it routes through a single aggregator endpoint and succeeds against the same blobs, at the cost of skipping client-side blob verification. Mainnet storage nodes are expected to be more reliable. See [SDK Client Setup → Picking a Walrus Adapter](https://docs.morsecms.xyz/sdk-client-setup.html#picking-a-walrus-adapter).
+> On testnet, `DefaultWalrusReadAdapter` (direct-node fanout) frequently fails right after an upload with `No valid blob metadata could be retrieved from any storage node`, even for healthy blobs. Use `HttpAggregatorReadAdapter` for reads instead; it routes through a single aggregator endpoint and succeeds against the same blobs, at the cost of skipping client-side blob verification. Mainnet storage nodes are expected to be more reliable. See [SDK Client Setup → Picking a Walrus adapter](https://docs.morsecms.xyz/sdk-client-setup.html#picking-a-walrus-adapter).
 
 > **INFO: Ordering caveat**
 >
 > `listEntries` and `scanEntries` return entries in dynamic-field object-store order, not chronological order. Sort by `entry.id` if you need insertion order.
 
-### Publication and Cap Lookups
+### Publication and cap lookups
 
-Beyond entries, the reader resolves publications and the caps that control them - useful for dashboards ("which publications does this wallet own?") and for verifying delegated write access:
+Beyond entries, the reader resolves publications and the caps that control them, useful for dashboards ("which publications does this wallet own?") and for verifying delegated write access:
 
 ```typescript
 // Publication metadata: name, slug, collections.
@@ -3739,15 +3727,15 @@ const cap = await reader.getPublisherCap(created.publisherCapId);
 // cap.publicationId, cap.holder
 ```
 
-All list methods return one page per call - `EntryListPage`, `PublicationListPage`, and `PublisherCapListPage` - each with a `results` array and a `nextCursor` (`null` when exhausted). They accept `{ limit, cursor, signal }` options (default limit 50; the cursor is opaque - feed `nextCursor` back in to get the next page). `scanEntries` auto-paginates and takes `{ pageSize, signal }` instead. Single-object reads (`getPublication`, `getPublisherCap`, `getEntry`, `getRevision`) throw `NotFoundError` when the target does not exist.
+All list methods return one page per call (`EntryListPage`, `PublicationListPage`, and `PublisherCapListPage`), each with a `results` array and a `nextCursor` (`null` when exhausted). They accept `{ limit, cursor, signal }` options (default limit 50; the cursor is opaque: feed `nextCursor` back in to get the next page). `scanEntries` auto-paginates and takes `{ pageSize, signal }` instead. Single-object reads (`getPublication`, `getPublisherCap`, `getEntry`, `getRevision`) throw `NotFoundError` when the target does not exist.
 
-See also: [CLI Cookbooks → Reading It Back](https://docs.morsecms.xyz/cli-workflows.html#reading-it-back)
+See also: [CLI Cookbooks → Reading it back](https://docs.morsecms.xyz/cli-workflows.html#reading-it-back)
 
-## Publishing a New Revision
+## Publishing a new revision
 
-Append a new public revision directly, or stage a draft first and promote it. Revisions are append-only - existing revisions are never edited in place. Two heads track progress: `draftHead` (work in progress) and `publicHead` (the live version).
+Append a new public revision directly, or stage a draft first and promote it. Revisions are append-only; existing revisions are never edited in place. Two heads track progress: `draftHead` (work in progress) and `publicHead` (the live version).
 
-### Option A: Publish direct
+### Option A: publish direct
 
 Skip the draft stage and append a public revision in one step. Requires a pre-uploaded blob (use `uploadBlob` first).
 
@@ -3775,7 +3763,7 @@ const result = await publishDirect(adapter, config, {
 // result.revisionId is the index of the new public revision
 ```
 
-### Option B: Draft then publish
+### Option B: draft then publish
 
 Stage a draft revision (updates `draftHead` only), iterate on it, then promote to a public revision. Both steps require a pre-uploaded blob (use `uploadBlob` first). The promotion appends a fresh public revision; the draft blob is referenced for validation but not reused.
 
@@ -3820,11 +3808,11 @@ const published = await publishFromDraft(adapter, config, {
 });
 ```
 
-See also: [CLI Cookbooks → Publishing a New Revision](https://docs.morsecms.xyz/cli-workflows.html#publishing-a-new-revision)
+See also: [CLI Cookbooks → Publishing a new revision](https://docs.morsecms.xyz/cli-workflows.html#publishing-a-new-revision)
 
-## Delegating Write Access
+## Delegating write access
 
-Morse separates ownership (`OwnerCap`) from publishing (`PublisherCap`). The owner issues a cap bound to a co-author's address, granting them write access. Once issued, the co-author can publish entries using their own key. Revoking the cap causes further writes to abort on-chain. See [Access Control → Issuing Publisher Caps](https://docs.morsecms.xyz/access-control.html#issuing-publisher-caps) for details.
+Morse separates ownership (`OwnerCap`) from publishing (`PublisherCap`). The owner issues a cap bound to a co-author's address, granting them write access. Once issued, the co-author can publish entries using their own key. Revoking the cap causes further writes to abort on-chain. See [Access Control → Issuing publisher caps](https://docs.morsecms.xyz/access-control.html#issuing-publisher-caps) for details.
 
 ```typescript
 import {
@@ -3859,9 +3847,9 @@ await destroyPublisherCap(coAuthorAdapter, config, {
 >
 > A PublisherCap is bound to the `holder` address at issue time. Transferring the Sui object to a different address does NOT grant write rights. To rotate authority to a new address, destroy the old cap and issue a fresh one.
 
-See also: [CLI Cookbooks → Delegating Write Access](https://docs.morsecms.xyz/cli-workflows.html#delegating-write-access)
+See also: [CLI Cookbooks → Delegating write access](https://docs.morsecms.xyz/cli-workflows.html#delegating-write-access)
 
-## Transferring Ownership
+## Transferring ownership
 
 Transfer the `OwnerCap` to a new address. The recipient gains governance rights: issuing/revoking publisher caps and deleting the publication. Existing publisher caps remain usable until individually revoked.
 
@@ -3878,12 +3866,12 @@ await transferOwnership(adapter, config, {
 >
 > Once transferred, the original owner loses all governance rights immediately. The new owner could transfer back, but there is no built-in undo.
 
-See also: [CLI Cookbooks → Transferring Ownership](https://docs.morsecms.xyz/cli-workflows.html#transferring-ownership)
+See also: [CLI Cookbooks → Transferring ownership](https://docs.morsecms.xyz/cli-workflows.html#transferring-ownership)
 
-## Deleting and Tearing Down
+## Deleting and tearing down
 
-Deletion works bottom-up: remove entries first, then the collections, then the publication. The Move layer enforces this - deleting a non-empty collection or publication aborts on-chain. This assumes the caller still holds both a `PublisherCap` and the `OwnerCap`. 
-Entry IDs are permanently retired on deletion and never reused. See [Entries → Deleting an Entry](https://docs.morsecms.xyz/entries.html#deleting-an-entry) for details.
+Deletion works bottom-up: remove entries first, then the collections, then the publication. The Move layer enforces this: deleting a non-empty collection or publication aborts on-chain. This assumes the caller still holds both a `PublisherCap` and the `OwnerCap`. 
+Entry IDs are permanently retired on deletion and never reused. See [Entries → Deleting an entry](https://docs.morsecms.xyz/entries.html#deleting-an-entry) for details.
 
 ```typescript
 import {
@@ -3925,9 +3913,9 @@ await deletePublication(reader, adapter, config, {
 });
 ```
 
-See also: [CLI Cookbooks → Deleting and Tearing Down](https://docs.morsecms.xyz/cli-workflows.html#deleting-and-tearing-down)
+See also: [CLI Cookbooks → Deleting and tearing down](https://docs.morsecms.xyz/cli-workflows.html#deleting-and-tearing-down)
 
-## Entry Path Options
+## Entry path options
 
 The SDK provides two ways to publish content. `addEntryFromBytes` (and `addEncryptedEntryFromBytes` for encrypted content) handles upload and on-chain registration in one call and is the recommended default. For cases that need more control, use the split form: `uploadBlob` followed by `addEntry`.
 
@@ -3939,9 +3927,9 @@ The SDK provides two ways to publish content. `addEntryFromBytes` (and `addEncry
 | Decouple upload and add-entry (draft-then-attach UX) | `uploadBlob` at upload time, `addEntry` at publish time | 2 + 1 |
 | Server pre-uploads; browser only adds entries | `uploadBlob` (server), `addEntry` (browser) | 2 + 1 |
 
-### Split Upload Path
+### Split upload path
 
-When you need control over the upload step - for example, to retry blob registration independently or reuse a blob across entries - split the operation into two calls:
+When you need control over the upload step (for example, to retry blob registration independently or reuse a blob across entries), split the operation into two calls:
 
 ```ts
 import { addEntry, DefaultWalrusWriteAdapter } from "@arcadiasystems/morse-sdk";
@@ -3970,12 +3958,12 @@ const entry = await addEntry(adapter, config, {
 });
 ```
 
-`addEntryFromBytes` requires an adapter that implements `WalrusFlowCapable`, which combines the certify and add-entry steps into a single transaction. `DefaultWalrusWriteAdapter` supports this; the HTTP publisher adapter does not. Passing an incompatible adapter throws a `TransportError` before any I/O - use the split path (`uploadBlob` + `addEntry`) instead. To branch at runtime, use the `isWalrusFlowCapable(walrusWriter)` type guard, which detects the capability on any `WalrusWriteAdapter`.
+`addEntryFromBytes` requires an adapter that implements `WalrusFlowCapable`, which combines the certify and add-entry steps into a single transaction. `DefaultWalrusWriteAdapter` supports this; the HTTP publisher adapter does not. Passing an incompatible adapter throws a `TransportError` before any I/O. Use the split path (`uploadBlob` + `addEntry`) instead. To branch at runtime, use the `isWalrusFlowCapable(walrusWriter)` type guard, which detects the capability on any `WalrusWriteAdapter`.
 
-## Next Steps
+## Next steps
 
 - [CLI: Overview](https://docs.morsecms.xyz/cli-overview.html): Interactive command-line tool for managing publications, collections, and entries without writing code.
-- [Smart Contracts: Overview](https://docs.morsecms.xyz/contracts-overview.html): Architecture of the Morse Move package - modules, shared objects, and the on-chain data model.
+- [Smart Contracts: Overview](https://docs.morsecms.xyz/contracts-overview.html): Architecture of the Morse Move package: modules, shared objects, and the on-chain data model.
 
 
 ---
@@ -3990,11 +3978,11 @@ const entry = await addEntry(adapter, config, {
 >
 > Use [SDK Setup → morseConfig()](https://docs.morsecms.xyz/sdk-client-setup.html#morse-config) to get the current package ID, original ID, and registry ID. These values update automatically when the contract is upgraded.
 
-## Getting Started
+## Getting started
 
 Use `morseConfig()` from `@arcadiasystems/morse-sdk` to resolve the package and registry addresses, then construct PTBs with `tx.moveCall`. See the [Contract Reference](https://docs.morsecms.xyz/contracts-reference.html) for complete function signatures and struct definitions, and the [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html) for step-by-step recipes.
 
-## Package Structure
+## Package structure
 
 The package compiles three modules. Every public entry point lives in `publication::publication`; the other two modules define the data types and internal logic it builds on.
 
@@ -4004,7 +3992,7 @@ The package compiles three modules. Every public entry point lives in `publicati
 | `publication::collection` | `sources/collection.move` | Defines `Collection` and the storage-mode constant, manages the per-collection `Table<u64, Entry>`. |
 | `publication::entry` | `sources/entry.move` | Defines `Entry`, `EntryRevision`, and the `BlobRef` enum. Contains revision append and publish logic and access-policy validation. |
 
-## Struct Definitions
+## Struct definitions
 
 ### Publication module
 
@@ -4080,21 +4068,21 @@ public enum BlobRef has copy, drop, store {
 }
 ```
 
-## What PTBs Give You
+## What PTBs give you
 
-- **Full transaction control** — Compose multiple Move calls in a single PTB - create a publication, add a collection, and publish an entry atomically.
-- **No SDK abstraction layer** — Call the contract functions directly. Useful when the SDK doesn't expose a wrapper for your use case or when you need fine-grained control.
+- **Full transaction control** — Compose multiple Move calls in a single PTB: create a publication, add a collection, and publish an entry atomically.
+- **No SDK abstraction layer** — Call the contract functions directly. Useful when the SDK does not expose a wrapper for your use case or when you need fine-grained control.
 - **Custom batching** — Delete 50 entries, 3 collections, and a publication in one transaction. The SDK processes these sequentially; PTBs batch them.
 - **BCS encoding** — Pass Option<vector<u8>> and other Move types directly via @mysten/sui/bcs. Required for encrypted entries and quilt patches.
 
-## Known Limitations
+## Known limitations
 
-- **No encrypted publish path.** `publish_from_draft` and `publish_direct` hardcode `encrypted = false`. Encrypted content stays as drafts - see [Entries → Adding an Entry](https://docs.morsecms.xyz/entries.html#adding-an-entry) for the full lifecycle.
+- **No encrypted publish path.** `publish_from_draft` and `publish_direct` hardcode `encrypted = false`. Encrypted content stays as drafts. See [Entries → Adding an entry](https://docs.morsecms.xyz/entries.html#adding-an-entry) for the full lifecycle.
 - **Only the Publisher access policy is enforced.** The `Subscription` policy constant is defined but the approval entry point is not yet implemented.
 - **All blobs must be deletable.** The contract calls `blob.is_deletable()` and aborts if a permanent blob is passed.
 - **Single entry point module.** All public functions live in `publication::publication`. The other modules are internal.
 
-## Next Steps
+## Next steps
 
 - [Smart Contracts: Reference](https://docs.morsecms.xyz/contracts-reference.html): Complete function signatures, events, error codes, and constants.
 - [Smart Contracts: Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html): Step-by-step recipes for creating publications, managing entries, and encrypting content via PTBs.
@@ -4106,13 +4094,13 @@ public enum BlobRef has copy, drop, store {
 
 # Contract Reference
 
-> Complete reference for the Morse Move package - function signatures, struct definitions, events, error codes, and constants for the `publication`, `collection`, and `entry` modules.
+> Complete reference for the Morse Move package: function signatures, struct definitions, events, error codes, and constants for the `publication`, `collection`, and `entry` modules.
 
 ## Publication module
 
 All functions live in `publication::publication`. Functions that accept a `&PublisherCap` also validate that the cap is not revoked and that `cap.holder == ctx.sender()`.
 
-### Publication Lifecycle
+### Publication lifecycle
 
 | Function | Description |
 | --- | --- |
@@ -4120,14 +4108,14 @@ All functions live in `publication::publication`. Functions that accept a `&Publ
 | `share_publication(publication: Publication)` | Share the publication object. Call after `new_publication` in the same PTB. |
 | `delete_publication(registry: &mut PublicationRegistry, publication: Publication, owner_cap: OwnerCap)` | Requires `OwnerCap` (consumed). Delete a publication and release its slug. All collections must be empty first. |
 
-### Registry Queries
+### Registry queries
 
 | Function | Description |
 | --- | --- |
 | `contains_slug(registry: &PublicationRegistry, slug: String)` | Returns `bool`. Whether a slug is currently registered. |
 | `get_publication_id_by_slug(registry: &PublicationRegistry, slug: String)` | Returns `&ID`. Resolve a slug to its publication object ID. Aborts if not registered. |
 
-### Capability Management
+### Capability management
 
 | Function | Description |
 | --- | --- |
@@ -4137,14 +4125,14 @@ All functions live in `publication::publication`. Functions that accept a `&Publ
 | `destroy_publisher_cap(publication: &mut Publication, cap: PublisherCap, ctx: &mut TxContext)` | Requires `PublisherCap` (holder only, consumed). Surrender write access. If revoked, also removes cap from the denylist. |
 | `transfer_publisher_cap(cap: PublisherCap, recipient: address)` | `PublisherCap` is consumed. Transfer to another address. Does not change `holder` binding. |
 
-### Collection Management
+### Collection management
 
 | Function | Description |
 | --- | --- |
 | `create_collection(publication: &mut Publication, cap: &PublisherCap, name: String, storage_mode: u8, ctx: &mut TxContext)` | Requires `PublisherCap`. Add a named collection. `storage_mode`: `0` (blob) or `1` (quilt), immutable. Emits `CollectionAdded`. |
 | `delete_collection(publication: &mut Publication, cap: &PublisherCap, name: String, ctx: &mut TxContext)` | Requires `PublisherCap`. Remove a named collection. Entries must be empty. Emits `CollectionRemoved`. |
 
-### Entry Management
+### Entry management
 
 | Function | Description |
 | --- | --- |
@@ -4154,9 +4142,9 @@ All functions live in `publication::publication`. Functions that accept a `&Publ
 | `publish_collection_entry_from_draft(publication: &mut Publication, cap: &PublisherCap, collection_name: String, entry_id: u64, draft_revision_id: u64, blob: &Blob, quilt_patch_id: Option<vector<u8>>, content_type: String, ctx: &mut TxContext)` | Requires `PublisherCap`. Returns `u64` (revision index). Publish from a draft revision. Advances `public_head`. |
 | `publish_collection_entry_direct(publication: &mut Publication, cap: &PublisherCap, collection_name: String, entry_id: u64, blob: &Blob, quilt_patch_id: Option<vector<u8>>, content_type: String, ctx: &mut TxContext)` | Requires `PublisherCap`. Returns `u64` (revision index). Publish directly without a draft. Advances `public_head`. |
 
-## Seal Function
+## Seal function
 
-The Seal approval entry point is called by the Seal network during decryption - not by end users directly. It is declared as an `entry` function (not `public fun`).
+The Seal approval entry point is called by the Seal network during decryption, not by end users directly. It is declared as an `entry` function (not `public fun`).
 
 | Function | Description |
 | --- | --- |
@@ -4190,7 +4178,7 @@ These functions are defined in `publication::entry`. Getter functions that opera
 | `get_revision(entry: &Entry, revision_id: u64)` | Returns `&EntryRevision`. A specific revision by zero-based index. Aborts with `ERevisionNotFound` if out of bounds. |
 | `access_policy_public()` | Returns `u8` (`0`). The `ACCESS_PUBLIC` constant. |
 | `access_policy_publisher()` | Returns `u8` (`1`). The `ACCESS_PUBLISHER` constant. |
-| `access_policy_subscription()` | Returns `u8` (`2`). The `ACCESS_SUBSCRIPTION` constant. Reserved - not yet implemented. |
+| `access_policy_subscription()` | Returns `u8` (`2`). The `ACCESS_SUBSCRIPTION` constant. Reserved, not yet implemented. |
 
 ## Constants
 
@@ -4207,20 +4195,20 @@ These functions are defined in `publication::entry`. Getter functions that opera
 | `ACCESS_PUBLISHER` | `1` | `entry` | Publisher-gated encrypted access policy. |
 | `ACCESS_SUBSCRIPTION` | `2` | `entry` | Subscription-gated access policy (reserved for future use). |
 
-## Object Abilities
+## Object abilities
 
 | Type | Abilities | Notes |
 | --- | --- | --- |
-| `Publication` | `key` | Shared object. No `store` - prevents wrapping outside this module. |
+| `Publication` | `key` | Shared object. No `store`: prevents wrapping outside this module. |
 | `PublicationRegistry` | `key` | Shared singleton. Created by the package `init()` function at publish time. |
 | `OwnerCap` | `key` | Owned object. Transferable. Exactly one exists per publication. |
-| `PublisherCap` | `key` | Owned object. Holder-bound. Multiple can exist per publication. No `store` - cannot be fabricated externally. |
+| `PublisherCap` | `key` | Owned object. Holder-bound. Multiple can exist per publication. No `store`: cannot be fabricated externally. |
 | `Collection` | `store` | Wrapped value inside `Publication.collections` VecMap. |
 | `Entry` | `store, drop` | Wrapped value inside `Collection.entries` Table. Dropped automatically on deletion. |
 | `EntryRevision` | `store, drop` | Element of the `Entry.revisions` vector. Immutable after creation. |
-| `BlobRef` | `copy, drop, store` | Enum - either `Blob(ID)` or `QuiltPatch(vector<u8>)`. Copyable because it is a reference, not the blob itself. |
+| `BlobRef` | `copy, drop, store` | Enum: either `Blob(ID)` or `QuiltPatch(vector<u8>)`. Copyable because it is a reference, not the blob itself. |
 
-## Next Steps
+## Next steps
 
 - [Smart Contracts: Overview](https://docs.morsecms.xyz/contracts-overview.html): Package structure, struct definitions, capabilities, and known limitations.
 - [Smart Contracts: Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html): Step-by-step PTB recipes for publishing, encrypted entries, and cap management.
@@ -4238,9 +4226,9 @@ These functions are defined in `publication::entry`. Getter functions that opera
 
 | Requirement | Details | Purpose |
 | --- | --- | --- |
-| Bun or Node | v1.2+ / >= 18 | JavaScript runtime |
-| SUI + WAL tokens | [SUI faucet](https://faucet.sui.io/) / [Swap SUI for WAL](https://stake-wal.wal.app/?network=testnet) | Gas fees (SUI) and Walrus storage fees (WAL) |
-| Bech32 private key | A `suiprivkey1...` string | Transaction signing - export from your wallet's settings |
+| Bun or Node | v1.2+ / ≥ 18 | JavaScript runtime |
+| SUI + WAL tokens | [SUI faucet](https://faucet.sui.io/) · [Swap SUI for WAL](https://stake-wal.wal.app/?network=testnet) | Gas fees (SUI) and Walrus storage fees (WAL) |
+| Bech32 private key | A `suiprivkey1...` string | Transaction signing. Export from your wallet's settings |
 | Morse SDK | `@arcadiasystems/morse-sdk` | Provides `morseConfig()` for package ID, registry ID, and RPC URL |
 
 Make sure the SDK and its peer dependencies are installed before continuing. See [SDK Setup](https://docs.morsecms.xyz/sdk-client-setup.html) for the install command.
@@ -4284,9 +4272,9 @@ const seal = DefaultSealAdapter.fromMorseConfig(config, {}, client);
 >
 > Each code block is a standalone script. Running multiple blocks in the same process can cause stale object version errors because the SDK caches object versions between transactions. To avoid this, run each block as its own script or combine operations into a single PTB.
 
-## Creating a Publication
+## Creating a publication
 
-Creates a publication, shares it, and transfers the resulting capabilities to the caller in one atomic PTB. `new_publication` returns a tuple - destructure it as three separate transaction results. The slug is globally unique and immutable after creation.
+Creates a publication, shares it, and transfers the resulting capabilities to the caller in one atomic PTB. `new_publication` returns a tuple; destructure it as three separate transaction results. The slug is globally unique and immutable after creation.
 
 > **WARNING: OwnerCap and PublisherCap are `key`-only**
 >
@@ -4339,9 +4327,9 @@ const createdObjects = effects.changedObjects
 console.log("Created objects:", createdObjects);
 ```
 
-See also: [SDK Cookbooks → Creating a Publication](https://docs.morsecms.xyz/sdk-workflows.html#creating-a-publication)
+See also: [SDK Cookbooks → Creating a publication](https://docs.morsecms.xyz/sdk-workflows.html#creating-a-publication)
 
-## Adding a Collection
+## Adding a collection
 
 Collections are added to an existing publication. The storage mode is immutable after creation: `0` for blob mode and `1` for quilt mode. Use blob mode for growing content like posts; use quilt mode for small, rarely-changing content like config files.
 
@@ -4386,9 +4374,9 @@ tx.moveCall({
 await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 ```
 
-See also: [SDK Cookbooks → Adding a Collection](https://docs.morsecms.xyz/sdk-workflows.html#adding-a-collection)
+See also: [SDK Cookbooks → Adding a collection](https://docs.morsecms.xyz/sdk-workflows.html#adding-a-collection)
 
-## Adding an Entry
+## Adding an entry
 
 Upload content to Walrus first, then pass the resulting Blob object ID to `add_entry_to_collection`. The `blob` argument is a reference to a Walrus Blob Sui object (`&Blob`), not a blob ID hash. Only deletable blobs are accepted. For blob-mode collections, pass `None` for `quilt_patch_id` using BCS serialization as shown below.
 
@@ -4428,13 +4416,13 @@ await client.signAndExecuteTransaction({
 });
 ```
 
-See also: [SDK Cookbooks → Adding an Entry](https://docs.morsecms.xyz/sdk-workflows.html#adding-an-entry)
+See also: [SDK Cookbooks → Adding an entry](https://docs.morsecms.xyz/sdk-workflows.html#adding-an-entry)
 
-## Publishing a New Revision
+## Publishing a new revision
 
 Revisions are appended to an existing entry. Two paths are available: publish directly in one call, or stage a draft first and promote it.
 
-### Option A: Publish Direct
+### Option A: publish direct
 
 Append a non-encrypted public revision in a single call, bypassing the draft stage. Advances `public_head` immediately.
 
@@ -4466,9 +4454,9 @@ tx.moveCall({
 await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 ```
 
-### Option B: Draft Then Publish
+### Option B: draft then publish
 
-Stage a draft revision first (advances `draft_head` only), then promote it to a public revision. The published revision takes a fresh blob - `draft_revision_id` is used only to validate the draft exists on-chain.
+Stage a draft revision first (advances `draft_head` only), then promote it to a public revision. The published revision takes a fresh blob; `draft_revision_id` is used only to validate the draft exists on-chain.
 
 ```typescript
 const ENTRY_ID = 0; // u64 entry ID returned by add_entry_to_collection
@@ -4522,9 +4510,9 @@ tx.moveCall({
 await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 ```
 
-See also: [SDK Cookbooks → Publishing a New Revision](https://docs.morsecms.xyz/sdk-workflows.html#publishing-a-new-revision)
+See also: [SDK Cookbooks → Publishing a new revision](https://docs.morsecms.xyz/sdk-workflows.html#publishing-a-new-revision)
 
-## Encrypted Content
+## Encrypted content
 
 Encrypted entries require `encrypted=true`, `access_policy=1` (Publisher), and a Seal identity in `seal_id`. Encrypt content with [Seal](https://docs.seal.mystenlabs.com/) first, then upload the ciphertext to Walrus. The Seal identity is a `vector<u8>`: `[publication_id_bytes (32)] || [0x01] || [nonce]`. Each entry should use a fresh nonce.
 
@@ -4576,17 +4564,17 @@ await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 
 > **WARNING: Encrypted entries are always created as drafts**
 >
-> The publish functions hardcode `encrypted=false` on the public path - they cannot promote encrypted content to a public head. Read encrypted entries via `seal.decrypt` using the `sealId` stored in the revision metadata.
+> The publish functions hardcode `encrypted=false` on the public path; they cannot promote encrypted content to a public head. Read encrypted entries via `seal.decrypt` using the `sealId` stored in the revision metadata.
 
-See also: [SDK Cookbooks → Encrypted Content](https://docs.morsecms.xyz/sdk-workflows.html#encrypted-content)
+See also: [SDK Cookbooks → Encrypted content](https://docs.morsecms.xyz/sdk-workflows.html#encrypted-content)
 
-## Delegating Write Access
+## Delegating write access
 
 The owner issues `PublisherCap` objects to grant write access to co-authors. Revocation adds the cap ID to an on-chain denylist; all subsequent writes using that cap abort with `EPublisherCapRevoked`. See [Access Control](https://docs.morsecms.xyz/access-control.html) for the full capability model.
 
 ### Issuing a PublisherCap
 
-Only the `OwnerCap` holder can issue new caps. The cap's `holder` field is fixed at issuance - the bound address is what grants write rights, not object ownership.
+Only the `OwnerCap` holder can issue new caps. The cap's `holder` field is fixed at issuance; the bound address is what grants write rights, not object ownership.
 
 ```typescript
 const PUBLICATION_ID = "0xPUBLICATION_ID";
@@ -4631,7 +4619,7 @@ console.log("Issued PublisherCap:", publisherCapId);
 
 ### Revoking a PublisherCap
 
-Revocation adds the cap's ID to an on-chain denylist. The physical object is not consumed - only the cap's ID is passed via `tx.pure.id`. The holder retains the object but any subsequent write attempt aborts with `EPublisherCapRevoked`.
+Revocation adds the cap's ID to an on-chain denylist. The physical object is not consumed; only the cap's ID is passed via `tx.pure.id`. The holder retains the object but any subsequent write attempt aborts with `EPublisherCapRevoked`.
 
 ```typescript
 const PUBLISHER_CAP_ID_TO_REVOKE = "0xCAP_ID";
@@ -4667,11 +4655,11 @@ tx.moveCall({
 await client.signAndExecuteTransaction({ transaction: tx, signer: coAuthorKeypair });
 ```
 
-See also: [SDK Cookbooks → Delegating Write Access](https://docs.morsecms.xyz/sdk-workflows.html#delegating-write-access)
+See also: [SDK Cookbooks → Delegating write access](https://docs.morsecms.xyz/sdk-workflows.html#delegating-write-access)
 
-## Transferring Ownership
+## Transferring ownership
 
-Transfer the `OwnerCap` to a new address. The recipient gains full governance rights: issuing and revoking publisher caps, deleting the publication, and transferring ownership again. Because `OwnerCap` is `key`-only (no `store`), you must use the typed `transfer_owner_cap` wrapper - `tx.transferObjects` will not work.
+Transfer the `OwnerCap` to a new address. The recipient gains full governance rights: issuing and revoking publisher caps, deleting the publication, and transferring ownership again. Because `OwnerCap` is `key`-only (no `store`), you must use the typed `transfer_owner_cap` wrapper; `tx.transferObjects` will not work.
 
 ```typescript
 const NEW_OWNER = "0xNEW_OWNER_ADDRESS";
@@ -4691,13 +4679,13 @@ await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 >
 > Once transferred, the original owner loses all governance rights immediately. The new owner could transfer back, but there is no built-in undo.
 
-See also: [SDK Cookbooks → Transferring Ownership](https://docs.morsecms.xyz/sdk-workflows.html#transferring-ownership)
+See also: [SDK Cookbooks → Transferring ownership](https://docs.morsecms.xyz/sdk-workflows.html#transferring-ownership)
 
-## Deleting and Tearing Down
+## Deleting and tearing down
 
 Deletion is strictly bottom-up. The Move layer enforces this: `delete_collection` calls `table::destroy_empty` on the entries table and aborts if any entries remain. `delete_publication` calls `collections.destroy_empty()` and aborts if any collections remain. Entry IDs are permanently retired on deletion and never reused.
 
-### Delete Entries
+### Delete entries
 
 ```typescript
 // Delete all entries from both collections in a single PTB.
@@ -4723,7 +4711,7 @@ tx.moveCall({
 await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 ```
 
-### Delete a Collection
+### Delete a collection
 
 The collection must be empty (all entries deleted) before this call succeeds.
 
@@ -4756,7 +4744,7 @@ tx.moveCall({
 await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 ```
 
-### Delete a Publication
+### Delete a publication
 
 Requires the `OwnerCap`. All collections must be deleted first. Both the publication object and the `OwnerCap` are consumed. The slug is released from the registry and becomes available for reuse.
 
@@ -4773,7 +4761,7 @@ tx.moveCall({
 await client.signAndExecuteTransaction({ transaction: tx, signer: keypair });
 ```
 
-See also: [SDK Cookbooks → Deleting and Tearing Down](https://docs.morsecms.xyz/sdk-workflows.html#deleting-and-tearing-down)
+See also: [SDK Cookbooks → Deleting and tearing down](https://docs.morsecms.xyz/sdk-workflows.html#deleting-and-tearing-down)
 
 ## Troubleshooting
 
@@ -4792,7 +4780,7 @@ Move aborts surface as `MoveAbort` errors in the RPC response with a module name
 | `12` | `ESealInvalidId` | `publication` | The Seal identity prefix does not match the publication's on-chain ID bytes. |
 | `13` | `ESealWrongPolicyTag` | `publication` | The byte at position 32 of the Seal identity is not `0x01` (the publisher policy tag). |
 
-## Next Steps
+## Next steps
 
 - [CLI: Overview](https://docs.morsecms.xyz/cli-overview.html): Install the CLI and manage publications, collections, and entries from the terminal.
 - [SDK: Overview](https://docs.morsecms.xyz/sdk-overview.html): TypeScript client for building custom integrations and automating Morse operations.
@@ -4818,7 +4806,7 @@ Move aborts surface as `MoveAbort` errors in the RPC response with a module name
 
 ## C
 
-**[Capability](https://docs.morsecms.xyz/access-control.html)** — A Move object that proves authorization to perform a specific action. Morse has two capability types: `OwnerCap` (admin authority) and `PublisherCap` (write authority). Capabilities cannot be fabricated - they can only be issued by the protocol.
+**[Capability](https://docs.morsecms.xyz/access-control.html)** — A Move object that proves authorization to perform a specific action. Morse has two capability types: `OwnerCap` (admin authority) and `PublisherCap` (write authority). Capabilities cannot be fabricated; they can only be issued by the protocol.
 
 **CMS** — Content Management System. Software for creating, organizing, and publishing structured digital content. Morse implements a decentralized, headless CMS protocol where permission management lives on-chain rather than in a centralized backend.
 
@@ -4828,7 +4816,7 @@ Move aborts surface as `MoveAbort` errors in the RPC response with a module name
 
 ## D
 
-**dCMS** — Decentralized Content Management System - the category Morse belongs to. Publication identity, authorization, and state transitions are governed on-chain; payloads are stored off-chain in decentralized storage (Walrus).
+**dCMS** — Decentralized Content Management System, the category Morse belongs to. Publication identity, authorization, and state transitions are governed on-chain; payloads are stored off-chain in decentralized storage (Walrus).
 
 **[Denylist](https://docs.morsecms.xyz/access-control.html#the-denylist-model)** — The revocation model used for PublisherCaps. A `Table<ID, bool>` on each publication stores IDs of revoked caps. Issuance writes nothing to the table; only revocations write. This optimizes for the common case where revocations never occur.
 
@@ -4840,17 +4828,17 @@ Move aborts surface as `MoveAbort` errors in the RPC response with a module name
 
 **[Entry](https://docs.morsecms.xyz/entries.html#entry-structure)** — A single content unit within a collection. Holds a name, an immutable revision vector, and two head pointers. Identified by a stable monotonic `entry_id` within its collection.
 
-**[Entry ID](https://docs.morsecms.xyz/entries.html#entry-ids)** — A `u64` assigned to an entry when added to a collection. Values start at `0` and increment monotonically. IDs are never reused after deletion - stable for external references.
+**[Entry ID](https://docs.morsecms.xyz/entries.html#entry-ids)** — A `u64` assigned to an entry when added to a collection. Values start at `0` and increment monotonically. IDs are never reused after deletion (stable for external references).
 
 **[EntryRevision](https://docs.morsecms.xyz/entries.html#revisions)** — The Move struct that stores a single revision's data: `blob_ref`, `content_type`, `encrypted`, `access_policy`, `seal_id`, and `author`. Has `store, drop` abilities. Stored in an entry's `revisions` vector.
 
-**Epoch** — A Walrus storage duration unit - roughly **one day on testnet** (two weeks on mainnet). When uploading a blob, the `epochs` parameter controls how long the data is available on the Walrus network; expired blobs can be renewed before their deadline. Passed as `--epochs <n>` in the CLI or `epochs: number` in the SDK.
+**Epoch** — A Walrus storage duration unit, roughly **one day on testnet** (two weeks on mainnet). When uploading a blob, the `epochs` parameter controls how long the data is available on the Walrus network; expired blobs can be renewed before their deadline. Passed as `--epochs <n>` in the CLI or `epochs: number` in the SDK.
 
 **Events** — On-chain event structs emitted by the Morse contracts during state transitions. All have `copy, drop` abilities. Includes `PublicationCreated`, `PublicationDeleted`, `SlugRegistered`, `SlugReleased`, `PublisherCapIssued`, `PublisherCapRevoked`, `CollectionAdded`, and `CollectionRemoved`. See the Events tables on [Publications](https://docs.morsecms.xyz/publications.html#events), [Collections](https://docs.morsecms.xyz/collections.html#events), and [Entries](https://docs.morsecms.xyz/entries.html#events).
 
 ## G
 
-**gRPC** — A high-performance RPC framework used by `SuiGrpcClient` from `@mysten/sui/grpc`. The Morse SDK requires gRPC transport for all Sui interactions. Works in modern browsers without a proxy. See [SDK Overview → Known Limitations](https://docs.morsecms.xyz/sdk-overview.html#known-limitations) for JSON-RPC fallback status.
+**gRPC** — A high-performance RPC framework used by `SuiGrpcClient` from `@mysten/sui/grpc`. The Morse SDK requires gRPC transport for all Sui interactions. Works in modern browsers without a proxy. See [SDK Overview → Known limitations](https://docs.morsecms.xyz/sdk-overview.html#known-limitations) for JSON-RPC fallback status.
 
 ## H
 
@@ -4860,7 +4848,7 @@ Move aborts surface as `MoveAbort` errors in the RPC response with a module name
 
 ## I
 
-**Indexer** — The off-chain service that listens to on-chain events and builds a read-optimized index of publications, collections, and entries. Currently planned. See [How Morse Works → Off-Chain Services](https://docs.morsecms.xyz/core-concepts.html#off-chain-services).
+**Indexer** — The off-chain service that listens to on-chain events and builds a read-optimized index of publications, collections, and entries. Currently planned. See [How Morse Works → Off-chain services](https://docs.morsecms.xyz/core-concepts.html#off-chain-services).
 
 ## M
 
@@ -4870,7 +4858,7 @@ Move aborts surface as `MoveAbort` errors in the RPC response with a module name
 
 ## O
 
-**[OwnerCap](https://docs.morsecms.xyz/access-control.html#ownercap)** — The admin capability for a publication. Exactly one exists per publication. Grants authority to issue and revoke publisher caps, delete the publication, and transfer ownership. Has `key` ability only - transferable via `transfer_owner_cap`.
+**[OwnerCap](https://docs.morsecms.xyz/access-control.html#ownercap)** — The admin capability for a publication. Exactly one exists per publication. Grants authority to issue and revoke publisher caps, delete the publication, and transfer ownership. Has `key` ability only. Transferable via `transfer_owner_cap`.
 
 ## P
 
@@ -4882,7 +4870,7 @@ Move aborts surface as `MoveAbort` errors in the RPC response with a module name
 
 **[PublisherCap](https://docs.morsecms.xyz/access-control.html#publishercap)** — The write capability for a publication. Many can exist per publication. Grants authority to create/delete collections and entries, append drafts, and publish content. Bound to a `holder` address. Issued by the owner; revocable by the owner.
 
-**PTB** — Programmable Transaction Block - Sui's composable transaction format. Multiple operations can be combined into a single atomic transaction. The Morse protocol uses pure creation functions that return objects for callers to compose in PTBs.
+**PTB** — Programmable Transaction Block, Sui's composable transaction format. Multiple operations can be combined into a single atomic transaction. The Morse protocol uses pure creation functions that return objects for callers to compose in PTBs.
 
 **[Policy Tag](https://docs.morsecms.xyz/access-control.html#seal-identity-format)** — A single byte in a Seal identity that identifies which access policy the identity targets. Currently only `0x01` (publisher) is defined. Allows future policy types to coexist within the same publication namespace.
 
@@ -4894,11 +4882,11 @@ Move aborts surface as `MoveAbort` errors in the RPC response with a module name
 
 ## R
 
-**[Revision](https://docs.morsecms.xyz/entries.html#revisions)** — An immutable version of an entry at a point in time. Stored in the entry's `revisions: vector<EntryRevision>`. Each revision records a `BlobRef`, content type, encryption state, access policy, optional Seal identity, and author address. Revisions are never mutated - edits append new ones.
+**[Revision](https://docs.morsecms.xyz/entries.html#revisions)** — An immutable version of an entry at a point in time. Stored in the entry's `revisions: vector<EntryRevision>`. Each revision records a `BlobRef`, content type, encryption state, access policy, optional Seal identity, and author address. Revisions are never mutated; edits append new ones.
 
 **[Revision ID](https://docs.morsecms.xyz/entries.html#revisions)** — The index of a revision within an entry's `revisions` vector. Starts at `0`. Returned by all revision-appending functions. Used to reference a specific revision in `publish_collection_entry_from_draft`.
 
-**[Revocation](https://docs.morsecms.xyz/access-control.html#revoking-publisher-caps)** — The act of adding a `PublisherCap`'s object ID to a publication's denylist via `revoke_publisher_cap`. Immediate effect - the next write attempt using the revoked cap will abort. Historical content is unaffected.
+**[Revocation](https://docs.morsecms.xyz/access-control.html#revoking-publisher-caps)** — The act of adding a `PublisherCap`'s object ID to a publication's denylist via `revoke_publisher_cap`. Immediate effect: the next write attempt using the revoked cap will abort. Historical content is unaffected.
 
 ## S
 
@@ -4922,7 +4910,7 @@ Move aborts surface as `MoveAbort` errors in the RPC response with a module name
 
 **WAL** — The utility token of the Walrus decentralized storage network. WAL is used to pay for blob storage and is separate from SUI (the gas token for Sui transactions).
 
-**Walrus** — MystenLabs' decentralized blob storage network integrated with Sui. Morse stores all content payloads in Walrus - the contracts hold references (`BlobRef`), not the raw bytes. Walrus is format-agnostic; payload interpretation is the client's responsibility.
+**Walrus** — MystenLabs' decentralized blob storage network integrated with Sui. Morse stores all content payloads in Walrus; the contracts hold references (`BlobRef`), not the raw bytes. Walrus is format-agnostic; payload interpretation is the client's responsibility.
 
 **[Walrus Blob](https://docs.morsecms.xyz/entries.html#walrus-blob-requirements)** — A Sui object (`walrus::blob::Blob`) representing a payload stored in the Walrus network. Production Morse write paths require a reference to this object (not just the blob ID) so the contract can verify the blob is deletable.
 
@@ -4933,19 +4921,19 @@ Move aborts surface as `MoveAbort` errors in the RPC response with a module name
 
 # Use Morse with AI
 
-> Morse publishes its documentation in machine-readable formats and ships agent-operable tooling, so AI coding agents can learn the protocol from current context — and then run the entire backend themselves.
+> Morse publishes its documentation in machine-readable formats and ships agent-operable tooling, so AI coding agents can learn the protocol from current context, and then run the entire backend themselves.
 
-## Machine-Readable Docs
+## Machine-readable docs
 
-Every page on this site is available in three agent-friendly forms. No scraping, no HTML parsing — just Markdown.
+Every page on this site is available in three agent-friendly forms. No scraping, no HTML parsing, just Markdown.
 
 | Format | URL | Use it for |
 | --- | --- | --- |
 | **llms.txt** | [`/llms.txt`](https://docs.morsecms.xyz/llms.txt) | Compact index of all pages with one-line descriptions. Point an agent here first so it can pick which pages to read. |
 | **llms-full.txt** | [`/llms-full.txt`](https://docs.morsecms.xyz/llms-full.txt) | The complete documentation concatenated into a single Markdown file. One fetch gives an agent everything. |
-| **Markdown twins** | `/<page>.md` | Every page has a Markdown version at the same URL with `.md` instead of `.html` — e.g. [`/entries.md`](https://docs.morsecms.xyz/entries.md). |
+| **Markdown twins** | `/<page>.md` | Every page has a Markdown version at the same URL with `.md` instead of `.html` (e.g. [`/entries.md`](https://docs.morsecms.xyz/entries.md)). |
 
-## Prime a Coding Agent
+## Prime a coding agent
 
 Paste one line into your agent to load the full Morse context:
 
@@ -4972,24 +4960,24 @@ curl -s https://docs.morsecms.xyz/llms-full.txt
 >
 > Add the prime-your-agent prompt to your project's `CLAUDE.md`, `AGENTS.md`, or Cursor rules so every session starts with accurate Morse context instead of guesses.
 
-## Copy Any Page for AI
+## Copy any page for AI
 
 Each docs page has a **Copy page** button (top right of the content area) with four actions:
 
-- **Copy page as Markdown** — puts the page's Markdown twin on your clipboard, ready to paste into any assistant.
-- **View as Markdown** — opens the raw `.md` version in a new tab.
-- **Open in ChatGPT / Open in Claude** — opens the assistant with a prompt that references this page and the full docs.
+- **Copy page as Markdown**: puts the page's Markdown twin on your clipboard, ready to paste into any assistant.
+- **View as Markdown**: opens the raw `.md` version in a new tab.
+- **Open in ChatGPT / Open in Claude**: opens the assistant with a prompt that references this page and the full docs.
 
 There is also **Ask AI** in the header (or press `⌘I`): type a question and it opens Claude or ChatGPT pre-loaded with the entire Morse documentation as context.
 
-## Agent-First by Design
+## Agent-first by design
 
-Morse isn't just documented for agents — it is *operable* by them. There is no dashboard signup, no API-key console, no human-only provisioning step anywhere in the protocol. Everything is a CLI command, an SDK call, or a transaction:
+Morse is not just documented for agents; it is *operable* by them. There is no dashboard signup, no API-key console, no human-only provisioning step anywhere in the protocol. Everything is a CLI command, an SDK call, or a transaction:
 
-- **Provision from the terminal** — `morse init`, `morse publication create`, `morse entry add`: a coding agent can go from nothing to published content without leaving the shell. See the [CLI quick start](https://docs.morsecms.xyz/quick-start-cli.html).
-- **Script it with the SDK** — `@arcadiasystems/morse-sdk` exposes the same operations as typed TypeScript with structured errors, ideal for agent-authored automation. See the [SDK quick start](https://docs.morsecms.xyz/quick-start-sdk.html).
-- **Verify on-chain** — every mutation returns a transaction digest an agent can check. State is queryable from the contracts directly; no opaque backend to trust. See [Smart Contracts](https://docs.morsecms.xyz/contracts-overview.html).
-- **Deterministic auth** — capability objects (`OwnerCap`, `PublisherCap`) make permissions explicit and inspectable, so an agent always knows what it is allowed to do. See [Access Control](https://docs.morsecms.xyz/access-control.html).
+- **Provision from the terminal**: with `morse init`, `morse publication create` and `morse entry add`, a coding agent can go from nothing to published content without leaving the shell. See the [CLI quick start](https://docs.morsecms.xyz/quick-start-cli.html).
+- **Script it with the SDK**: `@arcadiasystems/morse-sdk` exposes the same operations as typed TypeScript with structured errors, ideal for agent-authored automation. See the [SDK quick start](https://docs.morsecms.xyz/quick-start-sdk.html).
+- **Verify on-chain**: every mutation returns a transaction digest an agent can check. State is queryable from the contracts directly; no opaque backend to trust. See [Smart Contracts](https://docs.morsecms.xyz/contracts-overview.html).
+- **Deterministic auth**: capability objects (`OwnerCap`, `PublisherCap`) make permissions explicit and inspectable, so an agent always knows what it is allowed to do. See [Access Control](https://docs.morsecms.xyz/access-control.html).
 
 ```bash
 # A complete agent-driven publishing flow
@@ -5003,9 +4991,9 @@ morse entry add "hello" --file ./post.json  # payload to Walrus, proof on Sui
 morse entry get "hello"                     # read it back, verified
 ```
 
-## Feedback Loop
+## Feedback loop
 
-If these docs are stale, missing, or confusing — for you or your agent — use the **Was this helpful?** control at the bottom of any page, or open an issue directly:
+If these docs are stale, missing, or confusing (for you or your agent), use the **Was this helpful?** control at the bottom of any page, or open an issue directly:
 
-- [File docs feedback](https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs-feedback) — include the page URL and what was wrong.
-- [Suggest changes](https://github.com/arcadiasystems/morse-dcms) — every page footer links to its source for direct edits.
+- [File docs feedback](https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs-feedback): include the page URL and what was wrong.
+- [Suggest changes](https://github.com/arcadiasystems/morse-dcms): every page footer links to its source for direct edits.

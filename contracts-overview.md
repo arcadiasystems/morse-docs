@@ -9,11 +9,11 @@
 >
 > Use [SDK Setup → morseConfig()](https://docs.morsecms.xyz/sdk-client-setup.html#morse-config) to get the current package ID, original ID, and registry ID. These values update automatically when the contract is upgraded.
 
-## Getting Started
+## Getting started
 
 Use `morseConfig()` from `@arcadiasystems/morse-sdk` to resolve the package and registry addresses, then construct PTBs with `tx.moveCall`. See the [Contract Reference](https://docs.morsecms.xyz/contracts-reference.html) for complete function signatures and struct definitions, and the [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html) for step-by-step recipes.
 
-## Package Structure
+## Package structure
 
 The package compiles three modules. Every public entry point lives in `publication::publication`; the other two modules define the data types and internal logic it builds on.
 
@@ -23,7 +23,7 @@ The package compiles three modules. Every public entry point lives in `publicati
 | `publication::collection` | `sources/collection.move` | Defines `Collection` and the storage-mode constant, manages the per-collection `Table<u64, Entry>`. |
 | `publication::entry` | `sources/entry.move` | Defines `Entry`, `EntryRevision`, and the `BlobRef` enum. Contains revision append and publish logic and access-policy validation. |
 
-## Struct Definitions
+## Struct definitions
 
 ### Publication module
 
@@ -99,21 +99,21 @@ public enum BlobRef has copy, drop, store {
 }
 ```
 
-## What PTBs Give You
+## What PTBs give you
 
-- **Full transaction control** — Compose multiple Move calls in a single PTB - create a publication, add a collection, and publish an entry atomically.
-- **No SDK abstraction layer** — Call the contract functions directly. Useful when the SDK doesn't expose a wrapper for your use case or when you need fine-grained control.
+- **Full transaction control** — Compose multiple Move calls in a single PTB: create a publication, add a collection, and publish an entry atomically.
+- **No SDK abstraction layer** — Call the contract functions directly. Useful when the SDK does not expose a wrapper for your use case or when you need fine-grained control.
 - **Custom batching** — Delete 50 entries, 3 collections, and a publication in one transaction. The SDK processes these sequentially; PTBs batch them.
 - **BCS encoding** — Pass Option<vector<u8>> and other Move types directly via @mysten/sui/bcs. Required for encrypted entries and quilt patches.
 
-## Known Limitations
+## Known limitations
 
-- **No encrypted publish path.** `publish_from_draft` and `publish_direct` hardcode `encrypted = false`. Encrypted content stays as drafts - see [Entries → Adding an Entry](https://docs.morsecms.xyz/entries.html#adding-an-entry) for the full lifecycle.
+- **No encrypted publish path.** `publish_from_draft` and `publish_direct` hardcode `encrypted = false`. Encrypted content stays as drafts. See [Entries → Adding an entry](https://docs.morsecms.xyz/entries.html#adding-an-entry) for the full lifecycle.
 - **Only the Publisher access policy is enforced.** The `Subscription` policy constant is defined but the approval entry point is not yet implemented.
 - **All blobs must be deletable.** The contract calls `blob.is_deletable()` and aborts if a permanent blob is passed.
 - **Single entry point module.** All public functions live in `publication::publication`. The other modules are internal.
 
-## Next Steps
+## Next steps
 
 - [Smart Contracts: Reference](https://docs.morsecms.xyz/contracts-reference.html): Complete function signatures, events, error codes, and constants.
 - [Smart Contracts: Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html): Step-by-step recipes for creating publications, managing entries, and encrypting content via PTBs.

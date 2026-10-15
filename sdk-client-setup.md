@@ -12,15 +12,15 @@
 | Package | Version | Required |
 | --- | --- | --- |
 | `@arcadiasystems/morse-sdk` | 0.4.x | (this package) |
-| `@mysten/sui` | >=2.16.2 <2.17.0 | Yes - types, gRPC client, keypairs |
-| `@mysten/walrus` | >=1.1.6 <1.2.0 | Optional - for default Walrus adapters (read + write) |
-| `@mysten/seal` | >=1.1.3 <1.2.0 | Optional - for encryption |
+| `@mysten/sui` | >=2.16.2 <2.17.0 | Yes: types, gRPC client, keypairs |
+| `@mysten/walrus` | >=1.1.6 <1.2.0 | Optional: for default Walrus adapters (read + write) |
+| `@mysten/seal` | >=1.1.3 <1.2.0 | Optional: for encryption |
 
 > **WARNING: Pin to the verified minor version**
 >
 > Mysten packages may ship breaking changes within the same major version. When a new version like `@mysten/walrus@1.2.0` is released, `morse-sdk` needs a coordinated bump and re-verification. Use `bun add @arcadiasystems/morse-sdk@~0.4.0` to lock to patch-level updates only.
 
-The verified matrix is also exported programmatically as `TESTED_SUBSTRATE` - a frozen record of the tested `@mysten/sui`, `@mysten/seal`, and `@mysten/walrus` versions plus `verifiedOn` and `suiNetwork`. Log it during initialization or compare it against bundler-resolved versions in CI:
+The verified matrix is also exported programmatically as `TESTED_SUBSTRATE`, a frozen record of the tested `@mysten/sui`, `@mysten/seal`, and `@mysten/walrus` versions plus `verifiedOn` and `suiNetwork`. Log it during initialization or compare it against bundler-resolved versions in CI:
 
 ```typescript
 import { TESTED_SUBSTRATE } from "@arcadiasystems/morse-sdk";
@@ -28,17 +28,17 @@ import { TESTED_SUBSTRATE } from "@arcadiasystems/morse-sdk";
 console.log(TESTED_SUBSTRATE["@mysten/walrus"]);  // "1.1.6"
 ```
 
-## Runtime Requirements
+## Runtime requirements
 
 ESM-only (`"type": "module"`). CommonJS `require` is not supported.
 
 | Runtime | Supported | Notes |
 | --- | --- | --- |
-| Bun | >= 1.2.0 | Primary development runtime. End-to-end test scripts use Bun. |
-| Node | >= 18.0 | Uses ES2022 (private fields, `Error.cause`), `TextEncoder`, `crypto.getRandomValues`, `BigInt`. |
+| Bun | ≥ 1.2.0 | Primary development runtime. End-to-end test scripts use Bun. |
+| Node | ≥ 18.0 | Uses ES2022 (private fields, `Error.cause`), `TextEncoder`, `crypto.getRandomValues`, `BigInt`. |
 | Browser | Evergreen | Chrome / Edge / Firefox / Safari recent stable. Vite, Webpack, esbuild bundlers all handle the SDK with zero polyfills. |
 
-The SDK works in both Node and browser environments. It does not depend on Node-specific APIs like `fs`, `path`, `process`, or `node:crypto`. Some `@mysten/*` packages may need polyfills in the browser - check their docs if needed, though modern bundlers usually handle this automatically.
+The SDK works in both Node and browser environments. It does not depend on Node-specific APIs like `fs`, `path`, `process`, or `node:crypto`. Some `@mysten/*` packages may need polyfills in the browser. Check their docs if needed, though modern bundlers usually handle this automatically.
 
 ## Installing
 
@@ -48,7 +48,7 @@ The SDK works in both Node and browser environments. It does not depend on Node-
 bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3
 ```
 
-## morseConfig() Shape
+## morseConfig() shape
 
 `morseConfig({ network })` takes the target network (`"testnet"` or `"localnet"`) and returns a read-only object with the contract addresses and endpoints the SDK needs. Mainnet is not yet supported. All other fields have built-in defaults but can be overridden for custom deployments. Every SDK function takes this object as its `config` argument.
 
@@ -62,17 +62,17 @@ The returned object contains the following fields:
 | `originalPackageId` | `PackageId \| undefined` | Genesis publish address (`original-id`). Sui uses this in `objectType` strings and type filters. Defaults to `packageId` when the package has never been upgraded. |
 | `registryId` | `RegistryId` | Sui object ID of the shared `PublicationRegistry`. Required for publication creation and deletion. |
 | `sealKeyServers` | `readonly KeyServerConfig[]` | Seal threshold-encryption key servers for the network. Each entry has an `objectId` and `weight`. Used by `DefaultSealAdapter` when no explicit server list is provided. |
-| `walrusEndpoints` | `WalrusEndpoints` | Walrus HTTP endpoints. Contains `aggregator` (base URL for reads) and an optional `publisher` (base URL for HTTP-publisher writes). The publisher is intentionally unset by default - supply it explicitly for your operator. |
+| `walrusEndpoints` | `WalrusEndpoints` | Walrus HTTP endpoints. Contains `aggregator` (base URL for reads) and an optional `publisher` (base URL for HTTP-publisher writes). The publisher is intentionally unset by default; supply it explicitly for your operator. |
 
-The options shape is exported as `MorseConfigOptions`, the accepted network names as the `Network` constant, and the per-network public fullnode defaults as `DEFAULT_RPC_URLS` - useful when you need the default endpoint without building a full config.
+The options shape is exported as `MorseConfigOptions`, the accepted network names as the `Network` constant, and the per-network public fullnode defaults as `DEFAULT_RPC_URLS` (useful when you need the default endpoint without building a full config).
 
-`PackageId` and `RegistryId` are branded `string` types - compile-time guards that prevent passing one kind of Sui address where another is expected. Cast a raw hex string with the `toPackageId()` / `toRegistryId()` codec helpers.
+`PackageId` and `RegistryId` are branded `string` types: compile-time guards that prevent passing one kind of Sui address where another is expected. Cast a raw hex string with the `toPackageId()` / `toRegistryId()` codec helpers.
 
-For quilt-mode collections, the SDK also ships codecs for the 37-byte `QuiltPatchId` (`QUILT_PATCH_ID_LENGTH` = 37): `quiltPatchIdFromString` / `quiltPatchIdToString` convert between the URL-safe base64 string Walrus emits and the branded bytes, and `encodeQuiltPatchId` / `decodeQuiltPatchId` convert between the bytes and their structured parts (`quiltBlobId`, `version`, `startIndex`, `endIndex` - the `QuiltPatchIdParts` type).
+For quilt-mode collections, the SDK also ships codecs for the 37-byte `QuiltPatchId` (`QUILT_PATCH_ID_LENGTH` = 37): `quiltPatchIdFromString` / `quiltPatchIdToString` convert between the URL-safe base64 string Walrus emits and the branded bytes, and `encodeQuiltPatchId` / `decodeQuiltPatchId` convert between the bytes and their structured parts (`quiltBlobId`, `version`, `startIndex`, `endIndex`; the `QuiltPatchIdParts` type).
 
-## Server Setup
+## Server setup
 
-`RpcPublicationReader` provides read-only access to publications, collections, and entries via RPC - no keypair required.
+`RpcPublicationReader` provides read-only access to publications, collections, and entries via RPC. No keypair required.
 
 To set up a server-side client, create a testnet config, a gRPC client, a `KeypairAdapter` for signing transactions, and an `RpcPublicationReader` for querying on-chain data.
 
@@ -99,7 +99,7 @@ const reader = RpcPublicationReader.fromMorseConfig(config, client);
 
 `PRIVATE_KEY` must be a Bech32 `suiprivkey1...` string. Export it from your wallet's settings. Hex keys are not supported by `Ed25519Keypair.fromSecretKey`.
 
-## Browser Setup
+## Browser setup
 
 For browser apps, the SDK connects to the user's wallet extension (e.g. Slush, Suiet) instead of `KeypairAdapter`. The private key stays in the wallet and is never exposed to the SDK.
 
@@ -131,7 +131,7 @@ Build the SDK context once per connected account. `WalletStandardSigner.fromAcco
 
 > **WARNING: gRPC transport required**
 >
-> The SDK is typed against `SuiGrpcClient` from `@mysten/sui/grpc`, not the JSON-RPC `SuiClient` used by most Sui browser apps. `SuiGrpcClient` works in modern evergreen browsers without a proxy. JSON-RPC fallback is planned but has not shipped yet - environments that block gRPC must proxy through a gRPC-compatible RPC endpoint until then.
+> The SDK is typed against `SuiGrpcClient` from `@mysten/sui/grpc`, not the JSON-RPC `SuiClient` used by most Sui browser apps. `SuiGrpcClient` works in modern evergreen browsers without a proxy. JSON-RPC fallback is planned but has not shipped yet; environments that block gRPC must proxy through a gRPC-compatible RPC endpoint until then.
 
 ```typescript
 import {
@@ -335,21 +335,21 @@ function failedTransactionMessage(
 }
 ```
 
-Slush, Suiet, and Sui Wallet (Ed25519) are verified. Secp256k1, Secp256r1, and Passkey decoders ship but Walrus + Seal end-to-end behavior is unverified - fall back to Ed25519 if you see scheme-specific errors. ZkLogin is decoded but unverified; MultiSig is refused with `ConfigurationError` at `fromAccount` time. Wrap the call in try/catch and render unsupported accounts as product copy. 
+Slush, Suiet, and Sui Wallet (Ed25519) are verified. Secp256k1, Secp256r1, and Passkey decoders ship but Walrus + Seal end-to-end behavior is unverified. Fall back to Ed25519 if you see scheme-specific errors. ZkLogin is decoded but unverified; MultiSig is refused with `ConfigurationError` at `fromAccount` time. Wrap the call in try/catch and render unsupported accounts as product copy. 
 See the full table in the [SDK README compatibility section](https://github.com/arcadiasystems/morse-dcms/blob/main/morse-sdk/README.md#wallet-scheme-support).
 
-## Picking a Walrus Adapter
+## Picking a Walrus adapter
 
-The SDK ships two Walrus read adapters and two write adapters with different trade-offs. Read and write adapters can be mixed independently - for example, `DefaultWalrusWriteAdapter` (for the `addEntryFromBytes` optimization) with `HttpAggregatorReadAdapter` (for reliable testnet reads).
+The SDK ships two Walrus read adapters and two write adapters with different trade-offs. Read and write adapters can be mixed independently; for example, `DefaultWalrusWriteAdapter` (for the `addEntryFromBytes` optimization) with `HttpAggregatorReadAdapter` (for reliable testnet reads).
 
 | Pair | Trust | Transactions (upload + addEntry) | Storage paid by | Browser CORS |
 | --- | --- | --- | --- | --- |
 | `DefaultWalrusReadAdapter` + `DefaultWalrusWriteAdapter` | Trustless (direct fanout to ~30 storage nodes) | **2** with `addEntryFromBytes`, **3** if split | Consumer wallet (WAL + gas) | Spotty on testnet |
 | `HttpAggregatorReadAdapter` + `HttpPublisherWriteAdapter` | Operator-trusted | **1** (publisher uploads server-side; consumer only signs the `addEntry` transaction) | Publisher operator (WAL); consumer pays Sui gas only | Reliable (one endpoint) |
 
-### Default Adapter
+### Default adapter
 
-Best for CLI scripts, server-side dapps, and browser dapps that don't hit testnet CORS gaps. The flow-aware optimization (`addEntryFromBytes`) cuts transactions from 3 to 2.
+Best for CLI scripts, server-side dapps, and browser dapps that do not hit testnet CORS gaps. The flow-aware optimization (`addEntryFromBytes`) cuts transactions from 3 to 2.
 
 ```typescript
 import {
@@ -367,9 +367,9 @@ const walrusWriter = DefaultWalrusWriteAdapter.fromConfig(
 );
 ```
 
-### HTTP Adapter
+### HTTP adapter
 
-Best for browser dapps that need reliable CORS-friendly reads (one endpoint instead of ~30 nodes) and a "publisher pays storage" model where the user only signs the on-chain `addEntry`. Reads go through a trusted operator. To trust-but-verify, pass a `verifyBlobIntegrity` callback (type `WalrusBlobIntegrityCheck`) as a construction option - the adapter invokes it with the fetched bytes and the expected blob ID after every successful blob fetch, and it must throw on a mismatch (rewrapped as `TransportError`). Quilt patch reads are not verified.
+Best for browser dapps that need reliable CORS-friendly reads (one endpoint instead of ~30 nodes) and a "publisher pays storage" model where the user only signs the on-chain `addEntry`. Reads go through a trusted operator. To trust-but-verify, pass a `verifyBlobIntegrity` callback (type `WalrusBlobIntegrityCheck`) as a construction option. The adapter invokes it with the fetched bytes and the expected blob ID after every successful blob fetch, and it must throw on a mismatch (rewrapped as `TransportError`). Quilt patch reads are not verified.
 
 ```typescript
 import {
@@ -395,9 +395,9 @@ const walrusWriter = HttpPublisherWriteAdapter.fromConfig({
 
 > **WARNING: Use `HttpAggregatorReadAdapter` for reads on testnet**
 >
-> On testnet, `DefaultWalrusReadAdapter` (direct-node fanout with client-side verification) frequently fails right after an upload with `No valid blob metadata could be retrieved from any storage node`, even for healthy blobs - on both plain and encrypted reads. `HttpAggregatorReadAdapter` succeeds against the same blobs: it fetches from a single aggregator endpoint and skips client-side blob verification, so you trust the operator's bytes (pass `verifyBlobIntegrity` to add a check). Mainnet storage nodes are expected to be more reliable.
+> On testnet, `DefaultWalrusReadAdapter` (direct-node fanout with client-side verification) frequently fails right after an upload with `No valid blob metadata could be retrieved from any storage node`, even for healthy blobs, on both plain and encrypted reads. `HttpAggregatorReadAdapter` succeeds against the same blobs: it fetches from a single aggregator endpoint and skips client-side blob verification, so you trust the operator's bytes (pass `verifyBlobIntegrity` to add a check). Mainnet storage nodes are expected to be more reliable.
 
-## Verifying Setup
+## Verifying setup
 
 After completing either the server or browser setup above, confirm your connection works by listing publications owned by your address:
 
@@ -406,11 +406,11 @@ const { results } = await reader.listPublicationsOwnedBy(adapter.address);
 console.log(`Connected! Found ${results.length} publication(s).`);
 ```
 
-A successful call confirms the client, config, and RPC endpoint are wired correctly - even if the count is 0. Follow the [SDK Cookbooks](https://docs.morsecms.xyz/sdk-workflows.html) to create your first publication.
+A successful call confirms the client, config, and RPC endpoint are wired correctly, even if the count is 0. Follow the [SDK Cookbooks](https://docs.morsecms.xyz/sdk-workflows.html) to create your first publication.
 
-## Error Handling
+## Error handling
 
-Every error thrown by the SDK extends `MorseError`. Each error class carries structured properties, so errors can be handled by type without parsing message strings. All error classes are listed below - the first four are the most common.
+Every error thrown by the SDK extends `MorseError`. Each error class carries structured properties, so errors can be handled by type without parsing message strings. All error classes are listed below; the first four are the most common.
 
 | Class | Carries | Thrown when |
 | --- | --- | --- |
@@ -453,9 +453,9 @@ try {
 }
 ```
 
-### Formatting Errors for UI
+### Formatting errors for UI
 
-For end-user surfaces (toasts, dialogs, banners), `formatUserMessage(err)` translates any thrown value into a `FormattedError` - `{ title, description, cause }`. It accepts `unknown`, so it works directly in a catch block without narrowing first; non-`MorseError` throws fall back to a generic message, and the original error is preserved in `cause`.
+For end-user surfaces (toasts, dialogs, banners), `formatUserMessage(err)` translates any thrown value into a `FormattedError`: `{ title, description, cause }`. It accepts `unknown`, so it works directly in a catch block without narrowing first; non-`MorseError` throws fall back to a generic message, and the original error is preserved in `cause`.
 
 ```typescript
 import { formatUserMessage } from "@arcadiasystems/morse-sdk";
@@ -470,7 +470,7 @@ try {
 
 The copy uses the protocol's own terminology ("publication", "entry", "PublisherCap"). To translate into your app's domain (blog → post, gallery → image), narrow on the error class first and write your own message, then fall back to `formatUserMessage` for the rest.
 
-## Next Steps
+## Next steps
 
 - [SDK: Cookbooks](https://docs.morsecms.xyz/sdk-workflows.html): Create publications, add entries (plain + encrypted), read them back.
 - [Quick Start: SDK](https://docs.morsecms.xyz/quick-start-sdk.html): End-to-end script: create a publication, add an entry, and read it back.

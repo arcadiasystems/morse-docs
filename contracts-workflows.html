@@ -51,7 +51,7 @@
   <aside class="side" id="side"></aside>
 
   <main class="main">
-    <nav class="crumbs" aria-label="Breadcrumb"><span>Smart Contracts</span><span class="crumbs__sep" aria-hidden="true">/</span><span aria-current="page">Cookbooks</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><span>Smart contracts</span><span class="crumbs__sep" aria-hidden="true">/</span><span aria-current="page">Cookbooks</span></nav>
 
     <article class="article">
         <h1>Contract Cookbooks</h1>
@@ -76,9 +76,9 @@
           <table>
             <thead><tr><th>Requirement</th><th>Details</th><th>Purpose</th></tr></thead>
             <tbody>
-              <tr><td>Bun or Node</td><td>v1.2+ / >= 18</td><td>JavaScript runtime</td></tr>
-              <tr><td>SUI + WAL tokens</td><td><a href="https://faucet.sui.io/" target="_blank" rel="noopener">SUI faucet</a> / <a href="https://stake-wal.wal.app/?network=testnet" target="_blank" rel="noopener">Swap SUI for WAL</a></td><td>Gas fees (SUI) and Walrus storage fees (WAL)</td></tr>
-              <tr><td>Bech32 private key</td><td>A <code>suiprivkey1...</code> string</td><td>Transaction signing - export from your wallet's settings</td></tr>
+              <tr><td>Bun or Node</td><td>v1.2+ / ≥ 18</td><td>JavaScript runtime</td></tr>
+              <tr><td>SUI + WAL tokens</td><td><a href="https://faucet.sui.io/" target="_blank" rel="noopener">SUI faucet</a> · <a href="https://stake-wal.wal.app/?network=testnet" target="_blank" rel="noopener">Swap SUI for WAL</a></td><td>Gas fees (SUI) and Walrus storage fees (WAL)</td></tr>
+              <tr><td>Bech32 private key</td><td>A <code>suiprivkey1...</code> string</td><td>Transaction signing. Export from your wallet's settings</td></tr>
               <tr><td>Morse SDK</td><td><code>@arcadiasystems/morse-sdk</code></td><td>Provides <code>morseConfig()</code> for package ID, registry ID, and RPC URL</td></tr>
             </tbody>
           </table>
@@ -136,8 +136,8 @@
           </div>
         </div>
 
-        <h2 id="creating-a-publication">Creating a Publication</h2>
-        <p>Creates a publication, shares it, and transfers the resulting capabilities to the caller in one atomic PTB. <code>new_publication</code> returns a tuple  - destructure it as three separate transaction results. The slug is globally unique and immutable after creation.</p>
+        <h2 id="creating-a-publication">Creating a publication</h2>
+        <p>Creates a publication, shares it, and transfers the resulting capabilities to the caller in one atomic PTB. <code>new_publication</code> returns a tuple; destructure it as three separate transaction results. The slug is globally unique and immutable after creation.</p>
 
         <div class="callout callout-warning">
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
@@ -198,9 +198,9 @@ tx.moveCall({
 console.log(<span class="st">"Created objects:"</span>, createdObjects);</pre>
         </div>
 
-        <p class="see-also">See also: <a href="sdk-workflows.html#creating-a-publication">SDK Cookbooks &rarr; Creating a Publication</a></p>
+        <p class="see-also">See also: <a href="sdk-workflows.html#creating-a-publication">SDK Cookbooks &rarr; Creating a publication</a></p>
 
-        <h2 id="adding-a-collection">Adding a Collection</h2>
+        <h2 id="adding-a-collection">Adding a collection</h2>
         <p>Collections are added to an existing publication. The storage mode is immutable after creation: <code>0</code> for blob mode and <code>1</code> for quilt mode. Use blob mode for growing content like posts; use quilt mode for small, rarely-changing content like config files.</p>
 
         <div class="code-block">
@@ -248,9 +248,9 @@ tx.moveCall({
 <span class="kw">await</span> client.signAndExecuteTransaction({ transaction: tx, signer: keypair });</pre>
         </div>
 
-        <p class="see-also">See also: <a href="sdk-workflows.html#adding-a-collection">SDK Cookbooks &rarr; Adding a Collection</a></p>
+        <p class="see-also">See also: <a href="sdk-workflows.html#adding-a-collection">SDK Cookbooks &rarr; Adding a collection</a></p>
 
-        <h2 id="adding-an-entry">Adding an Entry</h2>
+        <h2 id="adding-an-entry">Adding an entry</h2>
         <p>Upload content to Walrus first, then pass the resulting Blob object ID to <code>add_entry_to_collection</code>. The <code>blob</code> argument is a reference to a Walrus Blob Sui object (<code>&amp;Blob</code>), not a blob ID hash. Only deletable blobs are accepted. For blob-mode collections, pass <code>None</code> for <code>quilt_patch_id</code> using BCS serialization as shown below.</p>
 
         <div class="code-block">
@@ -293,12 +293,12 @@ tx.moveCall({
 });</pre>
         </div>
 
-        <p class="see-also">See also: <a href="sdk-workflows.html#adding-an-entry">SDK Cookbooks &rarr; Adding an Entry</a></p>
+        <p class="see-also">See also: <a href="sdk-workflows.html#adding-an-entry">SDK Cookbooks &rarr; Adding an entry</a></p>
 
-        <h2 id="revisions">Publishing a New Revision</h2>
+        <h2 id="revisions">Publishing a new revision</h2>
         <p>Revisions are appended to an existing entry. Two paths are available: publish directly in one call, or stage a draft first and promote it.</p>
 
-        <h3 id="publish-direct">Option A: Publish Direct</h3>
+        <h3 id="publish-direct">Option A: publish direct</h3>
         <p>Append a non-encrypted public revision in a single call, bypassing the draft stage. Advances <code>public_head</code> immediately.</p>
 
         <div class="code-block">
@@ -333,8 +333,8 @@ tx.moveCall({
 <span class="kw">await</span> client.signAndExecuteTransaction({ transaction: tx, signer: keypair });</pre>
         </div>
 
-        <h3 id="draft-then-publish">Option B: Draft Then Publish</h3>
-        <p>Stage a draft revision first (advances <code>draft_head</code> only), then promote it to a public revision. The published revision takes a fresh blob  - <code>draft_revision_id</code> is used only to validate the draft exists on-chain.</p>
+        <h3 id="draft-then-publish">Option B: draft then publish</h3>
+        <p>Stage a draft revision first (advances <code>draft_head</code> only), then promote it to a public revision. The published revision takes a fresh blob; <code>draft_revision_id</code> is used only to validate the draft exists on-chain.</p>
 
         <div class="code-block">
           <div class="code-header">
@@ -392,9 +392,9 @@ tx.moveCall({
 <span class="kw">await</span> client.signAndExecuteTransaction({ transaction: tx, signer: keypair });</pre>
         </div>
 
-        <p class="see-also">See also: <a href="sdk-workflows.html#publishing-a-new-revision">SDK Cookbooks &rarr; Publishing a New Revision</a></p>
+        <p class="see-also">See also: <a href="sdk-workflows.html#publishing-a-new-revision">SDK Cookbooks &rarr; Publishing a new revision</a></p>
 
-        <h2 id="encrypted-content">Encrypted Content</h2>
+        <h2 id="encrypted-content">Encrypted content</h2>
         <p>Encrypted entries require <code>encrypted=true</code>, <code>access_policy=1</code> (Publisher), and a Seal identity in <code>seal_id</code>. Encrypt content with <a href="https://docs.seal.mystenlabs.com/" target="_blank">Seal</a> first, then upload the ciphertext to Walrus. The Seal identity is a <code>vector&lt;u8&gt;</code>: <code>[publication_id_bytes (32)] || [0x01] || [nonce]</code>. Each entry should use a fresh nonce.</p>
 
         <div class="code-block">
@@ -451,17 +451,17 @@ tx.moveCall({
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">Encrypted entries are always created as drafts</div>
-            <div class="callout-text">The publish functions hardcode <code>encrypted=false</code> on the public path  - they cannot promote encrypted content to a public head. Read encrypted entries via <code>seal.decrypt</code> using the <code>sealId</code> stored in the revision metadata.</div>
+            <div class="callout-text">The publish functions hardcode <code>encrypted=false</code> on the public path; they cannot promote encrypted content to a public head. Read encrypted entries via <code>seal.decrypt</code> using the <code>sealId</code> stored in the revision metadata.</div>
           </div>
         </div>
 
-        <p class="see-also">See also: <a href="sdk-workflows.html#encrypted-content">SDK Cookbooks &rarr; Encrypted Content</a></p>
+        <p class="see-also">See also: <a href="sdk-workflows.html#encrypted-content">SDK Cookbooks &rarr; Encrypted content</a></p>
 
-        <h2 id="delegating-write-access">Delegating Write Access</h2>
+        <h2 id="delegating-write-access">Delegating write access</h2>
         <p>The owner issues <code>PublisherCap</code> objects to grant write access to co-authors. Revocation adds the cap ID to an on-chain denylist; all subsequent writes using that cap abort with <code>EPublisherCapRevoked</code>. See <a href="access-control.html">Access Control</a> for the full capability model.</p>
 
         <h3 id="issuing-a-publisher-cap">Issuing a PublisherCap</h3>
-        <p>Only the <code>OwnerCap</code> holder can issue new caps. The cap's <code>holder</code> field is fixed at issuance  - the bound address is what grants write rights, not object ownership.</p>
+        <p>Only the <code>OwnerCap</code> holder can issue new caps. The cap's <code>holder</code> field is fixed at issuance; the bound address is what grants write rights, not object ownership.</p>
 
         <div class="code-block">
           <div class="code-header">
@@ -513,7 +513,7 @@ console.log(<span class="st">"Issued PublisherCap:"</span>, publisherCapId);</pr
         </div>
 
         <h3 id="revoking-a-publisher-cap">Revoking a PublisherCap</h3>
-        <p>Revocation adds the cap's ID to an on-chain denylist. The physical object is not consumed  - only the cap's ID is passed via <code>tx.pure.id</code>. The holder retains the object but any subsequent write attempt aborts with <code>EPublisherCapRevoked</code>.</p>
+        <p>Revocation adds the cap's ID to an on-chain denylist. The physical object is not consumed; only the cap's ID is passed via <code>tx.pure.id</code>. The holder retains the object but any subsequent write attempt aborts with <code>EPublisherCapRevoked</code>.</p>
 
         <div class="code-block">
           <div class="code-header">
@@ -556,10 +556,10 @@ tx.moveCall({
 <span class="kw">await</span> client.signAndExecuteTransaction({ transaction: tx, signer: coAuthorKeypair });</pre>
         </div>
 
-        <p class="see-also">See also: <a href="sdk-workflows.html#delegating-write-access">SDK Cookbooks &rarr; Delegating Write Access</a></p>
+        <p class="see-also">See also: <a href="sdk-workflows.html#delegating-write-access">SDK Cookbooks &rarr; Delegating write access</a></p>
 
-        <h2 id="transferring-ownership">Transferring Ownership</h2>
-        <p>Transfer the <code>OwnerCap</code> to a new address. The recipient gains full governance rights: issuing and revoking publisher caps, deleting the publication, and transferring ownership again. Because <code>OwnerCap</code> is <code>key</code>-only (no <code>store</code>), you must use the typed <code>transfer_owner_cap</code> wrapper  - <code>tx.transferObjects</code> will not work.</p>
+        <h2 id="transferring-ownership">Transferring ownership</h2>
+        <p>Transfer the <code>OwnerCap</code> to a new address. The recipient gains full governance rights: issuing and revoking publisher caps, deleting the publication, and transferring ownership again. Because <code>OwnerCap</code> is <code>key</code>-only (no <code>store</code>), you must use the typed <code>transfer_owner_cap</code> wrapper; <code>tx.transferObjects</code> will not work.</p>
 
         <div class="code-block">
           <div class="code-header">
@@ -587,12 +587,12 @@ tx.moveCall({
           </div>
         </div>
 
-        <p class="see-also">See also: <a href="sdk-workflows.html#transferring-ownership">SDK Cookbooks &rarr; Transferring Ownership</a></p>
+        <p class="see-also">See also: <a href="sdk-workflows.html#transferring-ownership">SDK Cookbooks &rarr; Transferring ownership</a></p>
 
-        <h2 id="deleting-and-tearing-down">Deleting and Tearing Down</h2>
+        <h2 id="deleting-and-tearing-down">Deleting and tearing down</h2>
         <p>Deletion is strictly bottom-up. The Move layer enforces this: <code>delete_collection</code> calls <code>table::destroy_empty</code> on the entries table and aborts if any entries remain. <code>delete_publication</code> calls <code>collections.destroy_empty()</code> and aborts if any collections remain. Entry IDs are permanently retired on deletion and never reused.</p>
 
-        <h3 id="delete-entries">Delete Entries</h3>
+        <h3 id="delete-entries">Delete entries</h3>
 
         <div class="code-block">
           <div class="code-header">
@@ -622,7 +622,7 @@ tx.moveCall({
 <span class="kw">await</span> client.signAndExecuteTransaction({ transaction: tx, signer: keypair });</pre>
         </div>
 
-        <h3 id="delete-collection">Delete a Collection</h3>
+        <h3 id="delete-collection">Delete a collection</h3>
         <p>The collection must be empty (all entries deleted) before this call succeeds.</p>
 
         <div class="code-block">
@@ -658,7 +658,7 @@ tx.moveCall({
 <span class="kw">await</span> client.signAndExecuteTransaction({ transaction: tx, signer: keypair });</pre>
         </div>
 
-        <h3 id="delete-publication">Delete a Publication</h3>
+        <h3 id="delete-publication">Delete a publication</h3>
         <p>Requires the <code>OwnerCap</code>. All collections must be deleted first. Both the publication object and the <code>OwnerCap</code> are consumed. The slug is released from the registry and becomes available for reuse.</p>
 
         <div class="code-block">
@@ -678,7 +678,7 @@ tx.moveCall({
 <span class="kw">await</span> client.signAndExecuteTransaction({ transaction: tx, signer: keypair });</pre>
         </div>
 
-        <p class="see-also">See also: <a href="sdk-workflows.html#deleting-and-tearing-down">SDK Cookbooks &rarr; Deleting and Tearing Down</a></p>
+        <p class="see-also">See also: <a href="sdk-workflows.html#deleting-and-tearing-down">SDK Cookbooks &rarr; Deleting and tearing down</a></p>
 
         <h2 id="troubleshooting">Troubleshooting</h2>
         <p>Move aborts surface as <code>MoveAbort</code> errors in the RPC response with a module name and numeric code. The table below maps the most common codes to their cause.</p>
@@ -750,7 +750,7 @@ tx.moveCall({
           </table>
         </div>
 
-        <h2 id="next-steps">Next Steps</h2>
+        <h2 id="next-steps">Next steps</h2>
         <div class="card-grid">
           <a href="cli-overview.html" class="card">
             <div class="card-title">CLI: Overview</div>
@@ -766,7 +766,7 @@ tx.moveCall({
     <div class="feedback">
       <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
       <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20contracts-workflows.html" target="_blank" rel="noopener">Report an issue</a>
-      <span class="feedback__upd">Updated 2026-06-19</span>
+      <span class="feedback__upd">Updated 2026-10-15</span>
     </div>
     <nav class="pager" aria-label="Previous and next">
       <a href="contracts-reference.html" rel="prev"><small>Previous</small><b>← Smart Contracts: Reference</b></a>

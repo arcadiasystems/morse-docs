@@ -3,47 +3,43 @@
 
 # Quick Start: Smart Contracts
 
-> Create a publication, add a collection, and publish an entry using raw Programmable Transaction Blocks against the deployed Morse contracts on testnet. No SDK wrappers - just `tx.moveCall`.
+> Create a publication, add a collection, and publish an entry using raw Programmable Transaction Blocks against the deployed Morse contracts on testnet. No SDK wrappers, just `tx.moveCall`.
 
 > **WARNING: Testnet status**
 >
-> Morse runs on **Sui testnet only** and the contracts are **unaudited**. Sui and Walrus testnets reset periodically (Walrus wipes every few months) - stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Don't publish anything you can't afford to lose.
+> Morse runs on **Sui testnet only** and the contracts are **unaudited**. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Do not publish anything you cannot afford to lose.
 
 ## Prerequisites
 
 | Requirement | Details | Purpose |
 | --- | --- | --- |
-| Bun or Node | v1.2+ / >= 18 | JavaScript runtime |
-| SUI + WAL tokens | [SUI faucet](https://faucet.sui.io/) / [Swap SUI for WAL](https://stake-wal.wal.app/?network=testnet) | Gas fees (SUI) and Walrus storage fees (WAL) |
-| Bech32 private key | A `suiprivkey1...` string | Transaction signing - export from your wallet's settings |
+| Bun or Node | v1.2+ / ≥ 18 | JavaScript runtime |
+| SUI + WAL tokens | [SUI faucet](https://faucet.sui.io/) · [Swap SUI for WAL](https://stake-wal.wal.app/?network=testnet) | Gas fees (SUI) and Walrus storage fees (WAL) |
+| Bech32 private key | A `suiprivkey1...` string | Transaction signing. Export from your wallet's settings |
 
 ## Installing
 
 Install the Morse SDK (for network configuration and Walrus uploads) and the Sui SDK (for transaction construction and signing).
 
-With Bun:
-
 ```bash
 bun add @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal
 ```
-
-Or with npm:
 
 ```bash
 npm install @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal
 ```
 
-> **INFO: Why the SDK if we're using raw PTBs?**
+> **INFO: Why the SDK if we are using raw PTBs?**
 >
-> This guide uses raw `tx.moveCall` - no SDK wrappers for contract calls. The SDK packages provide three things:  `morseConfig` - resolves the deployed package ID, registry ID, and RPC URL so you don't hard-code addresses `DefaultWalrusWriteAdapter` - handles blob uploads to Walrus (requires `@mysten/walrus`) `DefaultSealAdapter` - handles Seal encryption (requires `@mysten/seal`, loaded at runtime even for non-encrypted workflows)  For the high-level wrapper approach, see the [SDK Quick Start](https://docs.morsecms.xyz/quick-start-sdk.html).
+> This guide uses raw `tx.moveCall`. No SDK wrappers for contract calls. The SDK packages provide three things:  `morseConfig`: resolves the deployed package ID, registry ID, and RPC URL so you do not hard-code addresses `DefaultWalrusWriteAdapter`: handles blob uploads to Walrus (requires `@mysten/walrus`) `DefaultSealAdapter`: handles Seal encryption (requires `@mysten/seal`, loaded at runtime even for non-encrypted workflows)  For the high-level wrapper approach, see the [SDK Quick Start](https://docs.morsecms.xyz/quick-start-sdk.html).
 
-## Writing the Script
+## Writing the script
 
-Save this as `quickstart-contracts.ts`. It creates a publication, adds a collection, uploads content to Walrus, and registers an on-chain entry - all using raw PTBs.
+Save this as `quickstart-contracts.ts`. It creates a publication, adds a collection, uploads content to Walrus, and registers an on-chain entry, all using raw PTBs.
 
 > **INFO: Transport: gRPC**
 >
-> This guide uses `SuiGrpcClient` for its typed interface and lower latency. The Morse SDK also supports JSON-RPC via `SuiHTTPTransport` from `@mysten/sui/client` if your environment requires it - see [SDK Client Setup](https://docs.morsecms.xyz/sdk-client-setup.html) for details.
+> This guide uses `SuiGrpcClient` for its typed interface and lower latency. The Morse SDK also supports JSON-RPC via `SuiHTTPTransport` from `@mysten/sui/client` if your environment requires it. See [SDK Client Setup](https://docs.morsecms.xyz/sdk-client-setup.html) for details.
 
 ```typescript
 import { SuiGrpcClient } from "@mysten/sui/grpc";
@@ -190,9 +186,9 @@ console.log("Entry added: hello-world (ID 0)");
 
 > **TIP: Which IDs to save**
 >
-> Save the Publication, OwnerCap, and PublisherCap object IDs from the output - you need them for all subsequent contract calls. You can also recover the publication ID from its slug using `get_publication_id_by_slug` on the registry.
+> Save the Publication, OwnerCap, and PublisherCap object IDs from the output; you need them for all subsequent contract calls. You can also recover the publication ID from its slug using `get_publication_id_by_slug` on the registry.
 
-## Running It
+## Running it
 
 ```bash
 PRIVATE_KEY="suiprivkey1..." bun run quickstart-contracts.ts
@@ -207,12 +203,12 @@ Blob uploaded: 0x4d5e...6f7a
 Entry added: hello-world (ID 0)
 ```
 
-> **TIP: You're live on-chain**
+> **TIP: You are live on-chain**
 >
 > Your publication, collection, and entry are on Sui testnet. The entry content is stored on Walrus. For a friendlier reading experience, use the [Morse CLI](https://docs.morsecms.xyz/quick-start-cli.html): `morse entry read 0 --via-aggregator`.
 
-## Next Steps
+## Next steps
 
-- [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html): Revisions, drafts, encrypted content, delegating access, and teardown  - all via raw PTBs.
+- [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html): Revisions, drafts, encrypted content, delegating access, and teardown, all via raw PTBs.
 - [Contract Reference](https://docs.morsecms.xyz/contracts-reference.html): Full function signatures, argument types, error codes, and Move struct definitions.
-- [Core Concepts](https://docs.morsecms.xyz/core-concepts.html): Understand the data model  - publications, collections, entries, and revisions.
+- [Core Concepts](https://docs.morsecms.xyz/core-concepts.html): Understand the data model: publications, collections, entries, and revisions.

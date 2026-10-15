@@ -5,7 +5,7 @@
 
 > Complete reference for every `morse-cli` command, organized by resource: context, config, account, publication, collection, entry, revision, and cap.
 
-## Global Options
+## Global options
 
 Global options apply to every command and must appear before the subcommand (e.g. `morse --json publication list`).
 
@@ -21,7 +21,7 @@ Global options apply to every command and must appear before the subcommand (e.g
 | `-V, --version` | Print the version. |
 | `-h, --help` | Show help for any command. |
 
-## Shared Command Flags
+## Shared command flags
 
 These flags appear across multiple command groups. Command-specific flags are shown inline in each category below.
 
@@ -33,7 +33,7 @@ These flags appear across multiple command groups. Command-specific flags are sh
 | `-n` | `--name <name>` | Publication name (used by `publication create`). |
 | `-s` | `--slug <slug>` | URL slug (used by `publication create`). |
 
-## Argument Notation
+## Argument notation
 
 Values in `<angle brackets>` are required; values in `[square brackets]` are optional; `(a | b)` means one of the two is required.
 
@@ -105,7 +105,7 @@ $ morse account list
 
 ## Publication
 
-Create and manage publications - the top-level content containers.
+Create and manage publications, the top-level content containers.
 
 | Command | Purpose |
 | --- | --- |
@@ -145,17 +145,17 @@ Add, read, and delete entries within a collection.
 | Command | Purpose |
 | --- | --- |
 | `entry get <entryId>` | Fetch a single entry's metadata. |
-| `entry read <entryId> [<revisionIndex>] [--out <path>] [--via-aggregator]` | Fetch a public entry's content to stdout or a file. Reads the latest revision unless `revisionIndex` is specified; `--via-aggregator` fetches through a Walrus aggregator instead of directly - recommended on testnet, where direct reads frequently fail right after an upload (see [CLI Cookbooks → Reading It Back](https://docs.morsecms.xyz/cli-workflows.html#reading-it-back)). |
+| `entry read <entryId> [<revisionIndex>] [--out <path>] [--via-aggregator]` | Fetch a public entry's content to stdout or a file. Reads the latest revision unless `revisionIndex` is specified; `--via-aggregator` fetches through a Walrus aggregator instead of directly. Recommended on testnet, where direct reads frequently fail right after an upload (see [CLI Cookbooks → Reading it back](https://docs.morsecms.xyz/cli-workflows.html#reading-it-back)). |
 | `entry list [--limit <n>] [--cursor <cursor>] [--drafts-only]` | List entries. `--drafts-only` filters to unpublished entries. |
 | `entry scan [--drafts-only]` | List every entry (auto-paginated). `--drafts-only` filters to unpublished entries. |
-| `entry add <name> (--file <path> \| --stdin) [--content-type <type>] [--epochs <n>] [--publisher-cap <id>]` | Upload content and add a new entry. `--file` reads from a file path, `--stdin` reads from standard input; `--content-type` is inferred from file extension when omitted; `--epochs` sets Walrus storage duration (default 3 - roughly 3 days on testnet; renew or re-upload before expiry for longer-lived content). |
+| `entry add <name> (--file <path> \| --stdin) [--content-type <type>] [--epochs <n>] [--publisher-cap <id>]` | Upload content and add a new entry. `--file` reads from a file path, `--stdin` reads from standard input; `--content-type` is inferred from file extension when omitted; `--epochs` sets Walrus storage duration (default 3, roughly 3 days on testnet; renew or re-upload before expiry for longer-lived content). |
 | `entry delete <entryId> [--publisher-cap <id>]` | Delete an entry and its revisions. |
 | `entry add-encrypted <name> (--file <path> \| --stdin) [--content-type <type>] [--epochs <n>] [--publisher-cap <id>]` | Encrypt with Seal, upload, and add a new entry. |
 | `entry decrypt <entryId> [<revisionIndex>] [--out <path>] [--publisher-cap <id>] [--via-aggregator]` | Decrypt an encrypted revision; reads the latest unless `revisionIndex` is specified. Signs a SessionKey with the active account. |
 
 > **WARNING: Encrypted entries are always created as drafts**
 >
-> Encrypted entries are always created as drafts - there is no public head yet. Published revisions are always unencrypted and public, so to publish an encrypted entry you must supply a new unencrypted blob. A revision cannot be both published and encrypted. See [Entries -> Adding an Entry](https://docs.morsecms.xyz/entries.html#adding-an-entry) for the full explanation.
+> Encrypted entries are always created as drafts; there is no public head yet. Published revisions are always unencrypted and public, so to publish an encrypted entry you must supply a new unencrypted blob. A revision cannot be both published and encrypted. See [Entries → Adding an entry](https://docs.morsecms.xyz/entries.html#adding-an-entry) for the full explanation.
 
 ```example
 $ morse entry add welcome-post --file ./welcome.json
@@ -188,7 +188,7 @@ Issue, revoke, and transfer publisher capabilities.
 | `cap issue <holder> [-P <slug\|id>] [--owner-cap <id>]` | Issue a PublisherCap bound to an address. |
 | `cap revoke <publisherCapId> [-P <slug\|id>] [--owner-cap <id>]` | Revoke a PublisherCap. |
 | `cap destroy <publisherCapId> [-P <slug\|id>]` | Destroy a PublisherCap you hold. |
-| `cap transfer <publisherCapId> <recipient>` | Transfer a PublisherCap object. Does not change the `holder` binding - the recipient cannot use or destroy the cap unless they are the bound holder. To rotate access, destroy the old cap and issue a new one. |
+| `cap transfer <publisherCapId> <recipient>` | Transfer a PublisherCap object. Does not change the `holder` binding; the recipient cannot use or destroy the cap unless they are the bound holder. To rotate access, destroy the old cap and issue a new one. |
 
 ```example
 $ morse cap issue 0x71a3...9f2b
@@ -196,9 +196,9 @@ Issued PublisherCap 0xCAP_ID to 0x71a3...9f2b. (tx: AbCdEf...)
 ```
 
 `OwnerCap` and `PublisherCap` IDs are auto-resolved from the active account when the `--owner-cap` / `--publisher-cap` override is omitted. Morse separates ownership from publishing. 
-See [Access Control -> OwnerCap](https://docs.morsecms.xyz/access-control.html#ownercap) and [Access Control -> PublisherCap](https://docs.morsecms.xyz/access-control.html#publishercap) for how capability-based authorization works.
+See [Access Control → OwnerCap](https://docs.morsecms.xyz/access-control.html#ownercap) and [Access Control → PublisherCap](https://docs.morsecms.xyz/access-control.html#publishercap) for how capability-based authorization works.
 
-## Next Steps
+## Next steps
 
 - [CLI: Cookbooks](https://docs.morsecms.xyz/cli-workflows.html): Step-by-step recipes: publishing, encrypted entries, multi-writer setups, CI/CD scripting.
 - [Quick Start: CLI](https://docs.morsecms.xyz/quick-start-cli.html): Create your first publication, collection, and entry from the terminal.

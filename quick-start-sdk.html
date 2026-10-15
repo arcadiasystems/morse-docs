@@ -12,10 +12,10 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <meta name="description" content="Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter - no browser, no wallet popups. Want to see the result first? Browse the live demo blog built on this SDK.">
+  <meta name="description" content="Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter: no browser, no wallet popups. Want to see the result first? Browse the live demo blog built on this SDK.">
   <link rel="canonical" href="https://docs.morsecms.xyz/quick-start-sdk.html">
   <meta property="og:title" content="Quick Start: SDK · Morse Docs">
-  <meta property="og:description" content="Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter - no browser, no wallet popups.">
+  <meta property="og:description" content="Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter: no browser, no wallet popups.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://docs.morsecms.xyz/quick-start-sdk.html">
   <meta property="og:site_name" content="Morse Docs">
@@ -51,12 +51,12 @@
   <aside class="side" id="side"></aside>
 
   <main class="main">
-    <nav class="crumbs" aria-label="Breadcrumb"><span>Getting Started</span><span class="crumbs__sep" aria-hidden="true">/</span><a href="quick-start.html">Quick Start</a><span class="crumbs__sep" aria-hidden="true">/</span><span aria-current="page">SDK</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><span>Getting started</span><span class="crumbs__sep" aria-hidden="true">/</span><a href="quick-start.html">Quick Start</a><span class="crumbs__sep" aria-hidden="true">/</span><span aria-current="page">SDK</span></nav>
 
     <article class="article">
         <h1>Quick Start: SDK</h1>
         <p class="article-lead">
-          Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter - no browser, no wallet popups. Want to see the result first? Browse the <a href="https://morse-blog-demo.vercel.app" target="_blank" rel="noopener">live demo blog</a> built on this SDK.
+          Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter: no browser, no wallet popups. Want to see the result first? Browse the <a href="https://morse-blog-demo.vercel.app" target="_blank" rel="noopener">live demo blog</a> built on this SDK.
         </p>
         <div class="page-actions">
           <div class="copybtn-group">
@@ -75,7 +75,7 @@
         <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
         <div class="callout-body">
           <div class="callout-title">Testnet status</div>
-          <div class="callout-text">Morse runs on <strong>Sui testnet only</strong> and the contracts are <strong>unaudited</strong>. Sui and Walrus testnets reset periodically (Walrus wipes every few months) - stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Don't publish anything you can't afford to lose.</div>
+          <div class="callout-text">Morse runs on <strong>Sui testnet only</strong> and the contracts are <strong>unaudited</strong>. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Do not publish anything you cannot afford to lose.</div>
         </div>
       </div>
 
@@ -84,36 +84,32 @@
           <table>
             <thead><tr><th>Requirement</th><th>Details</th><th>Purpose</th></tr></thead>
             <tbody>
-              <tr><td>Bun or Node</td><td>v1.2+ / >= 18</td><td>JavaScript runtime</td></tr>
-              <tr><td>SUI + WAL tokens</td><td><a href="https://faucet.sui.io/" target="_blank">SUI faucet</a> / <a href="https://stake-wal.wal.app/?network=testnet" target="_blank">Swap SUI for WAL</a></td><td>Gas fees (SUI) and Walrus storage fees (WAL)</td></tr>
-              <tr><td>Bech32 private key</td><td>A <code>suiprivkey1...</code> string</td><td>SDK authentication - export from your wallet's settings</td></tr>
+              <tr><td>Bun or Node</td><td>v1.2+ / ≥ 18</td><td>JavaScript runtime</td></tr>
+              <tr><td>SUI + WAL tokens</td><td><a href="https://faucet.sui.io/" target="_blank">SUI faucet</a> · <a href="https://stake-wal.wal.app/?network=testnet" target="_blank">Swap SUI for WAL</a></td><td>Gas fees (SUI) and Walrus storage fees (WAL)</td></tr>
+              <tr><td>Bech32 private key</td><td>A <code>suiprivkey1...</code> string</td><td>SDK authentication. Export from your wallet's settings</td></tr>
             </tbody>
           </table>
         </div>
 
         <h2 id="installing">Installing</h2>
         <p>Install the SDK and its peer dependencies using your preferred package manager. See <a href="sdk-client-setup.html#compatibility">SDK Client Setup &rarr; Compatibility</a> for compatible dependency versions.</p>
-        <p>With Bun:</p>
-
         <div class="code-block">
           <div class="code-header">
-            <span class="code-lang">bash</span>
+            <span class="code-lang">bash</span><span class="code-note">bun</span>
             <button class="code-copy" type="button">Copy</button>
           </div>
           <pre>bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3</pre>
         </div>
-        <p>Or with npm:</p>
         <div class="code-block">
           <div class="code-header">
-            <span class="code-lang">bash</span>
+            <span class="code-lang">bash</span><span class="code-note">npm</span>
             <button class="code-copy" type="button">Copy</button>
           </div>
           <pre>npm install @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3</pre>
         </div>
-        <p>Or with Yarn:</p>
         <div class="code-block">
           <div class="code-header">
-            <span class="code-lang">bash</span>
+            <span class="code-lang">bash</span><span class="code-note">yarn</span>
             <button class="code-copy" type="button">Copy</button>
           </div>
           <pre>yarn add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3</pre>
@@ -121,14 +117,14 @@
 
         <p><code>@mysten/sui</code> is a required peer dependency. <code>@mysten/walrus</code> is needed for the <code>DefaultWalrusWriteAdapter</code> used below. <code>@mysten/seal</code> is required at runtime even for non-encrypted workflows.</p>
 
-        <h2 id="writing-the-script">Writing the Script</h2>
+        <h2 id="writing-the-script">Writing the script</h2>
         <p>Save this as <code>quickstart.ts</code>. It creates a publication, adds a collection, uploads an entry, and reads it back.</p>
 
         <div class="callout callout-info">
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">Transport: gRPC</div>
-            <div class="callout-text">This guide uses <code>SuiGrpcClient</code> from <code>@mysten/sui/grpc</code> - the SDK's client interfaces are typed against it. The JSON-RPC <code>SuiClient</code> from <code>@mysten/sui/client</code> is not supported; a JSON-RPC fallback is planned but has not shipped yet. See <a href="sdk-client-setup.html">SDK Client Setup</a> for details.</div>
+            <div class="callout-text">This guide uses <code>SuiGrpcClient</code> from <code>@mysten/sui/grpc</code>; the SDK's client interfaces are typed against it. The JSON-RPC <code>SuiClient</code> from <code>@mysten/sui/client</code> is not supported; a JSON-RPC fallback is planned but has not shipped yet. See <a href="sdk-client-setup.html">SDK Client Setup</a> for details.</div>
           </div>
         </div>
 
@@ -213,7 +209,7 @@ console.<span class="fn">log</span>(<span class="st">"Revisions:"</span>, fetche
 console.<span class="fn">log</span>(<span class="kw">new</span> <span class="fn">TextDecoder</span>().<span class="fn">decode</span>(content));</pre>
         </div>
 
-        <p><code>HttpAggregatorReadAdapter</code> routes content reads through the Walrus aggregator, which is more reliable on testnet. See <a href="sdk-client-setup.html#picking-a-walrus-adapter">SDK Client Setup &rarr; Picking a Walrus Adapter</a> for alternatives.</p>
+        <p><code>HttpAggregatorReadAdapter</code> routes content reads through the Walrus aggregator, which is more reliable on testnet. See <a href="sdk-client-setup.html#picking-a-walrus-adapter">SDK Client Setup &rarr; Picking a Walrus adapter</a> for alternatives.</p>
 
         <div class="callout callout-tip">
           <div class="callout-icon">
@@ -225,11 +221,10 @@ console.<span class="fn">log</span>(<span class="kw">new</span> <span class="fn"
           </div>
         </div>
 
-        <h2 id="running-it">Running It</h2>
-        <p>With Bun:</p>
+        <h2 id="running-it">Running it</h2>
         <div class="code-block">
           <div class="code-header">
-            <span class="code-lang">bash</span>
+            <span class="code-lang">bash</span><span class="code-note">bun</span>
             <button class="code-copy" type="button">Copy</button>
           </div>
           <pre>PRIVATE_KEY="suiprivkey1..." bun run quickstart.ts</pre>
@@ -247,9 +242,9 @@ console.<span class="fn">log</span>(<span class="kw">new</span> <span class="fn"
           <div class="code-header">
             <span class="code-lang">output</span>
           </div>
-          <pre>Publication: 0x1a2b...3c4d
-Collection created: posts
-Entry ID: 0
+          <pre><span class="m">Publication: 0x1a2b...3c4d</span>
+<span class="ok">Collection created: posts</span>
+<span class="m">Entry ID: 0</span>
 Entry name: first-post
 Revisions: 1</pre>
         </div>
@@ -257,8 +252,8 @@ Revisions: 1</pre>
         <div class="callout callout-tip">
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
           <div class="callout-body">
-            <div class="callout-title">You're live on-chain</div>
-            <div class="callout-text">Your publication, collection, and entry are on Sui testnet. The entry content is stored on Walrus. For browser integration with wallet popups, see <a href="sdk-client-setup.html#browser-setup">SDK Client Setup -> Browser</a>.</div>
+            <div class="callout-title">You are live on-chain</div>
+            <div class="callout-text">Your publication, collection, and entry are on Sui testnet. The entry content is stored on Walrus. For browser integration with wallet popups, see <a href="sdk-client-setup.html#browser-setup">SDK Client Setup &rarr; Browser</a>.</div>
           </div>
         </div>
 
@@ -276,7 +271,7 @@ Revisions: 1</pre>
           </details>
         </div> -->
 
-        <h2 id="next-steps">Next Steps</h2>
+        <h2 id="next-steps">Next steps</h2>
         <div class="card-grid">
           <a href="sdk-client-setup.html" class="card">
             <div class="card-title">SDK: Client Setup</div>
@@ -288,7 +283,7 @@ Revisions: 1</pre>
           </a>
           <a href="core-concepts.html" class="card">
             <div class="card-title">Core Concepts</div>
-            <div class="card-desc">Understand the data model - publications, collections, entries, and revisions.</div>
+            <div class="card-desc">Understand the data model: publications, collections, entries, and revisions.</div>
           </a>
         </div>
       </article>
@@ -296,7 +291,7 @@ Revisions: 1</pre>
     <div class="feedback">
       <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
       <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20quick-start-sdk.html" target="_blank" rel="noopener">Report an issue</a>
-      <span class="feedback__upd">Updated 2026-06-19</span>
+      <span class="feedback__upd">Updated 2026-10-15</span>
     </div>
     <nav class="pager" aria-label="Previous and next">
       <a href="quick-start-cli.html" rel="prev"><small>Previous</small><b>← Quick Start: CLI</b></a>

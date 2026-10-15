@@ -9,9 +9,9 @@
 
 | Requirement | Details | Purpose |
 | --- | --- | --- |
-| Bun or Node | v1.2+ / >= 18 | JavaScript runtime |
-| SUI + WAL tokens | [SUI faucet](https://faucet.sui.io/) / [Swap SUI for WAL](https://stake-wal.wal.app/?network=testnet) | Gas fees (SUI) and Walrus storage fees (WAL) |
-| Bech32 private key | A `suiprivkey1...` string | SDK authentication - export from your wallet's settings |
+| Bun or Node | v1.2+ / ≥ 18 | JavaScript runtime |
+| SUI + WAL tokens | [SUI faucet](https://faucet.sui.io/) · [Swap SUI for WAL](https://stake-wal.wal.app/?network=testnet) | Gas fees (SUI) and Walrus storage fees (WAL) |
+| Bech32 private key | A `suiprivkey1...` string | SDK authentication. Export from your wallet's settings |
 
 Make sure the SDK is installed and configured before continuing. See [SDK Setup](https://docs.morsecms.xyz/sdk-client-setup.html) for details.
 
@@ -19,9 +19,9 @@ Make sure the SDK is installed and configured before continuing. See [SDK Setup]
 
 Publications hold collections; collections hold entries; entries hold an append-only vector of revisions. Permission management lives in Sui; payloads live in Walrus.
 
-The examples below assume you've built a context as shown in [SDK Setup](https://docs.morsecms.xyz/sdk-client-setup.html). Browser flows carry a `signer` (via `WalletStandardSigner.fromAccount`) instead of `keypair`. Walrus adapters (`walrusWriter`, `walrusReader`) are constructed where needed - see [Picking a Walrus Adapter](https://docs.morsecms.xyz/sdk-client-setup.html#picking-a-walrus-adapter) for options.
+The examples below assume you have built a context as shown in [SDK Setup](https://docs.morsecms.xyz/sdk-client-setup.html). Browser flows carry a `signer` (via `WalletStandardSigner.fromAccount`) instead of `keypair`. Walrus adapters (`walrusWriter`, `walrusReader`) are constructed where needed. See [Picking a Walrus Adapter](https://docs.morsecms.xyz/sdk-client-setup.html#picking-a-walrus-adapter) for options.
 
-## Creating a Publication
+## Creating a publication
 
 Returns the publication's ID along with an `OwnerCap` for governance and a `PublisherCap` for write access, both transferred to the caller's address atomically.
 
@@ -42,7 +42,7 @@ try {
 }
 ```
 
-## Adding a Collection
+## Adding a collection
 
 `storageMode` is fixed at creation; switching the mode for the same collection name requires deleting and recreating.
 
@@ -57,7 +57,7 @@ await createCollection(adapter, config, {
 });
 ```
 
-## Adding an Entry
+## Adding an entry
 
 Uploads bytes to Walrus and attaches them as the first revision of a new entry in 2 transactions. Returns the assigned `entryId` (a monotonic `u64`) used to reference the entry in all subsequent operations.
 
@@ -91,9 +91,9 @@ const entry = await addEntryFromBytes(adapter, config, {
 >
 > If transaction 1 (register + upload) succeeds but transaction 2 (certify + add_entry) fails, the SDK throws `UncertifiedBlobError` carrying `blobObjectId` and `blobId`. The blob exists on storage nodes but remains uncertified and is released when the registration expires. Log the IDs or surface the error for debugging.
 
-See also: [CLI Cookbooks → Publishing Your First Entry](https://docs.morsecms.xyz/cli-workflows.html#publishing-your-first-entry)
+See also: [CLI Cookbooks → Publishing your first entry](https://docs.morsecms.xyz/cli-workflows.html#publishing-your-first-entry)
 
-## Encrypted Content
+## Encrypted content
 
 Encrypts content with Seal, uploads ciphertext to Walrus, and attaches it as the first revision of an encrypted entry in 2 transactions. Returns the same `entryId` as the plaintext path. Encrypted entries are always created as drafts and accessed via Seal decryption, not the public read path.
 
@@ -139,13 +139,13 @@ const result = await addEncryptedEntryFromBytes(adapter, config, {
 });
 ```
 
-`buildPublisherSealId` constructs the Seal identity from the publication ID and a random nonce. Each entry needs a fresh nonce - reusing a nonce produces the same identity. When creating a `SessionKey`, always pass `config.originalPackageId ?? config.packageId` as the package ID. Seal uses the original (genesis) package address, not the current upgrade address.
+`buildPublisherSealId` constructs the Seal identity from the publication ID and a random nonce. Each entry needs a fresh nonce; reusing a nonce produces the same identity. When creating a `SessionKey`, always pass `config.originalPackageId ?? config.packageId` as the package ID. Seal uses the original (genesis) package address, not the current upgrade address.
 
 > **WARNING: Encrypted entries are always created as drafts**
 >
-> `publishFromDraft` and `publishDirect` always write non-encrypted revisions - the contract hardcodes `encrypted=false` on the public path. For encrypted content, use `addEncryptedEntryFromBytes` / `appendEncryptedDraftRevision` and read via `seal.decrypt`.
+> `publishFromDraft` and `publishDirect` always write non-encrypted revisions; the contract hardcodes `encrypted=false` on the public path. For encrypted content, use `addEncryptedEntryFromBytes` / `appendEncryptedDraftRevision` and read via `seal.decrypt`.
 
-### Reading Encrypted Entries
+### Reading encrypted entries
 
 The full read flow for encrypted content combines entry metadata lookup, Walrus blob fetch, and Seal decryption. Decryption requires three things: a Seal `SessionKey` (built via wallet personal-message signature), the `sealId` bound to the revision, and a non-revoked `PublisherCap` ID.
 
@@ -189,7 +189,7 @@ const plaintext = await seal.decrypt(ciphertext, {
 console.log(new TextDecoder().decode(plaintext));
 ```
 
-### Encrypted Draft Revisions
+### Encrypted draft revisions
 
 After creating an encrypted entry with `addEncryptedEntryFromBytes`, use `appendEncryptedDraftRevision` to add subsequent encrypted revisions to the same entry. You encrypt and upload the blob yourself, then pass the `blobObjectId` to the SDK.
 
@@ -233,9 +233,9 @@ const revision = await appendEncryptedDraftRevision(adapter, config, {
 console.log("Revision", revision.revisionId, "appended");
 ```
 
-See also: [CLI Cookbooks → Encrypted Content](https://docs.morsecms.xyz/cli-workflows.html#encrypted-content)
+See also: [CLI Cookbooks → Encrypted content](https://docs.morsecms.xyz/cli-workflows.html#encrypted-content)
 
-## Reading It Back
+## Reading it back
 
 Single-object reads, paginated lists, and an async iterator for full-collection scans. The reader is gRPC-backed.
 
@@ -280,15 +280,15 @@ const revision = await reader.getRevision(
 
 > **WARNING: Use `HttpAggregatorReadAdapter` for reads on testnet**
 >
-> On testnet, `DefaultWalrusReadAdapter` (direct-node fanout) frequently fails right after an upload with `No valid blob metadata could be retrieved from any storage node`, even for healthy blobs. Use `HttpAggregatorReadAdapter` for reads instead - it routes through a single aggregator endpoint and succeeds against the same blobs, at the cost of skipping client-side blob verification. Mainnet storage nodes are expected to be more reliable. See [SDK Client Setup → Picking a Walrus Adapter](https://docs.morsecms.xyz/sdk-client-setup.html#picking-a-walrus-adapter).
+> On testnet, `DefaultWalrusReadAdapter` (direct-node fanout) frequently fails right after an upload with `No valid blob metadata could be retrieved from any storage node`, even for healthy blobs. Use `HttpAggregatorReadAdapter` for reads instead; it routes through a single aggregator endpoint and succeeds against the same blobs, at the cost of skipping client-side blob verification. Mainnet storage nodes are expected to be more reliable. See [SDK Client Setup → Picking a Walrus adapter](https://docs.morsecms.xyz/sdk-client-setup.html#picking-a-walrus-adapter).
 
 > **INFO: Ordering caveat**
 >
 > `listEntries` and `scanEntries` return entries in dynamic-field object-store order, not chronological order. Sort by `entry.id` if you need insertion order.
 
-### Publication and Cap Lookups
+### Publication and cap lookups
 
-Beyond entries, the reader resolves publications and the caps that control them - useful for dashboards ("which publications does this wallet own?") and for verifying delegated write access:
+Beyond entries, the reader resolves publications and the caps that control them, useful for dashboards ("which publications does this wallet own?") and for verifying delegated write access:
 
 ```typescript
 // Publication metadata: name, slug, collections.
@@ -304,15 +304,15 @@ const cap = await reader.getPublisherCap(created.publisherCapId);
 // cap.publicationId, cap.holder
 ```
 
-All list methods return one page per call - `EntryListPage`, `PublicationListPage`, and `PublisherCapListPage` - each with a `results` array and a `nextCursor` (`null` when exhausted). They accept `{ limit, cursor, signal }` options (default limit 50; the cursor is opaque - feed `nextCursor` back in to get the next page). `scanEntries` auto-paginates and takes `{ pageSize, signal }` instead. Single-object reads (`getPublication`, `getPublisherCap`, `getEntry`, `getRevision`) throw `NotFoundError` when the target does not exist.
+All list methods return one page per call (`EntryListPage`, `PublicationListPage`, and `PublisherCapListPage`), each with a `results` array and a `nextCursor` (`null` when exhausted). They accept `{ limit, cursor, signal }` options (default limit 50; the cursor is opaque: feed `nextCursor` back in to get the next page). `scanEntries` auto-paginates and takes `{ pageSize, signal }` instead. Single-object reads (`getPublication`, `getPublisherCap`, `getEntry`, `getRevision`) throw `NotFoundError` when the target does not exist.
 
-See also: [CLI Cookbooks → Reading It Back](https://docs.morsecms.xyz/cli-workflows.html#reading-it-back)
+See also: [CLI Cookbooks → Reading it back](https://docs.morsecms.xyz/cli-workflows.html#reading-it-back)
 
-## Publishing a New Revision
+## Publishing a new revision
 
-Append a new public revision directly, or stage a draft first and promote it. Revisions are append-only - existing revisions are never edited in place. Two heads track progress: `draftHead` (work in progress) and `publicHead` (the live version).
+Append a new public revision directly, or stage a draft first and promote it. Revisions are append-only; existing revisions are never edited in place. Two heads track progress: `draftHead` (work in progress) and `publicHead` (the live version).
 
-### Option A: Publish direct
+### Option A: publish direct
 
 Skip the draft stage and append a public revision in one step. Requires a pre-uploaded blob (use `uploadBlob` first).
 
@@ -340,7 +340,7 @@ const result = await publishDirect(adapter, config, {
 // result.revisionId is the index of the new public revision
 ```
 
-### Option B: Draft then publish
+### Option B: draft then publish
 
 Stage a draft revision (updates `draftHead` only), iterate on it, then promote to a public revision. Both steps require a pre-uploaded blob (use `uploadBlob` first). The promotion appends a fresh public revision; the draft blob is referenced for validation but not reused.
 
@@ -385,11 +385,11 @@ const published = await publishFromDraft(adapter, config, {
 });
 ```
 
-See also: [CLI Cookbooks → Publishing a New Revision](https://docs.morsecms.xyz/cli-workflows.html#publishing-a-new-revision)
+See also: [CLI Cookbooks → Publishing a new revision](https://docs.morsecms.xyz/cli-workflows.html#publishing-a-new-revision)
 
-## Delegating Write Access
+## Delegating write access
 
-Morse separates ownership (`OwnerCap`) from publishing (`PublisherCap`). The owner issues a cap bound to a co-author's address, granting them write access. Once issued, the co-author can publish entries using their own key. Revoking the cap causes further writes to abort on-chain. See [Access Control → Issuing Publisher Caps](https://docs.morsecms.xyz/access-control.html#issuing-publisher-caps) for details.
+Morse separates ownership (`OwnerCap`) from publishing (`PublisherCap`). The owner issues a cap bound to a co-author's address, granting them write access. Once issued, the co-author can publish entries using their own key. Revoking the cap causes further writes to abort on-chain. See [Access Control → Issuing publisher caps](https://docs.morsecms.xyz/access-control.html#issuing-publisher-caps) for details.
 
 ```typescript
 import {
@@ -424,9 +424,9 @@ await destroyPublisherCap(coAuthorAdapter, config, {
 >
 > A PublisherCap is bound to the `holder` address at issue time. Transferring the Sui object to a different address does NOT grant write rights. To rotate authority to a new address, destroy the old cap and issue a fresh one.
 
-See also: [CLI Cookbooks → Delegating Write Access](https://docs.morsecms.xyz/cli-workflows.html#delegating-write-access)
+See also: [CLI Cookbooks → Delegating write access](https://docs.morsecms.xyz/cli-workflows.html#delegating-write-access)
 
-## Transferring Ownership
+## Transferring ownership
 
 Transfer the `OwnerCap` to a new address. The recipient gains governance rights: issuing/revoking publisher caps and deleting the publication. Existing publisher caps remain usable until individually revoked.
 
@@ -443,12 +443,12 @@ await transferOwnership(adapter, config, {
 >
 > Once transferred, the original owner loses all governance rights immediately. The new owner could transfer back, but there is no built-in undo.
 
-See also: [CLI Cookbooks → Transferring Ownership](https://docs.morsecms.xyz/cli-workflows.html#transferring-ownership)
+See also: [CLI Cookbooks → Transferring ownership](https://docs.morsecms.xyz/cli-workflows.html#transferring-ownership)
 
-## Deleting and Tearing Down
+## Deleting and tearing down
 
-Deletion works bottom-up: remove entries first, then the collections, then the publication. The Move layer enforces this - deleting a non-empty collection or publication aborts on-chain. This assumes the caller still holds both a `PublisherCap` and the `OwnerCap`. 
-Entry IDs are permanently retired on deletion and never reused. See [Entries → Deleting an Entry](https://docs.morsecms.xyz/entries.html#deleting-an-entry) for details.
+Deletion works bottom-up: remove entries first, then the collections, then the publication. The Move layer enforces this: deleting a non-empty collection or publication aborts on-chain. This assumes the caller still holds both a `PublisherCap` and the `OwnerCap`. 
+Entry IDs are permanently retired on deletion and never reused. See [Entries → Deleting an entry](https://docs.morsecms.xyz/entries.html#deleting-an-entry) for details.
 
 ```typescript
 import {
@@ -490,9 +490,9 @@ await deletePublication(reader, adapter, config, {
 });
 ```
 
-See also: [CLI Cookbooks → Deleting and Tearing Down](https://docs.morsecms.xyz/cli-workflows.html#deleting-and-tearing-down)
+See also: [CLI Cookbooks → Deleting and tearing down](https://docs.morsecms.xyz/cli-workflows.html#deleting-and-tearing-down)
 
-## Entry Path Options
+## Entry path options
 
 The SDK provides two ways to publish content. `addEntryFromBytes` (and `addEncryptedEntryFromBytes` for encrypted content) handles upload and on-chain registration in one call and is the recommended default. For cases that need more control, use the split form: `uploadBlob` followed by `addEntry`.
 
@@ -504,9 +504,9 @@ The SDK provides two ways to publish content. `addEntryFromBytes` (and `addEncry
 | Decouple upload and add-entry (draft-then-attach UX) | `uploadBlob` at upload time, `addEntry` at publish time | 2 + 1 |
 | Server pre-uploads; browser only adds entries | `uploadBlob` (server), `addEntry` (browser) | 2 + 1 |
 
-### Split Upload Path
+### Split upload path
 
-When you need control over the upload step - for example, to retry blob registration independently or reuse a blob across entries - split the operation into two calls:
+When you need control over the upload step (for example, to retry blob registration independently or reuse a blob across entries), split the operation into two calls:
 
 ```ts
 import { addEntry, DefaultWalrusWriteAdapter } from "@arcadiasystems/morse-sdk";
@@ -535,9 +535,9 @@ const entry = await addEntry(adapter, config, {
 });
 ```
 
-`addEntryFromBytes` requires an adapter that implements `WalrusFlowCapable`, which combines the certify and add-entry steps into a single transaction. `DefaultWalrusWriteAdapter` supports this; the HTTP publisher adapter does not. Passing an incompatible adapter throws a `TransportError` before any I/O - use the split path (`uploadBlob` + `addEntry`) instead. To branch at runtime, use the `isWalrusFlowCapable(walrusWriter)` type guard, which detects the capability on any `WalrusWriteAdapter`.
+`addEntryFromBytes` requires an adapter that implements `WalrusFlowCapable`, which combines the certify and add-entry steps into a single transaction. `DefaultWalrusWriteAdapter` supports this; the HTTP publisher adapter does not. Passing an incompatible adapter throws a `TransportError` before any I/O. Use the split path (`uploadBlob` + `addEntry`) instead. To branch at runtime, use the `isWalrusFlowCapable(walrusWriter)` type guard, which detects the capability on any `WalrusWriteAdapter`.
 
-## Next Steps
+## Next steps
 
 - [CLI: Overview](https://docs.morsecms.xyz/cli-overview.html): Interactive command-line tool for managing publications, collections, and entries without writing code.
-- [Smart Contracts: Overview](https://docs.morsecms.xyz/contracts-overview.html): Architecture of the Morse Move package - modules, shared objects, and the on-chain data model.
+- [Smart Contracts: Overview](https://docs.morsecms.xyz/contracts-overview.html): Architecture of the Morse Move package: modules, shared objects, and the on-chain data model.

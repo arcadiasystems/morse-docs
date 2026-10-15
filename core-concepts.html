@@ -12,10 +12,10 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <meta name="description" content="Understand the fundamental building blocks of the Morse protocol - the data model, authorization system, storage strategy, and how on-chain and off-chain components interact.">
+  <meta name="description" content="Understand the fundamental building blocks of the Morse protocol: the data model, authorization system, storage strategy, and how on-chain and off-chain components interact.">
   <link rel="canonical" href="https://docs.morsecms.xyz/core-concepts.html">
   <meta property="og:title" content="Core Concepts · Morse Docs">
-  <meta property="og:description" content="Understand the fundamental building blocks of the Morse protocol - the data model, authorization system, storage strategy, and how on-chain and off-chain components interact.">
+  <meta property="og:description" content="Understand the fundamental building blocks of the Morse protocol: the data model, authorization system, storage strategy, and how on-chain and off-chain components interact.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://docs.morsecms.xyz/core-concepts.html">
   <meta property="og:site_name" content="Morse Docs">
@@ -51,11 +51,11 @@
   <aside class="side" id="side"></aside>
 
   <main class="main">
-    <nav class="crumbs" aria-label="Breadcrumb"><span>Getting Started</span><span class="crumbs__sep" aria-hidden="true">/</span><span aria-current="page">Core Concepts</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><span>Getting started</span><span class="crumbs__sep" aria-hidden="true">/</span><span aria-current="page">Core Concepts</span></nav>
 
     <article class="article">
         <h1>Core Concepts</h1>
-        <p class="article-lead">Understand the fundamental building blocks of the Morse protocol - the data model, authorization system, storage strategy, and how on-chain and off-chain components interact.</p>
+        <p class="article-lead">Understand the fundamental building blocks of the Morse protocol: the data model, authorization system, storage strategy, and how on-chain and off-chain components interact.</p>
         <div class="page-actions">
           <div class="copybtn-group">
             <button class="copybtn" type="button" id="copy-page"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-flash-label>Copy page</span></button>
@@ -69,7 +69,7 @@
           </div>
         </div>
 
-        <h2 id="data-model">The Data Model</h2>
+        <h2 id="data-model">The data model</h2>
         <p>Morse organizes content in a four-level hierarchy. Each level is stored on-chain and has a clear responsibility:</p>
 
         <div class="arch">
@@ -78,7 +78,7 @@
             <div class="arch-items">
               <div class="arch-chip">Publication</div>
               <div class="arch-arrow">→</div>
-              <span class="arch-note">e.g. <code>my-blog</code> - a brand-level content domain</span>
+              <span class="arch-note">e.g. <code>my-blog</code>, a brand-level content domain</span>
             </div>
           </div>
 
@@ -87,7 +87,7 @@
             <div class="arch-items">
               <div class="arch-chip">Collection</div>
               <div class="arch-arrow">→</div>
-              <span class="arch-note">e.g. <code>articles</code>, <code>site-pages</code> - content lanes</span>
+              <span class="arch-note">e.g. <code>articles</code>, <code>site-pages</code> (content lanes)</span>
             </div>
           </div>
 
@@ -96,7 +96,7 @@
             <div class="arch-items">
               <div class="arch-chip">Entry</div>
               <div class="arch-arrow">→</div>
-              <span class="arch-note">e.g. <code>welcome-post</code> - a single content unit</span>
+              <span class="arch-note">e.g. <code>welcome-post</code>, a single content unit</span>
             </div>
           </div>
 
@@ -105,69 +105,69 @@
             <div class="arch-items">
               <div class="arch-chip">Revision</div>
               <div class="arch-arrow">→</div>
-              <span class="arch-note">immutable snapshot - blob reference + metadata</span>
+              <span class="arch-note">immutable snapshot: blob reference + metadata</span>
             </div>
           </div>
         </div>
 
-        <h3 id="example">A Concrete Example</h3>
-        <p>Imagine you run a team blog. Here's how it maps to the Morse data model:</p>
+        <h3 id="example">A concrete example</h3>
+        <p>Imagine you run a team blog. Here is how it maps to the Morse data model:</p>
         <ul>
-          <li><strong>Publication</strong> <code>team-blog</code> - your brand-level content domain, registered with a unique slug</li>
-          <li><strong>Collection</strong> <code>articles</code> - one content lane for blog posts (blob mode, since each post is independent)</li>
-          <li><strong>Entry #0</strong> <code>welcome-post</code> - your first blog post, assigned the monotonic ID <code>0</code></li>
-          <li><strong>Revision 0</strong> - the initial published version. <code>public_head</code> points here, so readers see it immediately</li>
-          <li><strong>Revision 1</strong> - an updated draft. <code>draft_head</code> points here, but <code>public_head</code> still points to revision 0 - readers see the original until you explicitly promote the draft</li>
+          <li><strong>Publication</strong> <code>team-blog</code>: your brand-level content domain, registered with a unique slug</li>
+          <li><strong>Collection</strong> <code>articles</code>: one content lane for blog posts (blob mode, since each post is independent)</li>
+          <li><strong>Entry #0</strong> <code>welcome-post</code>: your first blog post, assigned the monotonic ID <code>0</code></li>
+          <li><strong>Revision 0</strong>: the initial published version. <code>public_head</code> points here, so readers see it immediately</li>
+          <li><strong>Revision 1</strong>: an updated draft. <code>draft_head</code> points here, but <code>public_head</code> still points to revision 0; readers see the original until you explicitly promote the draft</li>
         </ul>
 
         <p>Editors operate mostly at the <strong>Entry / Revision</strong> level. Owners operate mostly at the <strong>Publication / Authorization</strong> level.</p>
 
         <h2 id="publications">Publications</h2>
-        <p>Think of a publication as your project or site - it is the top-level namespace that groups all your content together. Every publication gets a unique slug (like <code>my-blog</code>) that acts as a human-readable identifier across the protocol. All collections, entries, and permissions live under this single umbrella.</p>
+        <p>Think of a publication as your project or site. It is the top-level namespace that groups all your content together. Every publication gets a unique slug (like <code>my-blog</code>) that acts as a human-readable identifier across the protocol. All collections, entries, and permissions live under this single umbrella.</p>
         <p><a href="publications.html">See Publications for the full reference &#8594;</a></p>
 
         <h2 id="collections">Collections</h2>
-        <p>Collections are how you organize entries within a publication - similar to folders or content types. For example, a blog might have an <code>articles</code> collection and a <code>site-pages</code> collection. When you create a collection, you choose how its content is stored: individually as separate blobs (good for standalone posts or images) or as a shared document that can be patched in place (good for structured data like settings or configuration).</p>
+        <p>Collections are how you organize entries within a publication, similar to folders or content types. For example, a blog might have an <code>articles</code> collection and a <code>site-pages</code> collection. When you create a collection, you choose how its content is stored: individually as separate blobs (good for standalone posts or images) or as a shared document that can be patched in place (good for structured data like settings or configuration).</p>
         <p><a href="collections.html">See Collections for the full reference &#8594;</a></p>
 
-        <h2 id="entries-and-revisions">Entries &amp; Revisions</h2>
-        <p>Entries are the actual content pieces - a blog post, an image, a page. Every edit creates a new revision rather than overwriting the previous one, giving you a complete version history whose on-chain record is immutable. The system tracks two pointers for each entry: a draft head for work-in-progress and a public head that readers see. This lets drafts evolve privately while production clients serve stable published content.</p>
+        <h2 id="entries-and-revisions">Entries &amp; revisions</h2>
+        <p>Entries are the actual content pieces: a blog post, an image, a page. Every edit creates a new revision rather than overwriting the previous one, giving you a complete version history whose on-chain record is immutable. The system tracks two pointers for each entry: a draft head for work-in-progress and a public head that readers see. This lets drafts evolve privately while production clients serve stable published content.</p>
         <p><a href="entries.html">See Entries for the full reference &#8594;</a></p>
 
-        <h2 id="how-publishing-works">How Publishing Works</h2>
+        <h2 id="how-publishing-works">How publishing works</h2>
         <p>End-to-end flow when you publish content:</p>
         <ol>
-          <li><strong>Authenticate</strong> - hold a <code>PublisherCap</code> for the target publication</li>
-          <li><strong>Upload</strong> - upload content bytes to Walrus, get a blob reference</li>
-          <li><strong>Register</strong> - create an entry on-chain storing the blob reference, content type, and access policy</li>
-          <li><strong>Heads update</strong> - public_head and/or draft_head update based on encryption status</li>
-          <li><strong>Read</strong> - any client resolves the entry and fetches the payload from Walrus</li>
+          <li><strong>Authenticate</strong>: hold a <code>PublisherCap</code> for the target publication</li>
+          <li><strong>Upload</strong>: upload content bytes to Walrus, get a blob reference</li>
+          <li><strong>Register</strong>: create an entry on-chain storing the blob reference, content type, and access policy</li>
+          <li><strong>Heads update</strong>: public_head and/or draft_head update based on encryption status</li>
+          <li><strong>Read</strong>: any client resolves the entry and fetches the payload from Walrus</li>
         </ol>
 
-        <h2 id="capability-based-auth">Capability-Based Authorization</h2>
-        <p>Instead of usernames and passwords, Morse uses on-chain capability objects to manage permissions. Owning the right object in your wallet proves you have permission to act - no login server required. Morse separates ownership from publishing using two types of capability tokens. An <code>OwnerCap</code> (one per publication) controls administrative operations like issuing permissions and deleting the publication. <code>PublisherCap</code>s (many per publication) grant write access and are bound to a specific holder address.</p>
-        <p>Revocation uses a denylist-based model - issuing caps is cheap (zero table writes), and only revocations write to the denylist. Once revoked, all future writes using that cap are immediately rejected.</p>
+        <h2 id="capability-based-auth">Capability-based authorization</h2>
+        <p>Instead of usernames and passwords, Morse uses on-chain capability objects to manage permissions. Owning the right object in your wallet proves you have permission to act. No login server required. Morse separates ownership from publishing using two types of capability tokens. An <code>OwnerCap</code> (one per publication) controls administrative operations like issuing permissions and deleting the publication. <code>PublisherCap</code>s (many per publication) grant write access and are bound to a specific holder address.</p>
+        <p>Revocation uses a denylist-based model: issuing caps is cheap (zero table writes), and only revocations write to the denylist. Once revoked, all future writes using that cap are immediately rejected.</p>
         <p><a href="access-control.html">See Access Control for the full reference &#8594;</a></p>
 
-        <h2 id="walrus-storage">Walrus Storage</h2>
+        <h2 id="walrus-storage">Walrus storage</h2>
         <p>The Sui blockchain only stores references (pointers) to your content, not the content bytes themselves. The actual payloads live on Walrus, a decentralized storage network designed for large data. This separation keeps on-chain costs low while keeping your content verifiable: payloads stay available for the storage period you fund (measured in Walrus epochs) and can be renewed at any time. Walrus is format-agnostic, so Morse can support JSON, Markdown, images, video, or any custom schema.</p>
-        <p><a href="collections.html#storage-modes">See Collections &rarr; Storage Modes for storage mode details &rarr;</a></p>
+        <p><a href="collections.html#storage-modes">See Collections &rarr; Storage modes for storage mode details &rarr;</a></p>
 
-        <h2 id="access-control">Access Control</h2>
-        <p>Morse can gate content behind on-chain encryption using Seal. Only users who meet specific on-chain conditions can decrypt and read the content. This means access rules are enforced by the blockchain itself, not by a server you have to trust. This approach enables paid subscriptions, token-gated access, team-only content, and other models - all without a centralized gatekeeper.</p>
+        <h2 id="access-control">Access control</h2>
+        <p>Morse can gate content behind on-chain encryption using Seal. Only users who meet specific on-chain conditions can decrypt and read the content. This means access rules are enforced by the blockchain itself, not by a server you have to trust. This approach enables paid subscriptions, token-gated access, team-only content, and other models, all without a centralized gatekeeper.</p>
         <p><a href="access-control.html">See Access Control for the full reference &rarr;</a></p>
 
-        <h2 id="off-chain-services">Off-Chain Services</h2>
+        <h2 id="off-chain-services">Off-chain services</h2>
         <p>The blockchain is the canonical source of truth, but off-chain services improve the developer experience. Morse provides optional infrastructure like an indexer (for fast search and queries) and a content API (for read access) so you do not have to query the chain directly. These services make building apps on Morse faster and simpler, but they are not required.</p>
         <ul>
-          <li><strong>Indexer</strong> - listens to on-chain events and builds a read-optimized state database</li>
-          <li><strong>Content API</strong> - serves fast queries for listings, slug resolution, and payload references</li>
-          <li><strong>SDK</strong> - TypeScript package that wraps Sui/Walrus/Seal interactions for app developers</li>
-          <li><strong>CLI</strong> - command-line tool for scripted automation, CI, and agent-native workflows</li>
+          <li><strong>Indexer</strong>: listens to on-chain events and builds a read-optimized state database</li>
+          <li><strong>Content API</strong>: serves fast queries for listings, slug resolution, and payload references</li>
+          <li><strong>SDK</strong>: TypeScript package that wraps Sui/Walrus/Seal interactions for app developers</li>
+          <li><strong>CLI</strong>: command-line tool for scripted automation, CI, and agent-native workflows</li>
         </ul>
         <p>Importantly, all off-chain services are replaceable. Any team can run their own indexer, API, or integrate directly with the contracts via the SDK. Protocol access is never gated by a single service provider.</p>
 
-        <h2 id="next-steps">Next Steps</h2>
+        <h2 id="next-steps">Next steps</h2>
         <div class="card-grid">
           <a href="quick-start.html" class="card">
             <div class="card-title">Quick Start</div>
@@ -191,7 +191,7 @@
     <div class="feedback">
       <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
       <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20core-concepts.html" target="_blank" rel="noopener">Report an issue</a>
-      <span class="feedback__upd">Updated 2026-06-19</span>
+      <span class="feedback__upd">Updated 2026-10-15</span>
     </div>
     <nav class="pager" aria-label="Previous and next">
       <a href="index.html" rel="prev"><small>Previous</small><b>← Introduction</b></a>

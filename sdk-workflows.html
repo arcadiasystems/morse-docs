@@ -76,9 +76,9 @@
           <table>
             <thead><tr><th>Requirement</th><th>Details</th><th>Purpose</th></tr></thead>
             <tbody>
-              <tr><td>Bun or Node</td><td>v1.2+ / >= 18</td><td>JavaScript runtime</td></tr>
-              <tr><td>SUI + WAL tokens</td><td><a href="https://faucet.sui.io/" target="_blank">SUI faucet</a> / <a href="https://stake-wal.wal.app/?network=testnet" target="_blank">Swap SUI for WAL</a></td><td>Gas fees (SUI) and Walrus storage fees (WAL)</td></tr>
-              <tr><td>Bech32 private key</td><td>A <code>suiprivkey1...</code> string</td><td>SDK authentication - export from your wallet's settings</td></tr>
+              <tr><td>Bun or Node</td><td>v1.2+ / ≥ 18</td><td>JavaScript runtime</td></tr>
+              <tr><td>SUI + WAL tokens</td><td><a href="https://faucet.sui.io/" target="_blank">SUI faucet</a> · <a href="https://stake-wal.wal.app/?network=testnet" target="_blank">Swap SUI for WAL</a></td><td>Gas fees (SUI) and Walrus storage fees (WAL)</td></tr>
+              <tr><td>Bech32 private key</td><td>A <code>suiprivkey1...</code> string</td><td>SDK authentication. Export from your wallet's settings</td></tr>
             </tbody>
           </table>
         </div>
@@ -88,9 +88,9 @@
         <h2 id="lifecycle">Lifecycle</h2>
         <p>Publications hold collections; collections hold entries; entries hold an append-only vector of revisions. Permission management lives in Sui; payloads live in Walrus.</p>
 
-        <p>The examples below assume you've built a context as shown in <a href="sdk-client-setup.html">SDK Setup</a>. Browser flows carry a <code>signer</code> (via <code>WalletStandardSigner.fromAccount</code>) instead of <code>keypair</code>. Walrus adapters (<code>walrusWriter</code>, <code>walrusReader</code>) are constructed where needed - see <a href="sdk-client-setup.html#picking-a-walrus-adapter">Picking a Walrus Adapter</a> for options.</p>
+        <p>The examples below assume you have built a context as shown in <a href="sdk-client-setup.html">SDK Setup</a>. Browser flows carry a <code>signer</code> (via <code>WalletStandardSigner.fromAccount</code>) instead of <code>keypair</code>. Walrus adapters (<code>walrusWriter</code>, <code>walrusReader</code>) are constructed where needed. See <a href="sdk-client-setup.html#picking-a-walrus-adapter">Picking a Walrus Adapter</a> for options.</p>
 
-        <h2 id="creating-a-publication">Creating a Publication</h2>
+        <h2 id="creating-a-publication">Creating a publication</h2>
         <p>Returns the publication's ID along with an <code>OwnerCap</code> for governance and a <code>PublisherCap</code> for write access, both transferred to the caller's address atomically.</p>
 
         <div class="code-block">
@@ -114,7 +114,7 @@
 }</pre>
         </div>
 
-        <h2 id="adding-a-collection">Adding a Collection</h2>
+        <h2 id="adding-a-collection">Adding a collection</h2>
         <p><code>storageMode</code> is fixed at creation; switching the mode for the same collection name requires deleting and recreating.</p>
 
         <div class="code-block">
@@ -132,7 +132,7 @@
 });</pre>
         </div>
 
-        <h2 id="adding-an-entry">Adding an Entry</h2>
+        <h2 id="adding-an-entry">Adding an entry</h2>
         <p>Uploads bytes to Walrus and attaches them as the first revision of a new entry in 2 transactions. Returns the assigned <code>entryId</code> (a monotonic <code>u64</code>) used to reference the entry in all subsequent operations.</p>
 
         <div class="code-block">
@@ -173,9 +173,9 @@
           </div>
         </div>
 
-        <p class="see-also">See also: <a href="cli-workflows.html#publishing-your-first-entry">CLI Cookbooks &rarr; Publishing Your First Entry</a></p>
+        <p class="see-also">See also: <a href="cli-workflows.html#publishing-your-first-entry">CLI Cookbooks &rarr; Publishing your first entry</a></p>
 
-        <h2 id="encrypted-content">Encrypted Content</h2>
+        <h2 id="encrypted-content">Encrypted content</h2>
         <p>Encrypts content with Seal, uploads ciphertext to Walrus, and attaches it as the first revision of an encrypted entry in 2 transactions. Returns the same <code>entryId</code> as the plaintext path. Encrypted entries are always created as drafts and accessed via Seal decryption, not the public read path.</p>
 
         <div class="code-block">
@@ -224,17 +224,17 @@
 });</pre>
         </div>
 
-        <p><code>buildPublisherSealId</code> constructs the Seal identity from the publication ID and a random nonce. Each entry needs a fresh nonce - reusing a nonce produces the same identity. When creating a <code>SessionKey</code>, always pass <code>config.originalPackageId ?? config.packageId</code> as the package ID. Seal uses the original (genesis) package address, not the current upgrade address.</p>
+        <p><code>buildPublisherSealId</code> constructs the Seal identity from the publication ID and a random nonce. Each entry needs a fresh nonce; reusing a nonce produces the same identity. When creating a <code>SessionKey</code>, always pass <code>config.originalPackageId ?? config.packageId</code> as the package ID. Seal uses the original (genesis) package address, not the current upgrade address.</p>
 
         <div class="callout callout-warning">
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">Encrypted entries are always created as drafts</div>
-            <div class="callout-text"><code>publishFromDraft</code> and <code>publishDirect</code> always write non-encrypted revisions - the contract hardcodes <code>encrypted=false</code> on the public path. For encrypted content, use <code>addEncryptedEntryFromBytes</code> / <code>appendEncryptedDraftRevision</code> and read via <code>seal.decrypt</code>.</div>
+            <div class="callout-text"><code>publishFromDraft</code> and <code>publishDirect</code> always write non-encrypted revisions; the contract hardcodes <code>encrypted=false</code> on the public path. For encrypted content, use <code>addEncryptedEntryFromBytes</code> / <code>appendEncryptedDraftRevision</code> and read via <code>seal.decrypt</code>.</div>
           </div>
         </div>
 
-        <h3 id="reading-encrypted-entries">Reading Encrypted Entries</h3>
+        <h3 id="reading-encrypted-entries">Reading encrypted entries</h3>
         <p>The full read flow for encrypted content combines entry metadata lookup, Walrus blob fetch, and Seal decryption. Decryption requires three things: a Seal <code>SessionKey</code> (built via wallet personal-message signature), the <code>sealId</code> bound to the revision, and a non-revoked <code>PublisherCap</code> ID.</p>
 
         <div class="code-block">
@@ -281,7 +281,7 @@
 console.<span class="fn">log</span>(<span class="kw">new</span> <span class="fn">TextDecoder</span>().<span class="fn">decode</span>(plaintext));</pre>
         </div>
 
-        <h3 id="encrypted-draft-revisions">Encrypted Draft Revisions</h3>
+        <h3 id="encrypted-draft-revisions">Encrypted draft revisions</h3>
         <p>After creating an encrypted entry with <code>addEncryptedEntryFromBytes</code>, use <code>appendEncryptedDraftRevision</code> to add subsequent encrypted revisions to the same entry. You encrypt and upload the blob yourself, then pass the <code>blobObjectId</code> to the SDK.</p>
         <div class="code-block">
           <div class="code-header">
@@ -340,9 +340,9 @@ console.<span class="fn">log</span>(<span class="st">"Revision"</span>, revision
           </details>
         </div> -->
 
-        <p class="see-also">See also: <a href="cli-workflows.html#encrypted-content">CLI Cookbooks &rarr; Encrypted Content</a></p>
+        <p class="see-also">See also: <a href="cli-workflows.html#encrypted-content">CLI Cookbooks &rarr; Encrypted content</a></p>
 
-        <h2 id="reading-it-back">Reading It Back</h2>
+        <h2 id="reading-it-back">Reading it back</h2>
         <p>Single-object reads, paginated lists, and an async iterator for full-collection scans. The reader is gRPC-backed.</p>
 
         <div class="code-block">
@@ -392,7 +392,7 @@ console.<span class="fn">log</span>(page.results.length, <span class="st">"entri
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">Use <code>HttpAggregatorReadAdapter</code> for reads on testnet</div>
-            <div class="callout-text">On testnet, <code>DefaultWalrusReadAdapter</code> (direct-node fanout) frequently fails right after an upload with <code>No valid blob metadata could be retrieved from any storage node</code>, even for healthy blobs. Use <code>HttpAggregatorReadAdapter</code> for reads instead - it routes through a single aggregator endpoint and succeeds against the same blobs, at the cost of skipping client-side blob verification. Mainnet storage nodes are expected to be more reliable. See <a href="sdk-client-setup.html#picking-a-walrus-adapter">SDK Client Setup &rarr; Picking a Walrus Adapter</a>.</div>
+            <div class="callout-text">On testnet, <code>DefaultWalrusReadAdapter</code> (direct-node fanout) frequently fails right after an upload with <code>No valid blob metadata could be retrieved from any storage node</code>, even for healthy blobs. Use <code>HttpAggregatorReadAdapter</code> for reads instead; it routes through a single aggregator endpoint and succeeds against the same blobs, at the cost of skipping client-side blob verification. Mainnet storage nodes are expected to be more reliable. See <a href="sdk-client-setup.html#picking-a-walrus-adapter">SDK Client Setup &rarr; Picking a Walrus adapter</a>.</div>
           </div>
         </div>
 
@@ -404,8 +404,8 @@ console.<span class="fn">log</span>(page.results.length, <span class="st">"entri
           </div>
         </div>
 
-        <h3 id="publication-and-cap-lookups">Publication and Cap Lookups</h3>
-        <p>Beyond entries, the reader resolves publications and the caps that control them - useful for dashboards ("which publications does this wallet own?") and for verifying delegated write access:</p>
+        <h3 id="publication-and-cap-lookups">Publication and cap lookups</h3>
+        <p>Beyond entries, the reader resolves publications and the caps that control them, useful for dashboards ("which publications does this wallet own?") and for verifying delegated write access:</p>
 
         <div class="code-block">
           <div class="code-header">
@@ -425,7 +425,7 @@ console.<span class="fn">log</span>(page.results.length, <span class="st">"entri
 <span class="cm">// cap.publicationId, cap.holder</span></pre>
         </div>
 
-        <p>All list methods return one page per call - <code>EntryListPage</code>, <code>PublicationListPage</code>, and <code>PublisherCapListPage</code> - each with a <code>results</code> array and a <code>nextCursor</code> (<code>null</code> when exhausted). They accept <code>{ limit, cursor, signal }</code> options (default limit 50; the cursor is opaque - feed <code>nextCursor</code> back in to get the next page). <code>scanEntries</code> auto-paginates and takes <code>{ pageSize, signal }</code> instead. Single-object reads (<code>getPublication</code>, <code>getPublisherCap</code>, <code>getEntry</code>, <code>getRevision</code>) throw <code>NotFoundError</code> when the target does not exist.</p>
+        <p>All list methods return one page per call (<code>EntryListPage</code>, <code>PublicationListPage</code>, and <code>PublisherCapListPage</code>), each with a <code>results</code> array and a <code>nextCursor</code> (<code>null</code> when exhausted). They accept <code>{ limit, cursor, signal }</code> options (default limit 50; the cursor is opaque: feed <code>nextCursor</code> back in to get the next page). <code>scanEntries</code> auto-paginates and takes <code>{ pageSize, signal }</code> instead. Single-object reads (<code>getPublication</code>, <code>getPublisherCap</code>, <code>getEntry</code>, <code>getRevision</code>) throw <code>NotFoundError</code> when the target does not exist.</p>
 <!-- <div class="ai-prompt">
           <details>
             <summary>Build with AI</summary>
@@ -440,12 +440,12 @@ console.<span class="fn">log</span>(page.results.length, <span class="st">"entri
           </details>
         </div> -->
 
-        <p class="see-also">See also: <a href="cli-workflows.html#reading-it-back">CLI Cookbooks &rarr; Reading It Back</a></p>
+        <p class="see-also">See also: <a href="cli-workflows.html#reading-it-back">CLI Cookbooks &rarr; Reading it back</a></p>
 
-        <h2 id="publishing-a-new-revision">Publishing a New Revision</h2>
-        <p>Append a new public revision directly, or stage a draft first and promote it. Revisions are append-only - existing revisions are never edited in place. Two heads track progress: <code>draftHead</code> (work in progress) and <code>publicHead</code> (the live version).</p>
+        <h2 id="publishing-a-new-revision">Publishing a new revision</h2>
+        <p>Append a new public revision directly, or stage a draft first and promote it. Revisions are append-only; existing revisions are never edited in place. Two heads track progress: <code>draftHead</code> (work in progress) and <code>publicHead</code> (the live version).</p>
 
-        <h3 id="publish-direct">Option A: Publish direct</h3>
+        <h3 id="publish-direct">Option A: publish direct</h3>
         <p>Skip the draft stage and append a public revision in one step. Requires a pre-uploaded blob (use <code>uploadBlob</code> first).</p>
 
         <div class="code-block">
@@ -476,7 +476,7 @@ console.<span class="fn">log</span>(page.results.length, <span class="st">"entri
 <span class="cm">// result.revisionId is the index of the new public revision</span></pre>
         </div>
 
-        <h3 id="draft-then-publish">Option B: Draft then publish</h3>
+        <h3 id="draft-then-publish">Option B: draft then publish</h3>
         <p>Stage a draft revision (updates <code>draftHead</code> only), iterate on it, then promote to a public revision. Both steps require a pre-uploaded blob (use <code>uploadBlob</code> first). The promotion appends a fresh public revision; the draft blob is referenced for validation but not reused.</p>
 
         <div class="code-block">
@@ -524,10 +524,10 @@ console.<span class="fn">log</span>(page.results.length, <span class="st">"entri
 });</pre>
         </div>
 
-        <p class="see-also">See also: <a href="cli-workflows.html#publishing-a-new-revision">CLI Cookbooks &rarr; Publishing a New Revision</a></p>
+        <p class="see-also">See also: <a href="cli-workflows.html#publishing-a-new-revision">CLI Cookbooks &rarr; Publishing a new revision</a></p>
 
-        <h2 id="delegating-write-access">Delegating Write Access</h2>
-        <p>Morse separates ownership (<code>OwnerCap</code>) from publishing (<code>PublisherCap</code>). The owner issues a cap bound to a co-author's address, granting them write access. Once issued, the co-author can publish entries using their own key. Revoking the cap causes further writes to abort on-chain. See <a href="access-control.html#issuing-publisher-caps">Access Control &rarr; Issuing Publisher Caps</a> for details.</p>
+        <h2 id="delegating-write-access">Delegating write access</h2>
+        <p>Morse separates ownership (<code>OwnerCap</code>) from publishing (<code>PublisherCap</code>). The owner issues a cap bound to a co-author's address, granting them write access. Once issued, the co-author can publish entries using their own key. Revoking the cap causes further writes to abort on-chain. See <a href="access-control.html#issuing-publisher-caps">Access Control &rarr; Issuing publisher caps</a> for details.</p>
 
         <div class="code-block">
           <div class="code-header">
@@ -570,9 +570,9 @@ console.<span class="fn">log</span>(page.results.length, <span class="st">"entri
           </div>
         </div>
 
-        <p class="see-also">See also: <a href="cli-workflows.html#delegating-write-access">CLI Cookbooks &rarr; Delegating Write Access</a></p>
+        <p class="see-also">See also: <a href="cli-workflows.html#delegating-write-access">CLI Cookbooks &rarr; Delegating write access</a></p>
 
-        <h2 id="transferring-ownership">Transferring Ownership</h2>
+        <h2 id="transferring-ownership">Transferring ownership</h2>
         <p>Transfer the <code>OwnerCap</code> to a new address. The recipient gains governance rights: issuing/revoking publisher caps and deleting the publication. Existing publisher caps remain usable until individually revoked.</p>
 
         <div class="code-block">
@@ -596,10 +596,10 @@ console.<span class="fn">log</span>(page.results.length, <span class="st">"entri
           </div>
         </div>
 
-        <p class="see-also">See also: <a href="cli-workflows.html#transferring-ownership">CLI Cookbooks &rarr; Transferring Ownership</a></p>
+        <p class="see-also">See also: <a href="cli-workflows.html#transferring-ownership">CLI Cookbooks &rarr; Transferring ownership</a></p>
 
-        <h2 id="deleting-and-tearing-down">Deleting and Tearing Down</h2>
-        <p>Deletion works bottom-up: remove entries first, then the collections, then the publication. The Move layer enforces this - deleting a non-empty collection or publication aborts on-chain. This assumes the caller still holds both a <code>PublisherCap</code> and the <code>OwnerCap</code>. <br>Entry IDs are permanently retired on deletion and never reused. See <a href="entries.html#deleting-an-entry">Entries &rarr; Deleting an Entry</a> for details.</p>
+        <h2 id="deleting-and-tearing-down">Deleting and tearing down</h2>
+        <p>Deletion works bottom-up: remove entries first, then the collections, then the publication. The Move layer enforces this: deleting a non-empty collection or publication aborts on-chain. This assumes the caller still holds both a <code>PublisherCap</code> and the <code>OwnerCap</code>. <br>Entry IDs are permanently retired on deletion and never reused. See <a href="entries.html#deleting-an-entry">Entries &rarr; Deleting an entry</a> for details.</p>
 
         <div class="code-block">
           <div class="code-header">
@@ -645,9 +645,9 @@ console.<span class="fn">log</span>(page.results.length, <span class="st">"entri
 });</pre>
         </div>
 
-        <p class="see-also">See also: <a href="cli-workflows.html#deleting-and-tearing-down">CLI Cookbooks &rarr; Deleting and Tearing Down</a></p>
+        <p class="see-also">See also: <a href="cli-workflows.html#deleting-and-tearing-down">CLI Cookbooks &rarr; Deleting and tearing down</a></p>
 
-        <h2 id="entry-path-options">Entry Path Options</h2>
+        <h2 id="entry-path-options">Entry path options</h2>
         <p>The SDK provides two ways to publish content. <code>addEntryFromBytes</code> (and <code>addEncryptedEntryFromBytes</code> for encrypted content) handles upload and on-chain registration in one call and is the recommended default. For cases that need more control, use the split form: <code>uploadBlob</code> followed by <code>addEntry</code>.</p>
 
         <div class="table-wrap">
@@ -689,8 +689,8 @@ console.<span class="fn">log</span>(page.results.length, <span class="st">"entri
           </table>
         </div>
 
-        <h3 id="split-upload-path">Split Upload Path</h3>
-        <p>When you need control over the upload step - for example, to retry blob registration independently or reuse a blob across entries - split the operation into two calls:</p>
+        <h3 id="split-upload-path">Split upload path</h3>
+        <p>When you need control over the upload step (for example, to retry blob registration independently or reuse a blob across entries), split the operation into two calls:</p>
         <div class="code-block">
           <div class="code-header">
             <span class="code-lang">ts</span>
@@ -722,9 +722,9 @@ console.<span class="fn">log</span>(page.results.length, <span class="st">"entri
 });</pre>
         </div>
 
-        <p><code>addEntryFromBytes</code> requires an adapter that implements <code>WalrusFlowCapable</code>, which combines the certify and add-entry steps into a single transaction. <code>DefaultWalrusWriteAdapter</code> supports this; the HTTP publisher adapter does not. Passing an incompatible adapter throws a <code>TransportError</code> before any I/O - use the split path (<code>uploadBlob</code> + <code>addEntry</code>) instead. To branch at runtime, use the <code>isWalrusFlowCapable(walrusWriter)</code> type guard, which detects the capability on any <code>WalrusWriteAdapter</code>.</p>
+        <p><code>addEntryFromBytes</code> requires an adapter that implements <code>WalrusFlowCapable</code>, which combines the certify and add-entry steps into a single transaction. <code>DefaultWalrusWriteAdapter</code> supports this; the HTTP publisher adapter does not. Passing an incompatible adapter throws a <code>TransportError</code> before any I/O. Use the split path (<code>uploadBlob</code> + <code>addEntry</code>) instead. To branch at runtime, use the <code>isWalrusFlowCapable(walrusWriter)</code> type guard, which detects the capability on any <code>WalrusWriteAdapter</code>.</p>
 
-        <h2 id="next-steps">Next Steps</h2>
+        <h2 id="next-steps">Next steps</h2>
         <div class="card-grid">
           <a href="cli-overview.html" class="card">
             <div class="card-title">CLI: Overview</div>
@@ -732,7 +732,7 @@ console.<span class="fn">log</span>(page.results.length, <span class="st">"entri
           </a>
           <a href="contracts-overview.html" class="card">
             <div class="card-title">Smart Contracts: Overview</div>
-            <div class="card-desc">Architecture of the Morse Move package - modules, shared objects, and the on-chain data model.</div>
+            <div class="card-desc">Architecture of the Morse Move package: modules, shared objects, and the on-chain data model.</div>
           </a>
         </div>
       </article>
@@ -740,7 +740,7 @@ console.<span class="fn">log</span>(page.results.length, <span class="st">"entri
     <div class="feedback">
       <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
       <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20sdk-workflows.html" target="_blank" rel="noopener">Report an issue</a>
-      <span class="feedback__upd">Updated 2026-06-19</span>
+      <span class="feedback__upd">Updated 2026-10-15</span>
     </div>
     <nav class="pager" aria-label="Previous and next">
       <a href="sdk-client-setup.html" rel="prev"><small>Previous</small><b>← SDK: Setup</b></a>

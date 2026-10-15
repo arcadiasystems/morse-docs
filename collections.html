@@ -69,7 +69,7 @@
           </div>
         </div>
 
-      <h2 id="what-is-a-collection">What is a Collection?</h2>
+      <h2 id="what-is-a-collection">What is a collection?</h2>
       <p>Collections organize entries into predictable buckets for editorial workflows and API consumers. A publication holds collections in a <code>VecMap&lt;String, Collection&gt;</code> keyed by name. The choice of <code>VecMap</code> reflects the expectation that a publication will have only a small number of named collections.</p>
 
       <div class="code-block">
@@ -84,7 +84,7 @@
 }</pre>
       </div>
 
-      <h2 id="storage-modes">Storage Modes</h2>
+      <h2 id="storage-modes">Storage modes</h2>
       <p>Every collection has a <code>storage_mode</code> set at creation that controls how entry revisions reference Walrus content.</p>
 
       <div class="feature-grid">
@@ -104,8 +104,8 @@
         </div>
       </div>
 
-      <h3 id="blob-mode">Blob Mode</h3>
-      <p>In blob mode, every revision stores a <code>BlobRef::Blob(ID)</code> - the Sui object ID of a standalone Walrus <code>Blob</code>. Each entry revision is fully independent: uploading new content creates a new blob, and the old blobs remain accessible by their IDs.</p>
+      <h3 id="blob-mode">Blob mode</h3>
+      <p>In blob mode, every revision stores a <code>BlobRef::Blob(ID)</code>, the Sui object ID of a standalone Walrus <code>Blob</code>. Each entry revision is fully independent: uploading new content creates a new blob, and the old blobs remain accessible by their IDs.</p>
 
       <p><strong>Best for:</strong></p>
       <ul>
@@ -115,8 +115,8 @@
         <li>Situations where you want maximum operational simplicity</li>
       </ul>
 
-      <h3 id="quilt-mode">Quilt Mode</h3>
-      <p>In quilt mode, every revision stores a <code>BlobRef::QuiltPatch(vector&lt;u8&gt;)</code> - a 37-byte identifier that locates a patch within a shared Walrus Quilt blob. This is more compact and efficient when updating small parts of a grouped content set.</p>
+      <h3 id="quilt-mode">Quilt mode</h3>
+      <p>In quilt mode, every revision stores a <code>BlobRef::QuiltPatch(vector&lt;u8&gt;)</code>, a 37-byte identifier that locates a patch within a shared Walrus Quilt blob. This is more compact and efficient when updating small parts of a grouped content set.</p>
 
       <pre class="diagram">┌─────────────────────────────────┬─────────┬───────────────┬─────────────┐
 │  quilt_blob_id (32 bytes)        │ ver (1) │  start_idx (2) │  end_idx (2)│
@@ -134,7 +134,7 @@
         <li>Stable grouped content with targeted patch updates</li>
       </ul>
 
-      <h3 id="choosing-a-storage-mode">Choosing a Storage Mode</h3>
+      <h3 id="choosing-a-storage-mode">Choosing a storage mode</h3>
       <div class="table-wrap"><table>
         <thead>
           <tr><th>Scenario</th><th>Recommended mode</th></tr>
@@ -159,9 +159,9 @@
         </div>
       </div>
 
-      <h2 id="creating-a-collection">Creating a Collection</h2>
+      <h2 id="creating-a-collection">Creating a collection</h2>
       <p>Collections are created through the publication module's <code>create_collection</code> function, which requires a valid <a href="access-control.html#publishercap">PublisherCap</a>.</p>
-      <p>A collection cannot exist outside of a <a href="publications.html">publication</a> - every collection is scoped to exactly one.</p>
+      <p>A collection cannot exist outside of a <a href="publications.html">publication</a>; every collection is scoped to exactly one.</p>
 
       <div class="code-tabs">
         <div class="code-tabs-header">
@@ -192,7 +192,7 @@ morse collection create site-pages --mode quilt</pre>
             <div class="code-header">
               <span class="code-lang">output</span>
             </div>
-            <pre>Created collection "articles". Selected as the active collection. (tx: AbCdEf...)</pre>
+            <pre><span class="ok">Created collection "articles".</span> Selected as the active collection. <span class="m">(tx: AbCdEf...)</span></pre>
           </div>
         </div>
         <div class="code-tab-panel" data-tab="sdk">
@@ -228,7 +228,7 @@ morse collection create site-pages --mode quilt</pre>
   ctx: &<span class="kw">mut</span> <span class="ty">TxContext</span>,
 )</pre>
           </div>
-          <p>Use <a href="sdk-client-setup.html#morse-config">SDK Setup &rarr; morseConfig()</a> to get the package ID and registry ID, <a href="sdk-client-setup.html#server-setup">SDK Setup &rarr; Server Setup</a> to initialize the client, and <a href="contracts-workflows.html">Contract Cookbooks</a> for complete PTB examples.</p>
+          <p>Use <a href="sdk-client-setup.html#morse-config">SDK Setup &rarr; morseConfig()</a> to get the package ID and registry ID, <a href="sdk-client-setup.html#server-setup">SDK Setup &rarr; Server setup</a> to initialize the client, and <a href="contracts-workflows.html">Contract Cookbooks</a> for complete PTB examples.</p>
         </div>
       </div>
 
@@ -245,7 +245,7 @@ morse collection create site-pages --mode quilt</pre>
       <p>To list collections in a publication, use the CLI: <code>morse collection list</code>.</p>
       <p>See <a href="cli-commands.html#collection">CLI Commands &rarr; Collection</a> for the full syntax.</p>
 
-      <h2 id="deleting-a-collection">Deleting a Collection</h2>
+      <h2 id="deleting-a-collection">Deleting a collection</h2>
       <p>Collections can be deleted, but only when <strong>all entries have been removed first</strong>. </p>
 
       <div class="code-tabs">
@@ -302,7 +302,7 @@ morse collection create site-pages --mode quilt</pre>
         </div>
       </div>
 
-      <p>Entries must be removed first because the <code>Table&lt;u64, Entry&gt;</code> that holds them requires an explicit <code>destroy_empty</code> - Sui's type system does not allow dropping a non-empty table. Delete entries individually with <code>delete_entry_from_collection</code> before removing the collection.</p>
+      <p>Entries must be removed first because the <code>Table&lt;u64, Entry&gt;</code> that holds them requires an explicit <code>destroy_empty</code>. Sui's type system does not allow dropping a non-empty table. Delete entries individually with <code>delete_entry_from_collection</code> before removing the collection.</p>
 
 
 <!-- <div class="ai-prompt">
@@ -339,7 +339,7 @@ morse collection create site-pages --mode quilt</pre>
         </tbody>
       </table></div>
 
-      <h2 id="error-codes">Error Codes</h2>
+      <h2 id="error-codes">Error codes</h2>
       <p>For more error codes, see: <a href="publications.html#error-codes">Publications</a>, <a href="entries.html#error-codes">Entries</a>, <a href="access-control.html#error-codes">Access Control</a>.</p>
       <div class="table-wrap"><table>
         <thead><tr><th>Code</th><th>Constant</th><th>Meaning</th></tr></thead>
@@ -355,7 +355,7 @@ morse collection create site-pages --mode quilt</pre>
     <div class="feedback">
       <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
       <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20collections.html" target="_blank" rel="noopener">Report an issue</a>
-      <span class="feedback__upd">Updated 2026-06-19</span>
+      <span class="feedback__upd">Updated 2026-10-15</span>
     </div>
     <nav class="pager" aria-label="Previous and next">
       <a href="publications.html" rel="prev"><small>Previous</small><b>← Publications</b></a>

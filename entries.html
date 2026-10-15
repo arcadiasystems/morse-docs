@@ -69,8 +69,8 @@
           </div>
         </div>
 
-      <h2 id="entry-structure">Entry Structure</h2>
-      <p>Entries live inside collections, stored in a <code>Table&lt;u64, Entry&gt;</code>. They have <code>store</code> and <code>drop</code> abilities - they are values owned by their collection, not independent Sui objects.</p>
+      <h2 id="entry-structure">Entry structure</h2>
+      <p>Entries live inside collections, stored in a <code>Table&lt;u64, Entry&gt;</code>. They have <code>store</code> and <code>drop</code> abilities; they are values owned by their collection, not independent Sui objects.</p>
 
       <div class="code-block">
         <div class="code-header">
@@ -87,7 +87,7 @@
       <p>The <code>name</code> field must be non-empty and at most 256 characters.</p>
 
       <h2 id="revisions">Revisions</h2>
-      <p>Each revision is an immutable snapshot of an entry at a point in time. Revisions are never mutated after creation - edits always append new revisions to the vector.</p>
+      <p>Each revision is an immutable snapshot of an entry at a point in time. Revisions are never mutated after creation; edits always append new revisions to the vector.</p>
 
       <div class="code-block">
         <div class="code-header">
@@ -105,8 +105,8 @@
 
       <p>The <code>content_type</code> field must be non-empty and at most 255 characters; standard MIME format is recommended.</p>
 
-      <h3 id="the-blobref-enum">The BlobRef Enum</h3>
-      <p><code>BlobRef</code> is a Move enum that abstracts the two storage modes (the SDK surfaces it as a discriminated union - switch on <code>.kind</code>):</p>
+      <h3 id="the-blobref-enum">The BlobRef enum</h3>
+      <p><code>BlobRef</code> is a Move enum that abstracts the two storage modes (the SDK surfaces it as a discriminated union; switch on <code>.kind</code>):</p>
 
       <div class="code-block">
         <div class="code-header">
@@ -118,16 +118,16 @@
 }</pre>
       </div>
 
-      <p>The variant used must match the collection's <a href="collections.html#storage-modes">storage mode</a>. The <code>make_blob_ref</code> function enforces this - you cannot accidentally mix modes.</p>
+      <p>The variant used must match the collection's <a href="collections.html#storage-modes">storage mode</a>. The <code>make_blob_ref</code> function enforces this; you cannot accidentally mix modes.</p>
 
-      <h2 id="the-dual-head-model">The Dual-Head Model</h2>
+      <h2 id="the-dual-head-model">The dual-head model</h2>
       <p>Every entry maintains two independent head pointers into its revision vector:</p>
 
       <div class="dual-head">
         <div class="dual-head-grid">
           <div>
             <div class="dual-head-label">draft_head</div>
-            <p class="dual-head-text">Points to the latest draft revision. Work in progress - not visible to public readers. May be <code>None</code> on a freshly-published entry.</p>
+            <p class="dual-head-text">Points to the latest draft revision. Work in progress, not visible to public readers. May be <code>None</code> on a freshly-published entry.</p>
           </div>
           <div>
             <div class="dual-head-label-alt">public_head</div>
@@ -140,9 +140,9 @@
 
       <p>This is what makes real editorial workflows possible: editors can keep appending drafts while production clients continuously serve the stable <code>public_head</code>.</p>
 
-      <h2 id="adding-an-entry">Adding an Entry</h2>
+      <h2 id="adding-an-entry">Adding an entry</h2>
       <p>Create a new entry and add it to a named collection. Requires a valid <a href="publications.html#publisher-cap-management">PublisherCap</a>. Returns the assigned <code>entry_id</code>.</p>
-      <p>An entry cannot exist outside of a <a href="collections.html">collection</a> - every entry is scoped to exactly one.</p>
+      <p>An entry cannot exist outside of a <a href="collections.html">collection</a>; every entry is scoped to exactly one.</p>
 
       <div class="code-tabs">
         <div class="code-tabs-header">
@@ -172,7 +172,7 @@ morse entry add "welcome-post" --file ./welcome.json --content-type application/
             <div class="code-header">
               <span class="code-lang">output</span>
             </div>
-            <pre>Added entry #0 "welcome-post". (tx: AbCdEf...)</pre>
+            <pre><span class="ok">Added entry #0 "welcome-post".</span> <span class="m">(tx: AbCdEf...)</span></pre>
           </div>
         </div>
         <div class="code-tab-panel" data-tab="sdk">
@@ -231,7 +231,7 @@ morse entry add "welcome-post" --file ./welcome.json --content-type application/
   ctx: &<span class="kw">mut</span> <span class="ty">TxContext</span>,
 ): <span class="ty">u64</span>                                   <span class="cm">// returns entry_id</span></pre>
           </div>
-          <p>Use <a href="sdk-client-setup.html#morse-config">SDK Setup &rarr; morseConfig()</a> to get the package ID and registry ID, <a href="sdk-client-setup.html#server-setup">SDK Setup &rarr; Server Setup</a> to initialize the client, and <a href="contracts-workflows.html">Contract Cookbooks</a> for complete PTB examples.</p>
+          <p>Use <a href="sdk-client-setup.html#morse-config">SDK Setup &rarr; morseConfig()</a> to get the package ID and registry ID, <a href="sdk-client-setup.html#server-setup">SDK Setup &rarr; Server setup</a> to initialize the client, and <a href="contracts-workflows.html">Contract Cookbooks</a> for complete PTB examples.</p>
         </div>
       </div>
 
@@ -243,14 +243,14 @@ morse entry add "welcome-post" --file ./welcome.json --content-type application/
         </div>
         <div class="callout-body">
           <div class="callout-title">Encrypted entries are always created as drafts</div>
-          <div class="callout-text">When <code>encrypted = true</code> and <code>access_policy = 1</code> (publisher), the initial revision goes to <code>draft_head</code> only - there is no <code>public_head</code> yet. Published revisions are always unencrypted and public, so to publish an encrypted entry you must supply a new unencrypted blob using <code>publish_from_draft</code> or <code>publish_direct</code>. A revision cannot be both published and encrypted.</div>
+          <div class="callout-text">When <code>encrypted = true</code> and <code>access_policy = 1</code> (publisher), the initial revision goes to <code>draft_head</code> only; there is no <code>public_head</code> yet. Published revisions are always unencrypted and public, so to publish an encrypted entry you must supply a new unencrypted blob using <code>publish_from_draft</code> or <code>publish_direct</code>. A revision cannot be both published and encrypted.</div>
         </div>
       </div>
 
       <p>To list entries in a collection, use the CLI: <code>morse entry list</code>. The command supports pagination with <code>--limit</code> and <code>--cursor</code> flags, and <code>--drafts-only</code> to filter for draft entries.</p>
       <p>See <a href="cli-commands.html#entry">CLI Commands &rarr; Entry</a> for the full syntax.</p>
 
-      <h2 id="appending-a-draft-revision">Appending a Draft Revision</h2>
+      <h2 id="appending-a-draft-revision">Appending a draft revision</h2>
       <p>Append a new revision to an existing entry and advance <code>draft_head</code>. The previous revisions are untouched.</p>
 
       <div class="code-tabs">
@@ -281,7 +281,7 @@ morse revision append-draft 0 --file ./welcome-v2.json --content-type applicatio
             <div class="code-header">
               <span class="code-lang">output</span>
             </div>
-            <pre>Appended draft revision #1 on entry #0. (tx: AbCdEf...)</pre>
+            <pre><span class="ok">Appended draft revision #1 on entry #0.</span> <span class="m">(tx: AbCdEf...)</span></pre>
           </div>
         </div>
         <div class="code-tab-panel" data-tab="sdk">
@@ -345,7 +345,7 @@ morse revision append-draft 0 --file ./welcome-v2.json --content-type applicatio
         </div>
       </div>
 
-      <h2 id="publishing-from-draft">Publishing from Draft</h2>
+      <h2 id="publishing-from-draft">Publishing from draft</h2>
       <p>Take a specific draft revision and publish it. This appends a new public revision and advances <code>public_head</code>. The draft revision is referenced for traceability.</p>
 
       <div class="code-tabs">
@@ -385,7 +385,7 @@ morse revision publish-from-draft 0 1 --file ./welcome-final.json</pre>
             <div class="code-header">
               <span class="code-lang">output</span>
             </div>
-            <pre>Published revision #2 from draft #1 on entry #0. (tx: AbCdEf...)</pre>
+            <pre><span class="ok">Published revision #2 from draft #1 on entry #0.</span> <span class="m">(tx: AbCdEf...)</span></pre>
           </div>
         </div>
         <div class="code-tab-panel" data-tab="sdk">
@@ -450,7 +450,7 @@ morse revision publish-from-draft 0 1 --file ./welcome-final.json</pre>
 
       <p>The resulting public revision always has <code>encrypted = false</code> and <code>access_policy = ACCESS_PUBLIC</code>.</p>
 
-      <h2 id="publishing-direct">Publishing Direct</h2>
+      <h2 id="publishing-direct">Publishing direct</h2>
       <p>Append a new public revision directly, skipping the draft workflow. Advances <code>public_head</code> in one step. </p>
 
       <div class="code-tabs">
@@ -480,7 +480,7 @@ morse revision publish-direct 0 --file ./welcome-hotfix.json --content-type appl
             <div class="code-header">
               <span class="code-lang">output</span>
             </div>
-            <pre>Published revision #3 on entry #0. (tx: AbCdEf...)</pre>
+            <pre><span class="ok">Published revision #3 on entry #0.</span> <span class="m">(tx: AbCdEf...)</span></pre>
           </div>
         </div>
         <div class="code-tab-panel" data-tab="sdk">
@@ -546,7 +546,7 @@ morse revision publish-direct 0 --file ./welcome-hotfix.json --content-type appl
 
       <ul>
         <li>Entry IDs are <strong>never reused</strong> after deletion</li>
-        <li>IDs are <strong>stable</strong> - external systems can safely hold references by ID</li>
+        <li>IDs are <strong>stable</strong>; external systems can safely hold references by ID</li>
         <li>Gaps in the ID sequence are expected and normal after deletions</li>
       </ul>
 
@@ -566,7 +566,7 @@ entry_id = <span class="fn">add_entry_to_collection</span>(...) <span class="cm"
 entry_id = <span class="fn">add_entry_to_collection</span>(...) <span class="cm">// → 3</span></pre>
       </div>
 
-      <h2 id="deleting-an-entry">Deleting an Entry</h2>
+      <h2 id="deleting-an-entry">Deleting an entry</h2>
       <p>Remove an entry by ID. Since <code>Entry</code> has the <code>drop</code> ability, it is simply dropped from the table.</p>
 
       <div class="code-tabs">
@@ -635,7 +635,7 @@ entry_id = <span class="fn">add_entry_to_collection</span>(...) <span class="cm"
         </div>
       </div>
 
-      <h2 id="typical-editorial-workflow">Typical Editorial Workflow</h2>
+      <h2 id="typical-editorial-workflow">Typical editorial workflow</h2>
       <p>The workflow below applies to both Blob and Quilt storage modes. In Quilt mode, entries target a specific patch within the shared document rather than a standalone blob, but the revision lifecycle is the same.</p>
 
       <div class="steps">
@@ -669,18 +669,18 @@ entry_id = <span class="fn">add_entry_to_collection</span>(...) <span class="cm"
         </div>
       </div>
 
-      <h2 id="walrus-blob-requirements">Walrus Blob Requirements</h2>
+      <h2 id="walrus-blob-requirements">Walrus blob requirements</h2>
       <p>All production write paths require a reference to the Walrus <code>&amp;Blob</code> object (not just its ID). The contract calls <code>blob.is_deletable()</code> and aborts with <code>EBlobNotDeletable</code> if the blob is not deletable. This ensures the platform can manage blob lifecycle.</p>
 
-      <h3 id="blob-lifecycle">Blob Lifecycle: Epochs, Expiry, Renewal</h3>
+      <h3 id="blob-lifecycle">Blob lifecycle: epochs, expiry, renewal</h3>
       <p>The on-chain revision history is immutable, but the payloads it points to are not stored "forever" by default: Walrus storage is <strong>funded per epoch</strong> (roughly one day on testnet, two weeks on mainnet). The <code>epochs</code> parameter on every upload sets how long the blob stays available; after its final epoch the blob expires and storage nodes drop it, while the on-chain <code>BlobRef</code> and revision metadata remain. Renew a blob before expiry (or re-upload and append a new revision) for longer-lived content.</p>
-      <p>Morse deliberately requires <em>deletable</em> blobs rather than Walrus's permanent variant: a CMS needs unpublishing, correction, and takedown paths. Permanence in Morse means the <strong>history is verifiable and tamper-proof</strong> - not that bytes are irrevocable.</p>
+      <p>Morse deliberately requires <em>deletable</em> blobs rather than Walrus's permanent variant: a CMS needs unpublishing, correction, and takedown paths. Permanence in Morse means the <strong>history is verifiable and tamper-proof</strong>, not that bytes are irrevocable.</p>
 
       <div class="callout callout-warning">
         <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
         <div class="callout-body">
           <div class="callout-title">Testnet payloads are disposable</div>
-          <div class="callout-text">The quick starts upload with <code>epochs: 3</code> - about three days on testnet. Walrus testnet is also wiped periodically (every few months). Treat testnet content as throwaway; fund more epochs and set renewal reminders only for things you actually want to keep around.</div>
+          <div class="callout-text">The quick starts upload with <code>epochs: 3</code>, about three days on testnet. Walrus testnet is also wiped periodically (every few months). Treat testnet content as throwaway; fund more epochs and set renewal reminders only for things you actually want to keep around.</div>
         </div>
       </div>
 
@@ -690,11 +690,11 @@ entry_id = <span class="fn">add_entry_to_collection</span>(...) <span class="cm"
         </div>
         <div class="callout-body">
           <div class="callout-title">Testing without Walrus blobs</div>
-          <div class="callout-text">In Move unit tests, <code>walrus::blob::Blob</code> cannot be constructed because its constructor is <code>public(package)</code>. Use the <code>_for_testing</code> variants (e.g. <code>add_entry_to_collection_for_testing</code>) that accept a raw <code>blob_id: ID</code> instead of <code>&amp;Blob</code>. These bypass only the deletable check - all other logic is identical.</div>
+          <div class="callout-text">In Move unit tests, <code>walrus::blob::Blob</code> cannot be constructed because its constructor is <code>public(package)</code>. Use the <code>_for_testing</code> variants (e.g. <code>add_entry_to_collection_for_testing</code>) that accept a raw <code>blob_id: ID</code> instead of <code>&amp;Blob</code>. These bypass only the deletable check; all other logic is identical.</div>
         </div>
       </div>
 
-      <h2 id="access-policy-and-encryption-rules">Access Policy &amp; Encryption Rules</h2>
+      <h2 id="access-policy-and-encryption-rules">Access policy &amp; encryption rules</h2>
       <p>The <code>encrypted</code> flag and <code>access_policy</code> must be consistent. The contract enforces this at every write. See <a href="access-control.html">Access Control</a> for the full permission model.</p>
 
       <div class="table-wrap"><table>
@@ -702,12 +702,12 @@ entry_id = <span class="fn">add_entry_to_collection</span>(...) <span class="cm"
           <tr><th>encrypted</th><th>access_policy</th><th>seal_id</th><th>Result</th></tr>
         </thead>
         <tbody>
-          <tr><td><code>false</code></td><td><code>0</code> <span style="font-size: 0.75em;">(PUBLIC)</span></td><td><code>None</code></td><td>Valid - unencrypted public revision</td></tr>
-          <tr><td><code>true</code></td><td><code>1</code> <span style="font-size: 0.75em;">(PUBLISHER)</span></td><td><code>Some(&lt;id&gt;)</code></td><td>Valid - encrypted publisher-gated revision</td></tr>
-          <tr><td><code>true</code></td><td><code>0</code></td><td>any</td><td>Aborts - <code>EInvalidAccessPolicy</code></td></tr>
-          <tr><td><code>false</code></td><td><code>1</code></td><td>any</td><td>Aborts - <code>EInvalidAccessPolicy</code></td></tr>
-          <tr><td><code>true</code></td><td><code>1</code></td><td><code>None</code></td><td>Aborts - <code>ESealIdRequired</code></td></tr>
-          <tr><td><code>false</code></td><td><code>0</code></td><td><code>Some(&lt;id&gt;)</code></td><td>Aborts - <code>ESealIdNotAllowed</code></td></tr>
+          <tr><td><code>false</code></td><td><code>0</code> <span style="font-size: 0.75em;">(PUBLIC)</span></td><td><code>None</code></td><td>Valid: unencrypted public revision</td></tr>
+          <tr><td><code>true</code></td><td><code>1</code> <span style="font-size: 0.75em;">(PUBLISHER)</span></td><td><code>Some(&lt;id&gt;)</code></td><td>Valid: encrypted publisher-gated revision</td></tr>
+          <tr><td><code>true</code></td><td><code>0</code></td><td>any</td><td>Aborts: <code>EInvalidAccessPolicy</code></td></tr>
+          <tr><td><code>false</code></td><td><code>1</code></td><td>any</td><td>Aborts: <code>EInvalidAccessPolicy</code></td></tr>
+          <tr><td><code>true</code></td><td><code>1</code></td><td><code>None</code></td><td>Aborts: <code>ESealIdRequired</code></td></tr>
+          <tr><td><code>false</code></td><td><code>0</code></td><td><code>Some(&lt;id&gt;)</code></td><td>Aborts: <code>ESealIdNotAllowed</code></td></tr>
         </tbody>
       </table></div>
 <br>
@@ -717,7 +717,7 @@ entry_id = <span class="fn">add_entry_to_collection</span>(...) <span class="cm"
       <h2 id="events">Events</h2>
       <p>Entry and revision operations do not emit on-chain events. Use the transaction log or an indexer to track changes.</p>
 
-      <h2 id="error-codes">Error Codes</h2>
+      <h2 id="error-codes">Error codes</h2>
       <p>For more error codes, see: <a href="publications.html#error-codes">Publications</a>, <a href="collections.html#error-codes">Collections</a>, <a href="access-control.html#error-codes">Access Control</a>. </p>
       <div class="table-wrap"><table>
         <thead><tr><th>Code</th><th>Constant</th><th>Meaning</th></tr></thead>
@@ -741,7 +741,7 @@ entry_id = <span class="fn">add_entry_to_collection</span>(...) <span class="cm"
     <div class="feedback">
       <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
       <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20entries.html" target="_blank" rel="noopener">Report an issue</a>
-      <span class="feedback__upd">Updated 2026-06-19</span>
+      <span class="feedback__upd">Updated 2026-10-15</span>
     </div>
     <nav class="pager" aria-label="Previous and next">
       <a href="collections.html" rel="prev"><small>Previous</small><b>← Collections</b></a>

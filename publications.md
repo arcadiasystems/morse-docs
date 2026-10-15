@@ -3,9 +3,9 @@
 
 # Publications
 
-> A publication is the top-level permission management and identity boundary for a content domain in Morse. Everything - collections, entries, permissions - lives inside a publication.
+> A publication is the top-level permission management and identity boundary for a content domain in Morse. Everything (collections, entries, permissions) lives inside a publication.
 
-## What is a Publication?
+## What is a publication?
 
 A `Publication` is a shared Sui object that acts as the root container for one content brand or site. It bundles:
 
@@ -24,13 +24,13 @@ public struct Publication has key {
 }
 ```
 
-The `Publication` type has `key` ability but no `store`. Sharing and transfer are gated through this module's own functions, enforced by the Sui type system. You cannot wrap or freely transfer a publication - you must call `share_publication`.
+The `Publication` type has `key` ability but no `store`. Sharing and transfer are gated through this module's own functions, enforced by the Sui type system. You cannot wrap or freely transfer a publication; you must call `share_publication`.
 
-## The Slug System
+## The slug system
 
-Every publication is identified by a **slug** - a short, lowercase string that becomes its canonical identifier across the protocol. Slugs are enforced to be globally unique by the `PublicationRegistry`.
+Every publication is identified by a **slug**: a short, lowercase string that becomes its canonical identifier across the protocol. Slugs are enforced to be globally unique by the `PublicationRegistry`.
 
-### Slug Rules
+### Slug rules
 
 | Rule | Constraint |
 | --- | --- |
@@ -54,9 +54,9 @@ Every publication is identified by a **slug** - a short, lowercase string that b
 ""                   // ESlugEmpty
 ```
 
-### Slug Reuse After Deletion
+### Slug reuse after deletion
 
-When a publication is deleted, its slug is released from the registry and becomes available again. This is a deliberate tradeoff - it gives publishers flexibility to re-register slugs - but teams should be aware that a released slug can be re-claimed by anyone.
+When a publication is deleted, its slug is released from the registry and becomes available again. This is a deliberate tradeoff: it gives publishers flexibility to re-register slugs, but teams should be aware that a released slug can be re-claimed by anyone.
 
 ## PublicationRegistry
 
@@ -81,7 +81,7 @@ To list publications owned by your account, use the CLI: `morse publication list
 
 See [CLI Commands → Publication](https://docs.morsecms.xyz/cli-commands.html#publication) for the full syntax.
 
-## Creating a Publication
+## Creating a publication
 
 Publication creation follows the **pure-function pattern**: `new_publication` returns objects without performing any transfers. The caller decides what to do with them in a Programmable Transaction Block (PTB).
 
@@ -136,15 +136,15 @@ public fun transfer_owner_cap(owner_cap: OwnerCap, recipient: address)
 public fun transfer_publisher_cap(cap: PublisherCap, recipient: address)
 ```
 
-Use [SDK Setup → morseConfig()](https://docs.morsecms.xyz/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server Setup](https://docs.morsecms.xyz/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html) for complete PTB examples.
+Use [SDK Setup → morseConfig()](https://docs.morsecms.xyz/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server setup](https://docs.morsecms.xyz/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html) for complete PTB examples.
 
 `new_publication` returns three objects in a tuple:
 
-- **Publication** - the shared content container
-- `OwnerCap` - admin authority over the publication (one per publication, held by the owner wallet). See [Access Control → OwnerCap](https://docs.morsecms.xyz/access-control.html#ownercap)
-- `PublisherCap` - write authority for content operations, bound to the transaction sender. See [Access Control → PublisherCap](https://docs.morsecms.xyz/access-control.html#publishercap)
+- **Publication**: the shared content container
+- `OwnerCap`: admin authority over the publication (one per publication, held by the owner wallet). See [Access Control → OwnerCap](https://docs.morsecms.xyz/access-control.html#ownercap)
+- `PublisherCap`: write authority for content operations, bound to the transaction sender. See [Access Control → PublisherCap](https://docs.morsecms.xyz/access-control.html#publishercap)
 
-## Deleting a Publication
+## Deleting a publication
 
 Publications can be deleted, but only when **all collections have been removed first**. Attempting to delete a publication with remaining collections aborts with an error.
 
@@ -198,9 +198,9 @@ On deletion:
 
 > **INFO: `PublisherCap`s are orphaned on deletion**
 >
-> Deleting a publication does not destroy outstanding `PublisherCap` objects. Any caps issued to other addresses remain as owned Sui objects, but they become permanently unusable - the publication they reference no longer exists, so all write operations will fail. Revoke or destroy caps before deleting the publication if you want a clean teardown.
+> Deleting a publication does not destroy outstanding `PublisherCap` objects. Any caps issued to other addresses remain as owned Sui objects, but they become permanently unusable. The publication they reference no longer exists, so all write operations will fail. Revoke or destroy caps before deleting the publication if you want a clean teardown.
 
-## Ownership Transfer
+## Ownership transfer
 
 Publication ownership can be transferred by transferring the `OwnerCap` to a new address. Since `OwnerCap` has only the `key` ability, transfer is handled by the module:
 
@@ -233,11 +233,11 @@ await transferOwnership(adapter, config, {
 public fun transfer_owner_cap(owner_cap: OwnerCap, recipient: address)
 ```
 
-The recipient immediately gains full admin authority - the ability to issue/revoke publisher caps and delete the publication. Existing publisher caps remain valid until individually revoked.
+The recipient immediately gains full admin authority: the ability to issue/revoke publisher caps and delete the publication. Existing publisher caps remain valid until individually revoked.
 
 After receiving the `OwnerCap`, the recipient must set the publication as active in their CLI before they can manage it: `morse use <slug>`.
 
-## Publisher Cap Management
+## Publisher cap management
 
 Publishers are managed through capability tokens. An owner can issue, revoke, and destroy publisher caps. Revoked caps are added to the publication's denylist, and any future operation attempted with a revoked cap aborts with `EPublisherCapRevoked`.
 
@@ -256,7 +256,7 @@ The publications module emits the following events. An off-chain indexer can sub
 | `PublisherCapIssued` | New publisher cap minted | `publication: ID`, `cap: ID` |
 | `PublisherCapRevoked` | Publisher cap revoked by owner | `publication: ID`, `cap: ID` |
 
-## Error Codes
+## Error codes
 
 For more error codes, see: [Collections](https://docs.morsecms.xyz/collections.html#error-codes), [Entries](https://docs.morsecms.xyz/entries.html#error-codes), [Access Control](https://docs.morsecms.xyz/access-control.html#error-codes).
 

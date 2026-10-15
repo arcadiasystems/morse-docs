@@ -51,7 +51,7 @@
   <aside class="side" id="side"></aside>
 
   <main class="main">
-    <nav class="crumbs" aria-label="Breadcrumb"><span>Smart Contracts</span><span class="crumbs__sep" aria-hidden="true">/</span><span aria-current="page">Overview</span></nav>
+    <nav class="crumbs" aria-label="Breadcrumb"><span>Smart contracts</span><span class="crumbs__sep" aria-hidden="true">/</span><span aria-current="page">Overview</span></nav>
 
     <article class="article">
         <h1>Contract Overview</h1>
@@ -81,10 +81,10 @@
           </div>
         </div>
 
-        <h2 id="getting-started">Getting Started</h2>
+        <h2 id="getting-started">Getting started</h2>
         <p>Use <code>morseConfig()</code> from <code>@arcadiasystems/morse-sdk</code> to resolve the package and registry addresses, then construct PTBs with <code>tx.moveCall</code>. See the <a href="contracts-reference.html">Contract Reference</a> for complete function signatures and struct definitions, and the <a href="contracts-workflows.html">Contract Cookbooks</a> for step-by-step recipes.</p>
 
-        <h2 id="package-structure">Package Structure</h2>
+        <h2 id="package-structure">Package structure</h2>
         <p>The package compiles three modules. Every public entry point lives in <code>publication::publication</code>; the other two modules define the data types and internal logic it builds on.</p>
 
         <div class="table-wrap">
@@ -112,7 +112,7 @@
           </table>
         </div>
 
-        <h2 id="struct-definitions">Struct Definitions</h2>
+        <h2 id="struct-definitions">Struct definitions</h2>
 
         <h3 id="struct-publication">Publication module</h3>
         <div class="code-block">
@@ -197,15 +197,15 @@
 }</pre>
         </div>
 
-        <h2 id="capabilities">What PTBs Give You</h2>
+        <h2 id="capabilities">What PTBs give you</h2>
         <div class="feature-grid">
           <div class="feature-item">
             <div class="feature-title">Full transaction control</div>
-            <div class="feature-desc">Compose multiple Move calls in a single PTB - create a publication, add a collection, and publish an entry atomically.</div>
+            <div class="feature-desc">Compose multiple Move calls in a single PTB: create a publication, add a collection, and publish an entry atomically.</div>
           </div>
           <div class="feature-item">
             <div class="feature-title">No SDK abstraction layer</div>
-            <div class="feature-desc">Call the contract functions directly. Useful when the SDK doesn't expose a wrapper for your use case or when you need fine-grained control.</div>
+            <div class="feature-desc">Call the contract functions directly. Useful when the SDK does not expose a wrapper for your use case or when you need fine-grained control.</div>
           </div>
           <div class="feature-item">
             <div class="feature-title">Custom batching</div>
@@ -217,15 +217,15 @@
           </div>
         </div>
 
-        <h2 id="known-limitations">Known Limitations</h2>
+        <h2 id="known-limitations">Known limitations</h2>
         <ul>
-          <li><strong>No encrypted publish path.</strong> <code>publish_from_draft</code> and <code>publish_direct</code> hardcode <code>encrypted = false</code>. Encrypted content stays as drafts - see <a href="entries.html#adding-an-entry">Entries &rarr; Adding an Entry</a> for the full lifecycle.</li>
+          <li><strong>No encrypted publish path.</strong> <code>publish_from_draft</code> and <code>publish_direct</code> hardcode <code>encrypted = false</code>. Encrypted content stays as drafts. See <a href="entries.html#adding-an-entry">Entries &rarr; Adding an entry</a> for the full lifecycle.</li>
           <li><strong>Only the Publisher access policy is enforced.</strong> The <code>Subscription</code> policy constant is defined but the approval entry point is not yet implemented.</li>
           <li><strong>All blobs must be deletable.</strong> The contract calls <code>blob.is_deletable()</code> and aborts if a permanent blob is passed.</li>
           <li><strong>Single entry point module.</strong> All public functions live in <code>publication::publication</code>. The other modules are internal.</li>
         </ul>
 
-        <h2 id="next-steps">Next Steps</h2>
+        <h2 id="next-steps">Next steps</h2>
         <div class="card-grid">
           <a href="contracts-reference.html" class="card">
             <div class="card-title">Smart Contracts: Reference</div>
@@ -241,7 +241,7 @@
     <div class="feedback">
       <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
       <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20contracts-overview.html" target="_blank" rel="noopener">Report an issue</a>
-      <span class="feedback__upd">Updated 2026-06-19</span>
+      <span class="feedback__upd">Updated 2026-10-15</span>
     </div>
     <nav class="pager" aria-label="Previous and next">
       <a href="sdk-workflows.html" rel="prev"><small>Previous</small><b>← SDK: Cookbooks</b></a>

@@ -80,7 +80,7 @@
         </div>
 
         <h2 id="installing">Installing</h2>
-        <p>The published binary is a Node-targeted bundle. You need Node (&gt;= 18) or Bun (&gt;= 1.2) to run it.</p>
+        <p>The published binary is a Node-targeted bundle. You need Node (≥ 18) or Bun (≥ 1.2) to run it.</p>
 
         <div class="code-block">
           <div class="code-header">
@@ -99,10 +99,10 @@ morse --help</pre>
           <pre>npx @arcadiasystems/morse-cli --help</pre>
         </div>
 
-        <h2 id="getting-started">Getting Started</h2>
-        <p>Select an active publication and collection once - all subsequent commands will use them automatically, so you never have to paste a 64-character object ID. <code>publication create</code> and <code>collection create</code> auto-select the new object. <br><br>See <a href="cli-workflows.html">CLI Cookbooks</a> for step-by-step guides.</p>
+        <h2 id="getting-started">Getting started</h2>
+        <p>Select an active publication and collection once. All subsequent commands will use them automatically, so you never have to paste a 64-character object ID. <code>publication create</code> and <code>collection create</code> auto-select the new object. <br><br>See <a href="cli-workflows.html">CLI Cookbooks</a> for step-by-step guides.</p>
 
-        <h2 id="active-context">Active Context</h2>
+        <h2 id="active-context">Active context</h2>
         <p>The active publication and collection live in the current profile. Override per command with <code>-P, --publication &lt;slug|id&gt;</code> and <code>-C, --collection &lt;name&gt;</code>. Slugs resolve against publications owned by the active account.</p>
         <ul>
           <li><code>morse use &lt;slug|id&gt; [collection]</code>: set the active publication and collection (optional)</li>
@@ -110,7 +110,7 @@ morse --help</pre>
           <li><code>morse status</code>: show the active profile, account, publication, and collection</li>
         </ul>
 
-        <h2 id="security-model">Security Model</h2>
+        <h2 id="security-model">Security model</h2>
         <p>Private keys are stored in an encrypted keystore (scrypt + AES-256-GCM) and unlocked by a password.</p>
         <ul>
           <li>Keys are <strong>never accepted as command-line flags</strong>. They come only from an interactive hidden prompt, the <code>MORSE_PRIVATE_KEY</code> env var, or the encrypted keystore.</li>
@@ -140,15 +140,15 @@ morse --help</pre>
           </table>
         </div>
 
-        <h2 id="output-and-scripting">Output &amp; Scripting</h2>
+        <h2 id="output-and-scripting">Output &amp; scripting</h2>
         <ul>
           <li>Human-readable output goes to <strong>stdout</strong>; progress, warnings, and prompts go to <strong>stderr</strong>. Redirecting stdout yields only the result.</li>
           <li>In <code>--json</code> mode, <code>bigint</code> values (e.g. <code>gasUsedMist</code>) are encoded as decimal strings and byte arrays (<code>sealId</code>, quilt patch IDs) as <code>0x</code>-hex.</li>
           <li>Color is emitted only to a TTY and honors <code>NO_COLOR</code> / <code>FORCE_COLOR</code>.</li>
         </ul>
-        <p>See <a href="cli-commands.html#global-options">CLI Command Reference &rarr; Global Options</a> for a full list of global flags (<code>--json</code>, <code>--quiet</code>, <code>--yes</code>, and more).</p>
+        <p>See <a href="cli-commands.html#global-options">CLI Command Reference &rarr; Global options</a> for a full list of global flags (<code>--json</code>, <code>--quiet</code>, <code>--yes</code>, and more).</p>
 
-        <h2 id="exit-codes">Exit Codes</h2>
+        <h2 id="exit-codes">Exit codes</h2>
         <div class="table-wrap">
           <table>
             <thead><tr><th>Code</th><th>Meaning</th></tr></thead>
@@ -163,7 +163,7 @@ morse --help</pre>
           </table>
         </div>
 
-        <h2 id="next-steps">Next Steps</h2>
+        <h2 id="next-steps">Next steps</h2>
         <div class="card-grid">
           <a href="cli-commands.html" class="card">
             <div class="card-title">CLI: Command Reference</div>
@@ -183,7 +183,7 @@ morse --help</pre>
     <div class="feedback">
       <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
       <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20cli-overview.html" target="_blank" rel="noopener">Report an issue</a>
-      <span class="feedback__upd">Updated 2026-06-19</span>
+      <span class="feedback__upd">Updated 2026-10-15</span>
     </div>
     <nav class="pager" aria-label="Previous and next">
       <a href="recipient-files.html" rel="prev"><small>Previous</small><b>← Recipient Files</b></a>

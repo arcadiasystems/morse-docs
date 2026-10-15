@@ -12,10 +12,10 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <meta name="description" content="Morse uses a capability-based permission model. Two types of capabilities control who can administer a publication and who can write content - enforced on-chain by the Sui type system, with no off-chain authorization service.">
+  <meta name="description" content="Morse uses a capability-based permission model. Two types of capabilities control who can administer a publication and who can write content, enforced on-chain by the Sui type system, with no off-chain authorization service.">
   <link rel="canonical" href="https://docs.morsecms.xyz/access-control.html">
   <meta property="og:title" content="Access Control · Morse Docs">
-  <meta property="og:description" content="Morse uses a capability-based permission model. Two types of capabilities control who can administer a publication and who can write content - enforced on-chain by the Sui type system, with no off-chain authorization service.">
+  <meta property="og:description" content="Morse uses a capability-based permission model. Two types of capabilities control who can administer a publication and who can write content, enforced on-chain by the Sui type system, with no off-chain authorization service.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://docs.morsecms.xyz/access-control.html">
   <meta property="og:site_name" content="Morse Docs">
@@ -55,7 +55,7 @@
 
     <article class="article">
       <h1>Access Control</h1>
-      <p class="article-lead">Morse uses a capability-based permission model. Two types of capabilities control who can administer a publication and who can write content - enforced on-chain by the Sui type system, with no off-chain authorization service.</p>
+      <p class="article-lead">Morse uses a capability-based permission model. Two types of capabilities control who can administer a publication and who can write content, enforced on-chain by the Sui type system, with no off-chain authorization service.</p>
         <div class="page-actions">
           <div class="copybtn-group">
             <button class="copybtn" type="button" id="copy-page"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-flash-label>Copy page</span></button>
@@ -70,7 +70,7 @@
         </div>
 
       <h2 id="overview">Overview</h2>
-      <p>Every write operation in Morse requires presenting a valid capability object. Capabilities cannot be fabricated - they can only be created by the protocol through designated functions. The type system itself is the enforcement mechanism.</p>
+      <p>Every write operation in Morse requires presenting a valid capability object. Capabilities cannot be fabricated; they can only be created by the protocol through designated functions. The type system itself is the enforcement mechanism.</p>
 
       <div class="feature-grid">
         <div class="card">
@@ -92,7 +92,7 @@
       </div>
 
       <h2 id="ownercap">OwnerCap</h2>
-      <p>The <code>OwnerCap</code> is the highest-authority object in a publication. Exactly one exists per publication - it is created alongside the publication and transferred to the creator.</p>
+      <p>The <code>OwnerCap</code> is the highest-authority object in a publication. Exactly one exists per publication; it is created alongside the publication and transferred to the creator.</p>
 
       <div class="code-block">
         <div class="code-header">
@@ -106,10 +106,10 @@
 
       <p>Operations that require <code>OwnerCap</code>:</p>
       <ul>
-        <li><code>issue_publisher_cap</code> - mint a new publisher cap for an address</li>
-        <li><code>revoke_publisher_cap</code> - add a cap ID to the revocation denylist</li>
-        <li><code>delete_publication</code> - delete the publication entirely</li>
-        <li><code>transfer_owner_cap</code> - transfer ownership to a new address</li>
+        <li><code>issue_publisher_cap</code>: mint a new publisher cap for an address</li>
+        <li><code>revoke_publisher_cap</code>: add a cap ID to the revocation denylist</li>
+        <li><code>delete_publication</code>: delete the publication entirely</li>
+        <li><code>transfer_owner_cap</code>: transfer ownership to a new address</li>
       </ul>
 
       <div class="callout callout-info">
@@ -118,7 +118,7 @@
         </div>
         <div class="callout-body">
           <div class="callout-title"><code>OwnerCap</code> is transferable by design</div>
-          <div class="callout-text">Ownership can be sold, transferred to a multisig wallet, or handed to a DAO treasury. This is a protocol-level feature, not a limitation - publication identity lives in the contract, not in a centralized identity system.</div>
+          <div class="callout-text">Ownership can be sold, transferred to a multisig wallet, or handed to a DAO treasury. This is a protocol-level feature, not a limitation: publication identity lives in the contract, not in a centralized identity system.</div>
         </div>
       </div>
 
@@ -140,7 +140,7 @@
 
       <div class="code-block">
         <div class="code-header">
-          <span class="code-lang">Move - internal validation</span>
+          <span class="code-lang">Move</span><span class="code-note">internal validation</span>
         </div>
         <pre>
 assert!(cap.publication_id == object::id(publication), <span class="ty">EUnauthorized</span>);
@@ -150,8 +150,8 @@ assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), <span cla
 
       <p>The <code>holder</code> field is critical: it binds the capability to a specific address. If someone holds the <code>PublisherCap</code> object but the transaction is not signed by <code>holder</code>, the write is rejected. You cannot use a single publisher cap from multiple wallets.</p>
 
-      <h2 id="issuing-publisher-caps">Issuing Publisher Caps</h2>
-      <p>Only the owner can issue publisher caps. The owner specifies the target <code>holder</code> address - the cap is created and delivered in a single command:</p>
+      <h2 id="issuing-publisher-caps">Issuing publisher caps</h2>
+      <p>Only the owner can issue publisher caps. The owner specifies the target <code>holder</code> address. The cap is created and delivered in a single command:</p>
 
       <div class="code-tabs">
         <div class="code-tabs-header">
@@ -177,7 +177,7 @@ assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), <span cla
             <div class="code-header">
               <span class="code-lang">output</span>
             </div>
-            <pre>Issued PublisherCap 0x9c0d...1e2f to 0x71a3...9f2b. (tx: AbCdEf...)</pre>
+            <pre><span class="ok">Issued PublisherCap 0x9c0d...1e2f to 0x71a3...9f2b.</span> <span class="m">(tx: AbCdEf...)</span></pre>
           </div>
         </div>
         <div class="code-tab-panel" data-tab="sdk">
@@ -215,15 +215,15 @@ assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), <span cla
 <span class="cm">// Step 2: deliver the cap to the holder</span>
 <span class="kw">public fun</span> <span class="fn">transfer_publisher_cap</span>(cap: <span class="ty">PublisherCap</span>, recipient: <span class="ty">address</span>)</pre>
           </div>
-          <p>Use <a href="sdk-client-setup.html#morse-config">SDK Setup &rarr; morseConfig()</a> to get the package ID and registry ID, <a href="sdk-client-setup.html#server-setup">SDK Setup &rarr; Server Setup</a> to initialize the client, and <a href="contracts-workflows.html">Contract Cookbooks</a> for complete PTB examples.</p>
+          <p>Use <a href="sdk-client-setup.html#morse-config">SDK Setup &rarr; morseConfig()</a> to get the package ID and registry ID, <a href="sdk-client-setup.html#server-setup">SDK Setup &rarr; Server setup</a> to initialize the client, and <a href="contracts-workflows.html">Contract Cookbooks</a> for complete PTB examples.</p>
         </div>
       </div>
 
       <h3 id="ownership-vs-holder-binding">Ownership vs holder binding</h3>
       <p>A <code>PublisherCap</code> has two layers of authorization that must both be satisfied:</p>
       <ul>
-        <li><strong>Sui object ownership</strong> - which wallet physically holds the cap object. This determines who can pass it into a transaction.</li>
-        <li><strong><code>holder</code> binding</strong> - an address set permanently at issuance. The contract checks <code>cap.holder == ctx.sender()</code> on every write operation.</li>
+        <li><strong>Sui object ownership</strong>: which wallet physically holds the cap object. This determines who can pass it into a transaction.</li>
+        <li><strong><code>holder</code> binding</strong>: an address set permanently at issuance. The contract checks <code>cap.holder == ctx.sender()</code> on every write operation.</li>
       </ul>
       <p>Both must match for the cap to work. Transferring a cap to someone who is not the bound <code>holder</code> gives them the object, but the contract will still reject their writes.</p>
 
@@ -248,9 +248,9 @@ assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), <span cla
         <li><code>transfer_publisher_cap</code> delivers the cap object to that address.</li>
       </ol>
 
-      <p><strong>No table write occurs during issuance</strong> - only revocations write to the denylist. This makes issuing caps essentially free beyond the gas cost of object creation.</p>
+      <p><strong>No table write occurs during issuance</strong>; only revocations write to the denylist. This makes issuing caps essentially free beyond the gas cost of object creation.</p>
 
-      <h2 id="revoking-publisher-caps">Revoking Publisher Caps</h2>
+      <h2 id="revoking-publisher-caps">Revoking publisher caps</h2>
       <p>When a publisher needs to be removed, the owner calls <code>revoke_publisher_cap</code> with the cap's object ID:</p>
 
       <div class="code-tabs">
@@ -278,7 +278,7 @@ assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), <span cla
             <div class="code-header">
               <span class="code-lang">output</span>
             </div>
-            <pre>Revoked PublisherCap 0x9c0d...1e2f. (tx: AbCdEf...)</pre>
+            <pre><span class="ok">Revoked PublisherCap 0x9c0d...1e2f.</span> <span class="m">(tx: AbCdEf...)</span></pre>
           </div>
         </div>
         <div class="code-tab-panel" data-tab="sdk">
@@ -311,7 +311,7 @@ assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), <span cla
         </div>
       </div>
 
-      <p>This adds the cap ID to the <code>revoked_publisher_caps: Table&lt;ID, bool&gt;</code> denylist on the publication. All subsequent writes using that cap will be rejected - the revocation is immediate and requires no cooperation from the cap holder.</p>
+      <p>This adds the cap ID to the <code>revoked_publisher_caps: Table&lt;ID, bool&gt;</code> denylist on the publication. All subsequent writes using that cap will be rejected. The revocation is immediate and requires no cooperation from the cap holder.</p>
 
       <div class="callout callout-warning">
         <div class="callout-icon">
@@ -323,7 +323,7 @@ assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), <span cla
         </div>
       </div>
 
-      <h3 id="the-denylist-model">The Denylist Model</h3>
+      <h3 id="the-denylist-model">The denylist model</h3>
       <p>Morse uses a <strong>denylist</strong> (blocklist), not an allowlist, for publisher cap tracking. This is a deliberate design choice:</p>
 
       <div class="table-wrap"><table>
@@ -336,9 +336,9 @@ assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), <span cla
         </tbody>
       </table></div>
 <br>
-      <p>This is safe because <code>PublisherCap</code> has no <code>store</code> ability and no external constructor - caps cannot be forged outside the module. An attacker cannot create a valid-looking cap; they must obtain a real one from the owner.</p>
+      <p>This is safe because <code>PublisherCap</code> has no <code>store</code> ability and no external constructor; caps cannot be forged outside the module. An attacker cannot create a valid-looking cap; they must obtain a real one from the owner.</p>
 
-      <h2 id="destroying-publisher-caps">Destroying Publisher Caps</h2>
+      <h2 id="destroying-publisher-caps">Destroying publisher caps</h2>
       <p>A publisher can voluntarily surrender their write access by calling <code>destroy_publisher_cap</code>:</p>
 
       <div class="code-tabs">
@@ -366,7 +366,7 @@ assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), <span cla
             <div class="code-header">
               <span class="code-lang">output</span>
             </div>
-            <pre>Destroyed PublisherCap 0x9c0d...1e2f. (tx: AbCdEf...)</pre>
+            <pre><span class="ok">Destroyed PublisherCap 0x9c0d...1e2f.</span> <span class="m">(tx: AbCdEf...)</span></pre>
           </div>
         </div>
         <div class="code-tab-panel" data-tab="sdk">
@@ -400,21 +400,21 @@ assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), <span cla
 
       <p>Only the <code>holder</code> can call this. The cap is permanently deleted from Sui and can never be used again. If it was previously revoked, the denylist entry is also removed to free on-chain storage.</p>
 
-      <h2 id="seal-integration">Seal Integration</h2>
-      <p>Morse integrates with <strong>Seal</strong> - Mysten's on-chain access control layer - to gate decryption of encrypted entry payloads. The integration is implemented via an <code>entry fun</code> that Seal calls during the decryption approval flow.</p>
+      <h2 id="seal-integration">Seal integration</h2>
+      <p>Morse integrates with <strong>Seal</strong>, Mysten's on-chain access control layer, to gate decryption of encrypted entry payloads. The integration is implemented via an <code>entry fun</code> that Seal calls during the decryption approval flow.</p>
 
-      <h3 id="decryption-sequence">Decryption Sequence</h3>
+      <h3 id="decryption-sequence">Decryption sequence</h3>
       <p>When a reader wants to decrypt an encrypted entry, the SDK and Seal key servers coordinate a multi-step flow:</p>
       <ol>
-        <li><strong>Client creates a <code>SessionKey</code></strong> - the reader's wallet signs a personal message to produce a time-limited <code>SessionKey</code> scoped to the contract's <code>originalPackageId</code> (the stable genesis address that survives upgrades).</li>
-        <li><strong>SDK builds an approval transaction</strong> - <code>seal.decrypt()</code> decodes the <code>sealId</code> to extract the target <code>publicationId</code>, then constructs a Programmable Transaction Block (PTB) that calls <code>seal_approve_publisher</code> with the <code>sealId</code>, the <code>Publication</code> object, and the caller's <code>PublisherCap</code>.</li>
-        <li><strong>SDK sends the request to Seal key servers</strong> - the serialized PTB bytes, the ciphertext, and the <code>SessionKey</code> are sent to the configured Seal key servers.</li>
-        <li><strong>Key servers dry-run the approval on-chain</strong> - each key server executes the PTB against the current chain state. The Move function runs two checks (see below). If either check fails the key server refuses to release its share.</li>
-        <li><strong>Key servers return threshold decryption shares</strong> - once at least <em>threshold</em> servers (default 2) confirm approval, each returns its decryption key share to the client.</li>
-        <li><strong>Client decrypts locally</strong> - the <code>SealClient</code> combines the shares and decrypts the Walrus blob ciphertext on the reader's device.</li>
+        <li><strong>Client creates a <code>SessionKey</code></strong>: the reader's wallet signs a personal message to produce a time-limited <code>SessionKey</code> scoped to the contract's <code>originalPackageId</code> (the stable genesis address that survives upgrades).</li>
+        <li><strong>SDK builds an approval transaction</strong>: <code>seal.decrypt()</code> decodes the <code>sealId</code> to extract the target <code>publicationId</code>, then constructs a Programmable Transaction Block (PTB) that calls <code>seal_approve_publisher</code> with the <code>sealId</code>, the <code>Publication</code> object, and the caller's <code>PublisherCap</code>.</li>
+        <li><strong>SDK sends the request to Seal key servers</strong>: the serialized PTB bytes, the ciphertext, and the <code>SessionKey</code> are sent to the configured Seal key servers.</li>
+        <li><strong>Key servers dry-run the approval on-chain</strong>: each key server executes the PTB against the current chain state. The Move function runs two checks (see below). If either check fails the key server refuses to release its share.</li>
+        <li><strong>Key servers return threshold decryption shares</strong>: once at least <em>threshold</em> servers (default 2) confirm approval, each returns its decryption key share to the client.</li>
+        <li><strong>Client decrypts locally</strong>: the <code>SealClient</code> combines the shares and decrypts the Walrus blob ciphertext on the reader's device.</li>
       </ol>
 
-      <h3 id="approval-function">Approval Function</h3>
+      <h3 id="approval-function">Approval function</h3>
       <p>The on-chain function that Seal key servers dry-run during step 4:</p>
 
       <div class="code-block">
@@ -432,11 +432,11 @@ assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), <span cla
 
       <p>The function runs two checks:</p>
       <ol>
-        <li><code>assert_active_publisher_cap</code> - verifies the cap is valid, not revoked, and the sender is the holder</li>
-        <li><code>assert_valid_publisher_seal_id</code> - verifies the Seal identity is scoped to this publication and policy</li>
+        <li><code>assert_active_publisher_cap</code>: verifies the cap is valid, not revoked, and the sender is the holder</li>
+        <li><code>assert_valid_publisher_seal_id</code>: verifies the Seal identity is scoped to this publication and policy</li>
       </ol>
 
-      <h3 id="seal-identity-format">Seal Identity Format</h3>
+      <h3 id="seal-identity-format">Seal identity format</h3>
       <p>Seal identities for Morse follow a structured namespace format to prevent cross-publication identity reuse:</p>
 
       <pre class="diagram">┌─────────────────────────────────┬────────────────┬──────────────────┐
@@ -454,8 +454,8 @@ assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), <span cla
       </ul>
 
 
-      <h2 id="access-policies">Access Policies</h2>
-      <p>Every revision stored on-chain carries an <code>access_policy</code> field that determines who can read the content payload. The Move contract validates the policy value, encryption flag, and Seal identity together at write time - invalid combinations abort the transaction.</p>
+      <h2 id="access-policies">Access policies</h2>
+      <p>Every revision stored on-chain carries an <code>access_policy</code> field that determines who can read the content payload. The Move contract validates the policy value, encryption flag, and Seal identity together at write time; invalid combinations abort the transaction.</p>
 
       <div class="table-wrap">
         <table>
@@ -500,11 +500,11 @@ assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), <span cla
         </div>
         <div class="callout-body">
           <div class="callout-title">Policy and encryption are coupled</div>
-          <div class="callout-text">Public revisions must be unencrypted; publisher revisions must be encrypted with a Seal identity. The contract rejects mismatches at write time. See <a href="entries.html#error-codes">Entries → Error Codes</a> for the specific error constants.</div>
+          <div class="callout-text">Public revisions must be unencrypted; publisher revisions must be encrypted with a Seal identity. The contract rejects mismatches at write time. See <a href="entries.html#error-codes">Entries → Error codes</a> for the specific error constants.</div>
         </div>
       </div>
 
-      <h2 id="real-world-usage-pattern">Real-World Usage Pattern</h2>
+      <h2 id="real-world-usage-pattern">Real-world usage pattern</h2>
 
       <div class="steps">
         <div class="step">
@@ -518,7 +518,7 @@ assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), <span cla
           <div class="step-number">2</div>
           <div class="step-body">
             <div class="step-title">Onboard editors</div>
-            <p>For each editor or automation agent, the owner calls <code>issue_publisher_cap(holder: editor_address)</code> and transfers the returned cap to that address. Each cap is independent - revoking one does not affect others.</p>
+            <p>For each editor or automation agent, the owner calls <code>issue_publisher_cap(holder: editor_address)</code> and transfers the returned cap to that address. Each cap is independent; revoking one does not affect others.</p>
           </div>
         </div>
         <div class="step">
@@ -532,19 +532,19 @@ assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), <span cla
           <div class="step-number">4</div>
           <div class="step-body">
             <div class="step-title">Offboard editors</div>
-            <p>When an editor leaves, the owner calls <code>revoke_publisher_cap(cap_id)</code>. The revocation is immediate - the next write attempt using that cap aborts. Historical content is unaffected.</p>
+            <p>When an editor leaves, the owner calls <code>revoke_publisher_cap(cap_id)</code>. The revocation is immediate; the next write attempt using that cap aborts. Historical content is unaffected.</p>
           </div>
         </div>
         <div class="step">
           <div class="step-number">5</div>
           <div class="step-body">
             <div class="step-title">Transfer ownership (optional)</div>
-            <p>The owner calls <code>transfer_owner_cap(owner_cap, new_owner_address)</code>. The new owner gains full admin authority immediately. The old owner retains only their <code>PublisherCap</code> (if any) unless it is revoked by the new owner. See <a href="publications.html#ownership-transfer">Publications → Ownership Transfer</a> for details.</p>
+            <p>The owner calls <code>transfer_owner_cap(owner_cap, new_owner_address)</code>. The new owner gains full admin authority immediately. The old owner retains only their <code>PublisherCap</code> (if any) unless it is revoked by the new owner. See <a href="publications.html#ownership-transfer">Publications → Ownership transfer</a> for details.</p>
           </div>
         </div>
       </div>
 
-      <h2 id="error-codes">Error Codes</h2>
+      <h2 id="error-codes">Error codes</h2>
       <p>For more error codes, see: <a href="publications.html#error-codes">Publications</a>, <a href="collections.html#error-codes">Collections</a>, <a href="entries.html#error-codes">Entries</a>.</p>
       <div class="table-wrap"><table>
         <thead><tr><th>Code</th><th>Constant</th><th>Meaning</th></tr></thead>
@@ -561,7 +561,7 @@ assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), <span cla
     <div class="feedback">
       <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
       <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20access-control.html" target="_blank" rel="noopener">Report an issue</a>
-      <span class="feedback__upd">Updated 2026-06-19</span>
+      <span class="feedback__upd">Updated 2026-10-15</span>
     </div>
     <nav class="pager" aria-label="Previous and next">
       <a href="entries.html" rel="prev"><small>Previous</small><b>← Entries &amp; Revisions</b></a>

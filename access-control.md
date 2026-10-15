@@ -3,15 +3,15 @@
 
 # Access Control
 
-> Morse uses a capability-based permission model. Two types of capabilities control who can administer a publication and who can write content - enforced on-chain by the Sui type system, with no off-chain authorization service.
+> Morse uses a capability-based permission model. Two types of capabilities control who can administer a publication and who can write content, enforced on-chain by the Sui type system, with no off-chain authorization service.
 
 ## Overview
 
-Every write operation in Morse requires presenting a valid capability object. Capabilities cannot be fabricated - they can only be created by the protocol through designated functions. The type system itself is the enforcement mechanism.
+Every write operation in Morse requires presenting a valid capability object. Capabilities cannot be fabricated; they can only be created by the protocol through designated functions. The type system itself is the enforcement mechanism.
 
 ## OwnerCap
 
-The `OwnerCap` is the highest-authority object in a publication. Exactly one exists per publication - it is created alongside the publication and transferred to the creator.
+The `OwnerCap` is the highest-authority object in a publication. Exactly one exists per publication; it is created alongside the publication and transferred to the creator.
 
 ```move
 public struct OwnerCap has key {
@@ -22,14 +22,14 @@ public struct OwnerCap has key {
 
 Operations that require `OwnerCap`:
 
-- `issue_publisher_cap` - mint a new publisher cap for an address
-- `revoke_publisher_cap` - add a cap ID to the revocation denylist
-- `delete_publication` - delete the publication entirely
-- `transfer_owner_cap` - transfer ownership to a new address
+- `issue_publisher_cap`: mint a new publisher cap for an address
+- `revoke_publisher_cap`: add a cap ID to the revocation denylist
+- `delete_publication`: delete the publication entirely
+- `transfer_owner_cap`: transfer ownership to a new address
 
 > **INFO: `OwnerCap` is transferable by design**
 >
-> Ownership can be sold, transferred to a multisig wallet, or handed to a DAO treasury. This is a protocol-level feature, not a limitation - publication identity lives in the contract, not in a centralized identity system.
+> Ownership can be sold, transferred to a multisig wallet, or handed to a DAO treasury. This is a protocol-level feature, not a limitation: publication identity lives in the contract, not in a centralized identity system.
 
 ## PublisherCap
 
@@ -45,7 +45,7 @@ public struct PublisherCap has key {
 
 Every write operation that uses a `PublisherCap` runs three checks internally:
 
-```move - internal validation
+```move
 assert!(cap.publication_id == object::id(publication), EUnauthorized);
 assert!(cap.holder == ctx.sender(), EPublisherCapWrongHolder);
 assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), EPublisherCapRevoked);
@@ -53,9 +53,9 @@ assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), EPublishe
 
 The `holder` field is critical: it binds the capability to a specific address. If someone holds the `PublisherCap` object but the transaction is not signed by `holder`, the write is rejected. You cannot use a single publisher cap from multiple wallets.
 
-## Issuing Publisher Caps
+## Issuing publisher caps
 
-Only the owner can issue publisher caps. The owner specifies the target `holder` address - the cap is created and delivered in a single command:
+Only the owner can issue publisher caps. The owner specifies the target `holder` address. The cap is created and delivered in a single command:
 
 **CLI:**
 
@@ -101,14 +101,14 @@ public fun issue_publisher_cap(
 public fun transfer_publisher_cap(cap: PublisherCap, recipient: address)
 ```
 
-Use [SDK Setup → morseConfig()](https://docs.morsecms.xyz/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server Setup](https://docs.morsecms.xyz/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html) for complete PTB examples.
+Use [SDK Setup → morseConfig()](https://docs.morsecms.xyz/sdk-client-setup.html#morse-config) to get the package ID and registry ID, [SDK Setup → Server setup](https://docs.morsecms.xyz/sdk-client-setup.html#server-setup) to initialize the client, and [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html) for complete PTB examples.
 
 ### Ownership vs holder binding
 
 A `PublisherCap` has two layers of authorization that must both be satisfied:
 
-- **Sui object ownership** - which wallet physically holds the cap object. This determines who can pass it into a transaction.
-- **`holder` binding** - an address set permanently at issuance. The contract checks `cap.holder == ctx.sender()` on every write operation.
+- **Sui object ownership**: which wallet physically holds the cap object. This determines who can pass it into a transaction.
+- **`holder` binding**: an address set permanently at issuance. The contract checks `cap.holder == ctx.sender()` on every write operation.
 
 Both must match for the cap to work. Transferring a cap to someone who is not the bound `holder` gives them the object, but the contract will still reject their writes.
 
@@ -129,9 +129,9 @@ When you issue a cap via the CLI or SDK, two Move calls are bundled in a single 
 1. `issue_publisher_cap` creates the cap and binds it to the `holder` address.
 2. `transfer_publisher_cap` delivers the cap object to that address.
 
-**No table write occurs during issuance** - only revocations write to the denylist. This makes issuing caps essentially free beyond the gas cost of object creation.
+**No table write occurs during issuance**; only revocations write to the denylist. This makes issuing caps essentially free beyond the gas cost of object creation.
 
-## Revoking Publisher Caps
+## Revoking publisher caps
 
 When a publisher needs to be removed, the owner calls `revoke_publisher_cap` with the cap's object ID:
 
@@ -173,13 +173,13 @@ public fun revoke_publisher_cap(
 )
 ```
 
-This adds the cap ID to the `revoked_publisher_caps: Table<ID, bool>` denylist on the publication. All subsequent writes using that cap will be rejected - the revocation is immediate and requires no cooperation from the cap holder.
+This adds the cap ID to the `revoked_publisher_caps: Table<ID, bool>` denylist on the publication. All subsequent writes using that cap will be rejected. The revocation is immediate and requires no cooperation from the cap holder.
 
 > **WARNING: Double-revoke aborts**
 >
 > Calling `revoke_publisher_cap` on an already-revoked cap ID aborts with `EPublisherCapRevoked`. Check the denylist state before revoking if unsure.
 
-### The Denylist Model
+### The denylist model
 
 Morse uses a **denylist** (blocklist), not an allowlist, for publisher cap tracking. This is a deliberate design choice:
 
@@ -190,9 +190,9 @@ Morse uses a **denylist** (blocklist), not an allowlist, for publisher cap track
 | Write validation | One table lookup | One table lookup |
 | Optimized for | Common case (no revocations) | Frequent churn |
 
-This is safe because `PublisherCap` has no `store` ability and no external constructor - caps cannot be forged outside the module. An attacker cannot create a valid-looking cap; they must obtain a real one from the owner.
+This is safe because `PublisherCap` has no `store` ability and no external constructor; caps cannot be forged outside the module. An attacker cannot create a valid-looking cap; they must obtain a real one from the owner.
 
-## Destroying Publisher Caps
+## Destroying publisher caps
 
 A publisher can voluntarily surrender their write access by calling `destroy_publisher_cap`:
 
@@ -235,22 +235,22 @@ public fun destroy_publisher_cap(
 
 Only the `holder` can call this. The cap is permanently deleted from Sui and can never be used again. If it was previously revoked, the denylist entry is also removed to free on-chain storage.
 
-## Seal Integration
+## Seal integration
 
-Morse integrates with **Seal** - Mysten's on-chain access control layer - to gate decryption of encrypted entry payloads. The integration is implemented via an `entry fun` that Seal calls during the decryption approval flow.
+Morse integrates with **Seal**, Mysten's on-chain access control layer, to gate decryption of encrypted entry payloads. The integration is implemented via an `entry fun` that Seal calls during the decryption approval flow.
 
-### Decryption Sequence
+### Decryption sequence
 
 When a reader wants to decrypt an encrypted entry, the SDK and Seal key servers coordinate a multi-step flow:
 
-1. **Client creates a `SessionKey`** - the reader's wallet signs a personal message to produce a time-limited `SessionKey` scoped to the contract's `originalPackageId` (the stable genesis address that survives upgrades).
-2. **SDK builds an approval transaction** - `seal.decrypt()` decodes the `sealId` to extract the target `publicationId`, then constructs a Programmable Transaction Block (PTB) that calls `seal_approve_publisher` with the `sealId`, the `Publication` object, and the caller's `PublisherCap`.
-3. **SDK sends the request to Seal key servers** - the serialized PTB bytes, the ciphertext, and the `SessionKey` are sent to the configured Seal key servers.
-4. **Key servers dry-run the approval on-chain** - each key server executes the PTB against the current chain state. The Move function runs two checks (see below). If either check fails the key server refuses to release its share.
-5. **Key servers return threshold decryption shares** - once at least *threshold* servers (default 2) confirm approval, each returns its decryption key share to the client.
-6. **Client decrypts locally** - the `SealClient` combines the shares and decrypts the Walrus blob ciphertext on the reader's device.
+1. **Client creates a `SessionKey`**: the reader's wallet signs a personal message to produce a time-limited `SessionKey` scoped to the contract's `originalPackageId` (the stable genesis address that survives upgrades).
+2. **SDK builds an approval transaction**: `seal.decrypt()` decodes the `sealId` to extract the target `publicationId`, then constructs a Programmable Transaction Block (PTB) that calls `seal_approve_publisher` with the `sealId`, the `Publication` object, and the caller's `PublisherCap`.
+3. **SDK sends the request to Seal key servers**: the serialized PTB bytes, the ciphertext, and the `SessionKey` are sent to the configured Seal key servers.
+4. **Key servers dry-run the approval on-chain**: each key server executes the PTB against the current chain state. The Move function runs two checks (see below). If either check fails the key server refuses to release its share.
+5. **Key servers return threshold decryption shares**: once at least *threshold* servers (default 2) confirm approval, each returns its decryption key share to the client.
+6. **Client decrypts locally**: the `SealClient` combines the shares and decrypts the Walrus blob ciphertext on the reader's device.
 
-### Approval Function
+### Approval function
 
 The on-chain function that Seal key servers dry-run during step 4:
 
@@ -265,10 +265,10 @@ entry fun seal_approve_publisher(
 
 The function runs two checks:
 
-1. `assert_active_publisher_cap` - verifies the cap is valid, not revoked, and the sender is the holder
-2. `assert_valid_publisher_seal_id` - verifies the Seal identity is scoped to this publication and policy
+1. `assert_active_publisher_cap`: verifies the cap is valid, not revoked, and the sender is the holder
+2. `assert_valid_publisher_seal_id`: verifies the Seal identity is scoped to this publication and policy
 
-### Seal Identity Format
+### Seal identity format
 
 Seal identities for Morse follow a structured namespace format to prevent cross-publication identity reuse:
 
@@ -287,9 +287,9 @@ The `policy_tag = 0x01` is the publisher policy tag. This namespacing ensures:
 - The same publication can host multiple policy types with different tags in the future (e.g. subscription tag)
 - Many unique Seal identities can exist within one publication namespace (via different nonces)
 
-## Access Policies
+## Access policies
 
-Every revision stored on-chain carries an `access_policy` field that determines who can read the content payload. The Move contract validates the policy value, encryption flag, and Seal identity together at write time - invalid combinations abort the transaction.
+Every revision stored on-chain carries an `access_policy` field that determines who can read the content payload. The Move contract validates the policy value, encryption flag, and Seal identity together at write time; invalid combinations abort the transaction.
 
 | Policy | Value | Encrypted | Who can read | Enforcement |
 | --- | --- | --- | --- | --- |
@@ -299,26 +299,26 @@ Every revision stored on-chain carries an `access_policy` field that determines 
 
 > **WARNING: Policy and encryption are coupled**
 >
-> Public revisions must be unencrypted; publisher revisions must be encrypted with a Seal identity. The contract rejects mismatches at write time. See [Entries → Error Codes](https://docs.morsecms.xyz/entries.html#error-codes) for the specific error constants.
+> Public revisions must be unencrypted; publisher revisions must be encrypted with a Seal identity. The contract rejects mismatches at write time. See [Entries → Error codes](https://docs.morsecms.xyz/entries.html#error-codes) for the specific error constants.
 
-## Real-World Usage Pattern
+## Real-world usage pattern
 
 1. **Publication created**
    Owner wallet creates the publication. Receives `OwnerCap` (kept in owner wallet) and an initial `PublisherCap` (also kept or immediately transferred).
 
 2. **Onboard editors**
-   For each editor or automation agent, the owner calls `issue_publisher_cap(holder: editor_address)` and transfers the returned cap to that address. Each cap is independent - revoking one does not affect others.
+   For each editor or automation agent, the owner calls `issue_publisher_cap(holder: editor_address)` and transfers the returned cap to that address. Each cap is independent; revoking one does not affect others.
 
 3. **Editors publish content**
    Editors present their `PublisherCap` in PTBs to create collections, add entries, append drafts, and publish. The contract verifies sender matches `holder` on every call.
 
 4. **Offboard editors**
-   When an editor leaves, the owner calls `revoke_publisher_cap(cap_id)`. The revocation is immediate - the next write attempt using that cap aborts. Historical content is unaffected.
+   When an editor leaves, the owner calls `revoke_publisher_cap(cap_id)`. The revocation is immediate; the next write attempt using that cap aborts. Historical content is unaffected.
 
 5. **Transfer ownership (optional)**
-   The owner calls `transfer_owner_cap(owner_cap, new_owner_address)`. The new owner gains full admin authority immediately. The old owner retains only their `PublisherCap` (if any) unless it is revoked by the new owner. See [Publications → Ownership Transfer](https://docs.morsecms.xyz/publications.html#ownership-transfer) for details.
+   The owner calls `transfer_owner_cap(owner_cap, new_owner_address)`. The new owner gains full admin authority immediately. The old owner retains only their `PublisherCap` (if any) unless it is revoked by the new owner. See [Publications → Ownership transfer](https://docs.morsecms.xyz/publications.html#ownership-transfer) for details.
 
-## Error Codes
+## Error codes
 
 For more error codes, see: [Publications](https://docs.morsecms.xyz/publications.html#error-codes), [Collections](https://docs.morsecms.xyz/collections.html#error-codes), [Entries](https://docs.morsecms.xyz/entries.html#error-codes).
 

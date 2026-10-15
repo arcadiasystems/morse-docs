@@ -138,7 +138,7 @@ Fetch the entry content by its ID. Entry IDs are monotonic; your first entry is 
 morse entry read 0 --via-aggregator
 ```
 
-The optional `--via-aggregator` flag routes reads through the Walrus aggregator, which is more reliable on testnet. Without it, testnet reads frequently fail with `No valid blob metadata could be retrieved from any storage node`, especially right after an upload. See [CLI Cookbooks → Reading It Back](https://docs.morsecms.xyz/cli-workflows.html#reading-it-back).
+The optional `--via-aggregator` flag routes reads through the Walrus aggregator, which is more reliable on testnet. Without it, testnet reads frequently fail with `No valid blob metadata could be retrieved from any storage node`, especially right after an upload. See [CLI Cookbooks → Reading it back](https://docs.morsecms.xyz/cli-workflows.html#reading-it-back).
 
 ```output
 {"title": "Hello World", "body": "My first post on Morse."}
