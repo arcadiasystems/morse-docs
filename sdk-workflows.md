@@ -413,7 +413,7 @@ await revokePublisherCap(adapter, config, {
   publisherCapId: issued.publisherCapId,
 });
 
-// Co-author destroys their own cap (requires an adapter built from the co-author's keypair — see SDK Setup)
+// Co-author destroys their own cap (requires an adapter built from the co-author's keypair; see SDK Setup)
 await destroyPublisherCap(coAuthorAdapter, config, {
   publicationId: created.publicationId,
   publisherCapId: issued.publisherCapId,

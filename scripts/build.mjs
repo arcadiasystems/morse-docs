@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Morse docs build — generates the AI/agent artifacts from the HTML pages:
+ * Morse docs build: generates the AI/agent artifacts from the HTML pages:
  *
  *   <page>.md            Markdown twin of every docs page
  *   llms.txt             Index of all pages with descriptions (llmstxt.org)
@@ -163,7 +163,7 @@ function blockMd($, el) {
     const parts = [];
     $el.find('dt').each((_, dt) => {
       const dd = $(dt).parent().find('dd').first();
-      parts.push(`**${inlineMd($, dt).trim()}** — ${dd.length ? inlineMd($, dd[0]).trim() : ''}`);
+      parts.push(`**${inlineMd($, dt).trim()}**: ${dd.length ? inlineMd($, dd[0]).trim() : ''}`);
     });
     return parts.join('\n\n');
   }
@@ -206,7 +206,7 @@ function blockMd($, el) {
       const items = $el.children('.feature-item').toArray().map(item => {
         const title = $(item).find('.feature-title').first().text().trim();
         const desc = $(item).find('.feature-desc').first().text().trim();
-        return `- **${title}** — ${desc}`;
+        return `- **${title}**: ${desc}`;
       });
       return items.join('\n');
     }
@@ -224,7 +224,7 @@ function blockMd($, el) {
       const parts = [];
       $el.find('.dual-head-label, .dual-head-label-alt').each((_, lb) => {
         const text = $(lb).next('.dual-head-text');
-        parts.push(`- **\`${$(lb).text().trim()}\`** — ${text.length ? inlineMd($, text[0]).trim() : ''}`);
+        parts.push(`- **\`${$(lb).text().trim()}\`**: ${text.length ? inlineMd($, text[0]).trim() : ''}`);
       });
       const visual = $el.find('.dual-head-visual').first();
       if (visual.length) parts.push('```\n' + visual.text().replace(/\s+$/, '') + '\n```');
@@ -249,7 +249,7 @@ function blockMd($, el) {
       const items = $el.children('.def-item').toArray().map(item => {
         const term = $(item).find('.def-term').first().text().trim();
         const body = $(item).find('.def-body').first();
-        return `**\`${term}\`** — ${body.length ? inlineMd($, body[0]).trim() : ''}`;
+        return `**\`${term}\`**: ${body.length ? inlineMd($, body[0]).trim() : ''}`;
       });
       return items.join('\n\n');
     }
@@ -393,7 +393,7 @@ for (const m of metas) (bySection[m.section] ||= []).push(m);
 
 const llms = `# Morse Documentation
 
-> Morse is an open, decentralized headless CMS protocol built on Sui and Walrus. Content entries are anchored on-chain with Move smart contracts, payloads are stored on Walrus decentralized storage, access is controlled by Seal encryption, and every revision carries a verifiable on-chain proof — no vendor in the loop.
+> Morse is an open, decentralized headless CMS protocol built on Sui and Walrus. Content entries are anchored on-chain with Move smart contracts, payloads are stored on Walrus decentralized storage, access is controlled by Seal encryption, and every revision carries a verifiable on-chain proof, with no vendor in the loop.
 
 Every page below is also available as Markdown: replace \`.html\` with \`.md\` in any URL. The complete documentation in one file: ${BASE_URL}/llms-full.txt
 
@@ -421,7 +421,7 @@ ${Object.entries(bySection).map(([section, items]) =>
 writeFileSync(join(ROOT, 'llms.txt'), llms);
 
 // llms-full.txt
-const full = `# Morse Documentation — Complete
+const full = `# Morse Documentation: Complete
 # Morse is an open, decentralized headless CMS protocol built on Sui and Walrus.
 # Index: ${BASE_URL}/llms.txt · Site: ${BASE_URL}/
 # Feedback: https://github.com/${DOCS_REPO}/issues/new?labels=docs-feedback

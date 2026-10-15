@@ -54,8 +54,8 @@ The variant used must match the collection's [storage mode](https://docs.morsecm
 
 Every entry maintains two independent head pointers into its revision vector:
 
-- **`draft_head`** — Points to the latest draft revision. Work in progress, not visible to public readers. May be `None` on a freshly-published entry.
-- **`public_head`** — Points to the currently published revision. Stable for readers. May be `None` on an entry that has only drafts.
+- **`draft_head`**: Points to the latest draft revision. Work in progress, not visible to public readers. May be `None` on a freshly-published entry.
+- **`public_head`**: Points to the currently published revision. Stable for readers. May be `None` on an entry that has only drafts.
 ```
 revisions: [rev0, rev1(draft), rev2(draft), rev3(public), rev4(draft)]
                                               ↑ public_head=3   ↑ draft_head=4

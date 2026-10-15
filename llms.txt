@@ -1,6 +1,6 @@
 # Morse Documentation
 
-> Morse is an open, decentralized headless CMS protocol built on Sui and Walrus. Content entries are anchored on-chain with Move smart contracts, payloads are stored on Walrus decentralized storage, access is controlled by Seal encryption, and every revision carries a verifiable on-chain proof — no vendor in the loop.
+> Morse is an open, decentralized headless CMS protocol built on Sui and Walrus. Content entries are anchored on-chain with Move smart contracts, payloads are stored on Walrus decentralized storage, access is controlled by Seal encryption, and every revision carries a verifiable on-chain proof, with no vendor in the loop.
 
 Every page below is also available as Markdown: replace `.html` with `.md` in any URL. The complete documentation in one file: https://docs.morsecms.xyz/llms-full.txt
 

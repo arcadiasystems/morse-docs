@@ -20,7 +20,7 @@ Every page on this site is available in three agent-friendly forms. No scraping,
 Paste one line into your agent to load the full Morse context:
 
 ```prompt
-Read https://docs.morsecms.xyz/llms-full.txt — the full documentation for Morse,
+Read https://docs.morsecms.xyz/llms-full.txt, the full documentation for Morse,
 the decentralized headless CMS protocol on Sui + Walrus. Use it to help me build
 with the Morse CLI, TypeScript SDK, or Move contracts.
 ```

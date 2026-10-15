@@ -15,12 +15,12 @@ Install the SDK and its peer dependencies, then wire a wallet adapter and Walrus
 
 ## Capabilities
 
-- **Adapter pattern** — Four swappable adapters (wallet, Walrus write, Walrus read, Seal) with shipped defaults and easy substitution for custom flows.
-- **Branded ID types** — PublicationId, PublisherCapId, OwnerCapId, BlobObjectId, WalrusBlobId, QuiltPatchId, and more. Compile-time guards against passing the wrong ID into the wrong call.
-- **Structured errors** — Every throw extends MorseError. Narrow by class + property (e.g. ContractAbortError.reason); no string parsing.
-- **2-transaction uploads** — addEntryFromBytes collapses register + certify + add-entry into 2 transactions instead of 3 via a flow-aware Walrus capability.
-- **End-to-end tests** — End-to-end scripts/phase-N-*.ts run against live testnet (real WAL, real SUI) to verify the public surface on every release.
-- **97% test coverage** — ~97% line / ~96% function coverage. Lint, typecheck, test, build all gate every change.
+- **Adapter pattern**: Four swappable adapters (wallet, Walrus write, Walrus read, Seal) with shipped defaults and easy substitution for custom flows.
+- **Branded ID types**: PublicationId, PublisherCapId, OwnerCapId, BlobObjectId, WalrusBlobId, QuiltPatchId, and more. Compile-time guards against passing the wrong ID into the wrong call.
+- **Structured errors**: Every throw extends MorseError. Narrow by class + property (e.g. ContractAbortError.reason); no string parsing.
+- **2-transaction uploads**: addEntryFromBytes collapses register + certify + add-entry into 2 transactions instead of 3 via a flow-aware Walrus capability.
+- **End-to-end tests**: End-to-end scripts/phase-N-*.ts run against live testnet (real WAL, real SUI) to verify the public surface on every release.
+- **97% test coverage**: ~97% line / ~96% function coverage. Lint, typecheck, test, build all gate every change.
 
 ## Adapter architecture
 

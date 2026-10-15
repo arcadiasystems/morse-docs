@@ -237,7 +237,7 @@ async function copyPageMarkdown(btn) {
     }
     flash(btn, 'Copied as Markdown', true);
   } catch {
-    // Fallback: copy the rendered article text — report success only if it lands
+    // Fallback: copy the rendered article text, reporting success only if it lands
     try {
       const article = document.querySelector('.article');
       if (!article) throw new Error('no article');
@@ -364,7 +364,7 @@ function initAskAI() {
 
   const buildPrompt = () => {
     const q = document.getElementById('askai-input').value.trim();
-    const context = `First read ${llmsFullUrl()} — the complete documentation for Morse, the decentralized headless CMS protocol on Sui and Walrus. Then answer this question:`;
+    const context = `First read ${llmsFullUrl()}, the complete documentation for Morse, the decentralized headless CMS protocol on Sui and Walrus. Then answer this question:`;
     return q ? `${context}\n\n${q}` : `Read ${llmsFullUrl()} and give me an overview of Morse, the decentralized CMS protocol.`;
   };
 
@@ -412,7 +412,7 @@ function initAskAI() {
 function initKeyboardNav() {
   document.addEventListener('keydown', e => {
     if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return;
-    // Only navigate when nothing is focused — arrow keys on focused
+    // Only navigate when nothing is focused: arrow keys on focused
     // buttons, tabs, or scrollable code blocks must keep their meaning.
     const ae = document.activeElement;
     if (ae && ae !== document.body && ae !== document.documentElement) return;

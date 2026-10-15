@@ -1824,7 +1824,7 @@
     "pageTitle": "Use Morse with AI",
     "section": "Reference",
     "heading": "Prime a coding agent",
-    "text": "Paste one line into your agent to load the full Morse context: prompt Copy Read https://docs.morsecms.xyz/llms-full.txt — the full documentation for Morse, the decentralized headless CMS protocol on Sui + Walrus. Use it to help me build with the Morse CLI, TypeScript SDK, or Move contracts. Or fetch context on demand from a terminal-capable agent: bash Copy # Index of all pages curl -s https://docs.morsecms.xyz/llms.txt # One specific page as Markdown curl -s https://docs.morsecms.xyz/quick-start-cli.md # Everything at once curl -s https://docs.morsecms.xyz/llms-full.txt Working in a Morse pro"
+    "text": "Paste one line into your agent to load the full Morse context: prompt Copy Read https://docs.morsecms.xyz/llms-full.txt, the full documentation for Morse, the decentralized headless CMS protocol on Sui + Walrus. Use it to help me build with the Morse CLI, TypeScript SDK, or Move contracts. Or fetch context on demand from a terminal-capable agent: bash Copy # Index of all pages curl -s https://docs.morsecms.xyz/llms.txt # One specific page as Markdown curl -s https://docs.morsecms.xyz/quick-start-cli.md # Everything at once curl -s https://docs.morsecms.xyz/llms-full.txt Working in a Morse proj"
   },
   {
     "url": "use-morse-with-ai.html#copy-any-page-for-ai",

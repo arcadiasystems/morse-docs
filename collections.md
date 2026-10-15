@@ -101,7 +101,7 @@ Created collection "articles". Selected as the active collection. (tx: AbCdEf...
 import { createCollection } from "@arcadiasystems/morse-sdk";
 
 // See sdk-client-setup.html for adapter and config initialization
-// publicationId and publisherCapId come from createPublication() — see Publications page
+// publicationId and publisherCapId come from createPublication(); see the Publications page
 const result = await createCollection(adapter, config, {
   publicationId: "0x1a2b...3c4d",
   publisherCapId: "0x7a8b...",

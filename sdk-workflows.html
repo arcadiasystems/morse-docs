@@ -555,7 +555,7 @@ console.<span class="fn">log</span>(page.results.length, <span class="st">"entri
   publisherCapId: issued.publisherCapId,
 });
 
-<span class="cm">// Co-author destroys their own cap (requires an adapter built from the co-author's keypair — see SDK Setup)</span>
+<span class="cm">// Co-author destroys their own cap (requires an adapter built from the co-author's keypair; see SDK Setup)</span>
 <span class="kw">await</span> <span class="fn">destroyPublisherCap</span>(coAuthorAdapter, config, {
   publicationId: created.publicationId,
   publisherCapId: issued.publisherCapId,

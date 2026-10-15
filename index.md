@@ -36,13 +36,13 @@ Morse is composed of five layers. Only the contracts are the source of truth; al
 
 ## Key features
 
-- **On-chain Permission Management** — Publication identity, write permissions, and state transitions are enforced by Move smart contracts: transparent and auditable.
-- **Walrus Storage** — Content payloads and assets live in Walrus decentralized storage. Contracts store verifiable references, not bytes.
-- **Capability-Based Auth** — OwnerCap and PublisherCap separate permission management from publishing. Revocation is instant and denylist-based.
-- **Immutable Revisions** — Every content change is an appended revision. Draft and public heads enable editorial workflows without losing history.
-- **Access Policies** — Public, publisher-gated, and subscription access policies control payload retrieval via Seal encryption.
-- **Open Protocol** — Anyone can build integrations directly on contracts. Off-chain services are optional ergonomics, not gatekeepers.
-- **Agent-First by Design** — A coding agent can provision publications, publish content, and operate the entire backend via CLI or SDK. No centralized provisioning required.
+- **On-chain Permission Management**: Publication identity, write permissions, and state transitions are enforced by Move smart contracts: transparent and auditable.
+- **Walrus Storage**: Content payloads and assets live in Walrus decentralized storage. Contracts store verifiable references, not bytes.
+- **Capability-Based Auth**: OwnerCap and PublisherCap separate permission management from publishing. Revocation is instant and denylist-based.
+- **Immutable Revisions**: Every content change is an appended revision. Draft and public heads enable editorial workflows without losing history.
+- **Access Policies**: Public, publisher-gated, and subscription access policies control payload retrieval via Seal encryption.
+- **Open Protocol**: Anyone can build integrations directly on contracts. Off-chain services are optional ergonomics, not gatekeepers.
+- **Agent-First by Design**: A coding agent can provision publications, publish content, and operate the entire backend via CLI or SDK. No centralized provisioning required.
 
 ## Component status
 

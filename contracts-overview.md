@@ -101,10 +101,10 @@ public enum BlobRef has copy, drop, store {
 
 ## What PTBs give you
 
-- **Full transaction control** — Compose multiple Move calls in a single PTB: create a publication, add a collection, and publish an entry atomically.
-- **No SDK abstraction layer** — Call the contract functions directly. Useful when the SDK does not expose a wrapper for your use case or when you need fine-grained control.
-- **Custom batching** — Delete 50 entries, 3 collections, and a publication in one transaction. The SDK processes these sequentially; PTBs batch them.
-- **BCS encoding** — Pass Option<vector<u8>> and other Move types directly via @mysten/sui/bcs. Required for encrypted entries and quilt patches.
+- **Full transaction control**: Compose multiple Move calls in a single PTB: create a publication, add a collection, and publish an entry atomically.
+- **No SDK abstraction layer**: Call the contract functions directly. Useful when the SDK does not expose a wrapper for your use case or when you need fine-grained control.
+- **Custom batching**: Delete 50 entries, 3 collections, and a publication in one transaction. The SDK processes these sequentially; PTBs batch them.
+- **BCS encoding**: Pass Option<vector<u8>> and other Move types directly via @mysten/sui/bcs. Required for encrypted entries and quilt patches.
 
 ## Known limitations
 
