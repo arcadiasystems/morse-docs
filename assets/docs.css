@@ -64,9 +64,15 @@ button{font:inherit;color:inherit}
 .side .sub{padding-left:14px;border-left:1px solid var(--line);margin-left:16px}
 .side .tag{font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--stone);border:1px solid var(--line-2);border-radius:999px;padding:2px 7px;white-space:nowrap}
 .side__askai{display:none}
-.agentbox{margin:0 4px 20px;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--paper)}
-.agentbox__title{font-size:13px;font-weight:600;margin-bottom:8px}
-.side .agentbox a{padding:6px 0;min-height:0;font-size:13px;display:block;border-radius:0}
+.agentbox{margin:0 4px 20px;border:1px solid var(--line);border-radius:12px;background:var(--paper)}
+.agentbox__title{display:flex;align-items:center;gap:8px;padding:9px 14px;font-size:13px;font-weight:600;cursor:pointer;list-style:none;border-radius:12px}
+.agentbox__title::-webkit-details-marker{display:none}
+.agentbox__title::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ultra)}
+.agentbox__title::after{content:"";margin-left:auto;width:7px;height:7px;border-right:1.5px solid var(--stone);border-bottom:1.5px solid var(--stone);transform:rotate(45deg) translateY(-2px);transition:transform .15s}
+.agentbox[open]>.agentbox__title::after{transform:rotate(-135deg) translateY(-2px)}
+.agentbox__title:hover{background:rgba(18,20,24,.03)}
+.agentbox[open]{padding-bottom:8px}
+.side .agentbox a{padding:6px 14px;min-height:0;font-size:13px;display:block;border-radius:0}
 .side .agentbox a:hover{background:none;color:var(--ultra)}
 .agentbox a small{display:block;color:var(--stone);font-size:12px;line-height:1.4}
 

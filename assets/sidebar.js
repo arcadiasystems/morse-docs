@@ -40,6 +40,8 @@ const NAV_SECTIONS = [
   ] },
 ];
 
+const AGENTBOX_KEY = 'morse-docs:agentbox';
+
 function navItemHtml(item) {
   // Unshipped pages render as plain text with a release tag, never as a link
   const self = item.page
@@ -62,10 +64,25 @@ function initSidebarNav() {
   }).join('');
 
   side.innerHTML =
-    '<div class="agentbox">'
-    + '<p class="agentbox__title">For agents</p>'
+    '<details class="agentbox">'
+    + '<summary class="agentbox__title">For agents</summary>'
     + '<a href="llms.txt">llms.txt<small>Compact index of every docs page.</small></a>'
     + '<a href="llms-full.txt">llms-full.txt<small>The whole documentation as one file.</small></a>'
-    + '</div>'
+    + '</details>'
     + `<nav aria-label="Documentation">${sections}</nav>`;
+
+  // Collapsed by default; remember a reader's choice across pages
+  const box = side.querySelector('.agentbox');
+  try {
+    box.open = localStorage.getItem(AGENTBOX_KEY) === 'open';
+  } catch {
+    // Storage unavailable (private mode, blocked site data): stay collapsed
+  }
+  box.addEventListener('toggle', () => {
+    try {
+      localStorage.setItem(AGENTBOX_KEY, box.open ? 'open' : 'closed');
+    } catch {
+      // Storage unavailable: the choice simply is not remembered
+    }
+  });
 }
