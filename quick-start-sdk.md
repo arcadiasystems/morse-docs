@@ -3,7 +3,7 @@
 
 # Quick Start: SDK
 
-> Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter - no browser, no wallet popups.
+> Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter - no browser, no wallet popups. Want to see the result first? Browse the [live demo blog](https://morse-blog-demo.vercel.app) built on this SDK.
 
 > **WARNING: Testnet status**
 >

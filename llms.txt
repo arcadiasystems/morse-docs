@@ -17,7 +17,7 @@ Every page below is also available as Markdown: replace `.html` with `.md` in an
 - [Core Concepts](https://docs.morsecms.xyz/core-concepts.md): Understand the fundamental building blocks of the Morse protocol - the data model, authorization system, storage strategy, and how on-chain and off-chain components interact.
 - [Quick Start](https://docs.morsecms.xyz/quick-start.md): Choose the path that fits your workflow. Each guide takes you from zero to published content on Sui testnet.
 - [Quick Start: CLI](https://docs.morsecms.xyz/quick-start-cli.md): Install morse-cli and go from zero to published content on Sui testnet in under five minutes. No contracts, no code, just your terminal.
-- [Quick Start: SDK](https://docs.morsecms.xyz/quick-start-sdk.md): Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter - no browser, no wallet popups. Want to see the result first? Browse the <a href=
+- [Quick Start: SDK](https://docs.morsecms.xyz/quick-start-sdk.md): Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter - no browser, no wallet popups. Want to see the result first? Browse the live demo blog built on this SDK.
 - [Quick Start: Smart Contracts](https://docs.morsecms.xyz/quick-start-contracts.md): Create a publication, add a collection, and publish an entry using raw Programmable Transaction Blocks against the deployed Morse contracts on testnet. No SDK wrappers - just tx.moveCall.
 
 ## Protocol

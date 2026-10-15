@@ -155,7 +155,7 @@
         <ul>
           <li><strong>Testnet only at v0.x.</strong> Mainnet config is released once the contracts are stable.</li>
           <li><strong>gRPC client only.</strong> Reader and adapter interfaces are typed against <code>SuiGrpcClient</code> from <code>@mysten/sui/grpc</code>. JSON-RPC fallback is planned.</li>
-          <li><strong>No encrypted publish path.</strong> The Move contract hardcodes <code>encrypted=false</code> on <code>publish_from_draft</code> and <code>publish_direct</code>. Encrypted content stays as drafts - see <a href="sdk-workflows.html#encrypted-entries">SDK Cookbooks → Encrypted entries</a> for the full lifecycle.</li>
+          <li><strong>No encrypted publish path.</strong> The Move contract hardcodes <code>encrypted=false</code> on <code>publish_from_draft</code> and <code>publish_direct</code>. Encrypted content stays as drafts - see <a href="sdk-workflows.html#encrypted-content">SDK Cookbooks → Encrypted content</a> for the full lifecycle.</li>
           <li><strong>Only the <code>Publisher</code> access policy is enforced.</strong> The <code>Subscription</code> policy is not yet active.</li>
           <li><strong><code>listEntries</code> is not sorted chronologically.</strong> Results follow on-chain storage order. Sort by <code>entry.id</code> for insertion order.</li>
           <li><strong>zkLogin support is untested.</strong> The decoder is included, but Walrus and Seal <code>SessionKey</code> flows have not been verified with zkLogin signatures. Use keypair or passkey accounts until you have tested your setup.</li>

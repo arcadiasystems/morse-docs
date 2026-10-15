@@ -358,7 +358,7 @@ The optional `--via-aggregator` flag routes reads through the Walrus aggregator,
 
 # Quick Start: SDK
 
-> Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter - no browser, no wallet popups.
+> Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter - no browser, no wallet popups. Want to see the result first? Browse the [live demo blog](https://morse-blog-demo.vercel.app) built on this SDK.
 
 > **WARNING: Testnet status**
 >
@@ -2938,7 +2938,7 @@ The rest of the SDK - functions like `createPublication`, `addEntryFromBytes`, t
 
 - **Testnet only at v0.x.** Mainnet config is released once the contracts are stable.
 - **gRPC client only.** Reader and adapter interfaces are typed against `SuiGrpcClient` from `@mysten/sui/grpc`. JSON-RPC fallback is planned.
-- **No encrypted publish path.** The Move contract hardcodes `encrypted=false` on `publish_from_draft` and `publish_direct`. Encrypted content stays as drafts - see [SDK Cookbooks → Encrypted entries](https://docs.morsecms.xyz/sdk-workflows.html#encrypted-entries) for the full lifecycle.
+- **No encrypted publish path.** The Move contract hardcodes `encrypted=false` on `publish_from_draft` and `publish_direct`. Encrypted content stays as drafts - see [SDK Cookbooks → Encrypted content](https://docs.morsecms.xyz/sdk-workflows.html#encrypted-content) for the full lifecycle.
 - **Only the `Publisher` access policy is enforced.** The `Subscription` policy is not yet active.
 - **`listEntries` is not sorted chronologically.** Results follow on-chain storage order. Sort by `entry.id` for insertion order.
 - **zkLogin support is untested.** The decoder is included, but Walrus and Seal `SessionKey` flows have not been verified with zkLogin signatures. Use keypair or passkey accounts until you have tested your setup.

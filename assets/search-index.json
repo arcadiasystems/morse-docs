@@ -221,7 +221,7 @@
     "pageTitle": "Quick Start: SDK",
     "section": "Getting Started",
     "heading": "Quick Start: SDK",
-    "text": "Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter - no browser, no wallet popups. Testnet status Morse runs on Sui testnet only and the contracts are unaudited. Sui and Walrus testnets reset periodically (Walrus wipes every few months) - stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Don't publish anything you can't afford to lose."
+    "text": "Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter - no browser, no wallet popups. Want to see the result first? Browse the live demo blog built on this SDK. Testnet status Morse runs on Sui testnet only and the contracts are unaudited. Sui and Walrus testnets reset periodically (Walrus wipes every few months) - stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Don't publish anything you can't afford to lose."
   },
   {
     "url": "quick-start-sdk.html#prerequisites",
@@ -1124,7 +1124,7 @@
     "pageTitle": "SDK Overview",
     "section": "SDK",
     "heading": "Known Limitations",
-    "text": "Testnet only at v0.x. Mainnet config is released once the contracts are stable. gRPC client only. Reader and adapter interfaces are typed against SuiGrpcClient from @mysten/sui/grpc. JSON-RPC fallback is planned. No encrypted publish path. The Move contract hardcodes encrypted=false on publish_from_draft and publish_direct. Encrypted content stays as drafts - see SDK Cookbooks → Encrypted entries for the full lifecycle. Only the Publisher access policy is enforced. The Subscription policy is not yet active. listEntries is not sorted chronologically. Results follow on-chain storage order. Sort "
+    "text": "Testnet only at v0.x. Mainnet config is released once the contracts are stable. gRPC client only. Reader and adapter interfaces are typed against SuiGrpcClient from @mysten/sui/grpc. JSON-RPC fallback is planned. No encrypted publish path. The Move contract hardcodes encrypted=false on publish_from_draft and publish_direct. Encrypted content stays as drafts - see SDK Cookbooks → Encrypted content for the full lifecycle. Only the Publisher access policy is enforced. The Subscription policy is not yet active. listEntries is not sorted chronologically. Results follow on-chain storage order. Sort "
   },
   {
     "url": "sdk-overview.html#next-steps",
