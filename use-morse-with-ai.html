@@ -152,7 +152,7 @@ curl -s https://docs.morsecms.xyz/llms-full.txt</pre>
       <p>Morse is not just documented for agents; it is <em>operable</em> by them. There is no dashboard signup, no API-key console, no human-only provisioning step anywhere in the protocol. Everything is a CLI command, an SDK call, or a transaction:</p>
 
       <ul>
-        <li><strong>Provision from the terminal</strong>: with <code>morse init</code>, <code>morse publication create</code> and <code>morse entry add</code>, a coding agent can go from nothing to published content without leaving the shell. See the <a href="quick-start-cli.html">CLI quick start</a>.</li>
+        <li><strong>Provision from the terminal</strong>: with <code>morse publication create</code>, <code>morse collection create</code> and <code>morse entry add</code>, a coding agent can go from nothing to published content without leaving the shell. See the <a href="quick-start-cli.html">CLI quick start</a>.</li>
         <li><strong>Script it with the SDK</strong>: <code>@arcadiasystems/morse-sdk</code> exposes the same operations as typed TypeScript with structured errors, ideal for agent-authored automation. See the <a href="quick-start-sdk.html">SDK quick start</a>.</li>
         <li><strong>Verify on-chain</strong>: every mutation returns a transaction digest an agent can check. State is queryable from the contracts directly; no opaque backend to trust. See <a href="contracts-overview.html">Smart Contracts</a>.</li>
         <li><strong>Deterministic auth</strong>: capability objects (<code>OwnerCap</code>, <code>PublisherCap</code>) make permissions explicit and inspectable, so an agent always knows what it is allowed to do. See <a href="access-control.html">Access Control</a>.</li>
@@ -166,12 +166,13 @@ curl -s https://docs.morsecms.xyz/llms-full.txt</pre>
         <pre># A complete agent-driven publishing flow
 npm install -g @arcadiasystems/morse-cli
 
-morse init                                  # create + fund an identity (testnet)
-morse publication create "agent-blog"       # canonical on-chain identity
-morse collection create "posts"             # content container
+export MORSE_PRIVATE_KEY=suiprivkey1...      # a funded testnet key for the agent
+export MORSE_NETWORK=testnet
+morse publication create --name "Agent Blog" --slug "agent-blog-$(date +%s)"   # canonical on-chain identity
+morse collection create posts                # content container
 echo '{"title":"Hello","body":"Sent by an agent."}' > post.json
-morse entry add "hello" --file ./post.json  # payload to Walrus, proof on Sui
-morse entry get "hello"                     # read it back, verified</pre>
+morse entry add hello --file ./post.json     # payload to Walrus, proof on Sui
+morse entry get 0                            # read the record back</pre>
       </div>
 
       <h2 id="feedback-loop">Feedback loop</h2>
