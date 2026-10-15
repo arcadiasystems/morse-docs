@@ -25,7 +25,7 @@
     "pageTitle": "Morse: The Decentralized Headless CMS Protocol",
     "section": "Getting Started",
     "heading": "System architecture",
-    "text": "Morse is composed of five layers. Only the contracts are the source of truth; all other layers are replaceable. Control Sui Blockchain Publication Registry Collections Entries & Revisions OwnerCap / PublisherCap Storage Walrus Blob Storage Quilt Storage Access Seal Publisher Policy Allowlist Policy Query Indexer Content API Develop TypeScript SDK CLI"
+    "text": "Morse is composed of five layers. Only the contracts are the source of truth; all other layers are replaceable. Control Sui Blockchain Publication Registry Collections Entries & Revisions OwnerCap / PublisherCap Storage Walrus Blob Storage Quilt Storage Access Seal Publisher Policy Allowlist Policy Query Indexer Content API Develop TypeScript SDK CLI The Morse Book For the full architecture, from what a headless CMS is to how each layer of Morse fits together, read The Morse Book on Notion."
   },
   {
     "url": "index.html#key-features",

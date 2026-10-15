@@ -34,6 +34,10 @@ Morse is composed of five layers. Only the contracts are the source of truth; al
 - **Query**: Indexer · Content API
 - **Develop**: TypeScript SDK · CLI
 
+> **INFO: The Morse Book**
+>
+> For the full architecture, from what a headless CMS is to how each layer of Morse fits together, read [The Morse Book](https://app.notion.com/p/thedivic/The-Morse-Book-2f3832ac2ab680e5a403f1dde1e8a900) on Notion.
+
 ## Key features
 
 - **On-chain Permission Management**: Publication identity, write permissions, and state transitions are enforced by Move smart contracts: transparent and auditable.
