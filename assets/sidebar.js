@@ -1,108 +1,71 @@
+/* Sidebar tree for every docs page. Order mirrors PAGES in scripts/build.mjs. */
+const NAV_SECTIONS = [
+  { title: 'Getting Started', items: [
+    { page: 'index.html', label: 'Introduction' },
+    { page: 'core-concepts.html', label: 'Core Concepts' },
+    { page: 'quick-start.html', label: 'Quick Start', children: [
+      { page: 'quick-start-cli.html', label: 'CLI' },
+      { page: 'quick-start-sdk.html', label: 'SDK' },
+      { page: 'quick-start-contracts.html', label: 'Smart Contracts' },
+    ] },
+  ] },
+  { title: 'Protocol', items: [
+    { page: 'publications.html', label: 'Publications' },
+    { page: 'collections.html', label: 'Collections' },
+    { page: 'entries.html', label: 'Entries &amp; Revisions' },
+    { page: 'access-control.html', label: 'Access Control' },
+    { page: 'recipient-files.html', label: 'Recipient Files' },
+  ] },
+  { title: 'CLI', items: [
+    { page: 'cli-overview.html', label: 'Overview' },
+    { page: 'cli-commands.html', label: 'Commands' },
+    { page: 'cli-workflows.html', label: 'Cookbooks' },
+  ] },
+  { title: 'SDK', items: [
+    { page: 'sdk-overview.html', label: 'Overview' },
+    { page: 'sdk-client-setup.html', label: 'Setup' },
+    { page: 'sdk-workflows.html', label: 'Cookbooks' },
+  ] },
+  { title: 'Smart Contracts', items: [
+    { page: 'contracts-overview.html', label: 'Overview' },
+    { page: 'contracts-reference.html', label: 'Reference' },
+    { page: 'contracts-workflows.html', label: 'Cookbooks' },
+  ] },
+  { title: 'Indexer', items: [
+    { label: 'Overview', tag: 'Q1 2027' },
+  ] },
+  { title: 'Reference', items: [
+    { page: 'glossary.html', label: 'Glossary' },
+    { page: 'use-morse-with-ai.html', label: 'Use Morse with AI' },
+  ] },
+];
+
+function navItemHtml(item) {
+  // Unshipped pages render as plain text with a release tag, never as a link
+  const self = item.page
+    ? `<a href="${item.page}" data-page="${item.page}">${item.label}</a>`
+    : `<span class="side__soon">${item.label} <span class="tag">${item.tag}</span></span>`;
+  const children = item.children
+    ? `<ul class="sub">${item.children.map(navItemHtml).join('')}</ul>`
+    : '';
+  return `<li>${self}${children}</li>`;
+}
+
 function initSidebarNav() {
-  var nav = document.querySelector('#sidebar > nav');
-  if (!nav) return;
+  const side = document.getElementById('side');
+  if (!side) return;
 
-  var filename = window.location.pathname.split('/').pop() || 'index.html';
-  var isQuickStart = filename.startsWith('quick-start');
-  var collapseClass = isQuickStart ? 'nav-sub-expanded' : 'nav-sub-collapsed';
-  var chevron = isQuickStart ? '&#9662;' : '&#9656;';
+  const sections = NAV_SECTIONS.map((section, i) => {
+    const id = `side-group-${i}`;
+    return `<p class="side__label" id="${id}">${section.title}</p>`
+      + `<ul aria-labelledby="${id}">${section.items.map(navItemHtml).join('')}</ul>`;
+  }).join('');
 
-  nav.innerHTML =
-    '<div class="nav-section">'
-    + '<div class="nav-section-title">Getting Started</div>'
-    + '<ul class="nav-list">'
-    + '<li><a href="index.html" class="nav-link" data-page="index.html">Introduction</a></li>'
-    + '<li><a href="core-concepts.html" class="nav-link" data-page="core-concepts.html">Core Concepts</a></li>'
-    + '<li>'
-    + '<a href="quick-start.html" class="nav-link" data-page="quick-start.html">Quick Start</a>'
-    + '<button type="button" class="nav-toggle" aria-label="Toggle Quick Start sub-pages" aria-expanded="' + (isQuickStart ? 'true' : 'false') + '">' + chevron + '</button>'
-    + '</li>'
-    + '<li class="nav-sub-container ' + collapseClass + '"><ul class="nav-list nav-list-sub">'
-    + '<li><a href="quick-start-cli.html" class="nav-link nav-link-sub" data-page="quick-start-cli.html">CLI</a></li>'
-    + '<li><a href="quick-start-sdk.html" class="nav-link nav-link-sub" data-page="quick-start-sdk.html">SDK</a></li>'
-    + '<li><a href="quick-start-contracts.html" class="nav-link nav-link-sub" data-page="quick-start-contracts.html">Smart Contracts</a></li>'
-    + '</ul></li>'
-    + '</ul></div>'
-
-    + '<div class="nav-divider"></div>'
-
-    + '<div class="nav-section">'
-    + '<div class="nav-section-title">Protocol</div>'
-    + '<ul class="nav-list">'
-    + '<li><a href="publications.html" class="nav-link" data-page="publications.html">Publications</a></li>'
-    + '<li><a href="collections.html" class="nav-link" data-page="collections.html">Collections</a></li>'
-    + '<li><a href="entries.html" class="nav-link" data-page="entries.html">Entries &amp; Revisions</a></li>'
-    + '<li><a href="access-control.html" class="nav-link" data-page="access-control.html">Access Control</a></li>'
-    + '<li><a href="recipient-files.html" class="nav-link" data-page="recipient-files.html">Recipient Files</a></li>'
-    + '</ul></div>'
-
-    + '<div class="nav-divider"></div>'
-
-    + '<div class="nav-section">'
-    + '<div class="nav-section-title">CLI</div>'
-    + '<ul class="nav-list">'
-    + '<li><a href="cli-overview.html" class="nav-link" data-page="cli-overview.html">Overview</a></li>'
-    + '<li><a href="cli-commands.html" class="nav-link" data-page="cli-commands.html">Commands</a></li>'
-    + '<li><a href="cli-workflows.html" class="nav-link" data-page="cli-workflows.html">Cookbooks</a></li>'
-    + '</ul></div>'
-
-    + '<div class="nav-divider"></div>'
-
-    + '<div class="nav-section">'
-    + '<div class="nav-section-title">SDK</div>'
-    + '<ul class="nav-list">'
-    + '<li><a href="sdk-overview.html" class="nav-link" data-page="sdk-overview.html">Overview</a></li>'
-    + '<li><a href="sdk-client-setup.html" class="nav-link" data-page="sdk-client-setup.html">Setup</a></li>'
-    + '<li><a href="sdk-workflows.html" class="nav-link" data-page="sdk-workflows.html">Cookbooks</a></li>'
-    + '</ul></div>'
-
-    + '<div class="nav-divider"></div>'
-
-    + '<div class="nav-section">'
-    + '<div class="nav-section-title">Smart Contracts</div>'
-    + '<ul class="nav-list">'
-    + '<li><a href="contracts-overview.html" class="nav-link" data-page="contracts-overview.html">Overview</a></li>'
-    + '<li><a href="contracts-reference.html" class="nav-link" data-page="contracts-reference.html">Reference</a></li>'
-    + '<li><a href="contracts-workflows.html" class="nav-link" data-page="contracts-workflows.html">Cookbooks</a></li>'
-    + '</ul></div>'
-
-    + '<div class="nav-divider"></div>'
-
-    + '<div class="nav-section">'
-    + '<div class="nav-section-title">Indexer <span class="nav-badge-soon">Soon</span></div>'
-    + '<ul class="nav-list">'
-    + '<li><a href="#" class="nav-link nav-disabled">Overview</a></li>'
-    + '</ul></div>'
-
-    + '<div class="nav-divider"></div>'
-
-    + '<div class="nav-section">'
-    + '<div class="nav-section-title">Reference</div>'
-    + '<ul class="nav-list">'
-    + '<li><a href="glossary.html" class="nav-link" data-page="glossary.html">Glossary</a></li>'
-    + '<li><a href="use-morse-with-ai.html" class="nav-link" data-page="use-morse-with-ai.html">Use Morse with AI</a></li>'
-    + '</ul></div>';
-
-  // Chevron toggle for Quick Start sub-pages
-  var chevronEl = nav.querySelector('.nav-toggle');
-  if (chevronEl) {
-    chevronEl.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      var container = nav.querySelector('.nav-sub-container');
-      if (!container) return;
-      var isCollapsed = container.classList.contains('nav-sub-collapsed');
-      if (isCollapsed) {
-        container.classList.remove('nav-sub-collapsed');
-        container.classList.add('nav-sub-expanded');
-        chevronEl.innerHTML = '&#9662;';
-        chevronEl.setAttribute('aria-expanded', 'true');
-      } else {
-        container.classList.remove('nav-sub-expanded');
-        container.classList.add('nav-sub-collapsed');
-        chevronEl.innerHTML = '&#9656;';
-        chevronEl.setAttribute('aria-expanded', 'false');
-      }
-    });
-  }
+  side.innerHTML =
+    '<div class="agentbox">'
+    + '<p class="agentbox__title">For agents</p>'
+    + '<a href="llms.txt">llms.txt<small>Compact index of every docs page.</small></a>'
+    + '<a href="llms-full.txt">llms-full.txt<small>The whole documentation as one file.</small></a>'
+    + '</div>'
+    + `<nav aria-label="Documentation">${sections}</nav>`;
 }

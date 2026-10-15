@@ -5,7 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Introduction · Morse Docs</title>
   <meta name="description" content="Morse is a decentralized, headless CMS protocol built on Sui and Walrus.">
-  <link rel="stylesheet" href="assets/styles.css">
+  <meta name="theme-color" content="#F2EFE8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="assets/docs.css">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -20,112 +24,51 @@
 </head>
 <body>
 
-<div class="banner">
-  <a href="https://www.morsecms.xyz" target="_blank" rel="noopener"><span class="banner-label-long">MORSE PROTOCOL V1 — LIVE ON SUI TESTNET</span><span class="banner-label-short">MORSE V1 — SUI TESTNET</span></a>
-  <div class="banner-links">
-    <a href="https://www.morsecms.xyz" target="_blank" rel="noopener">MORSECMS.XYZ</a>
-    <a href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener">GITHUB</a>
-  </div>
-</div>
-
-<header class="header">
-  <div class="header-inner">
-    <button class="hamburger" id="hamburger" aria-label="Toggle sidebar">
-      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
-      </svg>
+<header class="top">
+  <div class="top__in">
+    <button class="menu-btn" type="button" id="menu" aria-label="Open navigation" aria-expanded="false" aria-controls="side">
+      <svg class="menu-btn__open" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg class="menu-btn__close" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
     </button>
-    <a href="index.html" class="logo-home" aria-label="Morse docs home">
-      <span class="logo">
-        <span class="logo-wordmark">MORSE</span>
-        <span class="morse-glyphs logo-code" aria-hidden="true"><span class="dash"></span><span class="dash"></span><span class="gap"></span><span class="dash"></span><span class="dash"></span><span class="dash"></span><span class="gap"></span><span class="dot"></span><span class="dash"></span><span class="dot"></span><span class="gap"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="gap"></span><span class="dot"></span></span>
-      </span>
-      <span class="logo-suffix">Docs</span>
+    <a class="brand" href="index.html" aria-label="Morse docs home">
+      <svg aria-hidden="true" width="26" height="26" viewBox="0 0 100 100"><path d="M8 72 V30 H36 V72 H64 V30 H92 V72" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>morse</span><em>DOCS</em>
     </a>
-    <div class="header-search">
-      <button class="search-box" type="button" aria-label="Search documentation (⌘K)">
-        <span class="search-icon"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-        <span class="search-placeholder">Search documentation…</span>
-        <kbd class="search-kbd">⌘K</kbd>
-      </button>
-    </div>
-    <nav class="header-links">
-      <button class="header-link" id="askai-btn" title="Ask AI (⌘I)">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>
-        <span>Ask AI</span>
-      </button>
-      <div class="agents-wrap">
-        <button class="agents-btn" id="agents-btn" aria-expanded="false" aria-haspopup="true">
-          <span class="morse-glyphs" aria-hidden="true" style="color:var(--accent)"><span class="dot"></span><span class="dash"></span><span class="dot"></span></span>
-          <span>For agents</span>
-        </button>
-        <div class="agents-menu" id="agents-menu">
-          <div class="agents-menu-title">Use Morse docs with AI</div>
-          <a class="agents-item" href="llms.txt">
-            <span class="agents-item-title">llms.txt</span>
-            <span class="agents-item-desc">Compact index of every docs page, for agent retrieval.</span>
-          </a>
-          <div class="agents-cmd"><code data-copy="https://docs.morsecms.xyz/llms.txt">https://docs.morsecms.xyz/llms.txt</code><button class="agents-copy" aria-label="Copy llms.txt URL"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>
-          <a class="agents-item" href="llms-full.txt">
-            <span class="agents-item-title">llms-full.txt</span>
-            <span class="agents-item-desc">The entire documentation as one Markdown file.</span>
-          </a>
-          <div class="agents-cmd"><code data-copy="https://docs.morsecms.xyz/llms-full.txt">https://docs.morsecms.xyz/llms-full.txt</code><button class="agents-copy" aria-label="Copy llms-full.txt URL"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>
-          <div class="agents-item" role="presentation">
-            <span class="agents-item-title">Markdown twins</span>
-            <span class="agents-item-desc">Every page is also served as Markdown — swap <code>.html</code> for <code>.md</code>.</span>
-          </div>
-          <div class="agents-cmd"><code data-copy="curl https://docs.morsecms.xyz/entries.md"><span class="prompt">$ </span>curl https://docs.morsecms.xyz/entries.md</code><button class="agents-copy" aria-label="Copy curl command"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>
-          <div class="agents-divider"></div>
-          <div class="agents-item" role="presentation">
-            <span class="agents-item-title">Prime your coding agent</span>
-            <span class="agents-item-desc">Paste into Claude Code, Cursor, or any agent.</span>
-          </div>
-          <div class="agents-cmd"><code data-copy="Read https://docs.morsecms.xyz/llms-full.txt — the full documentation for Morse, the decentralized headless CMS protocol on Sui + Walrus. Use it to help me build with the Morse CLI, TypeScript SDK, or Move contracts.">Read https://docs.morsecms.xyz/llms-full.txt — the full docs for Morse…</code><button class="agents-copy" aria-label="Copy agent prompt"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>
-          <div class="agents-divider"></div>
-          <a class="agents-item" href="use-morse-with-ai.html">
-            <span class="agents-item-title">Use Morse with AI →</span>
-            <span class="agents-item-desc">Full guide: agent workflows, SDK &amp; CLI for automation.</span>
-          </a>
-        </div>
-      </div>
-      <a href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener" class="header-link header-link-github" title="GitHub">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-        <span>GitHub</span>
-      </a>
-      <a href="https://www.morsecms.xyz" target="_blank" rel="noopener" class="header-link header-link-primary">morsecms.xyz</a>
+    <button class="search" type="button" id="search-open" aria-label="Search documentation (⌘K)">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span class="search__label">Search documentation</span><kbd>⌘K</kbd>
+    </button>
+    <nav class="top__right" aria-label="Site">
+      <button class="askai" type="button" data-askai title="Ask AI (⌘I)"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>Ask AI</button>
+      <a class="agents" href="use-morse-with-ai.html"><i aria-hidden="true"></i>For agents</a>
+      <a class="gh" href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener">GitHub</a>
+      <a class="site" href="https://www.morsecms.xyz" target="_blank" rel="noopener">morsecms.xyz</a>
     </nav>
   </div>
 </header>
 
-<div class="sidebar-overlay" id="overlay"></div>
-
 <div class="layout">
-  <aside class="sidebar" id="sidebar">
-    <nav></nav>
-  </aside>
+  <aside class="side" id="side"></aside>
 
   <main class="main">
-    <div class="content">
-      <div class="page-actions">
-        <button class="pgact-btn pgact-main" id="pgact-copy"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy page</button>
-        <button class="pgact-btn pgact-caret" id="pgact-caret" aria-label="More AI actions" aria-haspopup="true" aria-expanded="false">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div class="pgact-menu" id="pgact-menu">
-          <button class="pgact-item" id="pgact-copy-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy page as Markdown</button>
-          <a class="pgact-item" id="pgact-view-md" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> View as Markdown</a>
-          <a class="pgact-item" id="pgact-chatgpt" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg> Open in ChatGPT</a>
-          <a class="pgact-item" id="pgact-claude" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg> Open in Claude</a>
-        </div>
-      </div>
-
-      <article class="article hero-article">
+    <article class="article">
 
         <h1>Morse - The Decentralized Headless CMS Protocol</h1>
         <p class="article-lead">
           A headless CMS protocol built on Sui and Walrus, for developers building content applications with on-chain ownership and decentralized storage.
         </p>
+        <div class="page-actions">
+          <div class="copybtn-group">
+            <button class="copybtn" type="button" id="copy-page"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-flash-label>Copy page</span></button>
+            <button class="copybtn copybtn-caret" type="button" id="page-menu-btn" aria-label="More page actions" aria-haspopup="true" aria-expanded="false" aria-controls="page-menu"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+          </div>
+          <div class="page-menu" id="page-menu" hidden>
+            <button class="page-menu__item" type="button" data-page-copy><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy page as Markdown</button>
+            <a class="page-menu__item" href="index.md" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>View as Markdown</a>
+            <a class="page-menu__item" id="page-chatgpt" href="https://chatgpt.com/" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>Open in ChatGPT</a>
+            <a class="page-menu__item" id="page-claude" href="https://claude.ai/new" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>Open in Claude</a>
+          </div>
+        </div>
 
       <div class="callout callout-warning">
         <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
@@ -296,31 +239,19 @@
 
       </article>
 
-      <div class="page-footer">
-        <div class="feedback" id="feedback">
-          <span>Was this helpful?</span>
-          <button class="feedback-btn" data-feedback="yes">Yes</button>
-          <button class="feedback-btn" data-feedback="no">No</button>
-        </div>
-        <div class="page-meta">
-          <a href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20index.html" target="_blank" rel="noopener">Report an issue</a>
-          <span>Updated 2026-06-19</span>
-        </div>
-      </div>
-
-      <div class="page-nav">
-        <div class="pnav-empty"></div>
-        <a href="core-concepts.html" class="pnav pnav-right">
-          <span class="pnav-dir">Next</span>
-          <span class="pnav-title">Core Concepts →</span>
-        </a>
-      </div>
+    <div class="feedback">
+      <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
+      <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20index.html" target="_blank" rel="noopener">Report an issue</a>
+      <span class="feedback__upd">Updated 2026-06-19</span>
     </div>
+    <nav class="pager" aria-label="Previous and next">
+      <a href="core-concepts.html" rel="next"><small>Next</small><b>Core Concepts →</b></a>
+    </nav>
   </main>
 
-  <aside class="toc">
-    <div class="toc-title">On this page</div>
-    <ul class="toc-list"></ul>
+  <aside class="toc" aria-label="On this page">
+    <p class="toc__title">On this page</p>
+    <div class="toc__list"></div>
   </aside>
 </div>
 

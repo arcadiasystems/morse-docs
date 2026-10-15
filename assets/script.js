@@ -5,6 +5,11 @@
 // Docs repo (for "Suggest changes" / feedback issues)
 const DOCS_REPO = 'arcadiasystems/morse-dcms';
 
+// Widest viewport that shows the sidebar as a sheet (keep in sync with docs.css)
+const SHEET_MAX_WIDTH = 860;
+
+const ASK_AI_ICON = '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>';
+
 function currentPage() {
   return window.location.pathname.split('/').pop() || 'index.html';
 }
@@ -21,79 +26,130 @@ function llmsFullUrl() {
   return absoluteUrl('llms-full.txt');
 }
 
+// ── Button feedback ("Copied", "Copy failed") ──────────────────
+const flashTimers = new WeakMap();
+
+function flash(btn, text, ok) {
+  const label = btn.querySelector('[data-flash-label]') ?? btn;
+  label.dataset.idle ??= label.textContent.trim();
+  label.textContent = text;
+  btn.classList.toggle('is-done', ok);
+  clearTimeout(flashTimers.get(btn));
+  flashTimers.set(btn, setTimeout(() => {
+    label.textContent = label.dataset.idle;
+    btn.classList.remove('is-done');
+  }, 1800));
+}
+
 // ── Active nav link ─────────────────────────────────────────────
 function setActiveNav() {
   const filename = currentPage();
-  document.querySelectorAll('.nav-link[data-page]').forEach(link => {
-    const page = link.getAttribute('data-page');
-    const matches =
-      (filename === page) ||
-      (filename === '' && page === 'index.html') ||
-      (filename === 'index.html' && page === 'index.html');
-    link.classList.toggle('active', matches);
-    if (matches) {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        window.history.replaceState(null, '', window.location.pathname);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
+  document.querySelectorAll('.side a[data-page]').forEach(link => {
+    const matches = link.getAttribute('data-page') === filename;
+    link.classList.toggle('is-on', matches);
+    if (!matches) return;
+    link.setAttribute('aria-current', 'page');
+    // Deep pages sit below the fold of the scrolling sidebar: bring them into view
+    const side = link.closest('.side');
+    if (side && link.offsetTop + link.offsetHeight > side.clientHeight) {
+      side.scrollTop = link.offsetTop - side.clientHeight / 2;
     }
-  });
-}
-
-// ── Sidebar toggle (mobile) ─────────────────────────────────────
-function initSidebar() {
-  const btn = document.getElementById('hamburger');
-  const sidebar = document.getElementById('sidebar');
-  const overlay = document.getElementById('overlay');
-  if (!btn || !sidebar) return;
-
-  const open = () => { sidebar.classList.add('open'); overlay?.classList.add('open'); };
-  const close = () => { sidebar.classList.remove('open'); overlay?.classList.remove('open'); };
-
-  btn.addEventListener('click', () => sidebar.classList.contains('open') ? close() : open());
-  overlay?.addEventListener('click', close);
-
-  // Close on nav link click (mobile)
-  sidebar.querySelectorAll('.nav-link').forEach(l => {
-    l.addEventListener('click', () => { if (window.innerWidth <= 900) close(); });
-  });
-}
-
-// ── Copy code buttons ───────────────────────────────────────────
-function initCopyButtons() {
-  document.querySelectorAll('.code-copy').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const pre = btn.closest('.code-block')?.querySelector('pre');
-      if (!pre) return;
-      try {
-        await navigator.clipboard.writeText(pre.innerText);
-        const orig = btn.innerHTML;
-        btn.classList.add('copied');
-        btn.innerHTML = '✓ Copied';
-        setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = orig; }, 2000);
-      } catch { /* clipboard unavailable */ }
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      window.history.replaceState(null, '', window.location.pathname);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   });
 }
 
-// ── Table of Contents (auto-generate from h2/h3) ────────────────
+// ── Sidebar sheet (mobile) ──────────────────────────────────────
+function initMenu() {
+  const btn = document.getElementById('menu');
+  const side = document.getElementById('side');
+  if (!btn || !side) return;
+
+  const isOpen = () => side.classList.contains('is-open');
+  const setOpen = open => {
+    side.classList.toggle('is-open', open);
+    document.documentElement.classList.toggle('menu-open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+  };
+
+  btn.addEventListener('click', () => setOpen(!isOpen()));
+  // Following a link or opening Ask AI from the sheet dismisses it
+  side.addEventListener('click', e => {
+    if (e.target.closest('a, [data-askai]')) setOpen(false);
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && isOpen()) { setOpen(false); btn.focus(); }
+  });
+  window.matchMedia(`(min-width: ${SHEET_MAX_WIDTH + 1}px)`).addEventListener('change', e => {
+    if (e.matches) setOpen(false);
+  });
+}
+
+// ── Code blocks: shell prompts + copy buttons ───────────────────
+const SHELL_LANGS = new Set(['bash', 'sh', 'shell', 'zsh']);
+const PROMPT_HTML = '<span class="p" aria-hidden="true">$ </span>';
+
+// Colour the prompt for shell commands. Display only: copy uses the original text.
+function decoratePrompts(pre, lang) {
+  if (pre.children.length) return; // already highlighted markup
+  const text = pre.textContent;
+  // Transcript blocks ("example") already prefix commands with "$ " and mix in output
+  if (text.split('\n').some(line => line.startsWith('$ '))) {
+    pre.innerHTML = text.split('\n')
+      .map(line => line.startsWith('$ ') ? PROMPT_HTML + escapeHtml(line.slice(2)) : escapeHtml(line))
+      .join('\n');
+    return;
+  }
+  if (!SHELL_LANGS.has(lang)) return;
+  let continued = false;
+  pre.innerHTML = text.split('\n').map(line => {
+    const html = escapeHtml(line);
+    const wasContinued = continued;
+    continued = line.endsWith('\\');
+    if (wasContinued || line.trim() === '') return html;
+    if (line.trimStart().startsWith('#')) return `<span class="cm">${html}</span>`;
+    return PROMPT_HTML + html;
+  }).join('\n');
+}
+
+function initCodeBlocks() {
+  document.querySelectorAll('.article .code-block').forEach(block => {
+    const pre = block.querySelector('pre');
+    if (!pre) return;
+    const text = pre.textContent;
+    const lang = block.querySelector('.code-lang')?.textContent.trim().toLowerCase() ?? '';
+    decoratePrompts(pre, lang);
+
+    const btn = block.querySelector('.code-copy');
+    btn?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(text);
+        flash(btn, 'Copied', true);
+      } catch {
+        flash(btn, 'Copy failed', false);
+      }
+    });
+  });
+}
+
+// ── On this page rail (auto-generated from h2/h3) ───────────────
 function initTOC() {
-  const tocList = document.querySelector('.toc-list');
-  if (!tocList) return;
+  const toc = document.querySelector('.toc');
+  const list = toc?.querySelector('.toc__list');
   const article = document.querySelector('.article');
-  if (!article) return;
+  if (!list || !article) return;
 
   const headings = [...article.querySelectorAll('h2, h3')];
-  if (!headings.length) return;
+  if (!headings.length) { toc.hidden = true; return; }
 
   const usedIds = new Set();
-  headings.forEach(h => {
+  const links = headings.map(h => {
     if (!h.id) {
-      let base = h.textContent
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-|-$/g, '');
+      const base = h.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
       let id = base;
       let n = 2;
       while (usedIds.has(id)) { id = base + '-' + n++; }
@@ -101,35 +157,42 @@ function initTOC() {
     }
     usedIds.add(h.id);
 
-    const li = document.createElement('li');
-    li.className = 'toc-item';
-
     const a = document.createElement('a');
     a.href = '#' + h.id;
-    a.className = 'toc-link' + (h.tagName === 'H3' ? ' toc-link-h3' : '');
     a.textContent = h.textContent;
-    a.addEventListener('click', e => {
-      e.preventDefault();
-      document.getElementById(h.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-
-    li.appendChild(a);
-    tocList.appendChild(li);
+    if (h.tagName === 'H3') a.className = 'toc__sub';
+    list.appendChild(a);
+    return a;
   });
 
-  // Highlight active section on scroll
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        const id = e.target.id;
-        document.querySelectorAll('.toc-link').forEach(l => {
-          l.classList.toggle('active', l.getAttribute('href') === '#' + id);
-        });
-      }
-    });
-  }, { rootMargin: '-88px 0px -65% 0px' });
+  // Highlight the last heading scrolled past the top bar; the final one at page end
+  const topBar = document.querySelector('.top');
+  let frame = 0;
+  const update = () => {
+    frame = 0;
+    if (!toc.offsetWidth) return; // rail hidden at this width
+    const line = (topBar?.offsetHeight ?? 0) + 32;
+    const atEnd = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+    let active = 0;
+    if (atEnd) active = headings.length - 1;
+    else headings.forEach((h, i) => { if (h.getBoundingClientRect().top <= line) active = i; });
 
-  headings.forEach(h => obs.observe(h));
+    links.forEach((a, i) => {
+      a.classList.toggle('is-on', i === active);
+      if (i === active) a.setAttribute('aria-current', 'location');
+      else a.removeAttribute('aria-current');
+    });
+
+    // Long rails scroll on their own: keep the active entry in view
+    const current = links[active];
+    if (current.offsetTop < toc.scrollTop || current.offsetTop + current.offsetHeight > toc.scrollTop + toc.clientHeight) {
+      toc.scrollTop = current.offsetTop - toc.clientHeight / 2;
+    }
+  };
+  const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule);
+  update();
 }
 
 // ── Heading anchor links ─────────────────────────────────────────
@@ -147,144 +210,95 @@ function initHeadingAnchors() {
 }
 
 // ── Scroll to hash on load ──────────────────────────────────────
+// Re-run the jump once web fonts settle, since they shift the layout.
 function scrollToHash() {
   if (!window.location.hash) return;
-  const target = document.getElementById(window.location.hash.slice(1));
+  const target = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
   if (!target) return;
-  setTimeout(() => {
-    const headerH = 96;
-    const top = target.getBoundingClientRect().top + window.scrollY - headerH - 16;
-    window.scrollTo({ top, behavior: 'smooth' });
-  }, 150);
+  document.fonts.ready.then(() => target.scrollIntoView({ behavior: 'instant' }));
 }
 
-// ── For Agents dropdown ─────────────────────────────────────────
-function initAgentsMenu() {
-  const btn = document.getElementById('agents-btn');
-  const menu = document.getElementById('agents-menu');
-  if (!btn || !menu) return;
-
-  const close = () => { menu.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); };
-
-  btn.addEventListener('click', e => {
-    e.stopPropagation();
-    const isOpen = menu.classList.toggle('open');
-    btn.setAttribute('aria-expanded', String(isOpen));
-  });
-
-  document.addEventListener('click', e => {
-    if (!menu.contains(e.target) && e.target !== btn) close();
-  });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
-
-  // Copy buttons inside the menu
-  menu.querySelectorAll('.agents-copy').forEach(copyBtn => {
-    copyBtn.addEventListener('click', async e => {
-      e.stopPropagation();
-      const code = copyBtn.closest('.agents-cmd')?.querySelector('code');
-      if (!code) return;
-      // Resolve relative doc paths to absolute URLs at copy time
-      const text = code.getAttribute('data-copy') || code.innerText;
-      try {
-        await navigator.clipboard.writeText(text.replace(/__ORIGIN__/g, new URL('.', window.location.href).href.replace(/\/$/, '')));
-        copyBtn.classList.add('copied');
-        setTimeout(() => copyBtn.classList.remove('copied'), 2000);
-      } catch { /* clipboard unavailable */ }
-    });
-  });
-}
-
-// ── Page actions (Copy page for AI) ─────────────────────────────
-function initPageActions() {
-  const main = document.getElementById('pgact-copy');
-  const caret = document.getElementById('pgact-caret');
-  const menu = document.getElementById('pgact-menu');
-  if (!main) return;
-
-  const origLabel = main.innerHTML;
-  const flash = (label, ok) => {
-    main.classList.toggle('copied', ok);
-    main.innerHTML = label;
-    setTimeout(() => { main.classList.remove('copied'); main.innerHTML = origLabel; }, 2200);
-  };
-
-  const copyMarkdown = async () => {
-    if (!navigator.clipboard) { flash('Copy unavailable', false); return; }
-    try {
-      // ClipboardItem with a promise keeps the user-activation window open
-      // across the fetch (Safari revokes it after an intervening await).
-      if (typeof ClipboardItem !== 'undefined' && navigator.clipboard.write) {
-        const textPromise = fetch(markdownTwinUrl())
-          .then(res => { if (!res.ok) throw new Error('md twin missing'); return res.text(); })
-          .then(text => new Blob([text], { type: 'text/plain' }));
-        await navigator.clipboard.write([new ClipboardItem({ 'text/plain': textPromise })]);
-        flash('✓ Copied as Markdown', true);
-        return;
-      }
+// ── Copy page (Markdown twin) + page actions menu ──────────────
+async function copyPageMarkdown(btn) {
+  if (!navigator.clipboard) { flash(btn, 'Copy unavailable', false); return; }
+  try {
+    // ClipboardItem with a promise keeps the user-activation window open
+    // across the fetch (Safari revokes it after an intervening await).
+    if (typeof ClipboardItem !== 'undefined' && navigator.clipboard.write) {
+      const textPromise = fetch(markdownTwinUrl())
+        .then(res => { if (!res.ok) throw new Error('md twin missing'); return res.text(); })
+        .then(text => new Blob([text], { type: 'text/plain' }));
+      await navigator.clipboard.write([new ClipboardItem({ 'text/plain': textPromise })]);
+    } else {
       const res = await fetch(markdownTwinUrl());
       if (!res.ok) throw new Error('md twin missing');
       await navigator.clipboard.writeText(await res.text());
-      flash('✓ Copied as Markdown', true);
-    } catch {
-      // Fallback: copy the rendered article text — report success only if it lands
-      try {
-        const article = document.querySelector('.article');
-        if (!article) throw new Error('no article');
-        await navigator.clipboard.writeText(article.innerText);
-        flash('✓ Copied', true);
-      } catch {
-        flash('Copy failed', false);
-      }
     }
-  };
-
-  main.addEventListener('click', copyMarkdown);
-
-  if (caret && menu) {
-    const closeMenu = () => { menu.classList.remove('open'); caret.setAttribute('aria-expanded', 'false'); };
-    caret.addEventListener('click', e => {
-      e.stopPropagation();
-      const isOpen = menu.classList.toggle('open');
-      caret.setAttribute('aria-expanded', String(isOpen));
-    });
-    document.addEventListener('click', e => {
-      if (!menu.contains(e.target) && e.target !== caret) closeMenu();
-    });
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && menu.classList.contains('open')) closeMenu();
-    });
-
-    const mdUrl = markdownTwinUrl();
-    const pageTitle = document.title;
-    const aiPrompt = `Read ${mdUrl} so you can answer questions about "${pageTitle}". For full Morse docs context, read ${llmsFullUrl()}.`;
-
-    const view = document.getElementById('pgact-view-md');
-    if (view) view.href = mdUrl;
-
-    const chatgpt = document.getElementById('pgact-chatgpt');
-    if (chatgpt) chatgpt.href = 'https://chatgpt.com/?hints=search&q=' + encodeURIComponent(aiPrompt);
-
-    const claude = document.getElementById('pgact-claude');
-    if (claude) claude.href = 'https://claude.ai/new?q=' + encodeURIComponent(aiPrompt);
-
-    const copyItem = document.getElementById('pgact-copy-item');
-    if (copyItem) copyItem.addEventListener('click', () => { closeMenu(); copyMarkdown(); });
+    flash(btn, 'Copied as Markdown', true);
+  } catch {
+    // Fallback: copy the rendered article text — report success only if it lands
+    try {
+      const article = document.querySelector('.article');
+      if (!article) throw new Error('no article');
+      const text = [...article.children]
+        .filter(el => !el.classList.contains('page-actions'))
+        .map(el => el.innerText)
+        .join('\n\n');
+      await navigator.clipboard.writeText(text);
+      flash(btn, 'Copied', true);
+    } catch {
+      flash(btn, 'Copy failed', false);
+    }
   }
+}
+
+function initPageActions() {
+  const copyBtn = document.getElementById('copy-page');
+  if (!copyBtn) return;
+  copyBtn.addEventListener('click', () => copyPageMarkdown(copyBtn));
+
+  const caret = document.getElementById('page-menu-btn');
+  const menu = document.getElementById('page-menu');
+  if (!caret || !menu) return;
+
+  const setOpen = open => {
+    menu.hidden = !open;
+    caret.setAttribute('aria-expanded', String(open));
+  };
+  caret.addEventListener('click', e => {
+    e.stopPropagation();
+    setOpen(menu.hidden);
+  });
+  document.addEventListener('click', e => {
+    if (!menu.hidden && !menu.contains(e.target)) setOpen(false);
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !menu.hidden) { setOpen(false); caret.focus(); }
+  });
+  menu.addEventListener('click', e => {
+    if (e.target.closest('.page-menu__item')) setOpen(false);
+  });
+
+  menu.querySelector('[data-page-copy]')?.addEventListener('click', () => copyPageMarkdown(copyBtn));
+
+  const aiPrompt = `Read ${markdownTwinUrl()} so you can answer questions about "${document.title}". For full Morse docs context, read ${llmsFullUrl()}.`;
+  const chatgpt = document.getElementById('page-chatgpt');
+  if (chatgpt) chatgpt.href = 'https://chatgpt.com/?hints=search&q=' + encodeURIComponent(aiPrompt);
+  const claude = document.getElementById('page-claude');
+  if (claude) claude.href = 'https://claude.ai/new?q=' + encodeURIComponent(aiPrompt);
 }
 
 // ── Feedback widget ─────────────────────────────────────────────
 function initFeedback() {
-  const wrap = document.getElementById('feedback');
-  if (!wrap) return;
-  const yes = wrap.querySelector('[data-feedback="yes"]');
-  const no = wrap.querySelector('[data-feedback="no"]');
+  const ask = document.getElementById('feedback');
+  if (!ask) return;
   const page = currentPage();
 
-  yes?.addEventListener('click', () => {
-    wrap.innerHTML = '<span class="feedback-thanks">Thanks for the signal ·–·</span>';
+  ask.querySelector('[data-feedback="yes"]')?.addEventListener('click', () => {
+    ask.textContent = 'Thanks for the signal ·–·';
   });
 
-  no?.addEventListener('click', () => {
+  ask.querySelector('[data-feedback="no"]')?.addEventListener('click', () => {
     const title = encodeURIComponent(`docs feedback: ${page}`);
     const body = encodeURIComponent(`Page: ${absoluteUrl(page)}\n\nWhat was missing, stale, or confusing?\n\n`);
     window.open(`https://github.com/${DOCS_REPO}/issues/new?title=${title}&body=${body}&labels=docs-feedback`, '_blank', 'noopener');
@@ -333,10 +347,7 @@ function initAskAI() {
   modal.innerHTML = `
     <div class="search-backdrop"></div>
     <div class="askai-dialog" role="dialog" aria-modal="true" aria-label="Ask AI about Morse">
-      <div class="askai-header">
-        <span class="morse-glyphs" aria-hidden="true"><span class="dot"></span><span class="dash"></span><span class="dot"></span></span>
-        Ask AI about Morse
-      </div>
+      <div class="askai-header">${ASK_AI_ICON}Ask AI about Morse</div>
       <textarea id="askai-input" class="askai-input" placeholder="e.g. How do I publish an encrypted entry with the CLI?" rows="3"></textarea>
       <div class="askai-footer">
         <div class="askai-hint">Opens your assistant with the full Morse docs as context.</div>
@@ -374,7 +385,18 @@ function initAskAI() {
   });
 
   trapFocus(modal.querySelector('.askai-dialog'));
-  document.getElementById('askai-btn')?.addEventListener('click', openAskAI);
+
+  // The top-bar pill is hidden on small screens, so the sheet carries its own entry
+  const side = document.getElementById('side');
+  if (side) {
+    const sheetBtn = document.createElement('button');
+    sheetBtn.type = 'button';
+    sheetBtn.className = 'side__askai';
+    sheetBtn.dataset.askai = '';
+    sheetBtn.innerHTML = `${ASK_AI_ICON}Ask AI about Morse`;
+    side.prepend(sheetBtn);
+  }
+  document.querySelectorAll('[data-askai]').forEach(btn => btn.addEventListener('click', openAskAI));
 
   document.addEventListener('keydown', e => {
     if ((e.metaKey || e.ctrlKey) && e.key === 'i') {
@@ -395,13 +417,9 @@ function initKeyboardNav() {
     if (ae && ae !== document.body && ae !== document.documentElement) return;
     if (askaiOpen || searchOpen) return;
 
-    if (e.key === 'ArrowRight') {
-      const next = document.querySelector('.page-nav .pnav-right');
-      if (next) window.location.href = next.href;
-    } else if (e.key === 'ArrowLeft') {
-      const prev = document.querySelector('.page-nav .pnav:not(.pnav-right):not(.pnav-empty)');
-      if (prev) window.location.href = prev.href;
-    }
+    const rel = { ArrowRight: 'next', ArrowLeft: 'prev' }[e.key];
+    const link = rel && document.querySelector(`.pager a[rel="${rel}"]`);
+    if (link) window.location.href = link.href;
   });
 }
 
@@ -527,8 +545,8 @@ function initSearch() {
     <div class="search-backdrop"></div>
     <div class="search-dialog" role="dialog" aria-modal="true" aria-label="Search documentation">
       <div class="search-input-wrap">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="flex-shrink:0;color:var(--text-muted)">
-          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        <svg aria-hidden="true" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
         </svg>
         <input id="search-input" class="search-dialog-input" placeholder="Search documentation…" autocomplete="off" spellcheck="false">
         <kbd class="search-close-kbd">ESC</kbd>
@@ -569,7 +587,7 @@ function initSearch() {
   });
 
   trapFocus(modal.querySelector('.search-dialog'));
-  document.querySelector('.search-box')?.addEventListener('click', openSearch);
+  document.getElementById('search-open')?.addEventListener('click', openSearch);
   document.addEventListener('keydown', e => {
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); searchOpen ? closeSearch() : openSearch(); }
     if (e.key === 'Escape' && searchOpen) closeSearch();
@@ -602,14 +620,13 @@ function initCodeTabs() {
 document.addEventListener('DOMContentLoaded', () => {
   if (typeof initSidebarNav === 'function') initSidebarNav();
   setActiveNav();
-  initSidebar();
-  initCopyButtons();
+  initMenu();
+  initCodeBlocks();
   initCodeTabs();
   initTOC();
   initHeadingAnchors();
   scrollToHash();
   initSearch();
-  initAgentsMenu();
   initPageActions();
   initFeedback();
   initAskAI();
