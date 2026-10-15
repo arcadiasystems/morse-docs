@@ -26,6 +26,7 @@ Every page below is also available as Markdown: replace `.html` with `.md` in an
 - [Collections](https://docs.morsecms.xyz/collections.md): A collection is a named content lane inside a publication. It groups related entries together and determines how their Walrus payload references are stored.
 - [Entries & Revisions](https://docs.morsecms.xyz/entries.md): An entry is a single content unit within a collection. Revisions are its immutable history. The dual-head model lets drafts evolve freely while production readers always see a stable published state.
 - [Access Control](https://docs.morsecms.xyz/access-control.md): Morse uses a capability-based permission model. Two types of capabilities control who can administer a publication and who can write content - enforced on-chain by the Sui type system, with no off-chain authorization…
+- [Recipient Files](https://docs.morsecms.xyz/recipient-files.md): Recipient files are Morse's second content model: standalone files on Walrus with a per-file recipient list enforced on-chain. Encrypt a file for specific addresses, share it with a single string, and revoke access…
 
 ## CLI
 

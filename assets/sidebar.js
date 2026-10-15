@@ -33,6 +33,7 @@ function initSidebarNav() {
     + '<li><a href="collections.html" class="nav-link" data-page="collections.html">Collections</a></li>'
     + '<li><a href="entries.html" class="nav-link" data-page="entries.html">Entries &amp; Revisions</a></li>'
     + '<li><a href="access-control.html" class="nav-link" data-page="access-control.html">Access Control</a></li>'
+    + '<li><a href="recipient-files.html" class="nav-link" data-page="recipient-files.html">Recipient Files</a></li>'
     + '</ul></div>'
 
     + '<div class="nav-divider"></div>'

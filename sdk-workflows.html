@@ -460,14 +460,22 @@ console.<span class="fn">log</span>(page.results.length, <span class="st">"entri
 <span class="cm">// Stream every entry in a collection.</span>
 <span class="kw">for await</span> (<span class="kw">const</span> e <span class="kw">of</span> reader.<span class="fn">scanEntries</span>(created.publicationId, <span class="st">"blog"</span>)) {
   console.<span class="fn">log</span>(e.id, e.name);
-}</pre>
+}
+
+<span class="cm">// Single revision by entry ID and revision index.</span>
+<span class="kw">const</span> revision = <span class="kw">await</span> reader.<span class="fn">getRevision</span>(
+  created.publicationId,
+  <span class="st">"blog"</span>,
+  entry.entryId,
+  <span class="nu">0</span>,
+);</pre>
         </div>
 
         <div class="callout callout-warning">
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">Use <code>HttpAggregatorReadAdapter</code> for reads on testnet</div>
-            <div class="callout-text">On testnet, <code>DefaultWalrusReadAdapter</code> (direct-node fanout) may fail. Use <code>HttpAggregatorReadAdapter</code> for reads instead - it routes through a single aggregator endpoint and is reliable on testnet. Mainnet storage nodes are expected to be more reliable. See <a href="sdk-client-setup.html#picking-a-walrus-adapter">SDK Client Setup &rarr; Picking a Walrus Adapter</a>.</div>
+            <div class="callout-text">On testnet, <code>DefaultWalrusReadAdapter</code> (direct-node fanout) frequently fails right after an upload with <code>No valid blob metadata could be retrieved from any storage node</code>, even for healthy blobs. Use <code>HttpAggregatorReadAdapter</code> for reads instead - it routes through a single aggregator endpoint and succeeds against the same blobs, at the cost of skipping client-side blob verification. Mainnet storage nodes are expected to be more reliable. See <a href="sdk-client-setup.html#picking-a-walrus-adapter">SDK Client Setup &rarr; Picking a Walrus Adapter</a>.</div>
           </div>
         </div>
 
@@ -478,6 +486,32 @@ console.<span class="fn">log</span>(page.results.length, <span class="st">"entri
             <div class="callout-text"><code>listEntries</code> and <code>scanEntries</code> return entries in dynamic-field object-store order, not chronological order. Sort by <code>entry.id</code> if you need insertion order.</div>
           </div>
         </div>
+
+        <h3 id="publication-and-cap-lookups">Publication and Cap Lookups</h3>
+        <p>Beyond entries, the reader resolves publications and the caps that control them - useful for dashboards ("which publications does this wallet own?") and for verifying delegated write access:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">typescript</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre><span class="cm">// Publication metadata: name, slug, collections.</span>
+<span class="kw">const</span> publication = <span class="kw">await</span> reader.<span class="fn">getPublication</span>(created.publicationId);
+
+<span class="cm">// Publications owned (via OwnerCap) by an address.</span>
+<span class="kw">const</span> owned = <span class="kw">await</span> reader.<span class="fn">listPublicationsOwnedBy</span>(adapter.address);
+<span class="cm">// owned.results: { ownerCapId, publicationId } handles (OwnedPublication)</span>
+
+<span class="cm">// PublisherCaps held by an address, and a single cap by ID.</span>
+<span class="kw">const</span> caps = <span class="kw">await</span> reader.<span class="fn">listPublisherCapsOwnedBy</span>(adapter.address);
+<span class="kw">const</span> cap = <span class="kw">await</span> reader.<span class="fn">getPublisherCap</span>(created.publisherCapId);
+<span class="cm">// cap.publicationId, cap.holder</span></pre>
+        </div>
+
+        <p>All list methods return one page per call - <code>EntryListPage</code>, <code>PublicationListPage</code>, and <code>PublisherCapListPage</code> - each with a <code>results</code> array and a <code>nextCursor</code> (<code>null</code> when exhausted). They accept <code>{ limit, cursor, signal }</code> options (default limit 50; the cursor is opaque - feed <code>nextCursor</code> back in to get the next page). <code>scanEntries</code> auto-paginates and takes <code>{ pageSize, signal }</code> instead. Single-object reads (<code>getPublication</code>, <code>getPublisherCap</code>, <code>getEntry</code>, <code>getRevision</code>) throw <code>NotFoundError</code> when the target does not exist.</p>
 <!-- <div class="ai-prompt">
           <details>
             <summary>Build with AI</summary>
@@ -795,7 +829,7 @@ console.<span class="fn">log</span>(page.results.length, <span class="st">"entri
 });</pre>
         </div>
 
-        <p><code>addEntryFromBytes</code> requires an adapter that implements <code>WalrusFlowCapable</code>, which combines the certify and add-entry steps into a single transaction. <code>DefaultWalrusWriteAdapter</code> supports this; the HTTP publisher adapter does not. Passing an incompatible adapter throws a <code>TransportError</code> before any I/O - use the split path (<code>uploadBlob</code> + <code>addEntry</code>) instead.</p>
+        <p><code>addEntryFromBytes</code> requires an adapter that implements <code>WalrusFlowCapable</code>, which combines the certify and add-entry steps into a single transaction. <code>DefaultWalrusWriteAdapter</code> supports this; the HTTP publisher adapter does not. Passing an incompatible adapter throws a <code>TransportError</code> before any I/O - use the split path (<code>uploadBlob</code> + <code>addEntry</code>) instead. To branch at runtime, use the <code>isWalrusFlowCapable(walrusWriter)</code> type guard, which detects the capability on any <code>WalrusWriteAdapter</code>.</p>
 
         <h2 id="next-steps">Next Steps</h2>
         <div class="card-grid">

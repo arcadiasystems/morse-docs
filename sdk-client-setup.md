@@ -20,6 +20,14 @@
 >
 > Mysten packages may ship breaking changes within the same major version. When a new version like `@mysten/walrus@1.2.0` is released, `morse-sdk` needs a coordinated bump and re-verification. Use `bun add @arcadiasystems/morse-sdk@~0.4.0` to lock to patch-level updates only.
 
+The verified matrix is also exported programmatically as `TESTED_SUBSTRATE` - a frozen record of the tested `@mysten/sui`, `@mysten/seal`, and `@mysten/walrus` versions plus `verifiedOn` and `suiNetwork`. Log it during initialization or compare it against bundler-resolved versions in CI:
+
+```typescript
+import { TESTED_SUBSTRATE } from "@arcadiasystems/morse-sdk";
+
+console.log(TESTED_SUBSTRATE["@mysten/walrus"]);  // "1.1.6"
+```
+
 ## Runtime Requirements
 
 ESM-only (`"type": "module"`). CommonJS `require` is not supported.
@@ -56,7 +64,11 @@ The returned object contains the following fields:
 | `sealKeyServers` | `readonly KeyServerConfig[]` | Seal threshold-encryption key servers for the network. Each entry has an `objectId` and `weight`. Used by `DefaultSealAdapter` when no explicit server list is provided. |
 | `walrusEndpoints` | `WalrusEndpoints` | Walrus HTTP endpoints. Contains `aggregator` (base URL for reads) and an optional `publisher` (base URL for HTTP-publisher writes). The publisher is intentionally unset by default - supply it explicitly for your operator. |
 
+The options shape is exported as `MorseConfigOptions`, the accepted network names as the `Network` constant, and the per-network public fullnode defaults as `DEFAULT_RPC_URLS` - useful when you need the default endpoint without building a full config.
+
 `PackageId` and `RegistryId` are branded `string` types - compile-time guards that prevent passing one kind of Sui address where another is expected. Cast a raw hex string with the `toPackageId()` / `toRegistryId()` codec helpers.
+
+For quilt-mode collections, the SDK also ships codecs for the 37-byte `QuiltPatchId` (`QUILT_PATCH_ID_LENGTH` = 37): `quiltPatchIdFromString` / `quiltPatchIdToString` convert between the URL-safe base64 string Walrus emits and the branded bytes, and `encodeQuiltPatchId` / `decodeQuiltPatchId` convert between the bytes and their structured parts (`quiltBlobId`, `version`, `startIndex`, `endIndex` - the `QuiltPatchIdParts` type).
 
 ## Server Setup
 
@@ -357,7 +369,7 @@ const walrusWriter = DefaultWalrusWriteAdapter.fromConfig(
 
 ### HTTP Adapter
 
-Best for browser dapps that need reliable CORS-friendly reads (one endpoint instead of ~30 nodes) and a "publisher pays storage" model where the user only signs the on-chain `addEntry`. Reads go through a trusted operator - use `verifyBlobIntegrity` on the read adapter to verify content after fetching.
+Best for browser dapps that need reliable CORS-friendly reads (one endpoint instead of ~30 nodes) and a "publisher pays storage" model where the user only signs the on-chain `addEntry`. Reads go through a trusted operator. To trust-but-verify, pass a `verifyBlobIntegrity` callback (type `WalrusBlobIntegrityCheck`) as a construction option - the adapter invokes it with the fetched bytes and the expected blob ID after every successful blob fetch, and it must throw on a mismatch (rewrapped as `TransportError`). Quilt patch reads are not verified.
 
 ```typescript
 import {
@@ -365,7 +377,12 @@ import {
   HttpPublisherWriteAdapter,
 } from "@arcadiasystems/morse-sdk";
 
-const walrusReader = HttpAggregatorReadAdapter.fromMorseConfig(config, client);
+const walrusReader = HttpAggregatorReadAdapter.fromMorseConfig(config, client, {
+  // Optional trust-but-verify: runs after every blob fetch; throw on mismatch.
+  verifyBlobIntegrity: async (bytes, expectedBlobId) => {
+    // e.g. recompute via WalrusClient.computeBlobMetadata and compare blob IDs
+  },
+});
 const walrusWriter = HttpPublisherWriteAdapter.fromConfig({
   publisherUrl: "https://walrus-testnet-publisher.nami.cloud",
   ownerAddress: account.address,
@@ -374,11 +391,11 @@ const walrusWriter = HttpPublisherWriteAdapter.fromConfig({
 
 > **WARNING: HTTP adapters skip the 2-transaction optimization**
 >
-> The HTTP adapters are NOT compatible with `addEntryFromBytes` / `addEncryptedEntryFromBytes`. Those functions require `WalrusFlowCapable` for the combined PTB; the publisher-paid path is naturally 1 transaction through `uploadBlob` + `addEntry`.
+> The HTTP adapters are NOT compatible with `addEntryFromBytes` / `addEncryptedEntryFromBytes`. Those functions require `WalrusFlowCapable` for the combined PTB; the publisher-paid path is naturally 1 transaction through `uploadBlob` + `addEntry`. Check any `WalrusWriteAdapter` at runtime with the `isWalrusFlowCapable(walrus)` type guard.
 
 > **WARNING: Use `HttpAggregatorReadAdapter` for reads on testnet**
 >
-> On testnet, `DefaultWalrusReadAdapter` (direct-node fanout) may fail. Use `HttpAggregatorReadAdapter` for reads instead - it routes through a single aggregator endpoint and is reliable on testnet. Mainnet storage nodes are expected to be more reliable.
+> On testnet, `DefaultWalrusReadAdapter` (direct-node fanout with client-side verification) frequently fails right after an upload with `No valid blob metadata could be retrieved from any storage node`, even for healthy blobs - on both plain and encrypted reads. `HttpAggregatorReadAdapter` succeeds against the same blobs: it fetches from a single aggregator endpoint and skips client-side blob verification, so you trust the operator's bytes (pass `verifyBlobIntegrity` to add a check). Mainnet storage nodes are expected to be more reliable.
 
 ## Verifying Setup
 
@@ -435,6 +452,23 @@ try {
   }
 }
 ```
+
+### Formatting Errors for UI
+
+For end-user surfaces (toasts, dialogs, banners), `formatUserMessage(err)` translates any thrown value into a `FormattedError` - `{ title, description, cause }`. It accepts `unknown`, so it works directly in a catch block without narrowing first; non-`MorseError` throws fall back to a generic message, and the original error is preserved in `cause`.
+
+```typescript
+import { formatUserMessage } from "@arcadiasystems/morse-sdk";
+
+try {
+  await addEntryFromBytes(adapter, config, args);
+} catch (err) {
+  const { title, description } = formatUserMessage(err);
+  toast.error(title, { description });  // e.g. "Slug already taken"
+}
+```
+
+The copy uses the protocol's own terminology ("publication", "entry", "PublisherCap"). To translate into your app's domain (blog → post, gallery → image), narrow on the error class first and write your own message, then fall back to `formatUserMessage` for the rest.
 
 ## Next Steps
 

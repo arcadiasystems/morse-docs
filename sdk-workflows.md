@@ -268,15 +268,43 @@ console.log(page.results.length, "entries, next cursor:", page.nextCursor);
 for await (const e of reader.scanEntries(created.publicationId, "blog")) {
   console.log(e.id, e.name);
 }
+
+// Single revision by entry ID and revision index.
+const revision = await reader.getRevision(
+  created.publicationId,
+  "blog",
+  entry.entryId,
+  0,
+);
 ```
 
 > **WARNING: Use `HttpAggregatorReadAdapter` for reads on testnet**
 >
-> On testnet, `DefaultWalrusReadAdapter` (direct-node fanout) may fail. Use `HttpAggregatorReadAdapter` for reads instead - it routes through a single aggregator endpoint and is reliable on testnet. Mainnet storage nodes are expected to be more reliable. See [SDK Client Setup → Picking a Walrus Adapter](https://docs.morsecms.xyz/sdk-client-setup.html#picking-a-walrus-adapter).
+> On testnet, `DefaultWalrusReadAdapter` (direct-node fanout) frequently fails right after an upload with `No valid blob metadata could be retrieved from any storage node`, even for healthy blobs. Use `HttpAggregatorReadAdapter` for reads instead - it routes through a single aggregator endpoint and succeeds against the same blobs, at the cost of skipping client-side blob verification. Mainnet storage nodes are expected to be more reliable. See [SDK Client Setup → Picking a Walrus Adapter](https://docs.morsecms.xyz/sdk-client-setup.html#picking-a-walrus-adapter).
 
 > **INFO: Ordering caveat**
 >
 > `listEntries` and `scanEntries` return entries in dynamic-field object-store order, not chronological order. Sort by `entry.id` if you need insertion order.
+
+### Publication and Cap Lookups
+
+Beyond entries, the reader resolves publications and the caps that control them - useful for dashboards ("which publications does this wallet own?") and for verifying delegated write access:
+
+```typescript
+// Publication metadata: name, slug, collections.
+const publication = await reader.getPublication(created.publicationId);
+
+// Publications owned (via OwnerCap) by an address.
+const owned = await reader.listPublicationsOwnedBy(adapter.address);
+// owned.results: { ownerCapId, publicationId } handles (OwnedPublication)
+
+// PublisherCaps held by an address, and a single cap by ID.
+const caps = await reader.listPublisherCapsOwnedBy(adapter.address);
+const cap = await reader.getPublisherCap(created.publisherCapId);
+// cap.publicationId, cap.holder
+```
+
+All list methods return one page per call - `EntryListPage`, `PublicationListPage`, and `PublisherCapListPage` - each with a `results` array and a `nextCursor` (`null` when exhausted). They accept `{ limit, cursor, signal }` options (default limit 50; the cursor is opaque - feed `nextCursor` back in to get the next page). `scanEntries` auto-paginates and takes `{ pageSize, signal }` instead. Single-object reads (`getPublication`, `getPublisherCap`, `getEntry`, `getRevision`) throw `NotFoundError` when the target does not exist.
 
 See also: [CLI Cookbooks → Reading It Back](https://docs.morsecms.xyz/cli-workflows.html#reading-it-back)
 
@@ -507,7 +535,7 @@ const entry = await addEntry(adapter, config, {
 });
 ```
 
-`addEntryFromBytes` requires an adapter that implements `WalrusFlowCapable`, which combines the certify and add-entry steps into a single transaction. `DefaultWalrusWriteAdapter` supports this; the HTTP publisher adapter does not. Passing an incompatible adapter throws a `TransportError` before any I/O - use the split path (`uploadBlob` + `addEntry`) instead.
+`addEntryFromBytes` requires an adapter that implements `WalrusFlowCapable`, which combines the certify and add-entry steps into a single transaction. `DefaultWalrusWriteAdapter` supports this; the HTTP publisher adapter does not. Passing an incompatible adapter throws a `TransportError` before any I/O - use the split path (`uploadBlob` + `addEntry`) instead. To branch at runtime, use the `isWalrusFlowCapable(walrusWriter)` type guard, which detects the capability on any `WalrusWriteAdapter`.
 
 ## Next Steps
 

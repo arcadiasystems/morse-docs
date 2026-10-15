@@ -360,7 +360,7 @@ Selected as the active collection. (tx: DWkD...)</pre>
           </div>
           <pre>morse entry read 0 --via-aggregator</pre>
         </div>
-        <p>The optional <code>--via-aggregator</code> flag routes reads through the Walrus aggregator, which is more reliable on testnet.</p>
+        <p>The optional <code>--via-aggregator</code> flag routes reads through the Walrus aggregator, which is more reliable on testnet. Without it, testnet reads frequently fail with <code>No valid blob metadata could be retrieved from any storage node</code>, especially right after an upload - see <a href="cli-workflows.html#reading-it-back">CLI Cookbooks &rarr; Reading It Back</a>.</p>
 
         <div class="code-block code-block-output">
           <div class="code-header">

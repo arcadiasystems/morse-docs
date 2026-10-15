@@ -30,6 +30,7 @@ const PAGES = [
   ['collections.html',           'Protocol'],
   ['entries.html',               'Protocol'],
   ['access-control.html',        'Protocol'],
+  ['recipient-files.html',       'Protocol'],
   ['cli-overview.html',          'CLI'],
   ['cli-commands.html',          'CLI'],
   ['cli-workflows.html',         'CLI'],

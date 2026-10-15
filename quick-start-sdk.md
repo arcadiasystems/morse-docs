@@ -47,7 +47,7 @@ Save this as `quickstart.ts`. It creates a publication, adds a collection, uploa
 
 > **INFO: Transport: gRPC**
 >
-> This guide uses `SuiGrpcClient` for its typed interface and lower latency. Morse SDK also supports JSON-RPC via `SuiHTTPTransport` from `@mysten/sui/client` if your environment requires it - see [SDK Client Setup](https://docs.morsecms.xyz/sdk-client-setup.html) for details.
+> This guide uses `SuiGrpcClient` from `@mysten/sui/grpc` - the SDK's client interfaces are typed against it. The JSON-RPC `SuiClient` from `@mysten/sui/client` is not supported; a JSON-RPC fallback is planned but has not shipped yet. See [SDK Client Setup](https://docs.morsecms.xyz/sdk-client-setup.html) for details.
 
 ```typescript
 import { SuiGrpcClient } from "@mysten/sui/grpc";

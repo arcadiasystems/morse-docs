@@ -145,7 +145,7 @@ Add, read, and delete entries within a collection.
 | Command | Purpose |
 | --- | --- |
 | `entry get <entryId>` | Fetch a single entry's metadata. |
-| `entry read <entryId> [<revisionIndex>] [--out <path>] [--via-aggregator]` | Fetch a public entry's content to stdout or a file. Reads the latest revision unless `revisionIndex` is specified; `--via-aggregator` fetches through a Walrus aggregator instead of directly. |
+| `entry read <entryId> [<revisionIndex>] [--out <path>] [--via-aggregator]` | Fetch a public entry's content to stdout or a file. Reads the latest revision unless `revisionIndex` is specified; `--via-aggregator` fetches through a Walrus aggregator instead of directly - recommended on testnet, where direct reads frequently fail right after an upload (see [CLI Cookbooks → Reading It Back](https://docs.morsecms.xyz/cli-workflows.html#reading-it-back)). |
 | `entry list [--limit <n>] [--cursor <cursor>] [--drafts-only]` | List entries. `--drafts-only` filters to unpublished entries. |
 | `entry scan [--drafts-only]` | List every entry (auto-paginated). `--drafts-only` filters to unpublished entries. |
 | `entry add <name> (--file <path> \| --stdin) [--content-type <type>] [--epochs <n>] [--publisher-cap <id>]` | Upload content and add a new entry. `--file` reads from a file path, `--stdin` reads from standard input; `--content-type` is inferred from file extension when omitted; `--epochs` sets Walrus storage duration (default 3 - roughly 3 days on testnet; renew or re-upload before expiry for longer-lived content). |

@@ -200,7 +200,7 @@
     "pageTitle": "Quick Start: CLI",
     "section": "Getting Started",
     "heading": "Reading It Back",
-    "text": "Fetch the entry content by its ID. Entry IDs are monotonic - your first entry is 0. bash Copy morse entry read 0 --via-aggregator The optional --via-aggregator flag routes reads through the Walrus aggregator, which is more reliable on testnet. output {\"title\": \"Hello World\", \"body\": \"My first post on Morse.\"} You're live on-chain Your content is stored on Walrus and registered on Sui testnet. Run morse status to see your active context, or morse entry list to see all entries in the collection. If you hit errors at any step, run morse --help for command usage or see the CLI Cookbooks → Troubles"
+    "text": "Fetch the entry content by its ID. Entry IDs are monotonic - your first entry is 0. bash Copy morse entry read 0 --via-aggregator The optional --via-aggregator flag routes reads through the Walrus aggregator, which is more reliable on testnet. Without it, testnet reads frequently fail with No valid blob metadata could be retrieved from any storage node, especially right after an upload - see CLI Cookbooks → Reading It Back. output {\"title\": \"Hello World\", \"body\": \"My first post on Morse.\"} You're live on-chain Your content is stored on Walrus and registered on Sui testnet. Run morse status to "
   },
   {
     "url": "quick-start-cli.html#next-steps",
@@ -235,7 +235,7 @@
     "pageTitle": "Quick Start: SDK",
     "section": "Getting Started",
     "heading": "Writing the Script",
-    "text": "Save this as quickstart.ts. It creates a publication, adds a collection, uploads an entry, and reads it back. Transport: gRPC This guide uses SuiGrpcClient for its typed interface and lower latency. Morse SDK also supports JSON-RPC via SuiHTTPTransport from @mysten/sui/client if your environment requires it - see SDK Client Setup for details. typescript Copy import { SuiGrpcClient } from \"@mysten/sui/grpc\"; import { Ed25519Keypair } from \"@mysten/sui/keypairs/ed25519\"; import { KeypairAdapter, morseConfig, RpcPublicationReader, createPublication, createCollection, addEntryFromBytes, DefaultWal"
+    "text": "Save this as quickstart.ts. It creates a publication, adds a collection, uploads an entry, and reads it back. Transport: gRPC This guide uses SuiGrpcClient from @mysten/sui/grpc - the SDK's client interfaces are typed against it. The JSON-RPC SuiClient from @mysten/sui/client is not supported; a JSON-RPC fallback is planned but has not shipped yet. See SDK Client Setup for details. typescript Copy import { SuiGrpcClient } from \"@mysten/sui/grpc\"; import { Ed25519Keypair } from \"@mysten/sui/keypairs/ed25519\"; import { KeypairAdapter, morseConfig, RpcPublicationReader, createPublication, createC"
   },
   {
     "url": "quick-start-sdk.html#running-it",
@@ -693,6 +693,139 @@
     "text": "For more error codes, see: Publications, Collections, Entries. CodeConstantMeaning 2EUnauthorizedCapability does not belong to this publication 4EPublisherCapWrongHolderTransaction sender is not the cap's bound holder address 5EPublisherCapRevokedThe cap ID is on the revocation denylist 12ESealInvalidIdSeal identity does not match this publication's namespace 13ESealWrongPolicyTagSeal identity has an unsupported policy tag byte"
   },
   {
+    "url": "recipient-files.html",
+    "pageTitle": "Recipient Files",
+    "section": "Protocol",
+    "heading": "Recipient Files",
+    "text": "Recipient files are Morse's second content model: standalone files on Walrus with a per-file recipient list enforced on-chain. Encrypt a file for specific addresses, share it with a single string, and revoke access at decrypt time - no publication required."
+  },
+  {
+    "url": "recipient-files.html#overview",
+    "pageTitle": "Recipient Files",
+    "section": "Protocol",
+    "heading": "Overview",
+    "text": "Publications, collections, and entries model structured CMS content: a site with editors, drafts, and revision history. Recipient files model something simpler - \"share THIS file with these addresses.\" Each file is an independent shared object on Sui (RecipientFile, defined in the recipient_file Move module) that references a Walrus blob and embeds its own recipient set. There is no shared ACL across files and no capability objects involved. Publication entriesRecipient files ContainerPublication → Collection → EntryNone - each file stands alone Write authorityPublisherCap (capability object)o"
+  },
+  {
+    "url": "recipient-files.html#the-recipientfile-object",
+    "pageTitle": "Recipient Files",
+    "section": "Protocol",
+    "heading": "The RecipientFile Object",
+    "text": "A RecipientFile is created in the same transaction that certifies its Walrus blob, then immediately shared so Seal key servers can dry-run its approval function regardless of who asks: Move public struct RecipientFile has key { id: UID, owner: address, // may mutate metadata, edit recipients, transfer, delete blob_id: vector<u8>, // Walrus content id (32 bytes) blob_object_id: Option<ID>, // on-chain Walrus Blob object, when known name: String, // original filename (max 256 chars) content_type: String, // MIME type (max 255 chars) size: u64, // plaintext byte length members: VecSet<address>, /"
+  },
+  {
+    "url": "recipient-files.html#move-operations",
+    "pageTitle": "Recipient Files",
+    "section": "Protocol",
+    "heading": "Move Operations",
+    "text": "FunctionAuthorityEffect new_recipient_fileAnyoneCreate a file record (returned by value; share it in the same PTB). Sender auto-added to members. new_recipient_file_with_seal_prefixAnyoneSame, plus binds a caller-supplied Seal identity prefix to the file via a dynamic field. Used by all encrypted upload flows. share_recipient_fileCreator (same PTB)Share the object so key servers can dry-run approval. add_recipientOwnerAdd an address to members. Aborts if already present. remove_recipientOwnerRemove an address from members. Aborts if not present. update_metadataOwnerReplace name and content_typ"
+  },
+  {
+    "url": "recipient-files.html#encryption-and-the-recipient-list",
+    "pageTitle": "Recipient Files",
+    "section": "Protocol",
+    "heading": "Encryption & the Recipient List",
+    "text": "Encrypted recipient files use Seal - the same threshold-encryption layer that gates encrypted entries - but under a second, independent policy. Both policies coexist in the same contract package: Publisher policyRecipient-file policy Policy tag13 Identity prefixPublication ID (32 bytes)Caller-chosen random bytes (32 recommended), bound to the file at creation Approval functionpublication::seal_approve_publisherrecipient_file::seal_approve_with_prefix (or seal_approve for legacy files) Who may decryptHolders of an active PublisherCapAddresses in the file's members set Documented atAccess Contro"
+  },
+  {
+    "url": "recipient-files.html#seal-identity-format",
+    "pageTitle": "Recipient Files",
+    "section": "Protocol",
+    "heading": "Seal Identity Format",
+    "text": "A recipient-file Seal identity is the byte concatenation of a prefix, the policy tag, and a per-encryption nonce: ┌───────────────────────────────┬────────────────┬─────────────────────┐ │ seal_id_prefix (≥1 byte) │ policy_tag (1) │ nonce (≥1 byte) │ └───────────────────────────────┴────────────────┴─────────────────────┘ Random, caller-chosen. Must be 0x03 Fresh per encryption. 32 bytes recommended. for the 16 bytes recommended. Bound to the file on-chain recipient-file at creation. policy. The prefix solves an ordering problem: a file's Sui object ID does not exist until its creation transac"
+  },
+  {
+    "url": "recipient-files.html#decryption-sequence",
+    "pageTitle": "Recipient Files",
+    "section": "Protocol",
+    "heading": "Decryption Sequence",
+    "text": "Decryption is gated on-chain, at decrypt time, by the current recipient set: Recipient creates a SessionKey - their wallet signs a personal message producing a time-limited key scoped to the contract package. The SDK never builds session keys silently; the consumer always signs. SDK builds an approval PTB - decryptUnderRecipientFile constructs a transaction calling recipient_file::seal_approve_with_prefix with the Seal identity and the shared RecipientFile object. Seal key servers dry-run it - each server executes the PTB against current chain state. The Move function checks that the identity "
+  },
+  {
+    "url": "recipient-files.html#cli-workflows",
+    "pageTitle": "Recipient Files",
+    "section": "Protocol",
+    "heading": "CLI Workflows",
+    "text": "The morse file command group covers the full lifecycle. See CLI Overview for installation and account setup."
+  },
+  {
+    "url": "recipient-files.html#upload-and-share",
+    "pageTitle": "Recipient Files",
+    "section": "Protocol",
+    "heading": "Upload & Share",
+    "text": "One command encrypts, uploads to Walrus, and registers the file on-chain. Pass -r/--recipient once per recipient; the sender is always added automatically. --encrypt is implied when -r is given. bash Copy morse file upload <path> -n <name> --encrypt [-r <addr>]... [--content-type <mime>] [--epochs <n>] example morse file upload ./launch-plan.md -n launch-plan.md -r 0x71a3...9f2b -r 0x88c2...41de output Uploaded encrypted file 0x5f0a...c37e blobId: kD3x...vQ8 share: mf1.MHg1ZjBh...LmM4.4kfx....9dQz tx: 4N94D7Zn... Give the share string to recipients; they need it (plus membership) to decrypt. T"
+  },
+  {
+    "url": "recipient-files.html#download",
+    "pageTitle": "Recipient Files",
+    "section": "Protocol",
+    "heading": "Download",
+    "text": "Recipients decrypt with the share string. The CLI reads the on-chain record, fetches the ciphertext from Walrus, signs a short-lived SessionKey (10 minutes) with the active account, and decrypts locally: bash Copy morse file download --share <string> --out <path> [--via-aggregator] --share carries the file ID, prefix, and nonce in one token. Alternatively pass the file ID positionally with --prefix <hex> --nonce <hex>. --raw writes the stored bytes without decrypting. For a file with a recipient list and no decrypt input, the CLI refuses by default - the ciphertext is unusable - and --raw is t"
+  },
+  {
+    "url": "recipient-files.html#managing-recipients",
+    "pageTitle": "Recipient Files",
+    "section": "Protocol",
+    "heading": "Managing Recipients",
+    "text": "The owner can grant and revoke decrypt access at any time; changes take effect on the next decrypt attempt: bash Copy morse file recipient add <file> <address> morse file recipient remove <file> <address> morse file recipient list <file> A newly added recipient also needs the share string (prefix + nonce) to decrypt - membership alone locates the key shares but not the identity bytes. Send it over any channel; the on-chain member check is what actually gates access."
+  },
+  {
+    "url": "recipient-files.html#lifecycle-commands",
+    "pageTitle": "Recipient Files",
+    "section": "Protocol",
+    "heading": "Lifecycle Commands",
+    "text": "CommandDescription file get <file>Fetch the on-chain metadata record. file list [--address <addr>] [--accessible] [--hydrate] [--limit <n>]List files owned by (or, with --accessible, decryptable by) an address, via event indexing. --hydrate fetches full records (one read per file). file register --blob-id <id> -n <name> --content-type <mime> --size <bytes> (--public | --encrypted --seal-prefix <hex>) [-r <addr>]...Register on-chain metadata for a blob already on Walrus, e.g. one uploaded out-of-band. file update <file> -n <name> --content-type <mime>Update name and content type. Owner only. fi"
+  },
+  {
+    "url": "recipient-files.html#sdk-usage",
+    "pageTitle": "Recipient Files",
+    "section": "Protocol",
+    "heading": "SDK Usage",
+    "text": "All recipient-file APIs are exported from the @arcadiasystems/morse-sdk root. The examples below assume the adapter, config, and client setup from SDK Setup."
+  },
+  {
+    "url": "recipient-files.html#sdk-encrypted-upload",
+    "pageTitle": "Recipient Files",
+    "section": "Protocol",
+    "heading": "Encrypted Upload",
+    "text": "uploadEncryptedRecipientFileFromBytes is the one-shot flow: it picks a random Seal prefix and nonce, encrypts, uploads to Walrus, and creates the file - in two wallet interactions (Walrus register_blob, then a combined certify_blob + new_recipient_file_with_seal_prefix + share PTB): typescript Copy import { DefaultSealAdapter, DefaultWalrusWriteAdapter, uploadEncryptedRecipientFileFromBytes, } from \"@arcadiasystems/morse-sdk\"; const seal = DefaultSealAdapter.fromMorseConfig(config, {}, client); const walrus = DefaultWalrusWriteAdapter.fromConfig( { network: \"testnet\", suiClient: client }, keyp"
+  },
+  {
+    "url": "recipient-files.html#sdk-decrypt",
+    "pageTitle": "Recipient Files",
+    "section": "Protocol",
+    "heading": "Decrypt with a SessionKey",
+    "text": "Decryption needs the file ID, the Seal prefix and nonce, and a SessionKey. The SDK never signs on your behalf - creating the session key is an explicit personal-message signature by the consumer: typescript Copy import { SessionKey } from \"@mysten/seal\"; import { buildRecipientFileSealId, HttpAggregatorReadAdapter, RpcRecipientFilesReader, } from \"@arcadiasystems/morse-sdk\"; // 1. Read the on-chain record and fetch the ciphertext from Walrus. const filesReader = RpcRecipientFilesReader.fromConfig(client, config); const file = await filesReader.getRecipientFile(result.fileId); const walrusReade"
+  },
+  {
+    "url": "recipient-files.html#listing-and-discovery",
+    "pageTitle": "Recipient Files",
+    "section": "Protocol",
+    "heading": "Listing & Discovery",
+    "text": "RecipientFile objects are shared, so they belong to no wallet and never appear in owned-object queries - you cannot enumerate them with getOwnedObjects. Discovery is event-based instead: every lifecycle mutation emits an event, and the SDK ships pure reducers that replay an event stream into a current-state list: typescript Copy import { buildRecipientFileEventTypes, reconcileRecipientFilesAccessibleBy, reconcileRecipientFilesOwnedBy, } from \"@arcadiasystems/morse-sdk\"; // Event types are rooted at the package where the module was FIRST // defined - NOT the current packageId, which moves on ev"
+  },
+  {
+    "url": "recipient-files.html#types-and-config",
+    "pageTitle": "Recipient Files",
+    "section": "Protocol",
+    "heading": "Types & Config Reference",
+    "text": "ExportWhat it is RecipientFileIdBranded string for a RecipientFile object ID. Validate with toRecipientFileId(). RecipientFileFull live-object record: id, owner, blobId, blobObjectId, name, contentType, size, members, createdAtMs. RecipientFileSummaryEvent-derived view (kind: \"summary\"). Missing blobId / blobObjectId; hydrate when needed. RecipientFileFull / RecipientFileSummaryOrFullHydrated variant (kind: \"full\") and the discriminated union the list flows return. MorseRecipientFileConfigConfig slice for recipient-file ops: packageId, originalPackageId, recipientFileEventOriginPackageId. Sati"
+  },
+  {
+    "url": "recipient-files.html#costs",
+    "pageTitle": "Recipient Files",
+    "section": "Protocol",
+    "heading": "Costs",
+    "text": "Measured on Sui testnet against the production package (2026-07-27, 127-byte file). Walrus storage is paid separately in WAL at upload time: OperationGas (MIST)Gas (SUI) file upload --encrypt (certify + create + share PTB)6,591,240~0.0066 file recipient add1,280,668~0.0013 file recipient remove796,700~0.0008 Decryption costs no gas: the seal_approve dry-run happens on the key servers' side and nothing is executed on-chain."
+  },
+  {
+    "url": "recipient-files.html#error-codes",
+    "pageTitle": "Recipient Files",
+    "section": "Protocol",
+    "heading": "Error Codes",
+    "text": "Move abort codes from the recipient_file module. The SDK surfaces them as ContractAbortError; Seal-side failures surface as SealError with codes no-access, decrypt-failed, session-expired, or rate-limited. CodeConstantMeaning 0EUnauthorizedSender is not the file owner 1EBlobIdEmptyblob_id must be non-empty 2ENameInvalidname is empty or over 256 characters 3EContentTypeInvalidcontent_type is empty or over 255 characters 4ERecipientAlreadyPresentAddress is already a recipient 5ERecipientNotPresentAddress is not a recipient 6ESealInvalidIdSeal identity does not match this file's namespace 7ESealW"
+  },
+  {
     "url": "cli-overview.html",
     "pageTitle": "CLI Overview",
     "section": "CLI",
@@ -823,7 +956,7 @@
     "pageTitle": "CLI Command Reference",
     "section": "CLI",
     "heading": "Entry",
-    "text": "Add, read, and delete entries within a collection. CommandPurpose entry get <entryId>Fetch a single entry's metadata. entry read <entryId> [<revisionIndex>] [--out <path>] [--via-aggregator]Fetch a public entry's content to stdout or a file. Reads the latest revision unless revisionIndex is specified; --via-aggregator fetches through a Walrus aggregator instead of directly. entry list [--limit <n>] [--cursor <cursor>] [--drafts-only]List entries. --drafts-only filters to unpublished entries. entry scan [--drafts-only]List every entry (auto-paginated). --drafts-only filters to unpublished entri"
+    "text": "Add, read, and delete entries within a collection. CommandPurpose entry get <entryId>Fetch a single entry's metadata. entry read <entryId> [<revisionIndex>] [--out <path>] [--via-aggregator]Fetch a public entry's content to stdout or a file. Reads the latest revision unless revisionIndex is specified; --via-aggregator fetches through a Walrus aggregator instead of directly - recommended on testnet, where direct reads frequently fail right after an upload (see CLI Cookbooks → Reading It Back). entry list [--limit <n>] [--cursor <cursor>] [--drafts-only]List entries. --drafts-only filters to unp"
   },
   {
     "url": "cli-commands.html#revision",
@@ -872,7 +1005,7 @@
     "pageTitle": "CLI Cookbooks",
     "section": "CLI",
     "heading": "Reading It Back",
-    "text": "entry get shows metadata; entry read fetches the public content itself. The view link printed by entry add opens the same bytes in a browser. bash Copy morse entry get 0 morse entry read 0 --via-aggregator morse entry read 0 --via-aggregator --out got.md Use --via-aggregator for reads on testnet On testnet, the default direct-node read path may fail. Add --via-aggregator to entry read and entry decrypt commands to route through the Walrus aggregator instead. This applies to testnet only; mainnet storage nodes are expected to be more reliable. See also: SDK Cookbooks → Reading It Back"
+    "text": "entry get shows metadata; entry read fetches the public content itself. The view link printed by entry add opens the same bytes in a browser. bash Copy morse entry get 0 morse entry read 0 --via-aggregator morse entry read 0 --via-aggregator --out got.md Use --via-aggregator for reads on testnet On testnet, the default direct-node read path frequently fails right after an upload with No valid blob metadata could be retrieved from any storage node, even though the blob is healthy - on both plain reads and encrypted decrypts. Add --via-aggregator to entry read and entry decrypt to route through "
   },
   {
     "url": "cli-workflows.html#listing-your-content",
@@ -1075,7 +1208,7 @@
     "pageTitle": "SDK Setup",
     "section": "SDK",
     "heading": "HTTP Adapter",
-    "text": "Best for browser dapps that need reliable CORS-friendly reads (one endpoint instead of ~30 nodes) and a \"publisher pays storage\" model where the user only signs the on-chain addEntry. Reads go through a trusted operator - use verifyBlobIntegrity on the read adapter to verify content after fetching. typescript Copy import { HttpAggregatorReadAdapter, HttpPublisherWriteAdapter, } from \"@arcadiasystems/morse-sdk\"; const walrusReader = HttpAggregatorReadAdapter.fromMorseConfig(config, client); const walrusWriter = HttpPublisherWriteAdapter.fromConfig({ publisherUrl: \"https://walrus-testnet-publish"
+    "text": "Best for browser dapps that need reliable CORS-friendly reads (one endpoint instead of ~30 nodes) and a \"publisher pays storage\" model where the user only signs the on-chain addEntry. Reads go through a trusted operator. To trust-but-verify, pass a verifyBlobIntegrity callback (type WalrusBlobIntegrityCheck) as a construction option - the adapter invokes it with the fetched bytes and the expected blob ID after every successful blob fetch, and it must throw on a mismatch (rewrapped as TransportError). Quilt patch reads are not verified. typescript Copy import { HttpAggregatorReadAdapter, HttpPu"
   },
   {
     "url": "sdk-client-setup.html#verify-your-setup",
@@ -1090,6 +1223,13 @@
     "section": "SDK",
     "heading": "Error Handling",
     "text": "Every error thrown by the SDK extends MorseError. Each error class carries structured properties, so errors can be handled by type without parsing message strings. All error classes are listed below - the first four are the most common. ClassCarriesThrown when ValidationErrorfieldClient-side input failed a precondition. ContractAbortErrormodule, abortCode, reasonMove VM aborted (e.g. ESlugAlreadyExists, EPublisherCapRevoked). TransportErroroperation?RPC, network, or response-parsing failure. Usually retryable. UncertifiedBlobErrorblobObjectId, blobIdaddEntryFromBytes upload succeeded but the s"
+  },
+  {
+    "url": "sdk-client-setup.html#formatting-errors",
+    "pageTitle": "SDK Setup",
+    "section": "SDK",
+    "heading": "Formatting Errors for UI",
+    "text": "For end-user surfaces (toasts, dialogs, banners), formatUserMessage(err) translates any thrown value into a FormattedError - { title, description, cause }. It accepts unknown, so it works directly in a catch block without narrowing first; non-MorseError throws fall back to a generic message, and the original error is preserved in cause. typescript Copy import { formatUserMessage } from \"@arcadiasystems/morse-sdk\"; try { await addEntryFromBytes(adapter, config, args); } catch (err) { const { title, description } = formatUserMessage(err); toast.error(title, { description }); // e.g. \"Slug alread"
   },
   {
     "url": "sdk-client-setup.html#next-steps",
@@ -1167,6 +1307,13 @@
     "section": "SDK",
     "heading": "Reading It Back",
     "text": "Single-object reads, paginated lists, and an async iterator for full-collection scans. The reader is gRPC-backed. typescript Copy import { HttpAggregatorReadAdapter } from \"@arcadiasystems/morse-sdk\"; const walrusReader = HttpAggregatorReadAdapter.fromMorseConfig(config, client); // Single entry by ID. const fetched = await reader.getEntry( created.publicationId, \"blog\", entry.entryId, ); const firstRevision = fetched.revisions[0]; // Fetch the actual content bytes from Walrus. const content = await walrusReader.readBlobRef(firstRevision.blobRef); console.log(new TextDecoder().decode(content))"
+  },
+  {
+    "url": "sdk-workflows.html#publication-and-cap-lookups",
+    "pageTitle": "SDK Cookbooks",
+    "section": "SDK",
+    "heading": "Publication and Cap Lookups",
+    "text": "Beyond entries, the reader resolves publications and the caps that control them - useful for dashboards (\"which publications does this wallet own?\") and for verifying delegated write access: typescript Copy // Publication metadata: name, slug, collections. const publication = await reader.getPublication(created.publicationId); // Publications owned (via OwnerCap) by an address. const owned = await reader.listPublicationsOwnedBy(adapter.address); // owned.results: { ownerCapId, publicationId } handles (OwnedPublication) // PublisherCaps held by an address, and a single cap by ID. const caps = a"
   },
   {
     "url": "sdk-workflows.html#publishing-a-new-revision",

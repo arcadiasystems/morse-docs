@@ -53,9 +53,9 @@ morse entry read 0 --via-aggregator
 morse entry read 0 --via-aggregator --out got.md
 ```
 
-> **WARNING: Use `--via-aggregator for reads on testnet`**
+> **WARNING: Use `--via-aggregator` for reads on testnet**
 >
-> On testnet, the default direct-node read path may fail. Add `--via-aggregator` to `entry read` and `entry decrypt` commands to route through the Walrus aggregator instead. This applies to testnet only; mainnet storage nodes are expected to be more reliable.
+> On testnet, the default direct-node read path frequently fails right after an upload with `No valid blob metadata could be retrieved from any storage node`, even though the blob is healthy - on both plain reads and encrypted decrypts. Add `--via-aggregator` to `entry read` and `entry decrypt` to route through the Walrus aggregator, which succeeds against the same blobs. The tradeoff: the aggregator path skips client-side blob verification, so you trust the operator's bytes. This applies to testnet only; mainnet storage nodes are expected to be more reliable.
 
 See also: [SDK Cookbooks → Reading It Back](https://docs.morsecms.xyz/sdk-workflows.html#reading-it-back)
 
@@ -188,6 +188,7 @@ morse publication get 0x00 || echo "exit $?"
 | `2` | Morse is not yet deployed on mainnet | Use `--network testnet`. |
 | `5` | InsufficientGas / out of SUI gas | The active account does not have enough SUI for gas fees. Run `sui client faucet` to request testnet SUI. |
 | `5` | Insufficient WAL balance | Walrus storage requires WAL tokens. Get WAL from the [Walrus testnet faucet](https://stake-wal.wal.app/?network=testnet). |
+| `5` | No valid blob metadata could be retrieved from any storage node | Common on testnet, especially right after an upload - the default direct-node read path fails even for healthy blobs. Re-run with `--via-aggregator`. See [Reading It Back](#reading-it-back). |
 | `5` | Walrus blob not retrievable / blob expired | The blob's storage epoch has ended and it is no longer available on Walrus storage nodes. Re-upload the content and create a new revision with a longer `--epochs` value. |
 
 ## Next Steps

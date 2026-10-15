@@ -159,6 +159,21 @@
           </div>
         </div>
 
+        <p>The verified matrix is also exported programmatically as <code>TESTED_SUBSTRATE</code> - a frozen record of the tested <code>@mysten/sui</code>, <code>@mysten/seal</code>, and <code>@mysten/walrus</code> versions plus <code>verifiedOn</code> and <code>suiNetwork</code>. Log it during initialization or compare it against bundler-resolved versions in CI:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">typescript</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre><span class="kw">import</span> { TESTED_SUBSTRATE } <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
+
+console.<span class="fn">log</span>(TESTED_SUBSTRATE[<span class="st">"@mysten/walrus"</span>]);  <span class="cm">// "1.1.6"</span></pre>
+        </div>
+
         <h2 id="runtime">Runtime Requirements</h2>
         <p>ESM-only (<code>"type": "module"</code>). CommonJS <code>require</code> is not supported.</p>
 
@@ -209,7 +224,11 @@
           </table>
         </div>
 
+        <p>The options shape is exported as <code>MorseConfigOptions</code>, the accepted network names as the <code>Network</code> constant, and the per-network public fullnode defaults as <code>DEFAULT_RPC_URLS</code> - useful when you need the default endpoint without building a full config.</p>
+
         <p><code>PackageId</code> and <code>RegistryId</code> are branded <code>string</code> types - compile-time guards that prevent passing one kind of Sui address where another is expected. Cast a raw hex string with the <code>toPackageId()</code> / <code>toRegistryId()</code> codec helpers.</p>
+
+        <p>For quilt-mode collections, the SDK also ships codecs for the 37-byte <code>QuiltPatchId</code> (<code>QUILT_PATCH_ID_LENGTH</code> = 37): <code>quiltPatchIdFromString</code> / <code>quiltPatchIdToString</code> convert between the URL-safe base64 string Walrus emits and the branded bytes, and <code>encodeQuiltPatchId</code> / <code>decodeQuiltPatchId</code> convert between the bytes and their structured parts (<code>quiltBlobId</code>, <code>version</code>, <code>startIndex</code>, <code>endIndex</code> - the <code>QuiltPatchIdParts</code> type).</p>
 
         <h2 id="server-setup">Server Setup</h2>
         <p><code>RpcPublicationReader</code> provides read-only access to publications, collections, and entries via RPC - no keypair required.</p>
@@ -565,7 +584,7 @@
         </div>
 
         <h3 id="http-walrus-adapter">HTTP Adapter</h3>
-        <p>Best for browser dapps that need reliable CORS-friendly reads (one endpoint instead of ~30 nodes) and a "publisher pays storage" model where the user only signs the on-chain <code>addEntry</code>. Reads go through a trusted operator - use <code>verifyBlobIntegrity</code> on the read adapter to verify content after fetching.</p>
+        <p>Best for browser dapps that need reliable CORS-friendly reads (one endpoint instead of ~30 nodes) and a "publisher pays storage" model where the user only signs the on-chain <code>addEntry</code>. Reads go through a trusted operator. To trust-but-verify, pass a <code>verifyBlobIntegrity</code> callback (type <code>WalrusBlobIntegrityCheck</code>) as a construction option - the adapter invokes it with the fetched bytes and the expected blob ID after every successful blob fetch, and it must throw on a mismatch (rewrapped as <code>TransportError</code>). Quilt patch reads are not verified.</p>
 
         <div class="code-block">
           <div class="code-header">
@@ -580,7 +599,12 @@
   HttpPublisherWriteAdapter,
 } <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
 
-<span class="kw">const</span> walrusReader = HttpAggregatorReadAdapter.<span class="fn">fromMorseConfig</span>(config, client);
+<span class="kw">const</span> walrusReader = HttpAggregatorReadAdapter.<span class="fn">fromMorseConfig</span>(config, client, {
+  <span class="cm">// Optional trust-but-verify: runs after every blob fetch; throw on mismatch.</span>
+  verifyBlobIntegrity: <span class="kw">async</span> (bytes, expectedBlobId) =&gt; {
+    <span class="cm">// e.g. recompute via WalrusClient.computeBlobMetadata and compare blob IDs</span>
+  },
+});
 <span class="kw">const</span> walrusWriter = HttpPublisherWriteAdapter.<span class="fn">fromConfig</span>({
   publisherUrl: <span class="st">"https://walrus-testnet-publisher.nami.cloud"</span>,
   ownerAddress: account.address,
@@ -591,7 +615,7 @@
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">HTTP adapters skip the 2-transaction optimization</div>
-            <div class="callout-text">The HTTP adapters are NOT compatible with <code>addEntryFromBytes</code> / <code>addEncryptedEntryFromBytes</code>. Those functions require <code>WalrusFlowCapable</code> for the combined PTB; the publisher-paid path is naturally 1 transaction through <code>uploadBlob</code> + <code>addEntry</code>.</div>
+            <div class="callout-text">The HTTP adapters are NOT compatible with <code>addEntryFromBytes</code> / <code>addEncryptedEntryFromBytes</code>. Those functions require <code>WalrusFlowCapable</code> for the combined PTB; the publisher-paid path is naturally 1 transaction through <code>uploadBlob</code> + <code>addEntry</code>. Check any <code>WalrusWriteAdapter</code> at runtime with the <code>isWalrusFlowCapable(walrus)</code> type guard.</div>
           </div>
         </div>
 
@@ -599,7 +623,7 @@
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">Use <code>HttpAggregatorReadAdapter</code> for reads on testnet</div>
-            <div class="callout-text">On testnet, <code>DefaultWalrusReadAdapter</code> (direct-node fanout) may fail. Use <code>HttpAggregatorReadAdapter</code> for reads instead - it routes through a single aggregator endpoint and is reliable on testnet. Mainnet storage nodes are expected to be more reliable.</div>
+            <div class="callout-text">On testnet, <code>DefaultWalrusReadAdapter</code> (direct-node fanout with client-side verification) frequently fails right after an upload with <code>No valid blob metadata could be retrieved from any storage node</code>, even for healthy blobs - on both plain and encrypted reads. <code>HttpAggregatorReadAdapter</code> succeeds against the same blobs: it fetches from a single aggregator endpoint and skips client-side blob verification, so you trust the operator's bytes (pass <code>verifyBlobIntegrity</code> to add a check). Mainnet storage nodes are expected to be more reliable.</div>
           </div>
         </div>
 
@@ -677,6 +701,29 @@ console.<span class="fn">log</span>(<span class="st">`Connected! Found </span>${
   }
 }</pre>
         </div>
+
+        <h3 id="formatting-errors">Formatting Errors for UI</h3>
+        <p>For end-user surfaces (toasts, dialogs, banners), <code>formatUserMessage(err)</code> translates any thrown value into a <code>FormattedError</code> - <code>{ title, description, cause }</code>. It accepts <code>unknown</code>, so it works directly in a catch block without narrowing first; non-<code>MorseError</code> throws fall back to a generic message, and the original error is preserved in <code>cause</code>.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">typescript</span>
+            <button class="code-copy">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+          </div>
+          <pre><span class="kw">import</span> { formatUserMessage } <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
+
+<span class="kw">try</span> {
+  <span class="kw">await</span> <span class="fn">addEntryFromBytes</span>(adapter, config, args);
+} <span class="kw">catch</span> (err) {
+  <span class="kw">const</span> { title, description } = <span class="fn">formatUserMessage</span>(err);
+  toast.<span class="fn">error</span>(title, { description });  <span class="cm">// e.g. "Slug already taken"</span>
+}</pre>
+        </div>
+
+        <p>The copy uses the protocol's own terminology ("publication", "entry", "PublisherCap"). To translate into your app's domain (blog &rarr; post, gallery &rarr; image), narrow on the error class first and write your own message, then fall back to <code>formatUserMessage</code> for the rest.</p>
 
 <!-- 
 

@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recipient Files · Morse Docs</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="description" content="Recipient files are Morse's second content model: standalone files on Walrus with a per-file recipient list enforced on-chain. Encrypt a file for specific addresses, share it with a single string, and revoke access at decrypt time - no publication required.">
+  <link rel="canonical" href="https://docs.morsecms.xyz/recipient-files.html">
+  <meta property="og:title" content="Recipient Files · Morse Docs">
+  <meta property="og:description" content="Recipient files are Morse's second content model: standalone files on Walrus with a per-file recipient list enforced on-chain. Encrypt a file for specific addresses, share it with a single string, and revoke access at decrypt time - no publication required.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://docs.morsecms.xyz/recipient-files.html">
+  <meta property="og:site_name" content="Morse Docs">
+  <meta name="twitter:card" content="summary">
+  <link rel="alternate" type="text/markdown" href="https://docs.morsecms.xyz/recipient-files.md" title="Markdown version">
+</head>
+<body>
+
+<div class="banner">
+  <a href="https://www.morsecms.xyz" target="_blank" rel="noopener"><span class="banner-label-long">MORSE PROTOCOL V1 — LIVE ON SUI TESTNET</span><span class="banner-label-short">MORSE V1 — SUI TESTNET</span></a>
+  <div class="banner-links">
+    <a href="https://www.morsecms.xyz" target="_blank" rel="noopener">MORSECMS.XYZ</a>
+    <a href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener">GITHUB</a>
+  </div>
+</div>
+
+<header class="header">
+  <div class="header-inner">
+    <button class="hamburger" id="hamburger" aria-label="Toggle sidebar">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <a href="index.html" class="logo-home" aria-label="Morse docs home">
+      <span class="logo">
+        <span class="logo-wordmark">MORSE</span>
+        <span class="morse-glyphs logo-code" aria-hidden="true"><span class="dash"></span><span class="dash"></span><span class="gap"></span><span class="dash"></span><span class="dash"></span><span class="dash"></span><span class="gap"></span><span class="dot"></span><span class="dash"></span><span class="dot"></span><span class="gap"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="gap"></span><span class="dot"></span></span>
+      </span>
+      <span class="logo-suffix">Docs</span>
+    </a>
+    <div class="header-search">
+      <button class="search-box" type="button" aria-label="Search documentation (⌘K)">
+        <span class="search-icon">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </span>
+        <span class="search-placeholder">Search documentation…</span>
+        <kbd class="search-kbd">⌘K</kbd>
+      </button>
+    </div>
+    <nav class="header-links">
+      <button class="header-link" id="askai-btn" title="Ask AI (⌘I)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>
+        <span>Ask AI</span>
+      </button>
+      <div class="agents-wrap">
+        <button class="agents-btn" id="agents-btn" aria-expanded="false" aria-haspopup="true">
+          <span class="morse-glyphs" aria-hidden="true" style="color:var(--accent)"><span class="dot"></span><span class="dash"></span><span class="dot"></span></span>
+          <span>For agents</span>
+        </button>
+        <div class="agents-menu" id="agents-menu">
+          <div class="agents-menu-title">Use Morse docs with AI</div>
+          <a class="agents-item" href="llms.txt">
+            <span class="agents-item-title">llms.txt</span>
+            <span class="agents-item-desc">Compact index of every docs page, for agent retrieval.</span>
+          </a>
+          <div class="agents-cmd"><code data-copy="https://docs.morsecms.xyz/llms.txt">https://docs.morsecms.xyz/llms.txt</code><button class="agents-copy" aria-label="Copy llms.txt URL"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>
+          <a class="agents-item" href="llms-full.txt">
+            <span class="agents-item-title">llms-full.txt</span>
+            <span class="agents-item-desc">The entire documentation as one Markdown file.</span>
+          </a>
+          <div class="agents-cmd"><code data-copy="https://docs.morsecms.xyz/llms-full.txt">https://docs.morsecms.xyz/llms-full.txt</code><button class="agents-copy" aria-label="Copy llms-full.txt URL"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>
+          <div class="agents-item" role="presentation">
+            <span class="agents-item-title">Markdown twins</span>
+            <span class="agents-item-desc">Every page is also served as Markdown — swap <code>.html</code> for <code>.md</code>.</span>
+          </div>
+          <div class="agents-cmd"><code data-copy="curl https://docs.morsecms.xyz/entries.md"><span class="prompt">$ </span>curl https://docs.morsecms.xyz/entries.md</code><button class="agents-copy" aria-label="Copy curl command"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>
+          <div class="agents-divider"></div>
+          <div class="agents-item" role="presentation">
+            <span class="agents-item-title">Prime your coding agent</span>
+            <span class="agents-item-desc">Paste into Claude Code, Cursor, or any agent.</span>
+          </div>
+          <div class="agents-cmd"><code data-copy="Read https://docs.morsecms.xyz/llms-full.txt — the full documentation for Morse, the decentralized headless CMS protocol on Sui + Walrus. Use it to help me build with the Morse CLI, TypeScript SDK, or Move contracts.">Read https://docs.morsecms.xyz/llms-full.txt — the full docs for Morse…</code><button class="agents-copy" aria-label="Copy agent prompt"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>
+          <div class="agents-divider"></div>
+          <a class="agents-item" href="use-morse-with-ai.html">
+            <span class="agents-item-title">Use Morse with AI →</span>
+            <span class="agents-item-desc">Full guide: agent workflows, SDK &amp; CLI for automation.</span>
+          </a>
+        </div>
+      </div>
+      <a href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener" class="header-link header-link-github" title="GitHub">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        <span>GitHub</span>
+      </a>
+      <a href="https://www.morsecms.xyz" target="_blank" rel="noopener" class="header-link header-link-primary">morsecms.xyz</a>
+    </nav>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="overlay"></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <nav></nav>
+  </aside>
+
+  <main class="main">
+    <div class="content">
+      <nav class="breadcrumbs">
+        <span class="breadcrumb-link">Protocol</span>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-current">Recipient Files</span>
+      </nav>
+
+      <div class="page-actions">
+        <button class="pgact-btn pgact-main" id="pgact-copy"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy page</button>
+        <button class="pgact-btn pgact-caret" id="pgact-caret" aria-label="More AI actions" aria-haspopup="true" aria-expanded="false">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="pgact-menu" id="pgact-menu">
+          <button class="pgact-item" id="pgact-copy-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy page as Markdown</button>
+          <a class="pgact-item" id="pgact-view-md" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> View as Markdown</a>
+          <a class="pgact-item" id="pgact-chatgpt" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg> Open in ChatGPT</a>
+          <a class="pgact-item" id="pgact-claude" href="#" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg> Open in Claude</a>
+        </div>
+      </div>
+
+      <article class="article">
+      <h1>Recipient Files</h1>
+      <p class="article-lead">Recipient files are Morse's second content model: standalone files on Walrus with a per-file recipient list enforced on-chain. Encrypt a file for specific addresses, share it with a single string, and revoke access at decrypt time - no publication required.</p>
+
+      <h2 id="overview">Overview</h2>
+      <p>Publications, collections, and entries model structured CMS content: a site with editors, drafts, and revision history. Recipient files model something simpler - <em>"share THIS file with these addresses."</em> Each file is an independent shared object on Sui (<code>RecipientFile</code>, defined in the <code>recipient_file</code> Move module) that references a Walrus blob and embeds its own recipient set. There is no shared ACL across files and no capability objects involved.</p>
+
+      <div class="table-wrap"><table>
+        <thead><tr><th></th><th>Publication entries</th><th>Recipient files</th></tr></thead>
+        <tbody>
+          <tr><td>Container</td><td>Publication → Collection → Entry</td><td>None - each file stands alone</td></tr>
+          <tr><td>Write authority</td><td><code>PublisherCap</code> (capability object)</td><td><code>owner</code> address field on the file</td></tr>
+          <tr><td>Read gating</td><td>Publisher Seal policy (tag <code>1</code>): any active cap holder</td><td>Recipient-file Seal policy (tag <code>3</code>): addresses in the file's <code>members</code> set</td></tr>
+          <tr><td>Revision history</td><td>Append-only revisions</td><td>None - metadata is mutable, content is fixed at creation</td></tr>
+          <tr><td>Use for</td><td>Sites, blogs, structured content</td><td>Ad-hoc encrypted file sharing between wallets</td></tr>
+        </tbody>
+      </table></div>
+<br>
+      <p>Use recipient files when the unit of sharing is a single file and the audience is a specific list of wallets: contracts, reports, credentials, media handoffs. Use <a href="entries.html">entries</a> when content belongs to a publication and is gated by publisher capabilities.</p>
+
+      <div class="callout callout-info">
+        <div class="callout-icon">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div class="callout-body">
+          <div class="callout-title">Supersedes the legacy <code>file</code> + <code>allowlist</code> modules</div>
+          <div class="callout-text">Earlier contract versions modeled encrypted files as an <code>EncryptedFile</code> paired with a separate <code>Allowlist</code> object. The <code>recipient_file</code> module embeds the recipient set directly on the file and replaces that pair. The legacy modules remain in the package bytecode for old clients, but all new code - SDK and CLI included - uses <code>recipient_file</code>.</div>
+        </div>
+      </div>
+
+      <h2 id="the-recipientfile-object">The RecipientFile Object</h2>
+      <p>A <code>RecipientFile</code> is created in the same transaction that certifies its Walrus blob, then immediately shared so Seal key servers can dry-run its approval function regardless of who asks:</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">Move</span>
+        </div>
+        <pre><span class="kw">public struct</span> <span class="ty">RecipientFile</span> <span class="kw">has</span> <span class="ty">key</span> {
+  id: <span class="ty">UID</span>,
+  owner: <span class="ty">address</span>,               <span class="cm">// may mutate metadata, edit recipients, transfer, delete</span>
+  blob_id: <span class="ty">vector</span>&lt;<span class="ty">u8</span>&gt;,         <span class="cm">// Walrus content id (32 bytes)</span>
+  blob_object_id: <span class="ty">Option</span>&lt;<span class="ty">ID</span>&gt;,  <span class="cm">// on-chain Walrus Blob object, when known</span>
+  name: <span class="ty">String</span>,                 <span class="cm">// original filename (max 256 chars)</span>
+  content_type: <span class="ty">String</span>,         <span class="cm">// MIME type (max 255 chars)</span>
+  size: <span class="ty">u64</span>,                    <span class="cm">// plaintext byte length</span>
+  members: <span class="ty">VecSet</span>&lt;<span class="ty">address</span>&gt;,    <span class="cm">// addresses that may decrypt</span>
+  created_at_ms: <span class="ty">u64</span>,           <span class="cm">// Sui clock timestamp, set once</span>
+}</pre>
+      </div>
+
+      <p>Key semantics, enforced by the contract:</p>
+      <ul>
+        <li><strong>The creator is always a member.</strong> <code>new_recipient_file</code> auto-inserts the transaction sender into <code>members</code>; duplicates in the recipients argument (including a self-reference) are silently deduplicated.</li>
+        <li><strong>Owner and member are separate roles.</strong> The <code>owner</code> field grants mutation rights; <code>members</code> grants decrypt access. The owner can remove themselves from <code>members</code> - they lose decrypt access but keep mutation rights.</li>
+        <li><strong><code>size</code> is the plaintext length.</strong> The Walrus blob stores the larger ciphertext (Seal adds an envelope). The field is informational for UIs, not validated against Walrus.</li>
+        <li><strong>Metadata is mutable, content is not.</strong> Only <code>name</code> and <code>content_type</code> can change after creation. To change the content, upload a new file.</li>
+        <li><strong>Shared object.</strong> The creation PTB calls <code>share_recipient_file</code>, so the file belongs to no wallet. Anyone can read the record; only <code>owner</code> passes the mutation checks.</li>
+      </ul>
+
+      <h3 id="move-operations">Move Operations</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Function</th><th>Authority</th><th>Effect</th></tr></thead>
+        <tbody>
+          <tr><td><code>new_recipient_file</code></td><td>Anyone</td><td>Create a file record (returned by value; share it in the same PTB). Sender auto-added to <code>members</code>.</td></tr>
+          <tr><td><code>new_recipient_file_with_seal_prefix</code></td><td>Anyone</td><td>Same, plus binds a caller-supplied Seal identity prefix to the file via a dynamic field. Used by all encrypted upload flows.</td></tr>
+          <tr><td><code>share_recipient_file</code></td><td>Creator (same PTB)</td><td>Share the object so key servers can dry-run approval.</td></tr>
+          <tr><td><code>add_recipient</code></td><td>Owner</td><td>Add an address to <code>members</code>. Aborts if already present.</td></tr>
+          <tr><td><code>remove_recipient</code></td><td>Owner</td><td>Remove an address from <code>members</code>. Aborts if not present.</td></tr>
+          <tr><td><code>update_metadata</code></td><td>Owner</td><td>Replace <code>name</code> and <code>content_type</code>.</td></tr>
+          <tr><td><code>transfer_ownership</code></td><td>Owner</td><td>Set a new <code>owner</code>. Does <em>not</em> touch <code>members</code>.</td></tr>
+          <tr><td><code>delete_file</code></td><td>Owner</td><td>Delete the metadata record. The Walrus blob is untouched.</td></tr>
+          <tr><td><code>seal_approve</code> / <code>seal_approve_with_prefix</code></td><td>Seal key servers (dry-run)</td><td>Abort unless the sender is a current member and the Seal identity matches the file's namespace.</td></tr>
+        </tbody>
+      </table></div>
+<br>
+      <p>Every mutation emits an event (<code>RecipientFileCreated</code>, <code>RecipientAdded</code>, <code>RecipientRemoved</code>, <code>RecipientFileMetadataUpdated</code>, <code>RecipientFileOwnershipTransferred</code>, <code>RecipientFileDeleted</code>, <code>RecipientFileSealPrefixAttached</code>). These events are the discovery mechanism - see <a href="#listing-and-discovery">Listing &amp; Discovery</a>.</p>
+
+      <h2 id="encryption-and-the-recipient-list">Encryption &amp; the Recipient List</h2>
+      <p>Encrypted recipient files use <strong>Seal</strong> - the same threshold-encryption layer that gates encrypted entries - but under a second, independent policy. Both policies coexist in the same contract package:</p>
+
+      <div class="table-wrap"><table>
+        <thead><tr><th></th><th>Publisher policy</th><th>Recipient-file policy</th></tr></thead>
+        <tbody>
+          <tr><td>Policy tag</td><td><code>1</code></td><td><code>3</code></td></tr>
+          <tr><td>Identity prefix</td><td>Publication ID (32 bytes)</td><td>Caller-chosen random bytes (32 recommended), bound to the file at creation</td></tr>
+          <tr><td>Approval function</td><td><code>publication::seal_approve_publisher</code></td><td><code>recipient_file::seal_approve_with_prefix</code> (or <code>seal_approve</code> for legacy files)</td></tr>
+          <tr><td>Who may decrypt</td><td>Holders of an active <code>PublisherCap</code></td><td>Addresses in the file's <code>members</code> set</td></tr>
+          <tr><td>Documented at</td><td><a href="access-control.html#seal-integration">Access Control → Seal Integration</a></td><td>This page</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3 id="seal-identity-format">Seal Identity Format</h3>
+      <p>A recipient-file Seal identity is the byte concatenation of a prefix, the policy tag, and a per-encryption nonce:</p>
+
+      <pre class="diagram">┌───────────────────────────────┬────────────────┬─────────────────────┐
+│  seal_id_prefix (≥1 byte)      │ policy_tag (1)  │  nonce (≥1 byte)     │
+└───────────────────────────────┴────────────────┴─────────────────────┘
+  Random, caller-chosen.          Must be 0x03      Fresh per encryption.
+  32 bytes recommended.           for the           16 bytes recommended.
+  Bound to the file on-chain      recipient-file
+  at creation.                    policy.</pre>
+
+      <p>The prefix solves an ordering problem: a file's Sui object ID does not exist until its creation transaction is signed, but encryption must happen <em>before</em> upload, which happens before that transaction. So the client picks a random prefix, encrypts under <code>prefix || 0x03 || nonce</code>, and binds the same prefix to the file on-chain via <code>new_recipient_file_with_seal_prefix</code>. This is what makes the whole upload fit in a single certify-and-create PTB.</p>
+      <p>The SDK exposes the recommended sizes as <code>RECOMMENDED_SEAL_PREFIX_BYTES</code> (32) and <code>RECOMMENDED_SEAL_NONCE_BYTES</code> (16), and generates values with <code>randomSealPrefix()</code> / <code>randomSealNonce()</code>. Files created via the older <code>new_recipient_file</code> path use the file's object ID itself as the prefix and are approved by the plain <code>seal_approve</code> entry point; <code>get_seal_id_prefix</code> tells clients which variant a file uses.</p>
+
+      <h3 id="decryption-sequence">Decryption Sequence</h3>
+      <p>Decryption is gated on-chain, at decrypt time, by the current recipient set:</p>
+      <ol>
+        <li><strong>Recipient creates a <code>SessionKey</code></strong> - their wallet signs a personal message producing a time-limited key scoped to the contract package. The SDK never builds session keys silently; the consumer always signs.</li>
+        <li><strong>SDK builds an approval PTB</strong> - <code>decryptUnderRecipientFile</code> constructs a transaction calling <code>recipient_file::seal_approve_with_prefix</code> with the Seal identity and the shared <code>RecipientFile</code> object.</li>
+        <li><strong>Seal key servers dry-run it</strong> - each server executes the PTB against current chain state. The Move function checks that the identity starts with the file's bound prefix, carries policy tag <code>3</code>, and that the requesting address is in <code>members</code>. Any failure and the server refuses its share.</li>
+        <li><strong>Threshold shares are returned</strong> - once the threshold (default 2) is met, the client combines shares and decrypts the Walrus ciphertext locally.</li>
+      </ol>
+
+      <div class="callout callout-info">
+        <div class="callout-icon">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div class="callout-body">
+          <div class="callout-title">Revocation is enforced at decrypt time</div>
+          <div class="callout-text">Because key servers re-check <code>members</code> on every request, <code>remove_recipient</code> takes effect immediately: the removed address gets <code>SealError</code> code <code>no-access</code> on its next decrypt attempt (verified on testnet). Revocation cannot claw back plaintext a recipient already decrypted - it stops future key-share requests, nothing more.</div>
+        </div>
+      </div>
+
+      <h2 id="cli-workflows">CLI Workflows</h2>
+      <p>The <code>morse file</code> command group covers the full lifecycle. See <a href="cli-overview.html">CLI Overview</a> for installation and account setup.</p>
+
+      <h3 id="upload-and-share">Upload &amp; Share</h3>
+      <p>One command encrypts, uploads to Walrus, and registers the file on-chain. Pass <code>-r/--recipient</code> once per recipient; the sender is always added automatically. <code>--encrypt</code> is implied when <code>-r</code> is given.</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="code-copy"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+        </div>
+        <pre>morse file upload &lt;path&gt; -n &lt;name&gt; --encrypt [-r &lt;addr&gt;]... [--content-type &lt;mime&gt;] [--epochs &lt;n&gt;]</pre>
+      </div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">example</span>
+        </div>
+        <pre>morse file upload ./launch-plan.md -n launch-plan.md -r 0x71a3...9f2b -r 0x88c2...41de</pre>
+      </div>
+      <div class="code-block code-block-output">
+        <div class="code-header">
+          <span class="code-lang">output</span>
+        </div>
+        <pre>Uploaded encrypted file 0x5f0a...c37e
+  blobId: kD3x...vQ8
+  share:  mf1.MHg1ZjBh...LmM4.4kfx....9dQz
+  tx:     4N94D7Zn...
+Give the share string to recipients; they need it (plus membership) to decrypt.</pre>
+      </div>
+
+      <p>The <strong>share string</strong> (<code>mf1.&lt;fileId&gt;.&lt;prefix&gt;.&lt;nonce&gt;</code>, each part base64url) bundles everything a recipient needs to locate and decrypt the file. It survives copy-paste and chat. It is not a secret capability by itself - decryption still requires the recipient's address to be in the on-chain member set - but treat it as sensitive: the prefix and nonce are not recoverable from the ciphertext, so a lost share string means a member cannot decrypt.</p>
+
+      <p>For a world-readable file, use <code>--public</code> instead of <code>--encrypt</code>. The bytes go to Walrus unencrypted and the CLI prints a direct aggregator URL (<code>&lt;aggregator&gt;/v1/blobs/&lt;blobId&gt;</code>) - anyone can fetch it without the CLI at all. <code>--public</code> and <code>-r</code> are mutually exclusive.</p>
+
+      <h3 id="download">Download</h3>
+      <p>Recipients decrypt with the share string. The CLI reads the on-chain record, fetches the ciphertext from Walrus, signs a short-lived <code>SessionKey</code> (10 minutes) with the active account, and decrypts locally:</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="code-copy"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+        </div>
+        <pre>morse file download --share &lt;string&gt; --out &lt;path&gt; [--via-aggregator]</pre>
+      </div>
+
+      <ul>
+        <li><code>--share</code> carries the file ID, prefix, and nonce in one token. Alternatively pass the file ID positionally with <code>--prefix &lt;hex&gt; --nonce &lt;hex&gt;</code>.</li>
+        <li><code>--raw</code> writes the stored bytes without decrypting. For a file with a recipient list and no decrypt input, the CLI refuses by default - the ciphertext is unusable - and <code>--raw</code> is the explicit opt-in.</li>
+        <li><code>--out</code> writes to a file; omitting it streams to stdout (not available in <code>--json</code> mode).</li>
+      </ul>
+
+      <p>The encrypted round-trip is byte-for-byte: the downloaded plaintext is identical to the uploaded file (verified on testnet). A non-member running the same command gets <code>SealError</code> code <code>no-access</code>; a tampered ciphertext fails with <code>decrypt-failed</code>.</p>
+
+      <div class="callout callout-warning">
+        <div class="callout-icon">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div class="callout-body">
+          <div class="callout-title">Freshly uploaded blobs may fail the default read path on testnet</div>
+          <div class="callout-text">Right after an upload, the default verifying Walrus read often fails with "No valid blob metadata could be retrieved from any storage node" while testnet storage nodes catch up. Pass <code>--via-aggregator</code> to fetch through the Walrus aggregator HTTP service instead - it is reliable immediately, at the cost of client-side blob verification.</div>
+        </div>
+      </div>
+
+      <h3 id="managing-recipients">Managing Recipients</h3>
+      <p>The owner can grant and revoke decrypt access at any time; changes take effect on the next decrypt attempt:</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="code-copy"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+        </div>
+        <pre>morse file recipient add &lt;file&gt; &lt;address&gt;
+morse file recipient remove &lt;file&gt; &lt;address&gt;
+morse file recipient list &lt;file&gt;</pre>
+      </div>
+
+      <p>A newly added recipient also needs the share string (prefix + nonce) to decrypt - membership alone locates the key shares but not the identity bytes. Send it over any channel; the on-chain member check is what actually gates access.</p>
+
+      <h3 id="lifecycle-commands">Lifecycle Commands</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Command</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>file get &lt;file&gt;</code></td><td>Fetch the on-chain metadata record.</td></tr>
+          <tr><td><code>file list [--address &lt;addr&gt;] [--accessible] [--hydrate] [--limit &lt;n&gt;]</code></td><td>List files owned by (or, with <code>--accessible</code>, decryptable by) an address, via event indexing. <code>--hydrate</code> fetches full records (one read per file).</td></tr>
+          <tr><td><code>file register --blob-id &lt;id&gt; -n &lt;name&gt; --content-type &lt;mime&gt; --size &lt;bytes&gt; (--public | --encrypted --seal-prefix &lt;hex&gt;) [-r &lt;addr&gt;]...</code></td><td>Register on-chain metadata for a blob already on Walrus, e.g. one uploaded out-of-band.</td></tr>
+          <tr><td><code>file update &lt;file&gt; -n &lt;name&gt; --content-type &lt;mime&gt;</code></td><td>Update name and content type. Owner only.</td></tr>
+          <tr><td><code>file transfer-ownership &lt;file&gt; &lt;newOwner&gt;</code></td><td>Transfer mutation rights. Recipient access is governed separately by the member list. Prompts; pass <code>-y</code> before the subcommand to skip.</td></tr>
+          <tr><td><code>file delete &lt;file&gt;</code></td><td>Delete the metadata record. The Walrus blob is <em>not</em> deleted - it expires on its own storage lease. Prompts; <code>-y</code> skips.</td></tr>
+        </tbody>
+      </table></div>
+<br>
+      <div class="callout callout-warning">
+        <div class="callout-icon">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div class="callout-body">
+          <div class="callout-title">Ownership transfer does not move decrypt access</div>
+          <div class="callout-text"><code>transfer_ownership</code> changes only the <code>owner</code> field. For a full handover - new owner gains decrypt access, old owner loses it - also run <code>recipient add &lt;file&gt; &lt;newOwner&gt;</code> and <code>recipient remove &lt;file&gt; &lt;oldOwner&gt;</code> (or compose all three calls in one PTB via the SDK).</div>
+        </div>
+      </div>
+
+      <h2 id="sdk-usage">SDK Usage</h2>
+      <p>All recipient-file APIs are exported from the <code>@arcadiasystems/morse-sdk</code> root. The examples below assume the adapter, config, and client setup from <a href="sdk-client-setup.html">SDK Setup</a>.</p>
+
+      <h3 id="sdk-encrypted-upload">Encrypted Upload</h3>
+      <p><code>uploadEncryptedRecipientFileFromBytes</code> is the one-shot flow: it picks a random Seal prefix and nonce, encrypts, uploads to Walrus, and creates the file - in two wallet interactions (Walrus <code>register_blob</code>, then a combined <code>certify_blob + new_recipient_file_with_seal_prefix + share</code> PTB):</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">typescript</span>
+          <button class="code-copy"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+        </div>
+        <pre><span class="kw">import</span> {
+  DefaultSealAdapter,
+  DefaultWalrusWriteAdapter,
+  uploadEncryptedRecipientFileFromBytes,
+} <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
+
+<span class="kw">const</span> seal = DefaultSealAdapter.<span class="fn">fromMorseConfig</span>(config, {}, client);
+<span class="kw">const</span> walrus = DefaultWalrusWriteAdapter.<span class="fn">fromConfig</span>(
+  { network: <span class="st">"testnet"</span>, suiClient: client },
+  keypair,
+);
+
+<span class="kw">const</span> result = <span class="kw">await</span> <span class="fn">uploadEncryptedRecipientFileFromBytes</span>(adapter, config, {
+  walrus,
+  seal,
+  plaintext: <span class="kw">new</span> <span class="fn">TextEncoder</span>().<span class="fn">encode</span>(<span class="st">"the launch plan"</span>),
+  recipients: [<span class="st">"0x71a3...9f2b"</span>],   <span class="cm">// sender is auto-added on-chain</span>
+  name: <span class="st">"launch-plan.md"</span>,
+  contentType: <span class="st">"text/markdown"</span>,
+  upload: { epochs: <span class="nu">3</span>, deletable: <span class="kw">true</span> },
+});
+<span class="cm">// result → { fileId, blobId, blobObjectId, digest, gasUsedMist,</span>
+<span class="cm">//            sealIdPrefix, sealNonce }</span>
+<span class="cm">// Persist sealIdPrefix + sealNonce: recipients need both to decrypt,</span>
+<span class="cm">// and they are not recoverable from the ciphertext.</span></pre>
+      </div>
+
+      <p>For an unencrypted file, use <code>uploadRecipientFileFromBytes</code> (same shape, no <code>seal</code>, <code>bytes</code> instead of <code>plaintext</code>). To register a blob you uploaded separately, use <code>createRecipientFile</code> (public) or <code>createEncryptedRecipientFile</code> (takes the <code>sealIdPrefix</code> the blob was encrypted under). Both upload helpers require a Walrus write adapter that implements <code>startBlobUpload</code> (<code>DefaultWalrusWriteAdapter</code> does); if the second transaction fails after the upload succeeded, they throw <code>UncertifiedBlobError</code> with the stranded blob's IDs.</p>
+
+      <h3 id="sdk-decrypt">Decrypt with a SessionKey</h3>
+      <p>Decryption needs the file ID, the Seal prefix and nonce, and a <code>SessionKey</code>. The SDK never signs on your behalf - creating the session key is an explicit personal-message signature by the consumer:</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">typescript</span>
+          <button class="code-copy"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+        </div>
+        <pre><span class="kw">import</span> { SessionKey } <span class="kw">from</span> <span class="st">"@mysten/seal"</span>;
+<span class="kw">import</span> {
+  buildRecipientFileSealId,
+  HttpAggregatorReadAdapter,
+  RpcRecipientFilesReader,
+} <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
+
+<span class="cm">// 1. Read the on-chain record and fetch the ciphertext from Walrus.</span>
+<span class="kw">const</span> filesReader = RpcRecipientFilesReader.<span class="fn">fromConfig</span>(client, config);
+<span class="kw">const</span> file = <span class="kw">await</span> filesReader.<span class="fn">getRecipientFile</span>(result.fileId);
+
+<span class="kw">const</span> walrusReader = HttpAggregatorReadAdapter.<span class="fn">fromMorseConfig</span>(config, client);
+<span class="kw">const</span> ciphertext = <span class="kw">await</span> walrusReader.<span class="fn">readBlob</span>(file.blobId);
+
+<span class="cm">// 2. Sign a SessionKey (wallet personal-message signature).</span>
+<span class="kw">const</span> sessionKey = <span class="kw">await</span> SessionKey.<span class="fn">create</span>({
+  address: keypair.<span class="fn">toSuiAddress</span>(),
+  packageId: config.originalPackageId ?? config.packageId,
+  ttlMin: <span class="nu">10</span>,
+  signer: keypair,  <span class="cm">// or `signer` in the browser</span>
+  suiClient: client,
+});
+
+<span class="cm">// 3. Rebuild the Seal identity and decrypt.</span>
+<span class="kw">const</span> sealId = <span class="fn">buildRecipientFileSealId</span>(result.sealIdPrefix, result.sealNonce);
+<span class="kw">const</span> plaintext = <span class="kw">await</span> seal.<span class="fn">decryptUnderRecipientFile</span>(ciphertext, {
+  sessionKey,
+  sealId,
+  fileId: file.id,
+});
+
+console.<span class="fn">log</span>(<span class="kw">new</span> <span class="fn">TextDecoder</span>().<span class="fn">decode</span>(plaintext));</pre>
+      </div>
+
+      <p>If the session key's address is not in the file's member set, the key servers refuse and the SDK throws <code>SealError</code> with code <code>no-access</code>. <code>decodeRecipientFileSealId(id, prefixLength)</code> splits an identity back into prefix, tag, and nonce when you need to inspect one.</p>
+
+      <h3 id="listing-and-discovery">Listing &amp; Discovery</h3>
+      <p><code>RecipientFile</code> objects are <em>shared</em>, so they belong to no wallet and never appear in owned-object queries - you cannot enumerate them with <code>getOwnedObjects</code>. Discovery is event-based instead: every lifecycle mutation emits an event, and the SDK ships pure reducers that replay an event stream into a current-state list:</p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">typescript</span>
+          <button class="code-copy"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy</button>
+        </div>
+        <pre><span class="kw">import</span> {
+  buildRecipientFileEventTypes,
+  reconcileRecipientFilesAccessibleBy,
+  reconcileRecipientFilesOwnedBy,
+} <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
+
+<span class="cm">// Event types are rooted at the package where the module was FIRST</span>
+<span class="cm">// defined - NOT the current packageId, which moves on every upgrade.</span>
+<span class="kw">const</span> types = <span class="fn">buildRecipientFileEventTypes</span>(
+  config.recipientFileEventOriginPackageId ?? config.packageId,
+);
+
+<span class="cm">// Fetch events of these types from your event source (indexer or RPC),</span>
+<span class="cm">// normalized to { type, json, timestampMs }, oldest first. Then reduce:</span>
+<span class="kw">const</span> owned = <span class="fn">reconcileRecipientFilesOwnedBy</span>(events, myAddress, types);
+<span class="kw">const</span> accessible = <span class="fn">reconcileRecipientFilesAccessibleBy</span>(events, myAddress, types);
+<span class="cm">// Both return RecipientFileSummary[] - no blobId/blobObjectId. Hydrate</span>
+<span class="cm">// individual files via filesReader.getRecipientFile(summary.id).</span></pre>
+      </div>
+
+      <p>The reducers handle creation, metadata updates, recipient add/remove, ownership transfer, and deletion. One known gap: <code>reconcileRecipientFilesOwnedBy</code> does not add files transferred <em>to</em> the queried address, because the transfer event does not carry the file's metadata - re-fetch those with <code>getRecipientFile</code>. The CLI's <code>morse file list</code> uses these same reducers over <code>suix_queryEvents</code> (a deprecated Sui RPC endpoint; pass <code>--indexer-url</code> to point at your own event source).</p>
+
+      <h3 id="types-and-config">Types &amp; Config Reference</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Export</th><th>What it is</th></tr></thead>
+        <tbody>
+          <tr><td><code>RecipientFileId</code></td><td>Branded string for a <code>RecipientFile</code> object ID. Validate with <code>toRecipientFileId()</code>.</td></tr>
+          <tr><td><code>RecipientFile</code></td><td>Full live-object record: <code>id</code>, <code>owner</code>, <code>blobId</code>, <code>blobObjectId</code>, <code>name</code>, <code>contentType</code>, <code>size</code>, <code>members</code>, <code>createdAtMs</code>.</td></tr>
+          <tr><td><code>RecipientFileSummary</code></td><td>Event-derived view (<code>kind: "summary"</code>). Missing <code>blobId</code> / <code>blobObjectId</code>; hydrate when needed.</td></tr>
+          <tr><td><code>RecipientFileFull</code> / <code>RecipientFileSummaryOrFull</code></td><td>Hydrated variant (<code>kind: "full"</code>) and the discriminated union the list flows return.</td></tr>
+          <tr><td><code>MorseRecipientFileConfig</code></td><td>Config slice for recipient-file ops: <code>packageId</code>, <code>originalPackageId</code>, <code>recipientFileEventOriginPackageId</code>. Satisfied by <code>morseConfig({ network })</code>.</td></tr>
+          <tr><td><code>SealPolicyTag</code></td><td>Policy tag constants: <code>Publisher = 1</code>, <code>RecipientFile = 3</code>.</td></tr>
+        </tbody>
+      </table></div>
+<br>
+      <p>The <code>recipientFileEventOriginPackageId</code> field exists because Sui stamps events (and created-object types) with the package address where a struct was <em>first</em> defined. The <code>recipient_file</code> module arrived in a later upgrade than the publication modules, so it has its own origin address - distinct from both <code>packageId</code> (current published-at) and <code>originalPackageId</code> (v1 genesis). <code>morseConfig({ network: "testnet" })</code> carries the correct value; only custom deployments need to set it.</p>
+
+      <h2 id="costs">Costs</h2>
+      <p>Measured on Sui testnet against the production package (2026-07-27, 127-byte file). Walrus storage is paid separately in WAL at upload time:</p>
+
+      <div class="table-wrap"><table>
+        <thead><tr><th>Operation</th><th>Gas (MIST)</th><th>Gas (SUI)</th></tr></thead>
+        <tbody>
+          <tr><td><code>file upload --encrypt</code> (certify + create + share PTB)</td><td>6,591,240</td><td>~0.0066</td></tr>
+          <tr><td><code>file recipient add</code></td><td>1,280,668</td><td>~0.0013</td></tr>
+          <tr><td><code>file recipient remove</code></td><td>796,700</td><td>~0.0008</td></tr>
+        </tbody>
+      </table></div>
+<br>
+      <p>Decryption costs no gas: the <code>seal_approve</code> dry-run happens on the key servers' side and nothing is executed on-chain.</p>
+
+      <h2 id="error-codes">Error Codes</h2>
+      <p>Move abort codes from the <code>recipient_file</code> module. The SDK surfaces them as <code>ContractAbortError</code>; Seal-side failures surface as <code>SealError</code> with codes <code>no-access</code>, <code>decrypt-failed</code>, <code>session-expired</code>, or <code>rate-limited</code>.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Code</th><th>Constant</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>0</code></td><td><code>EUnauthorized</code></td><td>Sender is not the file owner</td></tr>
+          <tr><td><code>1</code></td><td><code>EBlobIdEmpty</code></td><td><code>blob_id</code> must be non-empty</td></tr>
+          <tr><td><code>2</code></td><td><code>ENameInvalid</code></td><td><code>name</code> is empty or over 256 characters</td></tr>
+          <tr><td><code>3</code></td><td><code>EContentTypeInvalid</code></td><td><code>content_type</code> is empty or over 255 characters</td></tr>
+          <tr><td><code>4</code></td><td><code>ERecipientAlreadyPresent</code></td><td>Address is already a recipient</td></tr>
+          <tr><td><code>5</code></td><td><code>ERecipientNotPresent</code></td><td>Address is not a recipient</td></tr>
+          <tr><td><code>6</code></td><td><code>ESealInvalidId</code></td><td>Seal identity does not match this file's namespace</td></tr>
+          <tr><td><code>7</code></td><td><code>ESealWrongPolicyTag</code></td><td>Seal identity does not carry policy tag <code>3</code></td></tr>
+          <tr><td><code>8</code></td><td><code>ENoAccess</code></td><td>Sender is not in the file's member set (raised in the <code>seal_approve</code> dry-run; clients see <code>SealError("no-access")</code>)</td></tr>
+          <tr><td><code>9</code></td><td><code>ESealPrefixEmpty</code></td><td>Caller-supplied <code>seal_id_prefix</code> is empty</td></tr>
+          <tr><td><code>10</code></td><td><code>ESealPrefixMissing</code></td><td>File has no attached seal prefix; <code>seal_approve_with_prefix</code> cannot apply</td></tr>
+        </tbody>
+      </table></div>
+    </article>
+
+    <div class="page-footer">
+        <div class="feedback" id="feedback">
+          <span>Was this helpful?</span>
+          <button class="feedback-btn" data-feedback="yes">Yes</button>
+          <button class="feedback-btn" data-feedback="no">No</button>
+        </div>
+        <div class="page-meta">
+          <a href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20recipient-files.html" target="_blank" rel="noopener">Report an issue</a>
+          <span>Updated 2026-07-27</span>
+        </div>
+      </div>
+
+      <div class="page-nav">
+      <a href="access-control.html" class="pnav">
+        <span class="pnav-dir">Previous</span>
+        <span class="pnav-title">← Access Control</span>
+      </a>
+      <a href="cli-overview.html" class="pnav pnav-right">
+        <span class="pnav-dir">Next</span>
+        <span class="pnav-title">CLI: Overview →</span>
+      </a>
+    </div>
+    </div>
+  </main>
+
+  <aside class="toc">
+    <div class="toc-title">On this page</div>
+    <ul class="toc-list"></ul>
+  </aside>
+</div>
+
+<script src="assets/sidebar.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>
