@@ -159,7 +159,8 @@ function initTOC() {
 
     const a = document.createElement('a');
     a.href = '#' + h.id;
-    a.textContent = h.textContent;
+    // A labelled step chip (data-label) doubles as the short rail entry
+    a.textContent = h.dataset.label ?? h.textContent;
     if (h.tagName === 'H3') a.className = 'toc__sub';
     list.appendChild(a);
     return a;

@@ -94,6 +94,10 @@ button{font:inherit;color:inherit}
 .copybtn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--paper);font-size:13px;font-weight:500;color:var(--body);cursor:pointer;white-space:nowrap}
 .copybtn:hover{border-color:var(--line-2);color:var(--ink)}
 .copybtn.is-done{color:var(--ok);border-color:var(--ok-line)}
+.article>.article-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px;padding:0;list-style:none}
+.article>.article-meta+*{margin-top:32px}
+.article .article-meta li{display:inline-flex;align-items:center;gap:8px;margin:0;font-size:13px;color:var(--body);border:1px solid var(--line);border-radius:999px;padding:7px 12px;background:var(--paper)}
+.article-meta li:first-child::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ultra)}
 .copybtn-group{display:inline-flex}
 .copybtn-group .copybtn:first-child{border-radius:999px 0 0 999px;padding-right:12px}
 .copybtn-caret{margin-left:-1px;padding:0 12px;border-radius:0 999px 999px 0}
@@ -110,6 +114,8 @@ button{font:inherit;color:inherit}
 .article>h2{font-family:var(--disp);font-size:28px;line-height:1.1;letter-spacing:-.025em;font-weight:700;margin-top:56px;padding-top:24px;border-top:1px solid var(--line);display:flex;align-items:center;gap:14px;counter-increment:section}
 .article>h2::before{content:counter(section,decimal-leading-zero);flex-shrink:0;font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.1em;line-height:1.5;color:var(--ultra);background:var(--ultra-tint);border-radius:999px;padding:4px 9px}
 .article-unnumbered>h2::before{content:none}
+.article>h2[data-label]{counter-increment:none}
+.article>h2[data-label]::before{content:attr(data-label);text-transform:uppercase}
 .article h3{font-family:var(--disp);font-size:20px;line-height:1.25;font-weight:700;letter-spacing:-.01em}
 .article>h3{margin-top:28px}
 .article p,.article ul,.article ol{color:var(--body)}
@@ -148,7 +154,8 @@ button{font:inherit;color:inherit}
 /* code */
 .code-block{background:var(--ink);color:var(--on-ink);border-radius:14px;overflow:hidden;box-shadow:0 10px 30px rgba(18,20,24,.08)}
 .code-header{display:flex;align-items:center;gap:10px;min-height:34px;padding:9px 10px 9px 16px;border-bottom:1px solid var(--ink-line)}
-.code-lang{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--on-ink-3)}
+.code-lang,.code-note{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--on-ink-3)}
+.code-note::before{content:"·";margin-right:10px}
 .code-copy{margin-left:auto;display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 10px;border:1px solid var(--ink-line);border-radius:999px;background:transparent;color:var(--on-ink-2);font-family:var(--sans);font-size:12px;font-weight:500;cursor:pointer}
 .code-copy:hover{background:var(--ink-2)}
 .code-copy.is-done{color:var(--on-ink-ok);border-color:var(--on-ink-ok)}
@@ -162,6 +169,8 @@ button{font:inherit;color:inherit}
 .code-block-output{background:var(--paper);color:var(--ink);box-shadow:none;border:1px solid var(--line)}
 .code-block-output .code-header{border-bottom-color:var(--line)}
 .code-block-output .code-lang{color:var(--stone)}
+.code-block-output .ok{color:var(--ok)}
+.code-block-output .m{color:var(--stone)}
 pre.diagram{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px;font-family:var(--mono-sys);font-size:13px;line-height:1.55;color:var(--ink);overflow-x:auto;white-space:pre}
 
 /* code tabs (CLI / SDK / Move) */
@@ -192,6 +201,8 @@ a.card .card-title::after{content:"↗" / "";color:var(--ultra);font-family:var(
 .card-grid-paths a.card .card-title::after{content:none}
 .card-grid-paths .card-desc{font-size:15px;flex-grow:1}
 .card-grid-paths .card-meta{margin-top:0;line-height:1.6;border-top:1px solid var(--line);padding-top:12px}
+.card-grid-paths .card-meta span{display:block}
+.card-grid-paths .card-meta .card-meta-sep{display:none}
 .card-path-head{display:flex;justify-content:space-between;align-items:center;min-height:34px;color:var(--ultra)}
 .card-badge{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--ultra);border-radius:999px;padding:4px 8px}
 .card-cta{font-weight:600;color:var(--ultra)}

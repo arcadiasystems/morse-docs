@@ -12,10 +12,10 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <meta name="description" content="Install morse-cli and go from zero to published content on testnet in under 5 minutes - no contracts, no code, just your terminal.">
+  <meta name="description" content="Install morse-cli and go from zero to published content on Sui testnet in under five minutes. No contracts, no code, just your terminal.">
   <link rel="canonical" href="https://docs.morsecms.xyz/quick-start-cli.html">
   <meta property="og:title" content="Quick Start: CLI · Morse Docs">
-  <meta property="og:description" content="Install morse-cli and go from zero to published content on testnet in under 5 minutes - no contracts, no code, just your terminal.">
+  <meta property="og:description" content="Install morse-cli and go from zero to published content on Sui testnet in under five minutes. No contracts, no code, just your terminal.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://docs.morsecms.xyz/quick-start-cli.html">
   <meta property="og:site_name" content="Morse Docs">
@@ -56,7 +56,7 @@
     <article class="article">
         <h1>Quick Start: CLI</h1>
         <p class="article-lead">
-          Install morse-cli and go from zero to published content on testnet in under 5 minutes - no contracts, no code, just your terminal.
+          Install morse-cli and go from zero to published content on testnet in under five minutes. No contracts, no code, just your terminal.
         </p>
         <div class="page-actions">
           <div class="copybtn-group">
@@ -70,12 +70,13 @@
             <a class="page-menu__item" id="page-claude" href="https://claude.ai/new" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>Open in Claude</a>
           </div>
         </div>
+        <ul class="article-meta"><li>About 5 minutes</li><li>Bun or Node</li><li>Funded Sui wallet</li><li>Sui testnet</li></ul>
 
       <div class="callout callout-warning">
         <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
         <div class="callout-body">
           <div class="callout-title">Testnet status</div>
-          <div class="callout-text">Morse runs on <strong>Sui testnet only</strong> and the contracts are <strong>unaudited</strong>. Sui and Walrus testnets reset periodically (Walrus wipes every few months) - stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Don't publish anything you can't afford to lose.</div>
+          <div class="callout-text">Morse runs on <strong>Sui testnet only</strong> and the contracts are <strong>unaudited</strong>. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Do not publish anything you cannot afford to lose.</div>
         </div>
       </div>
 
@@ -84,29 +85,26 @@
           <table>
             <thead><tr><th>Requirement</th><th>Details</th><th>Purpose</th></tr></thead>
             <tbody>
-              <tr><td>Bun or Node</td><td>v1.2+ / >= 18</td><td>JavaScript runtime</td></tr>
+              <tr><td>Bun or Node</td><td>v1.2+ / ≥ 18</td><td>JavaScript runtime</td></tr>
               <tr><td>Sui wallet</td><td>Sui Wallet, Suiet, or any Sui-compatible wallet</td><td>Signing transactions on testnet</td></tr>
-              <tr><td>SUI + WAL tokens</td><td><a href="https://faucet.sui.io/" target="_blank">SUI faucet</a> / <a href="https://stake-wal.wal.app/?network=testnet" target="_blank">Swap SUI for WAL</a></td><td>Gas fees (SUI) and Walrus storage fees (WAL)</td></tr>
-              <tr><td>Bech32 private key</td><td>A <code>suiprivkey1...</code> string</td><td>CLI authentication - export from your wallet's settings</td></tr>
+              <tr><td>SUI + WAL tokens</td><td><a href="https://faucet.sui.io/" target="_blank">SUI faucet</a> · <a href="https://stake-wal.wal.app/?network=testnet" target="_blank">Swap SUI for WAL</a></td><td>Gas fees (SUI) and Walrus storage fees (WAL)</td></tr>
+              <tr><td>Bech32 private key</td><td>A <code>suiprivkey1...</code> string</td><td>CLI authentication. Export from your wallet's settings</td></tr>
             </tbody>
           </table>
         </div>
 
         <h2 id="installing">Installing</h2>
         <p>Install the CLI globally using your preferred package manager.</p>
-        <p>With npm:</p>
-
         <div class="code-block">
           <div class="code-header">
-            <span class="code-lang">bash</span>
+            <span class="code-lang">bash</span><span class="code-note">npm</span>
             <button class="code-copy" type="button">Copy</button>
           </div>
           <pre>npm i -g @arcadiasystems/morse-cli</pre>
         </div>
-        <p>Or with Bun / pnpm:</p>
         <div class="code-block">
           <div class="code-header">
-            <span class="code-lang">bash</span>
+            <span class="code-lang">bash</span><span class="code-note">bun or pnpm</span>
             <button class="code-copy" type="button">Copy</button>
           </div>
           <pre>bun add -g @arcadiasystems/morse-cli</pre>
@@ -120,8 +118,8 @@
           <pre>morse --help</pre>
         </div>
 
-        <h2 id="creating-a-profile">Creating a Profile</h2>
-        <p>A profile stores your network, RPC endpoint, and active context. Create one for testnet:</p>
+        <h2 id="creating-a-profile">Creating a profile</h2>
+        <p>A profile stores your network, RPC endpoint and active context. Create one for testnet:</p>
 
         <div class="code-block">
           <div class="code-header">
@@ -140,8 +138,8 @@
           <pre>morse status</pre>
         </div>
 
-        <h2 id="importing-your-key">Importing Your Key</h2>
-        <p>Import a Sui private key into the encrypted keystore. The CLI prompts interactively for the key and a password - keys are never passed as flags.</p>
+        <h2 id="importing-your-key">Importing your key</h2>
+        <p>Import a Sui private key into the encrypted keystore. The CLI prompts interactively for the key and a password. Keys are never passed as flags.</p>
 
         <div class="code-block">
           <div class="code-header">
@@ -152,14 +150,14 @@
         </div>
 
         <div class="callout callout-info">
-          <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
+          <div class="callout-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="m10.85 12.15 8.9-8.9M18 6l2 2M15 9l2 2"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">Key format</div>
-            <div class="callout-text">Paste a Bech32 <code>suiprivkey1...</code> string. Export one from your wallet's settings. For non-interactive environments (CI, scripts), set <code>MORSE_PRIVATE_KEY</code> instead - the CLI uses it directly and skips the keystore prompt entirely.</div>
+            <div class="callout-text">Paste a Bech32 <code>suiprivkey1...</code> string. Export one from your wallet's settings. For non-interactive environments (CI, scripts), set <code>MORSE_PRIVATE_KEY</code> instead; the CLI uses it directly and skips the keystore prompt.</div>
           </div>
         </div>
 
-        <h2 id="creating-a-publication">Creating a Publication</h2>
+        <h2 id="creating-a-publication">Creating a publication</h2>
         <p>This creates a publication with a globally unique slug and auto-selects it as the active context.</p>
 
         <div class="code-block">
@@ -174,7 +172,7 @@
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">Slugs are globally unique</div>
-            <div class="callout-text">Like usernames, a slug can only be registered once on the whole network - the timestamp suffix keeps this command collision-free for everyone following this guide. For a real project, pick any unused slug you like. If a slug is taken, the transaction aborts with <code>ESlugAlreadyExists</code>.</div>
+            <div class="callout-text">Like usernames, a slug can only be registered once on the whole network. The timestamp suffix keeps this command collision-free for everyone following this guide. For a real project, pick any unused slug. If a slug is taken, the transaction aborts with <code>ESlugAlreadyExists</code>.</div>
           </div>
         </div>
 
@@ -183,25 +181,23 @@
             <span class="code-lang">output</span>
           </div>
           <pre>Creating "My Blog"...
-Created "My Blog" (0x23d2...)
-  ownerCap:     0xa40a...
+<span class="ok">Created "My Blog" (0x23d2...)</span>
+  <span class="m">ownerCap:     0xa40a...
   publisherCap: 0x6141...
-  tx:           7nF2n...
+  tx:           7nF2n...</span>
 Selected as the active publication.</pre>
         </div>
 
-        <div class="callout callout-tip">
-          <div class="callout-icon">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
+        <div class="callout callout-info">
+          <div class="callout-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">Which IDs to save</div>
-            <div class="callout-text">The CLI auto-selects new publications and collections as your active context, so you rarely need to paste IDs. If you do need them later, run <code>morse status</code> to see your active publication ID and collection.</div>
+            <div class="callout-text">The CLI auto-selects new publications and collections as your active context, so you rarely need to paste IDs. If you need them later, run <code>morse status</code> to see your active publication ID and collection.</div>
           </div>
         </div>
 
-        <h2 id="creating-a-collection">Creating a Collection</h2>
-        <p>Collections group entries within a publication. The CLI auto-selects the new collection as your active context, so subsequent <code>entry</code> commands target it automatically. Run <code>morse status</code> at any point to see your active publication and collection.</p>
+        <h2 id="creating-a-collection">Creating a collection</h2>
+        <p>Collections group entries within a publication. The CLI auto-selects the new collection as your active context, so subsequent entry commands target it automatically.</p>
 
         <div class="code-block">
           <div class="code-header">
@@ -216,18 +212,18 @@ Selected as the active publication.</pre>
             <span class="code-lang">output</span>
           </div>
           <pre>Creating collection "posts" (blob)...
-Created collection "posts".
-Selected as the active collection. (tx: DWkD...)</pre>
+<span class="ok">Created collection "posts".</span>
+Selected as the active collection. <span class="m">(tx: DWkD...)</span></pre>
         </div>
 
-        <h2 id="publishing-an-entry">Publishing an Entry</h2>
+        <h2 id="publishing-an-entry">Publishing an entry</h2>
         <p>Create a content file and publish it. The CLI uploads the file to Walrus and registers the entry on-chain.</p>
 
         <div class="callout callout-warning">
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">This step needs WAL, not just SUI</div>
-            <div class="callout-text">Everything up to here only cost SUI gas - uploading to Walrus also spends WAL. Make sure your account holds both before running this (swap SUI for WAL at <a href="https://stake-wal.wal.app/?network=testnet" target="_blank" rel="noopener">stake-wal.wal.app</a>), or the upload fails with <code>Insufficient WAL balance</code>.</div>
+            <div class="callout-text">Everything up to here only cost SUI gas. Uploading to Walrus also spends WAL. Make sure your account holds both before running this (swap SUI for WAL at <a href="https://stake-wal.wal.app/?network=testnet" target="_blank" rel="noopener">stake-wal.wal.app</a>), or the upload fails with <code>Insufficient WAL balance</code>.</div>
           </div>
         </div>
 
@@ -238,7 +234,7 @@ Selected as the active collection. (tx: DWkD...)</pre>
           </div>
           <pre>echo '{"title": "Hello World", "body": "My first post on Morse."}' > post.json</pre>
         </div>
-        <p>Publish it. The CLI targets the active publication and collection by default - these are set automatically when you create them. You can override with <code>-P &lt;slug|id&gt;</code> and <code>-C &lt;name&gt;</code> flags:</p>
+        <p>Publish it. The CLI targets the active publication and collection by default. You can override with <code>-P &lt;slug|id&gt;</code> and <code>-C &lt;name&gt;</code>:</p>
         <div class="code-block">
           <div class="code-header">
             <span class="code-lang">bash</span>
@@ -252,12 +248,12 @@ Selected as the active collection. (tx: DWkD...)</pre>
             <span class="code-lang">output</span>
           </div>
           <pre>Uploading 65 bytes to Walrus...
-✔ Added entry #0 "hello" (tx: D9Yfjk...)
-  view: https://aggregator.walrus-testnet.walrus.space/v1/blobs/0iKeii...</pre>
+<span class="ok">✔ Added entry #0 "hello"</span> <span class="m">(tx: D9Yfjk...)</span>
+  <span class="m">view: https://aggregator.walrus-testnet.walrus.space/v1/blobs/0iKeii...</span></pre>
         </div>
 
-        <h2 id="reading-it-back">Reading It Back</h2>
-        <p>Fetch the entry content by its ID. Entry IDs are monotonic - your first entry is <code>0</code>.</p>
+        <h2 id="reading-it-back">Reading it back</h2>
+        <p>Fetch the entry content by its ID. Entry IDs are monotonic; your first entry is <code>0</code>.</p>
 
         <div class="code-block">
           <div class="code-header">
@@ -266,7 +262,7 @@ Selected as the active collection. (tx: DWkD...)</pre>
           </div>
           <pre>morse entry read 0 --via-aggregator</pre>
         </div>
-        <p>The optional <code>--via-aggregator</code> flag routes reads through the Walrus aggregator, which is more reliable on testnet. Without it, testnet reads frequently fail with <code>No valid blob metadata could be retrieved from any storage node</code>, especially right after an upload - see <a href="cli-workflows.html#reading-it-back">CLI Cookbooks &rarr; Reading It Back</a>.</p>
+        <p>The optional <code>--via-aggregator</code> flag routes reads through the Walrus aggregator, which is more reliable on testnet. Without it, testnet reads frequently fail with <code>No valid blob metadata could be retrieved from any storage node</code>, especially right after an upload. See <a href="cli-workflows.html#reading-it-back">CLI Cookbooks &rarr; Reading It Back</a>.</p>
 
         <div class="code-block code-block-output">
           <div class="code-header">
@@ -278,8 +274,8 @@ Selected as the active collection. (tx: DWkD...)</pre>
         <div class="callout callout-tip">
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
           <div class="callout-body">
-            <div class="callout-title">You're live on-chain</div>
-            <div class="callout-text">Your content is stored on Walrus and registered on Sui testnet. Run <code>morse status</code> to see your active context, or <code>morse entry list</code> to see all entries in the collection.</div>
+            <div class="callout-title">You are live on-chain</div>
+            <div class="callout-text">Your content is stored on Walrus and registered on Sui testnet. Run <code>morse status</code> to see your active context, or <code>morse entry list</code> to see all entries in the collection. If you hit errors at any step, run <code>morse --help</code> or see the <a href="cli-workflows.html#troubleshooting">CLI Cookbooks</a> troubleshooting section.</div>
           </div>
         </div>
 
@@ -297,9 +293,7 @@ Selected as the active collection. (tx: DWkD...)</pre>
           </details>
         </div> -->
 
-        <p>If you hit errors at any step, run <code>morse --help</code> for command usage or see the <a href="cli-workflows.html#troubleshooting">CLI Cookbooks &rarr; Troubleshooting</a> section.</p>
-
-        <h2 id="next-steps">Next Steps</h2>
+        <h2 id="next-steps">Next steps</h2>
         <div class="card-grid">
           <a href="cli-commands.html" class="card">
             <div class="card-title">CLI: Command Reference</div>
@@ -311,7 +305,7 @@ Selected as the active collection. (tx: DWkD...)</pre>
           </a>
           <a href="core-concepts.html" class="card">
             <div class="card-title">Core Concepts</div>
-            <div class="card-desc">Understand the data model - publications, collections, entries, and revisions.</div>
+            <div class="card-desc">The data model: publications, collections, entries and revisions.</div>
           </a>
         </div>
       </article>
@@ -319,7 +313,7 @@ Selected as the active collection. (tx: DWkD...)</pre>
     <div class="feedback">
       <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
       <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20quick-start-cli.html" target="_blank" rel="noopener">Report an issue</a>
-      <span class="feedback__upd">Updated 2026-06-19</span>
+      <span class="feedback__upd">Updated 2026-10-15</span>
     </div>
     <nav class="pager" aria-label="Previous and next">
       <a href="quick-start.html" rel="prev"><small>Previous</small><b>← Quick Start</b></a>

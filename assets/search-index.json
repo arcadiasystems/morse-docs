@@ -137,77 +137,84 @@
     "pageTitle": "Quick Start",
     "section": "Getting Started",
     "heading": "Quick Start",
-    "text": "Choose the path that fits your workflow. Each guide takes you from zero to published content on testnet. New to Morse? Start with Core Concepts for an overview, or jump straight into the CLI guide - it's the fastest way to see Morse in action. Recommended CLI Install morse-cli from npm, create a publication, publish and read content - all from your terminal. For operators and content managers. ~5 min · Requires: Bun or Node, funded Sui wallet Start the CLI guide → TypeScript SDK Wire up @arcadiasystems/morse-sdk, create a publication, add an entry, and read it back in a single script. For app "
+    "text": "Choose the path that fits your workflow. Each guide takes you from zero to published content on testnet. New to Morse? Start with Core Concepts for an overview, or jump straight into the CLI guide. It is the fastest way to see Morse in action. Recommended CLI Install morse-cli from npm, create a publication, publish and read content, all from your terminal. For operators and content managers. ~5 min · Bun or Node · funded Sui wallet Start the CLI guide → TypeScript SDK Wire up @arcadiasystems/morse-sdk, create a publication, add an entry and read it back in a single script. For app developers "
+  },
+  {
+    "url": "quick-start.html#before-you-start",
+    "pageTitle": "Quick Start",
+    "section": "Getting Started",
+    "heading": "Every path needs a funded testnet wallet",
+    "text": "All three guides sign transactions on Sui testnet and store content on Walrus testnet. You need SUI for gas and WAL for storage. Both are free and take about two minutes. StepWhereWhy 1. Install a walletSui Wallet, Suiet, or any Sui-compatible walletHolds your key and signs transactions 2. Get testnet SUIfaucet.sui.ioGas for every on-chain action 3. Swap some SUI for WALstake-wal.wal.appWalrus storage fees when you publish Testnet only, for now Contracts are unaudited and testnets reset periodically. Testnet tokens have no monetary value. Mainnet is on the roadmap."
   },
   {
     "url": "quick-start-cli.html",
     "pageTitle": "Quick Start: CLI",
     "section": "Getting Started",
     "heading": "Quick Start: CLI",
-    "text": "Install morse-cli and go from zero to published content on testnet in under 5 minutes - no contracts, no code, just your terminal. Testnet status Morse runs on Sui testnet only and the contracts are unaudited. Sui and Walrus testnets reset periodically (Walrus wipes every few months) - stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Don't publish anything you can't afford to lose."
+    "text": "Install morse-cli and go from zero to published content on testnet in under five minutes. No contracts, no code, just your terminal. About 5 minutesBun or NodeFunded Sui walletSui testnet Testnet status Morse runs on Sui testnet only and the contracts are unaudited. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Do not publish anything you cannot afford to lose."
   },
   {
     "url": "quick-start-cli.html#prerequisites",
     "pageTitle": "Quick Start: CLI",
     "section": "Getting Started",
     "heading": "Prerequisites",
-    "text": "RequirementDetailsPurpose Bun or Nodev1.2+ / >= 18JavaScript runtime Sui walletSui Wallet, Suiet, or any Sui-compatible walletSigning transactions on testnet SUI + WAL tokensSUI faucet / Swap SUI for WALGas fees (SUI) and Walrus storage fees (WAL) Bech32 private keyA suiprivkey1... stringCLI authentication - export from your wallet's settings"
+    "text": "RequirementDetailsPurpose Bun or Nodev1.2+ / ≥ 18JavaScript runtime Sui walletSui Wallet, Suiet, or any Sui-compatible walletSigning transactions on testnet SUI + WAL tokensSUI faucet · Swap SUI for WALGas fees (SUI) and Walrus storage fees (WAL) Bech32 private keyA suiprivkey1... stringCLI authentication. Export from your wallet's settings"
   },
   {
     "url": "quick-start-cli.html#installing",
     "pageTitle": "Quick Start: CLI",
     "section": "Getting Started",
     "heading": "Installing",
-    "text": "Install the CLI globally using your preferred package manager. With npm: bash Copy npm i -g @arcadiasystems/morse-cli Or with Bun / pnpm: bash Copy bun add -g @arcadiasystems/morse-cli Verify the installation: bash Copy morse --help"
+    "text": "Install the CLI globally using your preferred package manager. bashnpm Copy npm i -g @arcadiasystems/morse-cli bashbun or pnpm Copy bun add -g @arcadiasystems/morse-cli Verify the installation: bash Copy morse --help"
   },
   {
     "url": "quick-start-cli.html#creating-a-profile",
     "pageTitle": "Quick Start: CLI",
     "section": "Getting Started",
-    "heading": "Creating a Profile",
-    "text": "A profile stores your network, RPC endpoint, and active context. Create one for testnet: bash Copy morse config add testnet --network testnet Verify your profile is active: bash Copy morse status"
+    "heading": "Creating a profile",
+    "text": "A profile stores your network, RPC endpoint and active context. Create one for testnet: bash Copy morse config add testnet --network testnet Verify your profile is active: bash Copy morse status"
   },
   {
     "url": "quick-start-cli.html#importing-your-key",
     "pageTitle": "Quick Start: CLI",
     "section": "Getting Started",
-    "heading": "Importing Your Key",
-    "text": "Import a Sui private key into the encrypted keystore. The CLI prompts interactively for the key and a password - keys are never passed as flags. bash Copy morse account import Key format Paste a Bech32 suiprivkey1... string. Export one from your wallet's settings. For non-interactive environments (CI, scripts), set MORSE_PRIVATE_KEY instead - the CLI uses it directly and skips the keystore prompt entirely."
+    "heading": "Importing your key",
+    "text": "Import a Sui private key into the encrypted keystore. The CLI prompts interactively for the key and a password. Keys are never passed as flags. bash Copy morse account import Key format Paste a Bech32 suiprivkey1... string. Export one from your wallet's settings. For non-interactive environments (CI, scripts), set MORSE_PRIVATE_KEY instead; the CLI uses it directly and skips the keystore prompt."
   },
   {
     "url": "quick-start-cli.html#creating-a-publication",
     "pageTitle": "Quick Start: CLI",
     "section": "Getting Started",
-    "heading": "Creating a Publication",
-    "text": "This creates a publication with a globally unique slug and auto-selects it as the active context. bash Copy morse publication create --name \"My Blog\" --slug \"my-blog-$(date +%s)\" Slugs are globally unique Like usernames, a slug can only be registered once on the whole network - the timestamp suffix keeps this command collision-free for everyone following this guide. For a real project, pick any unused slug you like. If a slug is taken, the transaction aborts with ESlugAlreadyExists. output Creating \"My Blog\"... Created \"My Blog\" (0x23d2...) ownerCap: 0xa40a... publisherCap: 0x6141... tx: 7nF2n"
+    "heading": "Creating a publication",
+    "text": "This creates a publication with a globally unique slug and auto-selects it as the active context. bash Copy morse publication create --name \"My Blog\" --slug \"my-blog-$(date +%s)\" Slugs are globally unique Like usernames, a slug can only be registered once on the whole network. The timestamp suffix keeps this command collision-free for everyone following this guide. For a real project, pick any unused slug. If a slug is taken, the transaction aborts with ESlugAlreadyExists. output Creating \"My Blog\"... Created \"My Blog\" (0x23d2...) ownerCap: 0xa40a... publisherCap: 0x6141... tx: 7nF2n... Select"
   },
   {
     "url": "quick-start-cli.html#creating-a-collection",
     "pageTitle": "Quick Start: CLI",
     "section": "Getting Started",
-    "heading": "Creating a Collection",
-    "text": "Collections group entries within a publication. The CLI auto-selects the new collection as your active context, so subsequent entry commands target it automatically. Run morse status at any point to see your active publication and collection. bash Copy morse collection create posts output Creating collection \"posts\" (blob)... Created collection \"posts\". Selected as the active collection. (tx: DWkD...)"
+    "heading": "Creating a collection",
+    "text": "Collections group entries within a publication. The CLI auto-selects the new collection as your active context, so subsequent entry commands target it automatically. bash Copy morse collection create posts output Creating collection \"posts\" (blob)... Created collection \"posts\". Selected as the active collection. (tx: DWkD...)"
   },
   {
     "url": "quick-start-cli.html#publishing-an-entry",
     "pageTitle": "Quick Start: CLI",
     "section": "Getting Started",
-    "heading": "Publishing an Entry",
-    "text": "Create a content file and publish it. The CLI uploads the file to Walrus and registers the entry on-chain. This step needs WAL, not just SUI Everything up to here only cost SUI gas - uploading to Walrus also spends WAL. Make sure your account holds both before running this (swap SUI for WAL at stake-wal.wal.app), or the upload fails with Insufficient WAL balance. bash Copy echo '{\"title\": \"Hello World\", \"body\": \"My first post on Morse.\"}' > post.json Publish it. The CLI targets the active publication and collection by default - these are set automatically when you create them. You can override"
+    "heading": "Publishing an entry",
+    "text": "Create a content file and publish it. The CLI uploads the file to Walrus and registers the entry on-chain. This step needs WAL, not just SUI Everything up to here only cost SUI gas. Uploading to Walrus also spends WAL. Make sure your account holds both before running this (swap SUI for WAL at stake-wal.wal.app), or the upload fails with Insufficient WAL balance. bash Copy echo '{\"title\": \"Hello World\", \"body\": \"My first post on Morse.\"}' > post.json Publish it. The CLI targets the active publication and collection by default. You can override with -P <slug|id> and -C <name>: bash Copy morse en"
   },
   {
     "url": "quick-start-cli.html#reading-it-back",
     "pageTitle": "Quick Start: CLI",
     "section": "Getting Started",
-    "heading": "Reading It Back",
-    "text": "Fetch the entry content by its ID. Entry IDs are monotonic - your first entry is 0. bash Copy morse entry read 0 --via-aggregator The optional --via-aggregator flag routes reads through the Walrus aggregator, which is more reliable on testnet. Without it, testnet reads frequently fail with No valid blob metadata could be retrieved from any storage node, especially right after an upload - see CLI Cookbooks → Reading It Back. output {\"title\": \"Hello World\", \"body\": \"My first post on Morse.\"} You're live on-chain Your content is stored on Walrus and registered on Sui testnet. Run morse status to "
+    "heading": "Reading it back",
+    "text": "Fetch the entry content by its ID. Entry IDs are monotonic; your first entry is 0. bash Copy morse entry read 0 --via-aggregator The optional --via-aggregator flag routes reads through the Walrus aggregator, which is more reliable on testnet. Without it, testnet reads frequently fail with No valid blob metadata could be retrieved from any storage node, especially right after an upload. See CLI Cookbooks → Reading It Back. output {\"title\": \"Hello World\", \"body\": \"My first post on Morse.\"} You are live on-chain Your content is stored on Walrus and registered on Sui testnet. Run morse status to s"
   },
   {
     "url": "quick-start-cli.html#next-steps",
     "pageTitle": "Quick Start: CLI",
     "section": "Getting Started",
-    "heading": "Next Steps",
-    "text": "CLI: Command Reference Every command and flag: publication, collection, entry, revision, cap. CLI: Cookbooks Multi-step recipes: encrypted entries, multi-writer setups, CI/CD scripting. Core Concepts Understand the data model - publications, collections, entries, and revisions."
+    "heading": "Next steps",
+    "text": "CLI: Command Reference Every command and flag: publication, collection, entry, revision, cap. CLI: Cookbooks Multi-step recipes: encrypted entries, multi-writer setups, CI/CD scripting. Core Concepts The data model: publications, collections, entries and revisions."
   },
   {
     "url": "quick-start-sdk.html",
