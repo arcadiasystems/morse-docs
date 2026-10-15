@@ -2,3 +2,10 @@
 .gstack/
 node_modules/
 .vercel
+
+# Local design handover inputs (not served; the site deploys from the repo root)
+cookbooks/
+redesign/
+
+# macOS Finder metadata
+.DS_Store
