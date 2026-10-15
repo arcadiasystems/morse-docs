@@ -178,7 +178,7 @@ button{font:inherit;color:inherit}
 .code-block-output .code-lang{color:var(--stone)}
 .code-block-output .ok{color:var(--ok)}
 .code-block-output .m{color:var(--stone)}
-pre.diagram{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px;font-family:var(--mono-sys);font-size:13px;line-height:1.55;color:var(--ink);overflow-x:auto;white-space:pre}
+pre.diagram{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px;font-family:var(--mono-sys);font-size:13px;line-height:1.25;color:var(--ink);overflow-x:auto;white-space:pre}
 
 /* code tabs (CLI / SDK / Move) */
 .code-tabs-header{display:inline-flex;flex-wrap:wrap;gap:2px;padding:3px;border:1px solid var(--line);border-radius:999px;background:var(--paper)}

@@ -928,7 +928,7 @@
     "pageTitle": "Collections",
     "section": "Protocol",
     "heading": "Quilt mode",
-    "text": "In quilt mode, every revision stores a BlobRef::QuiltPatch(vector<u8>), a 37-byte identifier that locates a patch within a shared Walrus Quilt blob. This is more compact and efficient when updating small parts of a grouped content set. ┌─────────────────────────────────┬─────────┬───────────────┬─────────────┐ │ quilt_blob_id (32 bytes) │ ver (1) │ start_idx (2) │ end_idx (2)│ └─────────────────────────────────┴─────────┴───────────────┴─────────────┘ Walrus blob ID of the quilt version start index end index (this is the Walrus blob_id, (u16 LE) (u16 LE) not the Sui object ID) The contract val"
+    "text": "In quilt mode, every revision stores a BlobRef::QuiltPatch(vector<u8>), a 37-byte identifier that locates a patch within a shared Walrus Quilt blob. This is more compact and efficient when updating small parts of a grouped content set. ┌──────────────────────────────┬─────────┬───────────────┬─────────────┐ │ quilt_blob_id (32 bytes) │ ver (1) │ start_idx (2) │ end_idx (2) │ └──────────────────────────────┴─────────┴───────────────┴─────────────┘ Walrus blob ID of the quilt version start index end index (this is the Walrus blob_id, (u16 LE) (u16 LE) not the Sui object ID) The contract validate"
   },
   {
     "url": "collections.html#choosing-a-storage-mode",
@@ -1187,7 +1187,7 @@
     "pageTitle": "Access Control",
     "section": "Protocol",
     "heading": "Seal identity format",
-    "text": "Seal identities for Morse follow a structured namespace format to prevent cross-publication identity reuse: ┌─────────────────────────────────┬────────────────┬──────────────────┐ │ publication_id bytes (32) │ policy_tag (1) │ nonce (variable) │ └─────────────────────────────────┴────────────────┴──────────────────┘ Scopes identity to one Must be 0x01 Differentiates specific publication for publisher multiple identities policy under same namespace The policy_tag = 0x01 is the publisher policy tag. This namespacing ensures: A cap for Publication A cannot approve decryption of Publication B cont"
+    "text": "Seal identities for Morse follow a structured namespace format to prevent cross-publication identity reuse: ┌───────────────────────────┬────────────────┬──────────────────────┐ │ publication_id bytes (32) │ policy_tag (1) │ nonce (variable) │ └───────────────────────────┴────────────────┴──────────────────────┘ Scopes identity to one Must be 0x01 Differentiates specific publication for publisher multiple identities policy under same namespace The policy_tag = 0x01 is the publisher policy tag. This namespacing ensures: A cap for Publication A cannot approve decryption of Publication B content "
   },
   {
     "url": "access-control.html#access-policies",
@@ -1250,7 +1250,7 @@
     "pageTitle": "Recipient Files",
     "section": "Protocol",
     "heading": "Seal identity format",
-    "text": "A recipient-file Seal identity is the byte concatenation of a prefix, the policy tag, and a per-encryption nonce: ┌───────────────────────────────┬────────────────┬─────────────────────┐ │ seal_id_prefix (≥1 byte) │ policy_tag (1) │ nonce (≥1 byte) │ └───────────────────────────────┴────────────────┴─────────────────────┘ Random, caller-chosen. Must be 0x03 Fresh per encryption. 32 bytes recommended. for the 16 bytes recommended. Bound to the file on-chain recipient-file at creation. policy. The prefix solves an ordering problem: a file's Sui object ID does not exist until its creation transac"
+    "text": "A recipient-file Seal identity is the byte concatenation of a prefix, the policy tag, and a per-encryption nonce: ┌────────────────────────────┬────────────────┬───────────────────────┐ │ seal_id_prefix (≥1 byte) │ policy_tag (1) │ nonce (≥1 byte) │ └────────────────────────────┴────────────────┴───────────────────────┘ Random, caller-chosen. Must be 0x03 Fresh per encryption. 32 bytes recommended. for the 16 bytes recommended. Bound to the file on-chain recipient-file at creation. policy. The prefix solves an ordering problem: a file's Sui object ID does not exist until its creation transacti"
   },
   {
     "url": "recipient-files.html#decryption-sequence",

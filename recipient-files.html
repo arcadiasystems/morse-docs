@@ -159,13 +159,13 @@
       <h3 id="seal-identity-format">Seal identity format</h3>
       <p>A recipient-file Seal identity is the byte concatenation of a prefix, the policy tag, and a per-encryption nonce:</p>
 
-      <pre class="diagram">┌───────────────────────────────┬────────────────┬─────────────────────┐
-│  seal_id_prefix (≥1 byte)      │ policy_tag (1)  │  nonce (≥1 byte)     │
-└───────────────────────────────┴────────────────┴─────────────────────┘
-  Random, caller-chosen.          Must be 0x03      Fresh per encryption.
-  32 bytes recommended.           for the           16 bytes recommended.
-  Bound to the file on-chain      recipient-file
-  at creation.                    policy.</pre>
+      <pre class="diagram">┌────────────────────────────┬────────────────┬───────────────────────┐
+│ seal_id_prefix (≥1 byte)   │ policy_tag (1) │ nonce (≥1 byte)       │
+└────────────────────────────┴────────────────┴───────────────────────┘
+  Random, caller-chosen.       Must be 0x03     Fresh per encryption.
+  32 bytes recommended.        for the          16 bytes recommended.
+  Bound to the file on-chain   recipient-file
+  at creation.                 policy.</pre>
 
       <p>The prefix solves an ordering problem: a file's Sui object ID does not exist until its creation transaction is signed, but encryption must happen <em>before</em> upload, which happens before that transaction. So the client picks a random prefix, encrypts under <code>prefix || 0x03 || nonce</code>, and binds the same prefix to the file on-chain via <code>new_recipient_file_with_seal_prefix</code>. This is what makes the whole upload fit in a single certify-and-create PTB.</p>
       <p>The SDK exposes the recommended sizes as <code>RECOMMENDED_SEAL_PREFIX_BYTES</code> (32) and <code>RECOMMENDED_SEAL_NONCE_BYTES</code> (16), and generates values with <code>randomSealPrefix()</code> / <code>randomSealNonce()</code>. Files created via the older <code>new_recipient_file</code> path use the file's object ID itself as the prefix and are approved by the plain <code>seal_approve</code> entry point; <code>get_seal_id_prefix</code> tells clients which variant a file uses.</p>

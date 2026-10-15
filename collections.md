@@ -38,12 +38,12 @@ In blob mode, every revision stores a `BlobRef::Blob(ID)`, the Sui object ID of 
 In quilt mode, every revision stores a `BlobRef::QuiltPatch(vector<u8>)`, a 37-byte identifier that locates a patch within a shared Walrus Quilt blob. This is more compact and efficient when updating small parts of a grouped content set.
 
 ```
-┌─────────────────────────────────┬─────────┬───────────────┬─────────────┐
-│  quilt_blob_id (32 bytes)        │ ver (1) │  start_idx (2) │  end_idx (2)│
-└─────────────────────────────────┴─────────┴───────────────┴─────────────┘
-  Walrus blob ID of the quilt       version   start index     end index
-  (this is the Walrus blob_id,                (u16 LE)        (u16 LE)
-   not the Sui object ID)
+┌──────────────────────────────┬─────────┬───────────────┬─────────────┐
+│ quilt_blob_id (32 bytes)     │ ver (1) │ start_idx (2) │ end_idx (2) │
+└──────────────────────────────┴─────────┴───────────────┴─────────────┘
+  Walrus blob ID of the quilt    version   start index     end index
+  (this is the Walrus blob_id,             (u16 LE)        (u16 LE)
+  not the Sui object ID)
 ```
 
 The contract validates that every `QuiltPatchId` is exactly 37 bytes. Shorter or longer byte vectors are rejected with `EInvalidQuiltPatchId`.

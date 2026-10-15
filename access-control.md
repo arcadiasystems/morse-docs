@@ -273,12 +273,12 @@ The function runs two checks:
 Seal identities for Morse follow a structured namespace format to prevent cross-publication identity reuse:
 
 ```
-┌─────────────────────────────────┬────────────────┬──────────────────┐
-│  publication_id bytes (32)       │ policy_tag (1)  │ nonce (variable) │
-└─────────────────────────────────┴────────────────┴──────────────────┘
-  Scopes identity to one           Must be 0x01      Differentiates
-  specific publication             for publisher      multiple identities
-                                   policy             under same namespace
+┌───────────────────────────┬────────────────┬──────────────────────┐
+│ publication_id bytes (32) │ policy_tag (1) │ nonce (variable)     │
+└───────────────────────────┴────────────────┴──────────────────────┘
+  Scopes identity to one      Must be 0x01     Differentiates
+  specific publication        for publisher    multiple identities
+                              policy           under same namespace
 ```
 
 The `policy_tag = 0x01` is the publisher policy tag. This namespacing ensures:

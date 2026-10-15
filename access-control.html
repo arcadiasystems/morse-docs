@@ -439,12 +439,12 @@ assert!(!publication.revoked_publisher_caps.contains(object::id(cap)), <span cla
       <h3 id="seal-identity-format">Seal identity format</h3>
       <p>Seal identities for Morse follow a structured namespace format to prevent cross-publication identity reuse:</p>
 
-      <pre class="diagram">┌─────────────────────────────────┬────────────────┬──────────────────┐
-│  publication_id bytes (32)       │ policy_tag (1)  │ nonce (variable) │
-└─────────────────────────────────┴────────────────┴──────────────────┘
-  Scopes identity to one           Must be 0x01      Differentiates
-  specific publication             for publisher      multiple identities
-                                   policy             under same namespace</pre>
+      <pre class="diagram">┌───────────────────────────┬────────────────┬──────────────────────┐
+│ publication_id bytes (32) │ policy_tag (1) │ nonce (variable)     │
+└───────────────────────────┴────────────────┴──────────────────────┘
+  Scopes identity to one      Must be 0x01     Differentiates
+  specific publication        for publisher    multiple identities
+                              policy           under same namespace</pre>
 
       <p>The <code>policy_tag = 0x01</code> is the publisher policy tag. This namespacing ensures:</p>
       <ul>

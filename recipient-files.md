@@ -82,13 +82,13 @@ Encrypted recipient files use **Seal**, the same threshold-encryption layer that
 A recipient-file Seal identity is the byte concatenation of a prefix, the policy tag, and a per-encryption nonce:
 
 ```
-┌───────────────────────────────┬────────────────┬─────────────────────┐
-│  seal_id_prefix (≥1 byte)      │ policy_tag (1)  │  nonce (≥1 byte)     │
-└───────────────────────────────┴────────────────┴─────────────────────┘
-  Random, caller-chosen.          Must be 0x03      Fresh per encryption.
-  32 bytes recommended.           for the           16 bytes recommended.
-  Bound to the file on-chain      recipient-file
-  at creation.                    policy.
+┌────────────────────────────┬────────────────┬───────────────────────┐
+│ seal_id_prefix (≥1 byte)   │ policy_tag (1) │ nonce (≥1 byte)       │
+└────────────────────────────┴────────────────┴───────────────────────┘
+  Random, caller-chosen.       Must be 0x03     Fresh per encryption.
+  32 bytes recommended.        for the          16 bytes recommended.
+  Bound to the file on-chain   recipient-file
+  at creation.                 policy.
 ```
 
 The prefix solves an ordering problem: a file's Sui object ID does not exist until its creation transaction is signed, but encryption must happen *before* upload, which happens before that transaction. So the client picks a random prefix, encrypts under `prefix || 0x03 || nonce`, and binds the same prefix to the file on-chain via `new_recipient_file_with_seal_prefix`. This is what makes the whole upload fit in a single certify-and-create PTB.
