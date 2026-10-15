@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Encrypt a post for your team · Morse Docs</title>
+  <meta name="theme-color" content="#F2EFE8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="assets/docs.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="description" content="Encrypt a post with Seal so only active PublisherCap holders of your publication can decrypt it, then publish or revoke.">
+  <link rel="canonical" href="https://docs.morsecms.xyz/team-only-content.html">
+  <meta property="og:title" content="Encrypt a post for your team · Morse Docs">
+  <meta property="og:description" content="Encrypt a post with Seal so only active PublisherCap holders of your publication can decrypt it, then publish or revoke.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://docs.morsecms.xyz/team-only-content.html">
+  <meta property="og:site_name" content="Morse Docs">
+  <meta name="twitter:card" content="summary">
+  <link rel="alternate" type="text/markdown" href="https://docs.morsecms.xyz/team-only-content.md" title="Markdown version">
+</head>
+<body>
+
+<header class="top">
+  <div class="top__in">
+    <button class="menu-btn" type="button" id="menu" aria-label="Open navigation" aria-expanded="false" aria-controls="side">
+      <svg class="menu-btn__open" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg class="menu-btn__close" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <a class="brand" href="index.html" aria-label="Morse docs home">
+      <svg aria-hidden="true" width="26" height="26" viewBox="0 0 100 100"><path d="M8 72 V30 H36 V72 H64 V30 H92 V72" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>morse</span><em>DOCS</em>
+    </a>
+    <button class="search" type="button" id="search-open" aria-label="Search documentation (⌘K)">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span class="search__label">Search documentation</span><kbd>⌘K</kbd>
+    </button>
+    <nav class="top__right" aria-label="Site">
+      <button class="askai" type="button" data-askai title="Ask AI (⌘I)"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>Ask AI</button>
+      <a class="agents" href="use-morse-with-ai.html"><i aria-hidden="true"></i>For agents</a>
+      <a class="gh" href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener">GitHub</a>
+      <a class="site" href="https://www.morsecms.xyz" target="_blank" rel="noopener">morsecms.xyz</a>
+    </nav>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="side" id="side"></aside>
+
+  <main class="main">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="cookbooks.html">Cookbooks</a><span class="crumbs__sep" aria-hidden="true">/</span><span aria-current="page">Encrypt a post for your team</span></nav>
+    <article class="article">
+        <h1>Encrypt a post for your team</h1>
+        <p class="article-lead">
+          Client-side encryption with the access rule living on Sui. Who can read is who holds a live cap, and revoking is one command.
+        </p>
+        <div class="page-actions">
+          <div class="copybtn-group">
+            <button class="copybtn" type="button" id="copy-page"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-flash-label>Copy page</span></button>
+            <button class="copybtn copybtn-caret" type="button" id="page-menu-btn" aria-label="More page actions" aria-haspopup="true" aria-expanded="false" aria-controls="page-menu"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+          </div>
+          <div class="page-menu" id="page-menu" hidden>
+            <button class="page-menu__item" type="button" data-page-copy><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy page as Markdown</button>
+            <a class="page-menu__item" href="team-only-content.md" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>View as Markdown</a>
+            <a class="page-menu__item" id="page-chatgpt" href="https://chatgpt.com/" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>Open in ChatGPT</a>
+            <a class="page-menu__item" id="page-claude" href="https://claude.ai/new" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>Open in Claude</a>
+          </div>
+        </div>
+        <ul class="article-meta"><li>About 10 minutes</li><li>CLI</li><li>A publication with a blob collection</li><li>Testnet</li></ul>
+        <h2 id="what-encryption-gives-you-today">What encryption gives you today</h2>
+
+        <p>Morse encrypts content client side with <a href="https://seal-docs.wal.app/">Seal</a> before it goes to Walrus. The decryption rule is a Move function on Sui: a Seal key server only releases its share if the caller holds an active <code>PublisherCap</code> for that publication. So today, encrypted means <strong>readable by your team</strong>: everyone with write access, nobody else, and no server of yours in the middle.</p>
+
+        <div class="table-wrap">
+          <table><thead><tr><th>Policy</th><th>Who can read</th><th>Status</th></tr></thead><tbody><tr><td>Public (0)</td><td>Anyone with the blob id</td><td>Live</td></tr><tr><td>Publisher (1)</td><td>Active <code>PublisherCap</code> holders of the publication</td><td>Live, this recipe</td></tr><tr><td>Subscription (2)</td><td>Holders of a subscription token</td><td>Reserved on chain, approval function not built yet</td></tr></tbody></table>
+        </div>
+
+        <h2 id="publish-an-encrypted-entry">Publish an encrypted entry</h2>
+
+        <p>With your publication and collection active:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>cat &gt; q4-plan.md &lt;&lt;'EOF'
+<span class="cm"># Q4 plan (internal)</span>
+Ship mainnet, then the indexer.
+EOF
+<span class="p" aria-hidden="true">$ </span>morse entry add-encrypted q4-plan --file q4-plan.md --epochs 30</pre>
+        </div>
+
+        <div class="code-block code-block-output">
+          <div class="code-header">
+            <span class="code-lang">output</span>
+          </div>
+          <pre>Encrypting and uploading 53 bytes...
+<span class="ok">Added encrypted entry #5 "q4-plan".</span> <span class="m">(tx: 8Bq1mVr0...2kLs)</span></pre>
+        </div>
+
+        <p>Three things happened: the CLI generated a fresh Seal identity scoped to your publication, encrypted the file locally, and uploaded only ciphertext. The entry was created as a <strong>draft</strong>. Encrypted entries always start as drafts, because publishing is a separate decision.</p>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01M11 12h1v4h1"></path></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">Collection mode</div>
+            <div class="callout-text">Encrypted entries need a <code>blob</code> mode collection, which is the default. If you created the collection with <code>--mode quilt</code>, make another one for encrypted content.</div>
+          </div>
+        </div>
+
+        <h2 id="read-it-as-a-cap-holder">Read it as a cap holder</h2>
+
+        <p>Reading is <code>entry decrypt</code>, not <code>entry read</code>. The CLI signs a short-lived session key with your account, asks the key servers for shares, and decrypts locally.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>morse entry decrypt 5 --via-aggregator --out q4-plan.recovered.md
+<span class="p" aria-hidden="true">$ </span>diff q4-plan.md q4-plan.recovered.md &amp;&amp; echo identical</pre>
+        </div>
+
+        <p>Anyone you issued a cap to in <a href="co-author.html">Add a co-author</a> can run the same command from their own wallet. Anyone else gets the ciphertext from Walrus and nothing from the key servers.</p>
+
+        <h2 id="publish-the-draft">Publish the draft</h2>
+
+        <p>A draft is visible as an entry on chain but is not the public head, and for encrypted content it stays that way: published revisions are always public and unencrypted, so the team keeps reading the draft with <code>entry decrypt</code>. If you decide to release the text to everyone, publish it from the draft with the plaintext file:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>morse revision publish-from-draft 5 0 --file q4-plan.md</pre>
+        </div>
+
+        <p>Always pass <code>--file</code>. Without it the CLI reuses the draft's blob, which is ciphertext, and readers of the public head would get bytes nobody can decrypt. <code>morse revision publish-direct 5 --file q4-plan.md</code> does the same in one step.</p>
+
+        <h2 id="rotate-a-key-revoke-a-reader">Rotate a key, revoke a reader</h2>
+
+        <p>Access is enforced at decryption time, every time. Revoking a cap cuts off a reader even for content they could read yesterday:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>morse cap revoke 0xTHEIR_CAP_ID</pre>
+        </div>
+
+        <p>Note what this does and does not do. It stops the key servers from serving that wallet from now on. It does not un-read anything they already decrypted and saved. Same as any system, but worth saying out loud to a team.</p>
+
+        <h2 id="honest-limits">Honest limits</h2>
+
+        <div class="table-wrap">
+          <table><thead><tr><th>Question</th><th>Answer today</th></tr></thead><tbody><tr><td>Can I sell access to a post?</td><td>Not yet. The subscription policy exists on chain but its approval function is not built. It is on the roadmap.</td></tr><tr><td>Can a reader get read access without write access?</td><td>Not with Seal gating. A <code>PublisherCap</code> is both. Keep the team small.</td></tr><tr><td>Who runs the key servers?</td><td>Seal key servers on testnet, two of three shares needed by default. If they are down, nobody can decrypt, including you.</td></tr><tr><td>Is the ciphertext safe on Walrus?</td><td>Walrus stores the bytes anyone can fetch. The key never leaves the key servers and your client.</td></tr></tbody></table>
+        </div>
+
+        <h2 id="next">Next</h2>
+
+        <div class="card-grid">
+          <a href="co-author.html" class="card">
+            <div class="card-title">Add a co-author</div>
+            <div class="card-desc">Issue the caps your readers need.</div>
+          </a>
+          <a href="fix-a-typo.html" class="card">
+            <div class="card-title">Fix a typo without losing history</div>
+            <div class="card-desc">Drafts and heads explained.</div>
+          </a>
+          <a href="access-control.html" class="card">
+            <div class="card-title">Access control reference</div>
+            <div class="card-desc">seal_approve_publisher and friends.</div>
+          </a>
+        </div>
+      </article>
+
+    <div class="feedback">
+      <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
+      <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20team-only-content.html" target="_blank" rel="noopener">Report an issue</a>
+      <span class="feedback__upd">Updated 2026-10-15</span>
+    </div>
+    <nav class="pager" aria-label="Previous and next">
+      <a href="co-author.html" rel="prev"><small>Previous</small><b>← Add a co-author</b></a>
+      <a href="publish-from-ci.html" rel="next"><small>Next</small><b>Publish from CI →</b></a>
+    </nav>
+  </main>
+
+  <aside class="toc" aria-label="On this page">
+    <p class="toc__title">On this page</p>
+    <div class="toc__list"></div>
+  </aside>
+</div>
+
+<script src="assets/sidebar.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

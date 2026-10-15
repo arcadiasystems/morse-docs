@@ -9,6 +9,18 @@ const NAV_SECTIONS = [
       { page: 'quick-start-contracts.html', label: 'Smart Contracts' },
     ] },
   ] },
+  { title: 'Cookbooks', items: [
+    { page: 'cookbooks.html', label: 'All recipes', children: [
+      { page: 'launch-a-blog.html', label: 'Launch a blog in 10 minutes' },
+      { page: 'fix-a-typo.html', label: 'Fix a typo without losing history' },
+      { page: 'import-a-site.html', label: 'Import an existing Markdown site' },
+      { page: 'co-author.html', label: 'Add a co-author' },
+      { page: 'team-only-content.html', label: 'Encrypt a post for your team' },
+      { page: 'publish-from-ci.html', label: 'Publish from CI' },
+      { page: 'agent-publishes.html', label: 'Let an AI agent publish' },
+      { page: 'verify-a-post.html', label: 'Prove a post has not changed' },
+    ] },
+  ] },
   { title: 'Protocol', items: [
     { page: 'publications.html', label: 'Publications' },
     { page: 'collections.html', label: 'Collections' },
@@ -19,17 +31,17 @@ const NAV_SECTIONS = [
   { title: 'CLI', items: [
     { page: 'cli-overview.html', label: 'Overview' },
     { page: 'cli-commands.html', label: 'Commands' },
-    { page: 'cli-workflows.html', label: 'Cookbooks' },
+    { page: 'cli-workflows.html', label: 'Reference cookbooks' },
   ] },
   { title: 'SDK', items: [
     { page: 'sdk-overview.html', label: 'Overview' },
     { page: 'sdk-client-setup.html', label: 'Setup' },
-    { page: 'sdk-workflows.html', label: 'Cookbooks' },
+    { page: 'sdk-workflows.html', label: 'Reference cookbooks' },
   ] },
   { title: 'Smart contracts', items: [
     { page: 'contracts-overview.html', label: 'Overview' },
     { page: 'contracts-reference.html', label: 'Reference' },
-    { page: 'contracts-workflows.html', label: 'Cookbooks' },
+    { page: 'contracts-workflows.html', label: 'Reference cookbooks' },
   ] },
   { title: 'Indexer', items: [
     { label: 'Overview', tag: 'Q1 2027' },

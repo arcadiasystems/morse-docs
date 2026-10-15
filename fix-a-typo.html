@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fix a typo without losing history · Morse Docs</title>
+  <meta name="theme-color" content="#F2EFE8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="assets/docs.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="description" content="Publish a corrected revision of a post while keeping every earlier revision readable on chain.">
+  <link rel="canonical" href="https://docs.morsecms.xyz/fix-a-typo.html">
+  <meta property="og:title" content="Fix a typo without losing history · Morse Docs">
+  <meta property="og:description" content="Publish a corrected revision of a post while keeping every earlier revision readable on chain.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://docs.morsecms.xyz/fix-a-typo.html">
+  <meta property="og:site_name" content="Morse Docs">
+  <meta name="twitter:card" content="summary">
+  <link rel="alternate" type="text/markdown" href="https://docs.morsecms.xyz/fix-a-typo.md" title="Markdown version">
+</head>
+<body>
+
+<header class="top">
+  <div class="top__in">
+    <button class="menu-btn" type="button" id="menu" aria-label="Open navigation" aria-expanded="false" aria-controls="side">
+      <svg class="menu-btn__open" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg class="menu-btn__close" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <a class="brand" href="index.html" aria-label="Morse docs home">
+      <svg aria-hidden="true" width="26" height="26" viewBox="0 0 100 100"><path d="M8 72 V30 H36 V72 H64 V30 H92 V72" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>morse</span><em>DOCS</em>
+    </a>
+    <button class="search" type="button" id="search-open" aria-label="Search documentation (⌘K)">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span class="search__label">Search documentation</span><kbd>⌘K</kbd>
+    </button>
+    <nav class="top__right" aria-label="Site">
+      <button class="askai" type="button" data-askai title="Ask AI (⌘I)"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>Ask AI</button>
+      <a class="agents" href="use-morse-with-ai.html"><i aria-hidden="true"></i>For agents</a>
+      <a class="gh" href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener">GitHub</a>
+      <a class="site" href="https://www.morsecms.xyz" target="_blank" rel="noopener">morsecms.xyz</a>
+    </nav>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="side" id="side"></aside>
+
+  <main class="main">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="cookbooks.html">Cookbooks</a><span class="crumbs__sep" aria-hidden="true">/</span><span aria-current="page">Fix a typo without losing history</span></nav>
+    <article class="article">
+        <h1>Fix a typo without losing history</h1>
+        <p class="article-lead">
+          Correct a published post without rewriting history. Two ways to do it, and how to read any revision back.
+        </p>
+        <div class="page-actions">
+          <div class="copybtn-group">
+            <button class="copybtn" type="button" id="copy-page"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-flash-label>Copy page</span></button>
+            <button class="copybtn copybtn-caret" type="button" id="page-menu-btn" aria-label="More page actions" aria-haspopup="true" aria-expanded="false" aria-controls="page-menu"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+          </div>
+          <div class="page-menu" id="page-menu" hidden>
+            <button class="page-menu__item" type="button" data-page-copy><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy page as Markdown</button>
+            <a class="page-menu__item" href="fix-a-typo.md" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>View as Markdown</a>
+            <a class="page-menu__item" id="page-chatgpt" href="https://chatgpt.com/" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>Open in ChatGPT</a>
+            <a class="page-menu__item" id="page-claude" href="https://claude.ai/new" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>Open in Claude</a>
+          </div>
+        </div>
+        <ul class="article-meta"><li>About 5 minutes</li><li>CLI</li><li>An existing entry</li><li>Testnet</li></ul>
+        <h2 id="why-revisions-not-edits">Why revisions, not edits</h2>
+
+        <p>Morse never overwrites a post. Every change is a new revision appended to the entry, and every earlier revision stays readable forever. An entry keeps two pointers, the <strong>public head</strong> (what readers get) and the <strong>draft head</strong> (what you are working on). Fixing a typo moves the public head, it does not erase anything.</p>
+
+        <div class="code-block code-block-output">
+          <div class="code-header">
+            <span class="code-lang">text</span>
+          </div>
+          <pre>entry 0
+  revision 0   public   "Hello from Morse"           &lt;- still readable
+  revision 1   public   "Hello from Morse" (fixed)   &lt;- public head</pre>
+        </div>
+
+        <p>Everything below assumes you have the publication and collection from <a href="launch-a-blog.html">Launch a blog</a> set as your active context. Check with <code>morse status</code>.</p>
+
+        <h2 id="publish-a-corrected-revision-in-one-step">Publish a corrected revision in one step</h2>
+
+        <p>Edit the file, then publish it straight to the public head:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>sed -i.bak 's/no backend/no backend at all/' hello.md
+<span class="p" aria-hidden="true">$ </span>morse revision publish-direct 0 --file hello.md --epochs 14</pre>
+        </div>
+
+        <div class="code-block code-block-output">
+          <div class="code-header">
+            <span class="code-lang">output</span>
+          </div>
+          <pre>Uploading 100 bytes to Walrus...
+Blob uploaded (0xa3d0...2c1f). Submitting transaction...
+<span class="ok">Published revision #1 on entry #0.</span> <span class="m">(tx: 7Kq2mRv1...9v8)</span></pre>
+        </div>
+
+        <p>One upload, one transaction. The old blob and the old revision are untouched.</p>
+
+        <h2 id="or-stage-a-draft-first">Or stage a draft first</h2>
+
+        <p>For anything bigger than a typo, stage the change as a draft, read it back, and only then publish it. Drafts are real revisions on chain, they are just not the public head.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>morse revision append-draft 0 --file hello.md --epochs 14
+<span class="p" aria-hidden="true">$ </span>morse entry list --drafts-only
+<span class="p" aria-hidden="true">$ </span>morse revision publish-from-draft 0 2</pre>
+        </div>
+
+        <p>The second argument of <code>publish-from-draft</code> is the draft revision's index, which <code>entry list --drafts-only</code> or <code>morse entry get 0</code> shows you. The content is reused as is; pass <code>--file</code> if you want to replace it at the moment of publishing.</p>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01M11 12h1v4h1"></path></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">Encrypted entries always start as drafts</div>
+            <div class="callout-text">An entry added with <code>entry add-encrypted</code> starts as a draft and stays one: published revisions are always public and unencrypted, so team-only content is read from the draft with <code>entry decrypt</code>. See <a href="team-only-content.html">Encrypt a post for your team</a>.</div>
+          </div>
+        </div>
+
+        <h2 id="read-any-earlier-revision">Read any earlier revision</h2>
+
+        <p><code>entry read</code> takes an optional revision index. Without it you get the public head.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>morse entry read 0 --via-aggregator            # public head
+<span class="p" aria-hidden="true">$ </span>morse entry read 0 0 --via-aggregator          # revision 0, the original
+<span class="p" aria-hidden="true">$ </span>morse entry read 0 0 --via-aggregator --out original.md
+<span class="p" aria-hidden="true">$ </span>diff original.md hello.md</pre>
+        </div>
+
+        <p>That diff is the whole point. Anyone with the entry id can produce it, with no help from you.</p>
+
+        <h2 id="what-readers-see">What readers see</h2>
+
+        <p>A reader app that follows the public head sees the corrected post immediately. A reader who cares can fetch the entry record from Sui and walk the revision list, each revision pointing at its own Walrus blob and naming the address that wrote it. The demo blog shows this as a Revisions panel next to the post.</p>
+
+        <div class="table-wrap">
+          <table><thead><tr><th>Operation</th><th>Command</th><th>Moves public head</th><th>Keeps history</th></tr></thead><tbody><tr><td>Publish corrected text now</td><td><code>revision publish-direct</code></td><td>Yes</td><td>Yes</td></tr><tr><td>Stage, review, then publish</td><td><code>revision append-draft</code> + <code>publish-from-draft</code></td><td>On publish</td><td>Yes</td></tr><tr><td>Delete the entry</td><td><code>entry delete</code></td><td>n/a</td><td>No, and the id is retired for good</td></tr></tbody></table>
+        </div>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">Blobs expire, records do not</div>
+            <div class="callout-text">Each revision's bytes live on Walrus for the epochs you paid for. When they expire, the revision record on Sui still exists but the content cannot be fetched. Use a generous <code>--epochs</code> for anything you want readable next month, and expect testnet resets.</div>
+          </div>
+        </div>
+
+        <h2 id="next">Next</h2>
+
+        <div class="card-grid">
+          <a href="verify-a-post.html" class="card">
+            <div class="card-title">Prove a post has not changed</div>
+            <div class="card-desc">Compare what a reader got with the chain record.</div>
+          </a>
+          <a href="co-author.html" class="card">
+            <div class="card-title">Add a co-author</div>
+            <div class="card-desc">Let someone else publish revisions to your blog.</div>
+          </a>
+          <a href="cli-commands.html" class="card">
+            <div class="card-title">CLI command reference</div>
+            <div class="card-desc">Every revision and entry flag.</div>
+          </a>
+        </div>
+      </article>
+
+    <div class="feedback">
+      <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
+      <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20fix-a-typo.html" target="_blank" rel="noopener">Report an issue</a>
+      <span class="feedback__upd">Updated 2026-10-15</span>
+    </div>
+    <nav class="pager" aria-label="Previous and next">
+      <a href="launch-a-blog.html" rel="prev"><small>Previous</small><b>← Launch a blog in 10 minutes</b></a>
+      <a href="import-a-site.html" rel="next"><small>Next</small><b>Import an existing Markdown site →</b></a>
+    </nav>
+  </main>
+
+  <aside class="toc" aria-label="On this page">
+    <p class="toc__title">On this page</p>
+    <div class="toc__list"></div>
+  </aside>
+</div>
+
+<script src="assets/sidebar.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

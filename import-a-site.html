@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Import an existing Markdown site · Morse Docs</title>
+  <meta name="theme-color" content="#F2EFE8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="assets/docs.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="description" content="Publish a folder of Markdown posts into a Morse collection, one entry per file, with a map you can re-run safely.">
+  <link rel="canonical" href="https://docs.morsecms.xyz/import-a-site.html">
+  <meta property="og:title" content="Import an existing Markdown site · Morse Docs">
+  <meta property="og:description" content="Publish a folder of Markdown posts into a Morse collection, one entry per file, with a map you can re-run safely.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://docs.morsecms.xyz/import-a-site.html">
+  <meta property="og:site_name" content="Morse Docs">
+  <meta name="twitter:card" content="summary">
+  <link rel="alternate" type="text/markdown" href="https://docs.morsecms.xyz/import-a-site.md" title="Markdown version">
+</head>
+<body>
+
+<header class="top">
+  <div class="top__in">
+    <button class="menu-btn" type="button" id="menu" aria-label="Open navigation" aria-expanded="false" aria-controls="side">
+      <svg class="menu-btn__open" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg class="menu-btn__close" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <a class="brand" href="index.html" aria-label="Morse docs home">
+      <svg aria-hidden="true" width="26" height="26" viewBox="0 0 100 100"><path d="M8 72 V30 H36 V72 H64 V30 H92 V72" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>morse</span><em>DOCS</em>
+    </a>
+    <button class="search" type="button" id="search-open" aria-label="Search documentation (⌘K)">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span class="search__label">Search documentation</span><kbd>⌘K</kbd>
+    </button>
+    <nav class="top__right" aria-label="Site">
+      <button class="askai" type="button" data-askai title="Ask AI (⌘I)"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>Ask AI</button>
+      <a class="agents" href="use-morse-with-ai.html"><i aria-hidden="true"></i>For agents</a>
+      <a class="gh" href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener">GitHub</a>
+      <a class="site" href="https://www.morsecms.xyz" target="_blank" rel="noopener">morsecms.xyz</a>
+    </nav>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="side" id="side"></aside>
+
+  <main class="main">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="cookbooks.html">Cookbooks</a><span class="crumbs__sep" aria-hidden="true">/</span><span aria-current="page">Import an existing Markdown site</span></nav>
+    <article class="article">
+        <h1>Import an existing Markdown site</h1>
+        <p class="article-lead">
+          Bring an existing Hugo, Astro or plain Markdown site into Morse. One entry per post, a map file so you can run it twice, and a way to push edits as revisions.
+        </p>
+        <div class="page-actions">
+          <div class="copybtn-group">
+            <button class="copybtn" type="button" id="copy-page"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-flash-label>Copy page</span></button>
+            <button class="copybtn copybtn-caret" type="button" id="page-menu-btn" aria-label="More page actions" aria-haspopup="true" aria-expanded="false" aria-controls="page-menu"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+          </div>
+          <div class="page-menu" id="page-menu" hidden>
+            <button class="page-menu__item" type="button" data-page-copy><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy page as Markdown</button>
+            <a class="page-menu__item" href="import-a-site.md" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>View as Markdown</a>
+            <a class="page-menu__item" id="page-chatgpt" href="https://chatgpt.com/" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>Open in ChatGPT</a>
+            <a class="page-menu__item" id="page-claude" href="https://claude.ai/new" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>Open in Claude</a>
+          </div>
+        </div>
+        <ul class="article-meta"><li>About 15 minutes</li><li>CLI + bash + jq</li><li>A folder of .md files</li><li>Testnet</li></ul>
+        <h2 id="what-this-does">What this does</h2>
+
+        <p>You have a folder of Markdown posts from Hugo, Astro, Jekyll, Obsidian or a plain repo. This recipe publishes each file as one Morse entry, writes a small map from filename to entry id, and lets you run it again later without duplicating anything. Morse stores bytes as they are, so front matter goes in untouched and your existing renderer keeps working.</p>
+
+        <h2 id="lay-out-the-folder">Lay out the folder</h2>
+
+        <div class="code-block code-block-output">
+          <div class="code-header">
+            <span class="code-lang">text</span>
+          </div>
+          <pre>content/
+  posts/
+    2026-09-01-why-a-protocol.md
+    2026-09-14-dual-head-revisions.md
+    2026-10-02-publishing-from-an-agent.md
+morse-map.json        &lt;- created by the script</pre>
+        </div>
+
+        <p>Make sure your active context is the publication and collection you want to fill:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>morse use my-blog-1760000000 posts
+<span class="p" aria-hidden="true">$ </span>morse status</pre>
+        </div>
+
+        <h2 id="dry-run">Dry run</h2>
+
+        <p>Count the files and estimate storage before spending WAL. Walrus charges per blob per epoch, so the total size and the epoch count are what matter.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>ls content/posts/*.md | wc -l
+<span class="p" aria-hidden="true">$ </span>du -ch content/posts/*.md | tail -1</pre>
+        </div>
+
+        <h2 id="publish-everything">Publish everything</h2>
+
+        <p>The script publishes every file that is not yet in the map. The entry name is the filename without the extension. <code>--json</code> gives machine-readable output, <code>-q</code> hides the progress lines, and <code>jq</code> pulls the entry id out.</p>
+
+        <div class="code-block" data-no-prompt>
+          <div class="code-header">
+            <span class="code-lang">bash</span><span class="code-note is-file">import.sh</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre>#!/usr/bin/env bash
+set -euo pipefail
+MAP=morse-map.json
+EPOCHS=${EPOCHS:-30}
+[ -f "$MAP" ] || echo '{}' &gt; "$MAP"
+
+for f in content/posts/*.md; do
+  name=$(basename "$f" .md)
+  if jq -e --arg n "$name" '.[$n]' "$MAP" &gt;/dev/null; then
+    echo "skip  $name (already published)"; continue
+  fi
+  echo "add   $name"
+  out=$(morse --json -q entry add "$name" --file "$f" --epochs "$EPOCHS")
+  id=$(echo "$out" | jq -r '.entryId')
+  tmp=$(mktemp)
+  jq --arg n "$name" --arg id "$id" '.[$n] = {entryId: ($id|tonumber), file: $n}' "$MAP" &gt; "$tmp" &amp;&amp; mv "$tmp" "$MAP"
+done
+echo "done, $(jq length "$MAP") entries in $MAP"</pre>
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>chmod +x import.sh
+<span class="p" aria-hidden="true">$ </span>EPOCHS=30 ./import.sh</pre>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01M11 12h1v4h1"></path></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">One transaction pair per post</div>
+            <div class="callout-text">Each <code>entry add</code> signs two transactions. Thirty posts is sixty signatures and about a minute on testnet. If a run stops halfway, run it again, the map makes it pick up where it left off.</div>
+          </div>
+        </div>
+
+        <h2 id="keep-the-map">Keep the map</h2>
+
+        <p>Commit <code>morse-map.json</code> next to your content. It is the only thing that ties a filename to an entry id, and your site generator or reader app needs it to fetch bodies from Walrus.</p>
+
+        <div class="code-block code-block-output">
+          <div class="code-header">
+            <span class="code-lang">json</span><span class="code-note is-file">morse-map.json</span>
+          </div>
+          <pre>{
+  "2026-09-01-why-a-protocol": { "entryId": 0, "file": "2026-09-01-why-a-protocol" },
+  "2026-09-14-dual-head-revisions": { "entryId": 1, "file": "2026-09-14-dual-head-revisions" }
+}</pre>
+        </div>
+
+        <h2 id="re-running-safely">Re-running safely</h2>
+
+        <p>New files get added, existing ones are skipped. To push an edited post as a new revision rather than a new entry, look the id up in the map and use <code>revision publish-direct</code>:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>id=$(jq -r '.["2026-09-14-dual-head-revisions"].entryId' morse-map.json)
+<span class="p" aria-hidden="true">$ </span>morse revision publish-direct "$id" --file content/posts/2026-09-14-dual-head-revisions.md --epochs 30</pre>
+        </div>
+
+        <p>A simple way to automate that: store each file's content hash in the map and publish a revision whenever the hash changes. Left as a ten-line exercise, or ask your agent, see <a href="agent-publishes.html">Let an AI agent publish</a>.</p>
+
+        <h2 id="pitfalls">Pitfalls</h2>
+
+        <div class="table-wrap">
+          <table><thead><tr><th>Pitfall</th><th>What happens</th><th>What to do</th></tr></thead><tbody><tr><td>Entry names are not unique on chain</td><td>Running without the map creates duplicates</td><td>Always keep and commit the map</td></tr><tr><td>Images and other assets</td><td>A Markdown file only carries text</td><td>Publish each asset as its own entry, or keep assets on a plain host for now</td></tr><tr><td>Big files</td><td>Walrus storage cost scales with size and epochs</td><td>Keep posts as Markdown, strip embedded base64</td></tr><tr><td>Testnet reset</td><td>Entries and blobs are gone, the map is stale</td><td>Delete the map and re-run</td></tr></tbody></table>
+        </div>
+
+        <h2 id="next">Next</h2>
+
+        <div class="card-grid">
+          <a href="publish-from-ci.html" class="card">
+            <div class="card-title">Publish from CI</div>
+            <div class="card-desc">Run this script on every push to main.</div>
+          </a>
+          <a href="fix-a-typo.html" class="card">
+            <div class="card-title">Fix a typo without losing history</div>
+            <div class="card-desc">How revisions work.</div>
+          </a>
+          <a href="sdk-workflows.html" class="card">
+            <div class="card-title">SDK reference cookbooks</div>
+            <div class="card-desc">The same loop in TypeScript with addEntryFromBytes.</div>
+          </a>
+        </div>
+      </article>
+
+    <div class="feedback">
+      <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
+      <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20import-a-site.html" target="_blank" rel="noopener">Report an issue</a>
+      <span class="feedback__upd">Updated 2026-10-15</span>
+    </div>
+    <nav class="pager" aria-label="Previous and next">
+      <a href="fix-a-typo.html" rel="prev"><small>Previous</small><b>← Fix a typo without losing history</b></a>
+      <a href="co-author.html" rel="next"><small>Next</small><b>Add a co-author →</b></a>
+    </nav>
+  </main>
+
+  <aside class="toc" aria-label="On this page">
+    <p class="toc__title">On this page</p>
+    <div class="toc__list"></div>
+  </aside>
+</div>
+
+<script src="assets/sidebar.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

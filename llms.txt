@@ -20,6 +20,18 @@ Every page below is also available as Markdown: replace `.html` with `.md` in an
 - [Quick Start: SDK](https://docs.morsecms.xyz/quick-start-sdk.md): Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter: no browser, no wallet popups. Want to see the result first? Browse the live demo blog built on this SDK.
 - [Quick Start: Smart Contracts](https://docs.morsecms.xyz/quick-start-contracts.md): Create a publication, add a collection, and publish an entry using raw Programmable Transaction Blocks against the deployed Morse contracts on testnet. No SDK wrappers, just tx.moveCall.
 
+## Cookbooks
+
+- [Cookbooks](https://docs.morsecms.xyz/cookbooks.md): Goal-first recipes for Morse: launch a blog, fix a typo, add a co-author, encrypt for a team, publish from CI or an agent, verify a post.
+- [Launch a blog in 10 minutes](https://docs.morsecms.xyz/launch-a-blog.md): Go from an empty wallet to a publication, a collection and a first post on Sui testnet, using only the CLI.
+- [Fix a typo without losing history](https://docs.morsecms.xyz/fix-a-typo.md): Publish a corrected revision of a post while keeping every earlier revision readable on chain.
+- [Import an existing Markdown site](https://docs.morsecms.xyz/import-a-site.md): Publish a folder of Markdown posts into a Morse collection, one entry per file, with a map you can re-run safely.
+- [Add a co-author](https://docs.morsecms.xyz/co-author.md): Give another wallet permission to publish to your publication with a PublisherCap, and take it back when needed.
+- [Encrypt a post for your team](https://docs.morsecms.xyz/team-only-content.md): Encrypt a post with Seal so only active PublisherCap holders of your publication can decrypt it, then publish or revoke.
+- [Publish from CI](https://docs.morsecms.xyz/publish-from-ci.md): Publish entries and revisions from a GitHub Actions pipeline using a dedicated publisher key and environment variables.
+- [Let an AI agent publish](https://docs.morsecms.xyz/agent-publishes.md): Set up an AI agent with its own wallet and PublisherCap so it can publish to your publication unattended, and revoke it later.
+- [Prove a post has not changed](https://docs.morsecms.xyz/verify-a-post.md): Check a published post against its Sui record and Walrus blob with no account and no trust in the publisher.
+
 ## Protocol
 
 - [Publications](https://docs.morsecms.xyz/publications.md): A publication is the top-level permission management and identity boundary for a content domain in Morse. Everything (collections, entries, permissions) lives inside a publication.

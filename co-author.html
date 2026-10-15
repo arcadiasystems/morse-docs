@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add a co-author · Morse Docs</title>
+  <meta name="theme-color" content="#F2EFE8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="assets/docs.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="description" content="Give another wallet permission to publish to your publication with a PublisherCap, and take it back when needed.">
+  <link rel="canonical" href="https://docs.morsecms.xyz/co-author.html">
+  <meta property="og:title" content="Add a co-author · Morse Docs">
+  <meta property="og:description" content="Give another wallet permission to publish to your publication with a PublisherCap, and take it back when needed.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://docs.morsecms.xyz/co-author.html">
+  <meta property="og:site_name" content="Morse Docs">
+  <meta name="twitter:card" content="summary">
+  <link rel="alternate" type="text/markdown" href="https://docs.morsecms.xyz/co-author.md" title="Markdown version">
+</head>
+<body>
+
+<header class="top">
+  <div class="top__in">
+    <button class="menu-btn" type="button" id="menu" aria-label="Open navigation" aria-expanded="false" aria-controls="side">
+      <svg class="menu-btn__open" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg class="menu-btn__close" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <a class="brand" href="index.html" aria-label="Morse docs home">
+      <svg aria-hidden="true" width="26" height="26" viewBox="0 0 100 100"><path d="M8 72 V30 H36 V72 H64 V30 H92 V72" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>morse</span><em>DOCS</em>
+    </a>
+    <button class="search" type="button" id="search-open" aria-label="Search documentation (⌘K)">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span class="search__label">Search documentation</span><kbd>⌘K</kbd>
+    </button>
+    <nav class="top__right" aria-label="Site">
+      <button class="askai" type="button" data-askai title="Ask AI (⌘I)"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>Ask AI</button>
+      <a class="agents" href="use-morse-with-ai.html"><i aria-hidden="true"></i>For agents</a>
+      <a class="gh" href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener">GitHub</a>
+      <a class="site" href="https://www.morsecms.xyz" target="_blank" rel="noopener">morsecms.xyz</a>
+    </nav>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="side" id="side"></aside>
+
+  <main class="main">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="cookbooks.html">Cookbooks</a><span class="crumbs__sep" aria-hidden="true">/</span><span aria-current="page">Add a co-author</span></nav>
+    <article class="article">
+        <h1>Add a co-author</h1>
+        <p class="article-lead">
+          Let a second person publish to your blog without sharing a key, see who can write at any time, and revoke in one command.
+        </p>
+        <div class="page-actions">
+          <div class="copybtn-group">
+            <button class="copybtn" type="button" id="copy-page"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-flash-label>Copy page</span></button>
+            <button class="copybtn copybtn-caret" type="button" id="page-menu-btn" aria-label="More page actions" aria-haspopup="true" aria-expanded="false" aria-controls="page-menu"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+          </div>
+          <div class="page-menu" id="page-menu" hidden>
+            <button class="page-menu__item" type="button" data-page-copy><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy page as Markdown</button>
+            <a class="page-menu__item" href="co-author.md" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>View as Markdown</a>
+            <a class="page-menu__item" id="page-chatgpt" href="https://chatgpt.com/" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>Open in ChatGPT</a>
+            <a class="page-menu__item" id="page-claude" href="https://claude.ai/new" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>Open in Claude</a>
+          </div>
+        </div>
+        <ul class="article-meta"><li>About 10 minutes</li><li>CLI, two machines</li><li>Owner plus one more wallet</li><li>Testnet</li></ul>
+        <h2 id="how-write-access-works">How write access works</h2>
+
+        <p>There are no user accounts in Morse. Write access is an object. When you created your publication you received an <code>OwnerCap</code> (full control) and a <code>PublisherCap</code> (can add entries and revisions). To let someone else publish, the owner mints a new <code>PublisherCap</code> bound to their address. To take it away, the owner revokes it. The co-author never needs your key, and you never need theirs.</p>
+
+        <div class="table-wrap">
+          <table><thead><tr><th>Capability</th><th>Who holds it</th><th>Can do</th></tr></thead><tbody><tr><td><code>OwnerCap</code></td><td>You, one per publication</td><td>Issue and revoke publisher caps, transfer ownership, delete</td></tr><tr><td><code>PublisherCap</code></td><td>You and anyone you issue one to</td><td>Create collections, add entries, append and publish revisions, decrypt team content</td></tr><tr><td>Nothing</td><td>Everyone else</td><td>Read public entries</td></tr></tbody></table>
+        </div>
+
+        <h2 id="owner-issue-a-cap">Owner: issue a cap</h2>
+
+        <p>You need the co-author's Sui address. From your machine, with the publication active:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>morse status                                   # confirm the active publication
+<span class="p" aria-hidden="true">$ </span>morse cap issue 0xCOAUTHOR_ADDRESS</pre>
+        </div>
+
+        <div class="code-block code-block-output">
+          <div class="code-header">
+            <span class="code-lang">output</span>
+          </div>
+          <pre><span class="ok">Issued PublisherCap 0x3f8a...c21e to 0xCOAUTHOR_ADDRESS.</span> <span class="m">(tx: 4Hn9xT...q2Wd)</span></pre>
+        </div>
+
+        <p>Save the cap id, you will need it to revoke. The cap is sent to the co-author's address as part of the same transaction, there is nothing for you to hand over.</p>
+
+        <h2 id="co-author-set-up-and-publish">Co-author: set up and publish</h2>
+
+        <p>On the co-author's machine, same setup as <a href="launch-a-blog.html">Launch a blog</a>, then point at your publication by slug:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>npm i -g @arcadiasystems/morse-cli
+<span class="p" aria-hidden="true">$ </span>morse config add testnet --network testnet
+<span class="p" aria-hidden="true">$ </span>morse account import
+<span class="p" aria-hidden="true">$ </span>morse cap list                                 # the new cap shows up here
+<span class="p" aria-hidden="true">$ </span>morse use my-blog-1760000000 posts
+<span class="p" aria-hidden="true">$ </span>morse entry add guest-post --file guest-post.md --epochs 14</pre>
+        </div>
+
+        <p>The CLI finds the right <code>PublisherCap</code> automatically from the active account. If the co-author holds caps for several publications, <code>--publisher-cap &lt;id&gt;</code> picks one explicitly.</p>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01M11 12h1v4h1"></path></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">Reads by slug need an account, reads by id do not</div>
+            <div class="callout-text"><code>morse use &lt;slug&gt;</code> resolves the slug through the active account. Anyone can read a publication by object id with no key at all: <code>morse publication get 0x69d4...f327</code>.</div>
+          </div>
+        </div>
+
+        <h2 id="owner-see-who-can-write">Owner: see who can write</h2>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>morse cap list 0xCOAUTHOR_ADDRESS</pre>
+        </div>
+
+        <p>There is no team page. The list of who can write is the list of live caps, and anyone can query it on chain. That is the audit trail.</p>
+
+        <h2 id="revoke-and-what-the-co-author-sees">Revoke, and what the co-author sees</h2>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>morse cap revoke 0x3f8a...c21e</pre>
+        </div>
+
+        <p>From the next transaction on, every write the co-author attempts with that cap aborts on chain with exit code 4. Everything they published before stays. A revoked cap still sits in their wallet as a dead object; they can tidy it with <code>morse cap destroy 0x3f8a...c21e</code>.</p>
+
+        <h2 id="rotate-instead-of-transfer">Rotate instead of transfer</h2>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">Do not transfer caps between people</div>
+            <div class="callout-text">A cap's holder is fixed when it is issued. <code>cap transfer</code> moves the object but not the binding, so the recipient cannot use it and the original holder cannot either. To hand write access to a new person: owner revokes the old cap, owner issues a new one.</div>
+          </div>
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>morse cap revoke 0xOLD_CAP_ID
+<span class="p" aria-hidden="true">$ </span>morse cap issue 0xNEW_PERSON_ADDRESS</pre>
+        </div>
+
+        <p>Transferring the whole publication is different and final: <code>morse publication transfer-ownership 0xNEW_OWNER</code> hands over the <code>OwnerCap</code> with no undo. Existing publisher caps keep working until the new owner revokes them.</p>
+
+        <h2 id="next">Next</h2>
+
+        <div class="card-grid">
+          <a href="team-only-content.html" class="card">
+            <div class="card-title">Encrypt a post for your team</div>
+            <div class="card-desc">Cap holders can also decrypt.</div>
+          </a>
+          <a href="agent-publishes.html" class="card">
+            <div class="card-title">Let an AI agent publish</div>
+            <div class="card-desc">An agent is just another cap holder.</div>
+          </a>
+          <a href="access-control.html" class="card">
+            <div class="card-title">Access control reference</div>
+            <div class="card-desc">Caps, policies and the Move checks behind them.</div>
+          </a>
+        </div>
+      </article>
+
+    <div class="feedback">
+      <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
+      <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20co-author.html" target="_blank" rel="noopener">Report an issue</a>
+      <span class="feedback__upd">Updated 2026-10-15</span>
+    </div>
+    <nav class="pager" aria-label="Previous and next">
+      <a href="import-a-site.html" rel="prev"><small>Previous</small><b>← Import an existing Markdown site</b></a>
+      <a href="team-only-content.html" rel="next"><small>Next</small><b>Encrypt a post for your team →</b></a>
+    </nav>
+  </main>
+
+  <aside class="toc" aria-label="On this page">
+    <p class="toc__title">On this page</p>
+    <div class="toc__list"></div>
+  </aside>
+</div>
+
+<script src="assets/sidebar.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

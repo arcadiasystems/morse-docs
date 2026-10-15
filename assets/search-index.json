@@ -301,6 +301,517 @@
     "text": "Contract Cookbooks Revisions, drafts, encrypted content, delegating access, and teardown, all via raw PTBs. Contract Reference Full function signatures, argument types, error codes, and Move struct definitions. Core Concepts Understand the data model: publications, collections, entries, and revisions."
   },
   {
+    "url": "cookbooks.html",
+    "pageTitle": "Cookbooks",
+    "section": "Cookbooks",
+    "heading": "Cookbooks",
+    "text": "Eight things people actually want to do with Morse, each as a short path with real commands and the failure modes you will hit on testnet. How these differ from the reference cookbooks The CLI, SDK and contracts cookbooks show every operation once. These recipes start from a goal, take ten to twenty minutes end to end, and say what to do when a step fails on testnet. Every recipe assumes a funded Sui testnet wallet. If you do not have one yet, start with the first recipe, it walks through the faucet."
+  },
+  {
+    "url": "cookbooks.html#publish",
+    "pageTitle": "Cookbooks",
+    "section": "Cookbooks",
+    "heading": "Publish",
+    "text": "Get content on chain and keep it right. 10 min · CLI Launch a blog in 10 minutes Publication, collection and a first post on Sui testnet, nothing else. Open recipe → 5 min · CLI Fix a typo without losing history Publish a corrected revision and keep every earlier one readable. Open recipe → 15 min · CLI + bash Import an existing Markdown site A folder of Markdown posts in, one entry per file, re-runnable. Open recipe →"
+  },
+  {
+    "url": "cookbooks.html#collaborate",
+    "pageTitle": "Cookbooks",
+    "section": "Cookbooks",
+    "heading": "Collaborate",
+    "text": "Other people, other wallets, same publication. 10 min · CLI Add a co-author Issue a PublisherCap to another wallet, see who can write, revoke. Open recipe → 10 min · CLI Encrypt a post for your team Seal-encrypt a post so only cap holders can decrypt it. Open recipe →"
+  },
+  {
+    "url": "cookbooks.html#automate",
+    "pageTitle": "Cookbooks",
+    "section": "Cookbooks",
+    "heading": "Automate",
+    "text": "Pipelines and agents as publishers. 20 min · CLI + GitHub Actions Publish from CI Push to main, get a revision on chain, with a key you can revoke. Open recipe → 15 min · CLI or SDK Let an AI agent publish A wallet, a cap and llms.txt, and an agent publishes unattended. Open recipe →"
+  },
+  {
+    "url": "cookbooks.html#trust",
+    "pageTitle": "Cookbooks",
+    "section": "Cookbooks",
+    "heading": "Trust",
+    "text": "What a reader can check without asking you. 10 min · CLI, no key Prove a post has not changed Check bytes, revision and author of any post from a clean machine. Open recipe →"
+  },
+  {
+    "url": "cookbooks.html#conventions",
+    "pageTitle": "Cookbooks",
+    "section": "Cookbooks",
+    "heading": "Conventions",
+    "text": "You seeIt means$ commandType it in a shell. The Copy button strips the prompt.0x69d4...f327A shortened id. Yours will differ, never copy these.--via-aggregatorRead through the public Walrus aggregator. Reliable on testnet, trusts the operator.--epochs 14How long Walrus keeps the bytes. One epoch is about a day on testnet.Active contextThe publication and collection morse status shows. Set with morse use. Testnet only Morse is on Sui testnet with unaudited contracts. Testnets reset, blobs expire, tokens are free and worthless. Treat everything you publish as a rehearsal."
+  },
+  {
+    "url": "launch-a-blog.html",
+    "pageTitle": "Launch a blog in 10 minutes",
+    "section": "Cookbooks",
+    "heading": "Launch a blog in 10 minutes",
+    "text": "Zero to a post whose bytes are on Walrus and whose record is on Sui, with nothing but your terminal. About ten minutes, most of it waiting for a faucet. About 10 minutesCLI onlyFresh Sui walletTestnet Testnet only, unaudited Everything here runs on Sui testnet and Walrus testnet. Testnets reset from time to time, blobs expire when their storage epochs run out, and the contracts have not been audited. Testnet tokens have no value. Do not publish anything you cannot afford to lose."
+  },
+  {
+    "url": "launch-a-blog.html#what-you-will-have",
+    "pageTitle": "Launch a blog in 10 minutes",
+    "section": "Cookbooks",
+    "heading": "What you will have",
+    "text": "A publication on Sui that you own, one collection called posts, and one post whose body lives on Walrus and whose record lives on Sui. Nothing else: no server, no database, no account with us. You end up withWhere it livesHow you prove itA Publication objectSui testnetIts object id, shown by morse publication getA posts collectionSui testnet, inside the publicationmorse collection listEntry 0 with one public revisionRecord on Sui, bytes on Walrusmorse entry get 0 and the blob id"
+  },
+  {
+    "url": "launch-a-blog.html#get-a-wallet-and-testnet-tokens",
+    "pageTitle": "Launch a blog in 10 minutes",
+    "section": "Cookbooks",
+    "heading": "Get a wallet and testnet tokens",
+    "text": "You need a Sui address with a little SUI for gas and a little WAL for storage. Both are free on testnet and take about two minutes. StepWhereWhyInstall a walletSlush, Suiet, or any Sui Wallet Standard walletHolds your key and signsGet testnet SUIfaucet.sui.ioGas for every on-chain actionSwap a little SUI for WALstake-wal.wal.appWalrus storage fees when you publishExport your private keyWallet settingsA suiprivkey1... string the CLI can import Use a throwaway key Create a fresh wallet for Morse testnet. The CLI stores the key in an encrypted keystore under ~/.config/morse/keystores, but a key y"
+  },
+  {
+    "url": "launch-a-blog.html#install-the-cli",
+    "pageTitle": "Launch a blog in 10 minutes",
+    "section": "Cookbooks",
+    "heading": "Install the CLI",
+    "text": "bashnode 18+ or bun 1.2+ Copy $ npm i -g @arcadiasystems/morse-cli $ morse --version If you would rather not install anything, every command below also works as npx @arcadiasystems/morse-cli ...."
+  },
+  {
+    "url": "launch-a-blog.html#point-it-at-testnet-and-import-your-key",
+    "pageTitle": "Launch a blog in 10 minutes",
+    "section": "Cookbooks",
+    "heading": "Point it at testnet and import your key",
+    "text": "bash Copy $ morse config add testnet --network testnet $ morse account import account import asks for the suiprivkey1... string and a password, both hidden. Check that it took: bash Copy $ morse status output profile: testnet network: testnet account: 0x7be4...11d0 publication: (none) collection: (none)"
+  },
+  {
+    "url": "launch-a-blog.html#create-the-publication",
+    "pageTitle": "Launch a blog in 10 minutes",
+    "section": "Cookbooks",
+    "heading": "Create the publication",
+    "text": "Slugs are globally unique on the network, so add a suffix. The name and slug cannot be changed later, pick ones you like. bash Copy $ morse publication create --name \"My Blog\" --slug \"my-blog-$(date +%s)\" $ morse collection create posts Both commands set what they created as your active context, so you do not have to pass -P or -C on every call. Two transactions have been signed with your key: one created the publication and minted your OwnerCap and PublisherCap, the other added the collection."
+  },
+  {
+    "url": "launch-a-blog.html#write-and-publish-the-first-post",
+    "pageTitle": "Launch a blog in 10 minutes",
+    "section": "Cookbooks",
+    "heading": "Write and publish the first post",
+    "text": "A post is just a file. Markdown is a good default because every reader can render it. bash Copy $ cat > hello.md <<'EOF' # Hello from Morse This post has no backend. Its bytes are on Walrus, its record is on Sui. EOF $ morse entry add hello --file hello.md --epochs 14 --epochs is how long Walrus keeps the blob. The default is 3, which is about three days on testnet. Fourteen is enough for a demo you want to show people next week. The content type is inferred from the file extension. output Uploading 93 bytes to Walrus... Added entry #0 \"hello\". (tx: D9YfjkA3...9vB) view: https://aggregator.wal"
+  },
+  {
+    "url": "launch-a-blog.html#read-it-back",
+    "pageTitle": "Launch a blog in 10 minutes",
+    "section": "Cookbooks",
+    "heading": "Read it back",
+    "text": "bash Copy $ morse entry read 0 --via-aggregator On testnet the direct read path often fails for a few minutes right after upload while storage nodes catch up, which is why the command goes through the public aggregator. Without the flag the CLI verifies the bytes client side; with it you trust the aggregator operator. Fine for a blog, worth knowing."
+  },
+  {
+    "url": "launch-a-blog.html#share-the-record",
+    "pageTitle": "Launch a blog in 10 minutes",
+    "section": "Cookbooks",
+    "heading": "Share the record",
+    "text": "This is the part a hosted CMS cannot do. Print the record and hand it to anyone: bash Copy $ morse --json entry get 0 | jq . The output includes the public head and the revision list, and for each revision the address that wrote it and the Sui object id of its Walrus blob. Paste your publication id (morse status shows it) into suiscan.xyz/testnet and anyone can see who published to it and when, without a Morse account, without trusting you. You are live Your publication, collection and first post exist on Sui testnet. Run morse entry list to see them, or go straight to Fix a typo without losin"
+  },
+  {
+    "url": "launch-a-blog.html#if-something-fails",
+    "pageTitle": "Launch a blog in 10 minutes",
+    "section": "Cookbooks",
+    "heading": "If something fails",
+    "text": "SymptomLikely causeFixexit 2 and \"No account selected\" on publication createNo active account, or wrong profilemorse status, then morse account use <address>Insufficient gas / balanceNo SUI or no WAL on the addressFaucet for SUI, swap for WAL, check the address matches morse statusESlugAlreadyExistsSomeone used that slugAdd a suffix, the $(date +%s) trick above does thisentry read says no valid blob metadataStorage nodes have not caught up yetUse --via-aggregator, or wait a few minutesPost disappeared after a whileBlob epochs expired or testnet resetRepublish with a larger --epochs; the entry "
+  },
+  {
+    "url": "launch-a-blog.html#next",
+    "pageTitle": "Launch a blog in 10 minutes",
+    "section": "Cookbooks",
+    "heading": "Next",
+    "text": "Fix a typo without losing history Publish a second revision and keep the first readable. Import an existing Markdown site Loop over a folder of posts and publish them all. Prove a post has not changed Check a post against its Sui record and Walrus blob."
+  },
+  {
+    "url": "fix-a-typo.html",
+    "pageTitle": "Fix a typo without losing history",
+    "section": "Cookbooks",
+    "heading": "Fix a typo without losing history",
+    "text": "Correct a published post without rewriting history. Two ways to do it, and how to read any revision back. About 5 minutesCLIAn existing entryTestnet"
+  },
+  {
+    "url": "fix-a-typo.html#why-revisions-not-edits",
+    "pageTitle": "Fix a typo without losing history",
+    "section": "Cookbooks",
+    "heading": "Why revisions, not edits",
+    "text": "Morse never overwrites a post. Every change is a new revision appended to the entry, and every earlier revision stays readable forever. An entry keeps two pointers, the public head (what readers get) and the draft head (what you are working on). Fixing a typo moves the public head, it does not erase anything. text entry 0 revision 0 public \"Hello from Morse\" <- still readable revision 1 public \"Hello from Morse\" (fixed) <- public head Everything below assumes you have the publication and collection from Launch a blog set as your active context. Check with morse status."
+  },
+  {
+    "url": "fix-a-typo.html#publish-a-corrected-revision-in-one-step",
+    "pageTitle": "Fix a typo without losing history",
+    "section": "Cookbooks",
+    "heading": "Publish a corrected revision in one step",
+    "text": "Edit the file, then publish it straight to the public head: bash Copy $ sed -i.bak 's/no backend/no backend at all/' hello.md $ morse revision publish-direct 0 --file hello.md --epochs 14 output Uploading 100 bytes to Walrus... Blob uploaded (0xa3d0...2c1f). Submitting transaction... Published revision #1 on entry #0. (tx: 7Kq2mRv1...9v8) One upload, one transaction. The old blob and the old revision are untouched."
+  },
+  {
+    "url": "fix-a-typo.html#or-stage-a-draft-first",
+    "pageTitle": "Fix a typo without losing history",
+    "section": "Cookbooks",
+    "heading": "Or stage a draft first",
+    "text": "For anything bigger than a typo, stage the change as a draft, read it back, and only then publish it. Drafts are real revisions on chain, they are just not the public head. bash Copy $ morse revision append-draft 0 --file hello.md --epochs 14 $ morse entry list --drafts-only $ morse revision publish-from-draft 0 2 The second argument of publish-from-draft is the draft revision's index, which entry list --drafts-only or morse entry get 0 shows you. The content is reused as is; pass --file if you want to replace it at the moment of publishing. Encrypted entries always start as drafts An entry ad"
+  },
+  {
+    "url": "fix-a-typo.html#read-any-earlier-revision",
+    "pageTitle": "Fix a typo without losing history",
+    "section": "Cookbooks",
+    "heading": "Read any earlier revision",
+    "text": "entry read takes an optional revision index. Without it you get the public head. bash Copy $ morse entry read 0 --via-aggregator # public head $ morse entry read 0 0 --via-aggregator # revision 0, the original $ morse entry read 0 0 --via-aggregator --out original.md $ diff original.md hello.md That diff is the whole point. Anyone with the entry id can produce it, with no help from you."
+  },
+  {
+    "url": "fix-a-typo.html#what-readers-see",
+    "pageTitle": "Fix a typo without losing history",
+    "section": "Cookbooks",
+    "heading": "What readers see",
+    "text": "A reader app that follows the public head sees the corrected post immediately. A reader who cares can fetch the entry record from Sui and walk the revision list, each revision pointing at its own Walrus blob and naming the address that wrote it. The demo blog shows this as a Revisions panel next to the post. OperationCommandMoves public headKeeps historyPublish corrected text nowrevision publish-directYesYesStage, review, then publishrevision append-draft + publish-from-draftOn publishYesDelete the entryentry deleten/aNo, and the id is retired for good Blobs expire, records do not Each revisio"
+  },
+  {
+    "url": "fix-a-typo.html#next",
+    "pageTitle": "Fix a typo without losing history",
+    "section": "Cookbooks",
+    "heading": "Next",
+    "text": "Prove a post has not changed Compare what a reader got with the chain record. Add a co-author Let someone else publish revisions to your blog. CLI command reference Every revision and entry flag."
+  },
+  {
+    "url": "import-a-site.html",
+    "pageTitle": "Import an existing Markdown site",
+    "section": "Cookbooks",
+    "heading": "Import an existing Markdown site",
+    "text": "Bring an existing Hugo, Astro or plain Markdown site into Morse. One entry per post, a map file so you can run it twice, and a way to push edits as revisions. About 15 minutesCLI + bash + jqA folder of .md filesTestnet"
+  },
+  {
+    "url": "import-a-site.html#what-this-does",
+    "pageTitle": "Import an existing Markdown site",
+    "section": "Cookbooks",
+    "heading": "What this does",
+    "text": "You have a folder of Markdown posts from Hugo, Astro, Jekyll, Obsidian or a plain repo. This recipe publishes each file as one Morse entry, writes a small map from filename to entry id, and lets you run it again later without duplicating anything. Morse stores bytes as they are, so front matter goes in untouched and your existing renderer keeps working."
+  },
+  {
+    "url": "import-a-site.html#lay-out-the-folder",
+    "pageTitle": "Import an existing Markdown site",
+    "section": "Cookbooks",
+    "heading": "Lay out the folder",
+    "text": "text content/ posts/ 2026-09-01-why-a-protocol.md 2026-09-14-dual-head-revisions.md 2026-10-02-publishing-from-an-agent.md morse-map.json <- created by the script Make sure your active context is the publication and collection you want to fill: bash Copy $ morse use my-blog-1760000000 posts $ morse status"
+  },
+  {
+    "url": "import-a-site.html#dry-run",
+    "pageTitle": "Import an existing Markdown site",
+    "section": "Cookbooks",
+    "heading": "Dry run",
+    "text": "Count the files and estimate storage before spending WAL. Walrus charges per blob per epoch, so the total size and the epoch count are what matter. bash Copy $ ls content/posts/*.md | wc -l $ du -ch content/posts/*.md | tail -1"
+  },
+  {
+    "url": "import-a-site.html#publish-everything",
+    "pageTitle": "Import an existing Markdown site",
+    "section": "Cookbooks",
+    "heading": "Publish everything",
+    "text": "The script publishes every file that is not yet in the map. The entry name is the filename without the extension. --json gives machine-readable output, -q hides the progress lines, and jq pulls the entry id out. bashimport.sh Copy #!/usr/bin/env bash set -euo pipefail MAP=morse-map.json EPOCHS=${EPOCHS:-30} [ -f \"$MAP\" ] || echo '{}' > \"$MAP\" for f in content/posts/*.md; do name=$(basename \"$f\" .md) if jq -e --arg n \"$name\" '.[$n]' \"$MAP\" >/dev/null; then echo \"skip $name (already published)\"; continue fi echo \"add $name\" out=$(morse --json -q entry add \"$name\" --file \"$f\" --epochs \"$EPOCHS\") "
+  },
+  {
+    "url": "import-a-site.html#keep-the-map",
+    "pageTitle": "Import an existing Markdown site",
+    "section": "Cookbooks",
+    "heading": "Keep the map",
+    "text": "Commit morse-map.json next to your content. It is the only thing that ties a filename to an entry id, and your site generator or reader app needs it to fetch bodies from Walrus. jsonmorse-map.json { \"2026-09-01-why-a-protocol\": { \"entryId\": 0, \"file\": \"2026-09-01-why-a-protocol\" }, \"2026-09-14-dual-head-revisions\": { \"entryId\": 1, \"file\": \"2026-09-14-dual-head-revisions\" } }"
+  },
+  {
+    "url": "import-a-site.html#re-running-safely",
+    "pageTitle": "Import an existing Markdown site",
+    "section": "Cookbooks",
+    "heading": "Re-running safely",
+    "text": "New files get added, existing ones are skipped. To push an edited post as a new revision rather than a new entry, look the id up in the map and use revision publish-direct: bash Copy $ id=$(jq -r '.[\"2026-09-14-dual-head-revisions\"].entryId' morse-map.json) $ morse revision publish-direct \"$id\" --file content/posts/2026-09-14-dual-head-revisions.md --epochs 30 A simple way to automate that: store each file's content hash in the map and publish a revision whenever the hash changes. Left as a ten-line exercise, or ask your agent, see Let an AI agent publish."
+  },
+  {
+    "url": "import-a-site.html#pitfalls",
+    "pageTitle": "Import an existing Markdown site",
+    "section": "Cookbooks",
+    "heading": "Pitfalls",
+    "text": "PitfallWhat happensWhat to doEntry names are not unique on chainRunning without the map creates duplicatesAlways keep and commit the mapImages and other assetsA Markdown file only carries textPublish each asset as its own entry, or keep assets on a plain host for nowBig filesWalrus storage cost scales with size and epochsKeep posts as Markdown, strip embedded base64Testnet resetEntries and blobs are gone, the map is staleDelete the map and re-run"
+  },
+  {
+    "url": "import-a-site.html#next",
+    "pageTitle": "Import an existing Markdown site",
+    "section": "Cookbooks",
+    "heading": "Next",
+    "text": "Publish from CI Run this script on every push to main. Fix a typo without losing history How revisions work. SDK reference cookbooks The same loop in TypeScript with addEntryFromBytes."
+  },
+  {
+    "url": "co-author.html",
+    "pageTitle": "Add a co-author",
+    "section": "Cookbooks",
+    "heading": "Add a co-author",
+    "text": "Let a second person publish to your blog without sharing a key, see who can write at any time, and revoke in one command. About 10 minutesCLI, two machinesOwner plus one more walletTestnet"
+  },
+  {
+    "url": "co-author.html#how-write-access-works",
+    "pageTitle": "Add a co-author",
+    "section": "Cookbooks",
+    "heading": "How write access works",
+    "text": "There are no user accounts in Morse. Write access is an object. When you created your publication you received an OwnerCap (full control) and a PublisherCap (can add entries and revisions). To let someone else publish, the owner mints a new PublisherCap bound to their address. To take it away, the owner revokes it. The co-author never needs your key, and you never need theirs. CapabilityWho holds itCan doOwnerCapYou, one per publicationIssue and revoke publisher caps, transfer ownership, deletePublisherCapYou and anyone you issue one toCreate collections, add entries, append and publish revisi"
+  },
+  {
+    "url": "co-author.html#owner-issue-a-cap",
+    "pageTitle": "Add a co-author",
+    "section": "Cookbooks",
+    "heading": "Owner: issue a cap",
+    "text": "You need the co-author's Sui address. From your machine, with the publication active: bash Copy $ morse status # confirm the active publication $ morse cap issue 0xCOAUTHOR_ADDRESS output Issued PublisherCap 0x3f8a...c21e to 0xCOAUTHOR_ADDRESS. (tx: 4Hn9xT...q2Wd) Save the cap id, you will need it to revoke. The cap is sent to the co-author's address as part of the same transaction, there is nothing for you to hand over."
+  },
+  {
+    "url": "co-author.html#co-author-set-up-and-publish",
+    "pageTitle": "Add a co-author",
+    "section": "Cookbooks",
+    "heading": "Co-author: set up and publish",
+    "text": "On the co-author's machine, same setup as Launch a blog, then point at your publication by slug: bash Copy $ npm i -g @arcadiasystems/morse-cli $ morse config add testnet --network testnet $ morse account import $ morse cap list # the new cap shows up here $ morse use my-blog-1760000000 posts $ morse entry add guest-post --file guest-post.md --epochs 14 The CLI finds the right PublisherCap automatically from the active account. If the co-author holds caps for several publications, --publisher-cap <id> picks one explicitly. Reads by slug need an account, reads by id do not morse use <slug> reso"
+  },
+  {
+    "url": "co-author.html#owner-see-who-can-write",
+    "pageTitle": "Add a co-author",
+    "section": "Cookbooks",
+    "heading": "Owner: see who can write",
+    "text": "bash Copy $ morse cap list 0xCOAUTHOR_ADDRESS There is no team page. The list of who can write is the list of live caps, and anyone can query it on chain. That is the audit trail."
+  },
+  {
+    "url": "co-author.html#revoke-and-what-the-co-author-sees",
+    "pageTitle": "Add a co-author",
+    "section": "Cookbooks",
+    "heading": "Revoke, and what the co-author sees",
+    "text": "bash Copy $ morse cap revoke 0x3f8a...c21e From the next transaction on, every write the co-author attempts with that cap aborts on chain with exit code 4. Everything they published before stays. A revoked cap still sits in their wallet as a dead object; they can tidy it with morse cap destroy 0x3f8a...c21e."
+  },
+  {
+    "url": "co-author.html#rotate-instead-of-transfer",
+    "pageTitle": "Add a co-author",
+    "section": "Cookbooks",
+    "heading": "Rotate instead of transfer",
+    "text": "Do not transfer caps between people A cap's holder is fixed when it is issued. cap transfer moves the object but not the binding, so the recipient cannot use it and the original holder cannot either. To hand write access to a new person: owner revokes the old cap, owner issues a new one. bash Copy $ morse cap revoke 0xOLD_CAP_ID $ morse cap issue 0xNEW_PERSON_ADDRESS Transferring the whole publication is different and final: morse publication transfer-ownership 0xNEW_OWNER hands over the OwnerCap with no undo. Existing publisher caps keep working until the new owner revokes them."
+  },
+  {
+    "url": "co-author.html#next",
+    "pageTitle": "Add a co-author",
+    "section": "Cookbooks",
+    "heading": "Next",
+    "text": "Encrypt a post for your team Cap holders can also decrypt. Let an AI agent publish An agent is just another cap holder. Access control reference Caps, policies and the Move checks behind them."
+  },
+  {
+    "url": "team-only-content.html",
+    "pageTitle": "Encrypt a post for your team",
+    "section": "Cookbooks",
+    "heading": "Encrypt a post for your team",
+    "text": "Client-side encryption with the access rule living on Sui. Who can read is who holds a live cap, and revoking is one command. About 10 minutesCLIA publication with a blob collectionTestnet"
+  },
+  {
+    "url": "team-only-content.html#what-encryption-gives-you-today",
+    "pageTitle": "Encrypt a post for your team",
+    "section": "Cookbooks",
+    "heading": "What encryption gives you today",
+    "text": "Morse encrypts content client side with Seal before it goes to Walrus. The decryption rule is a Move function on Sui: a Seal key server only releases its share if the caller holds an active PublisherCap for that publication. So today, encrypted means readable by your team: everyone with write access, nobody else, and no server of yours in the middle. PolicyWho can readStatusPublic (0)Anyone with the blob idLivePublisher (1)Active PublisherCap holders of the publicationLive, this recipeSubscription (2)Holders of a subscription tokenReserved on chain, approval function not built yet"
+  },
+  {
+    "url": "team-only-content.html#publish-an-encrypted-entry",
+    "pageTitle": "Encrypt a post for your team",
+    "section": "Cookbooks",
+    "heading": "Publish an encrypted entry",
+    "text": "With your publication and collection active: bash Copy $ cat > q4-plan.md <<'EOF' # Q4 plan (internal) Ship mainnet, then the indexer. EOF $ morse entry add-encrypted q4-plan --file q4-plan.md --epochs 30 output Encrypting and uploading 53 bytes... Added encrypted entry #5 \"q4-plan\". (tx: 8Bq1mVr0...2kLs) Three things happened: the CLI generated a fresh Seal identity scoped to your publication, encrypted the file locally, and uploaded only ciphertext. The entry was created as a draft. Encrypted entries always start as drafts, because publishing is a separate decision. Collection mode Encrypted"
+  },
+  {
+    "url": "team-only-content.html#read-it-as-a-cap-holder",
+    "pageTitle": "Encrypt a post for your team",
+    "section": "Cookbooks",
+    "heading": "Read it as a cap holder",
+    "text": "Reading is entry decrypt, not entry read. The CLI signs a short-lived session key with your account, asks the key servers for shares, and decrypts locally. bash Copy $ morse entry decrypt 5 --via-aggregator --out q4-plan.recovered.md $ diff q4-plan.md q4-plan.recovered.md && echo identical Anyone you issued a cap to in Add a co-author can run the same command from their own wallet. Anyone else gets the ciphertext from Walrus and nothing from the key servers."
+  },
+  {
+    "url": "team-only-content.html#publish-the-draft",
+    "pageTitle": "Encrypt a post for your team",
+    "section": "Cookbooks",
+    "heading": "Publish the draft",
+    "text": "A draft is visible as an entry on chain but is not the public head, and for encrypted content it stays that way: published revisions are always public and unencrypted, so the team keeps reading the draft with entry decrypt. If you decide to release the text to everyone, publish it from the draft with the plaintext file: bash Copy $ morse revision publish-from-draft 5 0 --file q4-plan.md Always pass --file. Without it the CLI reuses the draft's blob, which is ciphertext, and readers of the public head would get bytes nobody can decrypt. morse revision publish-direct 5 --file q4-plan.md does the"
+  },
+  {
+    "url": "team-only-content.html#rotate-a-key-revoke-a-reader",
+    "pageTitle": "Encrypt a post for your team",
+    "section": "Cookbooks",
+    "heading": "Rotate a key, revoke a reader",
+    "text": "Access is enforced at decryption time, every time. Revoking a cap cuts off a reader even for content they could read yesterday: bash Copy $ morse cap revoke 0xTHEIR_CAP_ID Note what this does and does not do. It stops the key servers from serving that wallet from now on. It does not un-read anything they already decrypted and saved. Same as any system, but worth saying out loud to a team."
+  },
+  {
+    "url": "team-only-content.html#honest-limits",
+    "pageTitle": "Encrypt a post for your team",
+    "section": "Cookbooks",
+    "heading": "Honest limits",
+    "text": "QuestionAnswer todayCan I sell access to a post?Not yet. The subscription policy exists on chain but its approval function is not built. It is on the roadmap.Can a reader get read access without write access?Not with Seal gating. A PublisherCap is both. Keep the team small.Who runs the key servers?Seal key servers on testnet, two of three shares needed by default. If they are down, nobody can decrypt, including you.Is the ciphertext safe on Walrus?Walrus stores the bytes anyone can fetch. The key never leaves the key servers and your client."
+  },
+  {
+    "url": "team-only-content.html#next",
+    "pageTitle": "Encrypt a post for your team",
+    "section": "Cookbooks",
+    "heading": "Next",
+    "text": "Add a co-author Issue the caps your readers need. Fix a typo without losing history Drafts and heads explained. Access control reference seal_approve_publisher and friends."
+  },
+  {
+    "url": "publish-from-ci.html",
+    "pageTitle": "Publish from CI",
+    "section": "Cookbooks",
+    "heading": "Publish from CI",
+    "text": "Push to main, get a revision on chain. A separate pipeline key you can revoke, the environment variables the CLI reads, and a workflow file to copy. About 20 minutesCLI + GitHub ActionsA repo of postsTestnet"
+  },
+  {
+    "url": "publish-from-ci.html#the-idea",
+    "pageTitle": "Publish from CI",
+    "section": "Cookbooks",
+    "heading": "The idea",
+    "text": "Your posts live in a git repo. On every push to main, CI publishes new files as entries and changed files as revisions. No deploy step, no server to keep up: the published state is on Sui and Walrus, the source of truth is the repo, and the map file links the two."
+  },
+  {
+    "url": "publish-from-ci.html#a-ci-only-publisher-key",
+    "pageTitle": "Publish from CI",
+    "section": "Cookbooks",
+    "heading": "A CI-only publisher key",
+    "text": "Do not put your owner key in CI. Make a separate wallet for the pipeline, fund it with a little SUI and WAL, and issue it a PublisherCap from your owner wallet. If CI ever leaks the key, you revoke one cap and move on. bashon your machine Copy $ morse cap issue 0xCI_WALLET_ADDRESS $ morse --json publication get | jq -r .id # you will need this id"
+  },
+  {
+    "url": "publish-from-ci.html#environment-variables-the-cli-reads",
+    "pageTitle": "Publish from CI",
+    "section": "Cookbooks",
+    "heading": "Environment variables the CLI reads",
+    "text": "In a non-interactive shell the CLI takes everything from the environment. Flags beat variables, variables beat the config file. VariableSet it toWhyMORSE_PRIVATE_KEYThe CI wallet's suiprivkey1...Highest-priority key source, never written to diskMORSE_NETWORKtestnetNo profile neededMORSE_PUBLICATIONThe publication object idActive publication without morse useMORSE_COLLECTIONpostsActive collection With those four set, morse status in CI shows the same context you have locally, with no keystore and no prompts."
+  },
+  {
+    "url": "publish-from-ci.html#github-actions-workflow",
+    "pageTitle": "Publish from CI",
+    "section": "Cookbooks",
+    "heading": "GitHub Actions workflow",
+    "text": "This reuses import.sh from Import an existing Markdown site and commits the updated map back to the repo so the next run knows what exists. yaml.github/workflows/publish.yml Copy name: Publish to Morse on: push: branches: [main] paths: [\"content/posts/**\", \"morse-map.json\"] permissions: contents: write jobs: publish: runs-on: ubuntu-latest env: MORSE_PRIVATE_KEY: ${{ secrets.MORSE_CI_PRIVATE_KEY }} MORSE_NETWORK: testnet MORSE_PUBLICATION: ${{ vars.MORSE_PUBLICATION_ID }} MORSE_COLLECTION: posts EPOCHS: \"30\" steps: - uses: actions/checkout@v4 - uses: actions/setup-node@v4 with: { node-version:"
+  },
+  {
+    "url": "publish-from-ci.html#idempotency-and-exit-codes",
+    "pageTitle": "Publish from CI",
+    "section": "Cookbooks",
+    "heading": "Idempotency and exit codes",
+    "text": "The map is what makes a rerun safe: a file already in it is skipped. Everything else you need for scripting is in the CLI's exit codes and --json. Exit codeMeaningIn a pipeline0SuccessCarry on1Any other failureFor example a contract abort such as ESlugAlreadyExists; read the message and fail the job2Usage errorYour command line is wrong, fix the script3Not foundWrong publication id or entry id4Auth or permissionCap revoked, wrong key, or no cap for this publication5Network or transportRetry once after a pause, then fail the job bashretry once on transport errors Copy publish() { morse --json -"
+  },
+  {
+    "url": "publish-from-ci.html#lock-it-down",
+    "pageTitle": "Publish from CI",
+    "section": "Cookbooks",
+    "heading": "Lock it down",
+    "text": "RiskMitigationKey leaks from CIIt is a publisher key, not the owner. morse cap revoke and rotate.Someone pushes garbage to mainBranch protection, and the chain keeps every revision so nothing is lostPipeline publishes twiceThe map, committed back after every runWAL runs outCheck the CI wallet balance in the job and fail early with a clear message"
+  },
+  {
+    "url": "publish-from-ci.html#next",
+    "pageTitle": "Publish from CI",
+    "section": "Cookbooks",
+    "heading": "Next",
+    "text": "Import an existing Markdown site The script this workflow runs. Let an AI agent publish Same key model, different author. CLI overview All environment variables and exit codes."
+  },
+  {
+    "url": "agent-publishes.html",
+    "pageTitle": "Let an AI agent publish",
+    "section": "Cookbooks",
+    "heading": "Let an AI agent publish",
+    "text": "No signup, no API console. A wallet, a cap, the docs in llms.txt, and an agent can publish on its own while you keep the owner key. About 15 minutesCLI or SDKAn agent runtime with a shellTestnet"
+  },
+  {
+    "url": "agent-publishes.html#why-this-works-at-all",
+    "pageTitle": "Let an AI agent publish",
+    "section": "Cookbooks",
+    "heading": "Why this works at all",
+    "text": "Most CMSs need a human to click through signup, create an API key and paste it somewhere. Morse has no signup. An agent with a funded Sui wallet and a PublisherCap can publish on its own, every write returns a transaction digest, and you can revoke it in one command without touching the agent. That makes Morse a natural output channel for an agent that writes: a changelog bot, a research digest, a status page, a newsletter drafted overnight."
+  },
+  {
+    "url": "agent-publishes.html#give-the-agent-its-own-wallet-and-cap",
+    "pageTitle": "Let an AI agent publish",
+    "section": "Cookbooks",
+    "heading": "Give the agent its own wallet and cap",
+    "text": "Treat the agent like a contractor, not like yourself. Fresh wallet, small balance, its own cap. bashon your machine Copy $ morse cap issue 0xAGENT_WALLET_ADDRESS $ morse --json publication get | jq -r .id Fund the agent wallet from the faucet and swap a little WAL, as in Launch a blog. Keep the owner key on your machine only."
+  },
+  {
+    "url": "agent-publishes.html#give-the-agent-the-docs",
+    "pageTitle": "Let an AI agent publish",
+    "section": "Cookbooks",
+    "heading": "Give the agent the docs",
+    "text": "The docs ship in agent-readable form. Put this in the project's CLAUDE.md, AGENTS.md or Cursor rules so every session starts with Morse context: markdownCLAUDE.md Copy # Morse This project publishes to a Morse publication on Sui testnet. Before using the Morse CLI or SDK, read https://docs.morsecms.xyz/llms-full.txt (or https://docs.morsecms.xyz/llms.txt for the index and fetch pages as .md). Rules - Use the CLI non-interactively: `morse --json -q --yes ...` - Never run `account export`, never print MORSE_PRIVATE_KEY. - New post: `morse entry add <name> --file <path> --epochs 30` - Edit an exi"
+  },
+  {
+    "url": "agent-publishes.html#give-the-agent-a-job",
+    "pageTitle": "Let an AI agent publish",
+    "section": "Cookbooks",
+    "heading": "Give the agent a job",
+    "text": "Environment for the agent's shell, same four variables as Publish from CI: bash Copy export MORSE_PRIVATE_KEY=suiprivkey1... # the agent wallet, not yours export MORSE_NETWORK=testnet export MORSE_PUBLICATION=0x69d4...f327 export MORSE_COLLECTION=posts Then a prompt that describes the outcome, not the commands. The agent has the docs. textprompt Every Friday, summarise the week's merged pull requests in this repo as a short Markdown post under content/posts/YYYY-MM-DD-weekly.md, then publish it to Morse as a new entry. Print the entry id and the Sui transaction digest when done."
+  },
+  {
+    "url": "agent-publishes.html#what-the-agent-runs",
+    "pageTitle": "Let an AI agent publish",
+    "section": "Cookbooks",
+    "heading": "What the agent runs",
+    "text": "Under the hood the agent ends up running something like this, which you can also run yourself to check the setup: bash Copy $ morse --json -q --yes status $ morse --json -q --yes entry add 2026-10-17-weekly --file content/posts/2026-10-17-weekly.md --epochs 30 $ morse --json -q entry get 7 For an agent built on the SDK rather than shelling out, the equivalent is addEntryFromBytes with a KeypairAdapter from the agent's key; the SDK reference cookbooks have the exact call. Why --json --yes -q The agent should never sit at a prompt. --yes removes confirmations, -q removes progress output, --json "
+  },
+  {
+    "url": "agent-publishes.html#watch-audit-revoke",
+    "pageTitle": "Let an AI agent publish",
+    "section": "Cookbooks",
+    "heading": "Watch, audit, revoke",
+    "text": "Every write the agent makes is a transaction signed by its wallet, so the audit log is Sui itself: bash Copy $ morse entry list # what exists now $ morse cap list 0xAGENT_WALLET_ADDRESS # what it is allowed to do $ morse cap revoke 0xAGENT_CAP_ID # and when you are done Revocation takes effect on the next transaction. Nothing the agent already published disappears, and if it published something wrong, you append a revision (or delete the entry) from your own wallet. DoDo notGive the agent a wallet with days of budget, not monthsGive it the owner keyPoint it at llms-full.txtPaste commands you h"
+  },
+  {
+    "url": "agent-publishes.html#next",
+    "pageTitle": "Let an AI agent publish",
+    "section": "Cookbooks",
+    "heading": "Next",
+    "text": "Publish from CI The same key model on a schedule. Use Morse with AI llms.txt, Markdown twins and the Ask AI shortcut. Add a co-author What a cap is and how to revoke it."
+  },
+  {
+    "url": "verify-a-post.html",
+    "pageTitle": "Prove a post has not changed",
+    "section": "Cookbooks",
+    "heading": "Prove a post has not changed",
+    "text": "Three claims, three commands. Verify the bytes, the revision and the author of any post from a clean machine. About 10 minutesCLI, no key neededA publication id and entry idTestnet"
+  },
+  {
+    "url": "verify-a-post.html#what-you-are-checking",
+    "pageTitle": "Prove a post has not changed",
+    "section": "Cookbooks",
+    "heading": "What you are checking",
+    "text": "A Morse post makes three claims you can test without trusting the publisher or us: the content you are reading is the bytes that were registered, the revision you are reading is the one the publisher marked public, and the wallet that published it is the one that holds a cap. Each claim has a command. ClaimWhere the proof livesCommandThese bytes are the registered bytesThe Walrus blob object the revision points toentry read without --via-aggregatorThis is the public revisionEntry record on Sui, inside the collectionentry getA cap holder published itThe revision's author on Suientry get, then c"
+  },
+  {
+    "url": "verify-a-post.html#get-the-record",
+    "pageTitle": "Prove a post has not changed",
+    "section": "Cookbooks",
+    "heading": "Get the record",
+    "text": "All you need is the publication id, the collection name and the entry id. No key: reads by object id do not use an account. bash Copy $ morse --json entry get 0 -P 0x69d4...f327 -C posts | jq . Keep three values from the output: publicHead (the index of the public revision), that revision's blobRef.blobObjectId (the Sui object of its Walrus blob) and its author. Those three are the record."
+  },
+  {
+    "url": "verify-a-post.html#fetch-the-bytes-two-ways",
+    "pageTitle": "Prove a post has not changed",
+    "section": "Cookbooks",
+    "heading": "Fetch the bytes two ways",
+    "text": "The aggregator is convenient. The direct path is the proof. bash Copy $ morse entry read 0 -P 0x69d4...f327 -C posts --via-aggregator --out a.md # fast, trusts the aggregator $ morse entry read 0 -P 0x69d4...f327 -C posts --out b.md # verifies against storage nodes $ cmp a.md b.md && echo \"bytes match\" Without the flag, the CLI fetches slivers from Walrus storage nodes and checks them against the blob's metadata before writing a byte. If it succeeds, the file matches the blob id on chain. If the bytes had been swapped anywhere, this step fails rather than returning something else. Testnet timi"
+  },
+  {
+    "url": "verify-a-post.html#walk-the-revisions",
+    "pageTitle": "Prove a post has not changed",
+    "section": "Cookbooks",
+    "heading": "Walk the revisions",
+    "text": "Every earlier revision is still there. Read the first one and diff it against the current public head: bash Copy $ morse entry read 0 0 -P 0x69d4...f327 -C posts --via-aggregator --out v0.md $ diff v0.md b.md This is what the demo blog's Revisions panel does for a reader with a browser. A reporter, a lawyer or a regulator can do it with these two lines and no relationship to the publisher."
+  },
+  {
+    "url": "verify-a-post.html#check-who-published-it",
+    "pageTitle": "Prove a post has not changed",
+    "section": "Cookbooks",
+    "heading": "Check who published it",
+    "text": "The record names the wallet that wrote each revision, so no explorer is needed: jq -r '.revisions[.publicHead].author' on the entry get output prints it. To see the transactions themselves, open the publication id on a Sui explorer, for example suiscan.xyz/testnet/object/<PUBLICATION_ID>. Then check that the author held a cap for the publication: bash Copy $ morse cap list 0xAUTHOR_ADDRESS A live cap, or a cap that was active at that time, means the publication's owner authorised that wallet. A revoked cap still proves the write was authorised when it happened, because the chain would have rej"
+  },
+  {
+    "url": "verify-a-post.html#do-it-from-a-script",
+    "pageTitle": "Prove a post has not changed",
+    "section": "Cookbooks",
+    "heading": "Do it from a script",
+    "text": "The whole check as one script, suitable for a cron job or a CI step that guards a site built from Morse content: bashverify.sh Copy #!/usr/bin/env bash set -euo pipefail PUB=$1; COL=$2; ENTRY=$3 tmp=$(mktemp -d) morse --json entry get \"$ENTRY\" -P \"$PUB\" -C \"$COL\" > \"$tmp/record.json\" morse -q entry read \"$ENTRY\" -P \"$PUB\" -C \"$COL\" --out \"$tmp/verified\" \\ || { echo \"direct read failed: blob unavailable or expired\"; exit 5; } morse -q entry read \"$ENTRY\" -P \"$PUB\" -C \"$COL\" --via-aggregator --out \"$tmp/served\" cmp -s \"$tmp/verified\" \"$tmp/served\" && echo \"OK: served bytes match the verified blo"
+  },
+  {
+    "url": "verify-a-post.html#next",
+    "pageTitle": "Prove a post has not changed",
+    "section": "Cookbooks",
+    "heading": "Next",
+    "text": "Fix a typo without losing history Where revisions come from. Contracts reference The Entry and Revision objects you just read. Core concepts Publications, collections, entries, revisions."
+  },
+  {
     "url": "publications.html",
     "pageTitle": "Publications",
     "section": "Protocol",

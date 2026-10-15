@@ -120,14 +120,17 @@ function initCodeBlocks() {
   document.querySelectorAll('.article .code-block').forEach(block => {
     const pre = block.querySelector('pre');
     if (!pre) return;
-    const text = pre.textContent;
     const lang = block.querySelector('.code-lang')?.textContent.trim().toLowerCase() ?? '';
-    decoratePrompts(pre, lang);
+    // Scripts and env files carry no prompts by design
+    if (!block.hasAttribute('data-no-prompt')) decoratePrompts(pre, lang);
 
     const btn = block.querySelector('.code-copy');
     btn?.addEventListener('click', async () => {
+      // Copy what a shell should receive: prompts (static or decorated) are left out
+      const clean = pre.cloneNode(true);
+      clean.querySelectorAll('.p').forEach(prompt => prompt.remove());
       try {
-        await navigator.clipboard.writeText(text);
+        await navigator.clipboard.writeText(clean.textContent);
         flash(btn, 'Copied', true);
       } catch {
         flash(btn, 'Copy failed', false);

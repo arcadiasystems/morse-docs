@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Launch a blog in 10 minutes · Morse Docs</title>
+  <meta name="theme-color" content="#F2EFE8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="assets/docs.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="description" content="Go from an empty wallet to a publication, a collection and a first post on Sui testnet, using only the CLI.">
+  <link rel="canonical" href="https://docs.morsecms.xyz/launch-a-blog.html">
+  <meta property="og:title" content="Launch a blog in 10 minutes · Morse Docs">
+  <meta property="og:description" content="Go from an empty wallet to a publication, a collection and a first post on Sui testnet, using only the CLI.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://docs.morsecms.xyz/launch-a-blog.html">
+  <meta property="og:site_name" content="Morse Docs">
+  <meta name="twitter:card" content="summary">
+  <link rel="alternate" type="text/markdown" href="https://docs.morsecms.xyz/launch-a-blog.md" title="Markdown version">
+</head>
+<body>
+
+<header class="top">
+  <div class="top__in">
+    <button class="menu-btn" type="button" id="menu" aria-label="Open navigation" aria-expanded="false" aria-controls="side">
+      <svg class="menu-btn__open" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg class="menu-btn__close" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <a class="brand" href="index.html" aria-label="Morse docs home">
+      <svg aria-hidden="true" width="26" height="26" viewBox="0 0 100 100"><path d="M8 72 V30 H36 V72 H64 V30 H92 V72" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>morse</span><em>DOCS</em>
+    </a>
+    <button class="search" type="button" id="search-open" aria-label="Search documentation (⌘K)">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span class="search__label">Search documentation</span><kbd>⌘K</kbd>
+    </button>
+    <nav class="top__right" aria-label="Site">
+      <button class="askai" type="button" data-askai title="Ask AI (⌘I)"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>Ask AI</button>
+      <a class="agents" href="use-morse-with-ai.html"><i aria-hidden="true"></i>For agents</a>
+      <a class="gh" href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener">GitHub</a>
+      <a class="site" href="https://www.morsecms.xyz" target="_blank" rel="noopener">morsecms.xyz</a>
+    </nav>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="side" id="side"></aside>
+
+  <main class="main">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="cookbooks.html">Cookbooks</a><span class="crumbs__sep" aria-hidden="true">/</span><span aria-current="page">Launch a blog in 10 minutes</span></nav>
+    <article class="article">
+        <h1>Launch a blog in 10 minutes</h1>
+        <p class="article-lead">
+          Zero to a post whose bytes are on Walrus and whose record is on Sui, with nothing but your terminal. About ten minutes, most of it waiting for a faucet.
+        </p>
+        <div class="page-actions">
+          <div class="copybtn-group">
+            <button class="copybtn" type="button" id="copy-page"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-flash-label>Copy page</span></button>
+            <button class="copybtn copybtn-caret" type="button" id="page-menu-btn" aria-label="More page actions" aria-haspopup="true" aria-expanded="false" aria-controls="page-menu"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+          </div>
+          <div class="page-menu" id="page-menu" hidden>
+            <button class="page-menu__item" type="button" data-page-copy><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy page as Markdown</button>
+            <a class="page-menu__item" href="launch-a-blog.md" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>View as Markdown</a>
+            <a class="page-menu__item" id="page-chatgpt" href="https://chatgpt.com/" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>Open in ChatGPT</a>
+            <a class="page-menu__item" id="page-claude" href="https://claude.ai/new" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>Open in Claude</a>
+          </div>
+        </div>
+        <ul class="article-meta"><li>About 10 minutes</li><li>CLI only</li><li>Fresh Sui wallet</li><li>Testnet</li></ul>
+        <div class="callout callout-warning">
+          <div class="callout-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">Testnet only, unaudited</div>
+            <div class="callout-text">Everything here runs on Sui testnet and Walrus testnet. Testnets reset from time to time, blobs expire when their storage epochs run out, and the contracts have not been audited. Testnet tokens have no value. Do not publish anything you cannot afford to lose.</div>
+          </div>
+        </div>
+
+        <h2 id="what-you-will-have">What you will have</h2>
+
+        <p>A publication on Sui that you own, one collection called <code>posts</code>, and one post whose body lives on Walrus and whose record lives on Sui. Nothing else: no server, no database, no account with us.</p>
+
+        <div class="table-wrap">
+          <table><thead><tr><th>You end up with</th><th>Where it lives</th><th>How you prove it</th></tr></thead><tbody><tr><td>A Publication object</td><td>Sui testnet</td><td>Its object id, shown by <code>morse publication get</code></td></tr><tr><td>A <code>posts</code> collection</td><td>Sui testnet, inside the publication</td><td><code>morse collection list</code></td></tr><tr><td>Entry <code>0</code> with one public revision</td><td>Record on Sui, bytes on Walrus</td><td><code>morse entry get 0</code> and the blob id</td></tr></tbody></table>
+        </div>
+
+        <h2 id="get-a-wallet-and-testnet-tokens">Get a wallet and testnet tokens</h2>
+
+        <p>You need a Sui address with a little SUI for gas and a little WAL for storage. Both are free on testnet and take about two minutes.</p>
+
+        <div class="table-wrap">
+          <table><thead><tr><th>Step</th><th>Where</th><th>Why</th></tr></thead><tbody><tr><td>Install a wallet</td><td>Slush, Suiet, or any Sui Wallet Standard wallet</td><td>Holds your key and signs</td></tr><tr><td>Get testnet SUI</td><td><a href="https://faucet.sui.io/">faucet.sui.io</a></td><td>Gas for every on-chain action</td></tr><tr><td>Swap a little SUI for WAL</td><td><a href="https://stake-wal.wal.app/?network=testnet">stake-wal.wal.app</a></td><td>Walrus storage fees when you publish</td></tr><tr><td>Export your private key</td><td>Wallet settings</td><td>A <code>suiprivkey1...</code> string the CLI can import</td></tr></tbody></table>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01M11 12h1v4h1"></path></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">Use a throwaway key</div>
+            <div class="callout-text">Create a fresh wallet for Morse testnet. The CLI stores the key in an encrypted keystore under <code>~/.config/morse/keystores</code>, but a key you only use for testnet is one less thing to worry about.</div>
+          </div>
+        </div>
+
+        <h2 id="install-the-cli">Install the CLI</h2>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span><span class="code-note">node 18+ or bun 1.2+</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>npm i -g @arcadiasystems/morse-cli
+<span class="p" aria-hidden="true">$ </span>morse --version</pre>
+        </div>
+
+        <p>If you would rather not install anything, every command below also works as <code>npx @arcadiasystems/morse-cli ...</code>.</p>
+
+        <h2 id="point-it-at-testnet-and-import-your-key">Point it at testnet and import your key</h2>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>morse config add testnet --network testnet
+<span class="p" aria-hidden="true">$ </span>morse account import</pre>
+        </div>
+
+        <p><code>account import</code> asks for the <code>suiprivkey1...</code> string and a password, both hidden. Check that it took:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>morse status</pre>
+        </div>
+
+        <div class="code-block code-block-output">
+          <div class="code-header">
+            <span class="code-lang">output</span>
+          </div>
+          <pre>profile:     testnet
+network:     testnet
+account:     0x7be4...11d0
+publication: (none)
+collection:  (none)</pre>
+        </div>
+
+        <h2 id="create-the-publication">Create the publication</h2>
+
+        <p>Slugs are globally unique on the network, so add a suffix. The name and slug cannot be changed later, pick ones you like.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>morse publication create --name "My Blog" --slug "my-blog-$(date +%s)"
+<span class="p" aria-hidden="true">$ </span>morse collection create posts</pre>
+        </div>
+
+        <p>Both commands set what they created as your active context, so you do not have to pass <code>-P</code> or <code>-C</code> on every call. Two transactions have been signed with your key: one created the publication and minted your <code>OwnerCap</code> and <code>PublisherCap</code>, the other added the collection.</p>
+
+        <h2 id="write-and-publish-the-first-post">Write and publish the first post</h2>
+
+        <p>A post is just a file. Markdown is a good default because every reader can render it.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>cat &gt; hello.md &lt;&lt;'EOF'
+<span class="cm"># Hello from Morse</span>
+
+This post has no backend. Its bytes are on Walrus, its record is on Sui.
+EOF
+<span class="p" aria-hidden="true">$ </span>morse entry add hello --file hello.md --epochs 14</pre>
+        </div>
+
+        <p><code>--epochs</code> is how long Walrus keeps the blob. The default is 3, which is about three days on testnet. Fourteen is enough for a demo you want to show people next week. The content type is inferred from the file extension.</p>
+
+        <div class="code-block code-block-output">
+          <div class="code-header">
+            <span class="code-lang">output</span>
+          </div>
+          <pre>Uploading 93 bytes to Walrus...
+<span class="ok">Added entry #0 "hello".</span> <span class="m">(tx: D9YfjkA3...9vB)</span>
+  <span class="m">view: https://aggregator.walrus-testnet.walrus.space/v1/blobs/0iKeiiQ2...m7Xp</span></pre>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01M11 12h1v4h1"></path></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">Two transactions, one command</div>
+            <div class="callout-text"><code>entry add</code> uploads the bytes to Walrus and registers the blob, then records the entry on Sui. If the second step fails you will see an error naming the blob that was already uploaded; rerun the command, the blob is not lost.</div>
+          </div>
+        </div>
+
+        <h2 id="read-it-back">Read it back</h2>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>morse entry read 0 --via-aggregator</pre>
+        </div>
+
+        <p>On testnet the direct read path often fails for a few minutes right after upload while storage nodes catch up, which is why the command goes through the public aggregator. Without the flag the CLI verifies the bytes client side; with it you trust the aggregator operator. Fine for a blog, worth knowing.</p>
+
+        <h2 id="share-the-record">Share the record</h2>
+
+        <p>This is the part a hosted CMS cannot do. Print the record and hand it to anyone:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>morse --json entry get 0 | jq .</pre>
+        </div>
+
+        <p>The output includes the public head and the revision list, and for each revision the address that wrote it and the Sui object id of its Walrus blob. Paste your publication id (<code>morse status</code> shows it) into <a href="https://suiscan.xyz/testnet/home">suiscan.xyz/testnet</a> and anyone can see who published to it and when, without a Morse account, without trusting you.</p>
+
+        <div class="callout callout-tip">
+          <div class="callout-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">You are live</div>
+            <div class="callout-text">Your publication, collection and first post exist on Sui testnet. Run <code>morse entry list</code> to see them, or go straight to <a href="fix-a-typo.html">Fix a typo without losing history</a> for the second thing every blog needs.</div>
+          </div>
+        </div>
+
+        <h2 id="if-something-fails">If something fails</h2>
+
+        <div class="table-wrap">
+          <table><thead><tr><th>Symptom</th><th>Likely cause</th><th>Fix</th></tr></thead><tbody><tr><td><code>exit 2</code> and "No account selected" on <code>publication create</code></td><td>No active account, or wrong profile</td><td><code>morse status</code>, then <code>morse account use &lt;address&gt;</code></td></tr><tr><td>Insufficient gas / balance</td><td>No SUI or no WAL on the address</td><td>Faucet for SUI, swap for WAL, check the address matches <code>morse status</code></td></tr><tr><td><code>ESlugAlreadyExists</code></td><td>Someone used that slug</td><td>Add a suffix, the <code>$(date +%s)</code> trick above does this</td></tr><tr><td><code>entry read</code> says no valid blob metadata</td><td>Storage nodes have not caught up yet</td><td>Use <code>--via-aggregator</code>, or wait a few minutes</td></tr><tr><td>Post disappeared after a while</td><td>Blob epochs expired or testnet reset</td><td>Republish with a larger <code>--epochs</code>; the entry record on Sui is unaffected</td></tr></tbody></table>
+        </div>
+
+        <h2 id="next">Next</h2>
+
+        <div class="card-grid">
+          <a href="fix-a-typo.html" class="card">
+            <div class="card-title">Fix a typo without losing history</div>
+            <div class="card-desc">Publish a second revision and keep the first readable.</div>
+          </a>
+          <a href="import-a-site.html" class="card">
+            <div class="card-title">Import an existing Markdown site</div>
+            <div class="card-desc">Loop over a folder of posts and publish them all.</div>
+          </a>
+          <a href="verify-a-post.html" class="card">
+            <div class="card-title">Prove a post has not changed</div>
+            <div class="card-desc">Check a post against its Sui record and Walrus blob.</div>
+          </a>
+        </div>
+      </article>
+
+    <div class="feedback">
+      <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
+      <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20launch-a-blog.html" target="_blank" rel="noopener">Report an issue</a>
+      <span class="feedback__upd">Updated 2026-10-15</span>
+    </div>
+    <nav class="pager" aria-label="Previous and next">
+      <a href="cookbooks.html" rel="prev"><small>Previous</small><b>← Cookbooks</b></a>
+      <a href="fix-a-typo.html" rel="next"><small>Next</small><b>Fix a typo without losing history →</b></a>
+    </nav>
+  </main>
+
+  <aside class="toc" aria-label="On this page">
+    <p class="toc__title">On this page</p>
+    <div class="toc__list"></div>
+  </aside>
+</div>
+
+<script src="assets/sidebar.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

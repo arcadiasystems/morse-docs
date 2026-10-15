@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Publish from CI · Morse Docs</title>
+  <meta name="theme-color" content="#F2EFE8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="assets/docs.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="description" content="Publish entries and revisions from a GitHub Actions pipeline using a dedicated publisher key and environment variables.">
+  <link rel="canonical" href="https://docs.morsecms.xyz/publish-from-ci.html">
+  <meta property="og:title" content="Publish from CI · Morse Docs">
+  <meta property="og:description" content="Publish entries and revisions from a GitHub Actions pipeline using a dedicated publisher key and environment variables.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://docs.morsecms.xyz/publish-from-ci.html">
+  <meta property="og:site_name" content="Morse Docs">
+  <meta name="twitter:card" content="summary">
+  <link rel="alternate" type="text/markdown" href="https://docs.morsecms.xyz/publish-from-ci.md" title="Markdown version">
+</head>
+<body>
+
+<header class="top">
+  <div class="top__in">
+    <button class="menu-btn" type="button" id="menu" aria-label="Open navigation" aria-expanded="false" aria-controls="side">
+      <svg class="menu-btn__open" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg class="menu-btn__close" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <a class="brand" href="index.html" aria-label="Morse docs home">
+      <svg aria-hidden="true" width="26" height="26" viewBox="0 0 100 100"><path d="M8 72 V30 H36 V72 H64 V30 H92 V72" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>morse</span><em>DOCS</em>
+    </a>
+    <button class="search" type="button" id="search-open" aria-label="Search documentation (⌘K)">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span class="search__label">Search documentation</span><kbd>⌘K</kbd>
+    </button>
+    <nav class="top__right" aria-label="Site">
+      <button class="askai" type="button" data-askai title="Ask AI (⌘I)"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>Ask AI</button>
+      <a class="agents" href="use-morse-with-ai.html"><i aria-hidden="true"></i>For agents</a>
+      <a class="gh" href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener">GitHub</a>
+      <a class="site" href="https://www.morsecms.xyz" target="_blank" rel="noopener">morsecms.xyz</a>
+    </nav>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="side" id="side"></aside>
+
+  <main class="main">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="cookbooks.html">Cookbooks</a><span class="crumbs__sep" aria-hidden="true">/</span><span aria-current="page">Publish from CI</span></nav>
+    <article class="article">
+        <h1>Publish from CI</h1>
+        <p class="article-lead">
+          Push to main, get a revision on chain. A separate pipeline key you can revoke, the environment variables the CLI reads, and a workflow file to copy.
+        </p>
+        <div class="page-actions">
+          <div class="copybtn-group">
+            <button class="copybtn" type="button" id="copy-page"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-flash-label>Copy page</span></button>
+            <button class="copybtn copybtn-caret" type="button" id="page-menu-btn" aria-label="More page actions" aria-haspopup="true" aria-expanded="false" aria-controls="page-menu"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+          </div>
+          <div class="page-menu" id="page-menu" hidden>
+            <button class="page-menu__item" type="button" data-page-copy><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy page as Markdown</button>
+            <a class="page-menu__item" href="publish-from-ci.md" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>View as Markdown</a>
+            <a class="page-menu__item" id="page-chatgpt" href="https://chatgpt.com/" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>Open in ChatGPT</a>
+            <a class="page-menu__item" id="page-claude" href="https://claude.ai/new" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>Open in Claude</a>
+          </div>
+        </div>
+        <ul class="article-meta"><li>About 20 minutes</li><li>CLI + GitHub Actions</li><li>A repo of posts</li><li>Testnet</li></ul>
+        <h2 id="the-idea">The idea</h2>
+
+        <p>Your posts live in a git repo. On every push to <code>main</code>, CI publishes new files as entries and changed files as revisions. No deploy step, no server to keep up: the published state is on Sui and Walrus, the source of truth is the repo, and the map file links the two.</p>
+
+        <h2 id="a-ci-only-publisher-key">A CI-only publisher key</h2>
+
+        <p>Do not put your owner key in CI. Make a separate wallet for the pipeline, fund it with a little SUI and WAL, and issue it a <code>PublisherCap</code> from your owner wallet. If CI ever leaks the key, you revoke one cap and move on.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span><span class="code-note">on your machine</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>morse cap issue 0xCI_WALLET_ADDRESS
+<span class="p" aria-hidden="true">$ </span>morse --json publication get | jq -r .id      # you will need this id</pre>
+        </div>
+
+        <h2 id="environment-variables-the-cli-reads">Environment variables the CLI reads</h2>
+
+        <p>In a non-interactive shell the CLI takes everything from the environment. Flags beat variables, variables beat the config file.</p>
+
+        <div class="table-wrap">
+          <table><thead><tr><th>Variable</th><th>Set it to</th><th>Why</th></tr></thead><tbody><tr><td><code>MORSE_PRIVATE_KEY</code></td><td>The CI wallet's <code>suiprivkey1...</code></td><td>Highest-priority key source, never written to disk</td></tr><tr><td><code>MORSE_NETWORK</code></td><td><code>testnet</code></td><td>No profile needed</td></tr><tr><td><code>MORSE_PUBLICATION</code></td><td>The publication object id</td><td>Active publication without <code>morse use</code></td></tr><tr><td><code>MORSE_COLLECTION</code></td><td><code>posts</code></td><td>Active collection</td></tr></tbody></table>
+        </div>
+
+        <p>With those four set, <code>morse status</code> in CI shows the same context you have locally, with no keystore and no prompts.</p>
+
+        <h2 id="github-actions-workflow">GitHub Actions workflow</h2>
+
+        <p>This reuses <code>import.sh</code> from <a href="import-a-site.html">Import an existing Markdown site</a> and commits the updated map back to the repo so the next run knows what exists.</p>
+
+        <div class="code-block" data-no-prompt>
+          <div class="code-header">
+            <span class="code-lang">yaml</span><span class="code-note is-file">.github/workflows/publish.yml</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre>name: Publish to Morse
+on:
+  push:
+    branches: [main]
+    paths: ["content/posts/**", "morse-map.json"]
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      MORSE_PRIVATE_KEY: ${{ secrets.MORSE_CI_PRIVATE_KEY }}
+      MORSE_NETWORK: testnet
+      MORSE_PUBLICATION: ${{ vars.MORSE_PUBLICATION_ID }}
+      MORSE_COLLECTION: posts
+      EPOCHS: "30"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm i -g @arcadiasystems/morse-cli
+      - run: morse --yes -q status
+      - run: ./import.sh
+      - name: Commit the map
+        run: |
+          git config user.name "morse-ci"
+          git config user.email "ci@users.noreply.github.com"
+          git add morse-map.json
+          git diff --cached --quiet || git commit -m "chore: update morse map" &amp;&amp; git push</pre>
+        </div>
+
+        <p>Store the key as a repository <strong>secret</strong> and the publication id as a repository <strong>variable</strong>. The <code>paths</code> filter keeps the job from running on unrelated commits.</p>
+
+        <h2 id="idempotency-and-exit-codes">Idempotency and exit codes</h2>
+
+        <p>The map is what makes a rerun safe: a file already in it is skipped. Everything else you need for scripting is in the CLI's exit codes and <code>--json</code>.</p>
+
+        <div class="table-wrap">
+          <table><thead><tr><th>Exit code</th><th>Meaning</th><th>In a pipeline</th></tr></thead><tbody><tr><td>0</td><td>Success</td><td>Carry on</td></tr><tr><td>1</td><td>Any other failure</td><td>For example a contract abort such as <code>ESlugAlreadyExists</code>; read the message and fail the job</td></tr><tr><td>2</td><td>Usage error</td><td>Your command line is wrong, fix the script</td></tr><tr><td>3</td><td>Not found</td><td>Wrong publication id or entry id</td></tr><tr><td>4</td><td>Auth or permission</td><td>Cap revoked, wrong key, or no cap for this publication</td></tr><tr><td>5</td><td>Network or transport</td><td>Retry once after a pause, then fail the job</td></tr></tbody></table>
+        </div>
+
+        <div class="code-block" data-no-prompt>
+          <div class="code-header">
+            <span class="code-lang">bash</span><span class="code-note">retry once on transport errors</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre>publish() { morse --json -q entry add "$@"; }
+out=$(publish "$name" --file "$f" --epochs "$EPOCHS") || { [ $? -eq 5 ] &amp;&amp; sleep 20 &amp;&amp; out=$(publish "$name" --file "$f" --epochs "$EPOCHS"); }</pre>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01M11 12h1v4h1"></path></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">--yes and -q</div>
+            <div class="callout-text"><code>--yes</code> answers every confirmation, which matters for <code>delete</code> commands. <code>-q</code> keeps progress bars out of your logs so the JSON on stdout is the only thing the script sees.</div>
+          </div>
+        </div>
+
+        <h2 id="lock-it-down">Lock it down</h2>
+
+        <div class="table-wrap">
+          <table><thead><tr><th>Risk</th><th>Mitigation</th></tr></thead><tbody><tr><td>Key leaks from CI</td><td>It is a publisher key, not the owner. <code>morse cap revoke</code> and rotate.</td></tr><tr><td>Someone pushes garbage to main</td><td>Branch protection, and the chain keeps every revision so nothing is lost</td></tr><tr><td>Pipeline publishes twice</td><td>The map, committed back after every run</td></tr><tr><td>WAL runs out</td><td>Check the CI wallet balance in the job and fail early with a clear message</td></tr></tbody></table>
+        </div>
+
+        <h2 id="next">Next</h2>
+
+        <div class="card-grid">
+          <a href="import-a-site.html" class="card">
+            <div class="card-title">Import an existing Markdown site</div>
+            <div class="card-desc">The script this workflow runs.</div>
+          </a>
+          <a href="agent-publishes.html" class="card">
+            <div class="card-title">Let an AI agent publish</div>
+            <div class="card-desc">Same key model, different author.</div>
+          </a>
+          <a href="cli-overview.html" class="card">
+            <div class="card-title">CLI overview</div>
+            <div class="card-desc">All environment variables and exit codes.</div>
+          </a>
+        </div>
+      </article>
+
+    <div class="feedback">
+      <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
+      <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20publish-from-ci.html" target="_blank" rel="noopener">Report an issue</a>
+      <span class="feedback__upd">Updated 2026-10-15</span>
+    </div>
+    <nav class="pager" aria-label="Previous and next">
+      <a href="team-only-content.html" rel="prev"><small>Previous</small><b>← Encrypt a post for your team</b></a>
+      <a href="agent-publishes.html" rel="next"><small>Next</small><b>Let an AI agent publish →</b></a>
+    </nav>
+  </main>
+
+  <aside class="toc" aria-label="On this page">
+    <p class="toc__title">On this page</p>
+    <div class="toc__list"></div>
+  </aside>
+</div>
+
+<script src="assets/sidebar.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

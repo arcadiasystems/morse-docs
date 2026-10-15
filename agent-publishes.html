@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Let an AI agent publish · Morse Docs</title>
+  <meta name="theme-color" content="#F2EFE8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="assets/docs.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="description" content="Set up an AI agent with its own wallet and PublisherCap so it can publish to your publication unattended, and revoke it later.">
+  <link rel="canonical" href="https://docs.morsecms.xyz/agent-publishes.html">
+  <meta property="og:title" content="Let an AI agent publish · Morse Docs">
+  <meta property="og:description" content="Set up an AI agent with its own wallet and PublisherCap so it can publish to your publication unattended, and revoke it later.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://docs.morsecms.xyz/agent-publishes.html">
+  <meta property="og:site_name" content="Morse Docs">
+  <meta name="twitter:card" content="summary">
+  <link rel="alternate" type="text/markdown" href="https://docs.morsecms.xyz/agent-publishes.md" title="Markdown version">
+</head>
+<body>
+
+<header class="top">
+  <div class="top__in">
+    <button class="menu-btn" type="button" id="menu" aria-label="Open navigation" aria-expanded="false" aria-controls="side">
+      <svg class="menu-btn__open" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg class="menu-btn__close" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <a class="brand" href="index.html" aria-label="Morse docs home">
+      <svg aria-hidden="true" width="26" height="26" viewBox="0 0 100 100"><path d="M8 72 V30 H36 V72 H64 V30 H92 V72" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>morse</span><em>DOCS</em>
+    </a>
+    <button class="search" type="button" id="search-open" aria-label="Search documentation (⌘K)">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span class="search__label">Search documentation</span><kbd>⌘K</kbd>
+    </button>
+    <nav class="top__right" aria-label="Site">
+      <button class="askai" type="button" data-askai title="Ask AI (⌘I)"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>Ask AI</button>
+      <a class="agents" href="use-morse-with-ai.html"><i aria-hidden="true"></i>For agents</a>
+      <a class="gh" href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener">GitHub</a>
+      <a class="site" href="https://www.morsecms.xyz" target="_blank" rel="noopener">morsecms.xyz</a>
+    </nav>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="side" id="side"></aside>
+
+  <main class="main">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="cookbooks.html">Cookbooks</a><span class="crumbs__sep" aria-hidden="true">/</span><span aria-current="page">Let an AI agent publish</span></nav>
+    <article class="article">
+        <h1>Let an AI agent publish</h1>
+        <p class="article-lead">
+          No signup, no API console. A wallet, a cap, the docs in llms.txt, and an agent can publish on its own while you keep the owner key.
+        </p>
+        <div class="page-actions">
+          <div class="copybtn-group">
+            <button class="copybtn" type="button" id="copy-page"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-flash-label>Copy page</span></button>
+            <button class="copybtn copybtn-caret" type="button" id="page-menu-btn" aria-label="More page actions" aria-haspopup="true" aria-expanded="false" aria-controls="page-menu"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+          </div>
+          <div class="page-menu" id="page-menu" hidden>
+            <button class="page-menu__item" type="button" data-page-copy><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy page as Markdown</button>
+            <a class="page-menu__item" href="agent-publishes.md" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>View as Markdown</a>
+            <a class="page-menu__item" id="page-chatgpt" href="https://chatgpt.com/" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>Open in ChatGPT</a>
+            <a class="page-menu__item" id="page-claude" href="https://claude.ai/new" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>Open in Claude</a>
+          </div>
+        </div>
+        <ul class="article-meta"><li>About 15 minutes</li><li>CLI or SDK</li><li>An agent runtime with a shell</li><li>Testnet</li></ul>
+        <h2 id="why-this-works-at-all">Why this works at all</h2>
+
+        <p>Most CMSs need a human to click through signup, create an API key and paste it somewhere. Morse has no signup. An agent with a funded Sui wallet and a <code>PublisherCap</code> can publish on its own, every write returns a transaction digest, and you can revoke it in one command without touching the agent. That makes Morse a natural output channel for an agent that writes: a changelog bot, a research digest, a status page, a newsletter drafted overnight.</p>
+
+        <h2 id="give-the-agent-its-own-wallet-and-cap">Give the agent its own wallet and cap</h2>
+
+        <p>Treat the agent like a contractor, not like yourself. Fresh wallet, small balance, its own cap.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span><span class="code-note">on your machine</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>morse cap issue 0xAGENT_WALLET_ADDRESS
+<span class="p" aria-hidden="true">$ </span>morse --json publication get | jq -r .id</pre>
+        </div>
+
+        <p>Fund the agent wallet from the faucet and swap a little WAL, as in <a href="launch-a-blog.html">Launch a blog</a>. Keep the owner key on your machine only.</p>
+
+        <h2 id="give-the-agent-the-docs">Give the agent the docs</h2>
+
+        <p>The docs ship in agent-readable form. Put this in the project's <code>CLAUDE.md</code>, <code>AGENTS.md</code> or Cursor rules so every session starts with Morse context:</p>
+
+        <div class="code-block" data-no-prompt>
+          <div class="code-header">
+            <span class="code-lang">markdown</span><span class="code-note is-file">CLAUDE.md</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="cm"># Morse</span>
+This project publishes to a Morse publication on Sui testnet.
+Before using the Morse CLI or SDK, read https://docs.morsecms.xyz/llms-full.txt
+(or https://docs.morsecms.xyz/llms.txt for the index and fetch pages as .md).
+
+Rules
+- Use the CLI non-interactively: `morse --json -q --yes ...`
+- Never run `account export`, never print MORSE_PRIVATE_KEY.
+- New post: `morse entry add &lt;name&gt; --file &lt;path&gt; --epochs 30`
+- Edit an existing post: `morse revision publish-direct &lt;entryId&gt; --file &lt;path&gt; --epochs 30`
+- Look up entry ids in morse-map.json; update it after every add.
+- Read back with `--via-aggregator` on testnet.</pre>
+        </div>
+
+        <h2 id="give-the-agent-a-job">Give the agent a job</h2>
+
+        <p>Environment for the agent's shell, same four variables as <a href="publish-from-ci.html">Publish from CI</a>:</p>
+
+        <div class="code-block" data-no-prompt>
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre>export MORSE_PRIVATE_KEY=suiprivkey1...      # the agent wallet, not yours
+export MORSE_NETWORK=testnet
+export MORSE_PUBLICATION=0x69d4...f327
+export MORSE_COLLECTION=posts</pre>
+        </div>
+
+        <p>Then a prompt that describes the outcome, not the commands. The agent has the docs.</p>
+
+        <div class="code-block code-block-output">
+          <div class="code-header">
+            <span class="code-lang">text</span><span class="code-note">prompt</span>
+          </div>
+          <pre>Every Friday, summarise the week's merged pull requests in this repo as a short
+Markdown post under content/posts/YYYY-MM-DD-weekly.md, then publish it to Morse
+as a new entry. Print the entry id and the Sui transaction digest when done.</pre>
+        </div>
+
+        <h2 id="what-the-agent-runs">What the agent runs</h2>
+
+        <p>Under the hood the agent ends up running something like this, which you can also run yourself to check the setup:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>morse --json -q --yes status
+<span class="p" aria-hidden="true">$ </span>morse --json -q --yes entry add 2026-10-17-weekly --file content/posts/2026-10-17-weekly.md --epochs 30
+<span class="p" aria-hidden="true">$ </span>morse --json -q entry get 7</pre>
+        </div>
+
+        <p>For an agent built on the SDK rather than shelling out, the equivalent is <code>addEntryFromBytes</code> with a <code>KeypairAdapter</code> from the agent's key; the <a href="sdk-workflows.html">SDK reference cookbooks</a> have the exact call.</p>
+
+        <div class="callout callout-info">
+          <div class="callout-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01M11 12h1v4h1"></path></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">Why --json --yes -q</div>
+            <div class="callout-text">The agent should never sit at a prompt. <code>--yes</code> removes confirmations, <code>-q</code> removes progress output, <code>--json</code> gives it something to parse instead of guess.</div>
+          </div>
+        </div>
+
+        <h2 id="watch-audit-revoke">Watch, audit, revoke</h2>
+
+        <p>Every write the agent makes is a transaction signed by its wallet, so the audit log is Sui itself:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="p" aria-hidden="true">$ </span>morse entry list                               # what exists now
+<span class="p" aria-hidden="true">$ </span>morse cap list 0xAGENT_WALLET_ADDRESS          # what it is allowed to do
+<span class="p" aria-hidden="true">$ </span>morse cap revoke 0xAGENT_CAP_ID                 # and when you are done</pre>
+        </div>
+
+        <p>Revocation takes effect on the next transaction. Nothing the agent already published disappears, and if it published something wrong, you append a revision (or delete the entry) from your own wallet.</p>
+
+        <div class="table-wrap">
+          <table><thead><tr><th>Do</th><th>Do not</th></tr></thead><tbody><tr><td>Give the agent a wallet with days of budget, not months</td><td>Give it the owner key</td></tr><tr><td>Point it at <code>llms-full.txt</code></td><td>Paste commands you have not tested into its prompt</td></tr><tr><td>Keep <code>morse-map.json</code> in the repo</td><td>Let it guess entry ids</td></tr><tr><td>Review the first few posts before you stop reviewing</td><td>Assume it read the docs</td></tr></tbody></table>
+        </div>
+
+        <h2 id="next">Next</h2>
+
+        <div class="card-grid">
+          <a href="publish-from-ci.html" class="card">
+            <div class="card-title">Publish from CI</div>
+            <div class="card-desc">The same key model on a schedule.</div>
+          </a>
+          <a href="use-morse-with-ai.html" class="card">
+            <div class="card-title">Use Morse with AI</div>
+            <div class="card-desc">llms.txt, Markdown twins and the Ask AI shortcut.</div>
+          </a>
+          <a href="co-author.html" class="card">
+            <div class="card-title">Add a co-author</div>
+            <div class="card-desc">What a cap is and how to revoke it.</div>
+          </a>
+        </div>
+      </article>
+
+    <div class="feedback">
+      <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
+      <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20agent-publishes.html" target="_blank" rel="noopener">Report an issue</a>
+      <span class="feedback__upd">Updated 2026-10-15</span>
+    </div>
+    <nav class="pager" aria-label="Previous and next">
+      <a href="publish-from-ci.html" rel="prev"><small>Previous</small><b>← Publish from CI</b></a>
+      <a href="verify-a-post.html" rel="next"><small>Next</small><b>Prove a post has not changed →</b></a>
+    </nav>
+  </main>
+
+  <aside class="toc" aria-label="On this page">
+    <p class="toc__title">On this page</p>
+    <div class="toc__list"></div>
+  </aside>
+</div>
+
+<script src="assets/sidebar.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

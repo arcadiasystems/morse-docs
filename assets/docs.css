@@ -153,7 +153,7 @@ button{font:inherit;color:inherit}
 .table-wrap{border:1px solid var(--line);border-radius:14px;overflow-x:auto;background:var(--paper)}
 .article table{width:100%;border-collapse:collapse;font-size:15px}
 .article th{text-align:left;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--stone);background:var(--bone);padding:12px 18px;border-bottom:1px solid var(--line);white-space:nowrap}
-.article td{padding:14px 18px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--body);line-height:1.55}
+.article td{min-width:120px;padding:14px 18px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--body);line-height:1.55}
 .article tr:last-child td{border-bottom:0}
 .article td:first-child{color:var(--ink);font-weight:500}
 
@@ -162,6 +162,7 @@ button{font:inherit;color:inherit}
 .code-header{display:flex;align-items:center;gap:10px;min-height:34px;padding:9px 10px 9px 16px;border-bottom:1px solid var(--ink-line)}
 .code-lang,.code-note{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--on-ink-3)}
 .code-note::before{content:"·";margin-right:10px}
+.code-note.is-file{text-transform:none;letter-spacing:.04em}
 .code-copy{margin-left:auto;display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 10px;border:1px solid var(--ink-line);border-radius:999px;background:transparent;color:var(--on-ink-2);font-family:var(--sans);font-size:12px;font-weight:500;cursor:pointer}
 .code-copy:hover{background:var(--ink-2)}
 .code-copy.is-done{color:var(--on-ink-ok);border-color:var(--on-ink-ok)}
@@ -190,7 +191,7 @@ pre.diagram{margin:0;background:var(--paper);border:1px solid var(--line);border
 
 /* next-step cards */
 .card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.card-grid:has(>.card:nth-child(2):last-child),.card-grid:has(>.card:nth-child(4):last-child){grid-template-columns:repeat(2,minmax(0,1fr))}
+.card-grid:has(>.card:nth-child(2):last-child),.card-grid:has(>.card:nth-child(4):last-child),.card-grid.recipes{grid-template-columns:repeat(2,minmax(0,1fr))}
 .card{display:flex;flex-direction:column;gap:6px;padding:20px;border:1px solid var(--line);border-radius:14px;background:var(--paper);color:var(--ink);min-width:0}
 .article a.card{color:var(--ink);text-decoration:none;transition:transform .15s,box-shadow .15s}
 .article a.card:hover{transform:translateY(-2px);box-shadow:0 14px 36px rgba(18,20,24,.08)}
@@ -213,6 +214,19 @@ a.card .card-title::after{content:"↗" / "";color:var(--ultra);font-family:var(
 .card-badge{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--ultra);border-radius:999px;padding:4px 8px}
 .card-cta{font-weight:600;color:var(--ultra)}
 .article .card-grid-paths .card-recommended{border-color:var(--ultra);box-shadow:0 0 0 3px var(--ultra-tint)}
+
+/* recipe cards (Cookbooks index) */
+.card.recipe{gap:8px;padding:22px;border-radius:16px}
+.article a.card.recipe{transition:transform .15s,box-shadow .15s,border-color .15s}
+.article a.card.recipe:hover{border-color:var(--line-2)}
+a.card.recipe .card-title::after{content:none}
+.recipe .card-title{font-size:20px;line-height:1.15;letter-spacing:-.02em;margin-top:4px}
+.recipe .card-desc{font-size:15px;line-height:1.5}
+.recipe .card-cta{margin-top:auto;padding-top:6px;font-size:14px}
+.recipe-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:0}
+.recipe-tags span{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--stone);border:1px solid var(--line);border-radius:999px;padding:3px 8px}
+.recipe-tags span:first-child{color:var(--ultra);border-color:var(--ultra-tint-2);background:var(--ultra-tint)}
+.recipe-tags .recipe-tags-sep{display:none}
 
 /* feature, capability and storage-mode cards */
 .feature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
@@ -328,7 +342,7 @@ pre.dual-head-visual{margin:18px 0 0;padding-top:16px;border-top:1px solid var(-
   .article>h1{font-size:36px;padding-right:0}
   .article>.page-actions{position:relative;margin-top:18px}
   .page-menu{right:auto;left:0}
-  .card-grid,.card-grid:has(>.card:nth-child(2):last-child),.card-grid:has(>.card:nth-child(4):last-child),.feature-grid,.dual-head-grid{grid-template-columns:1fr}
+  .card-grid,.card-grid:has(>.card:nth-child(2):last-child),.card-grid:has(>.card:nth-child(4):last-child),.card-grid.recipes,.feature-grid,.dual-head-grid{grid-template-columns:1fr}
   .arch-row{grid-template-columns:1fr;gap:8px}
   .pager{grid-template-columns:1fr}
   .pager a[rel="next"]{grid-column:auto;text-align:left;align-items:flex-start}

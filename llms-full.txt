@@ -731,6 +731,927 @@ Entry added: hello-world (ID 0)
 
 ---
 
+<!-- Source: https://docs.morsecms.xyz/cookbooks.html -->
+
+# Cookbooks
+
+> Eight things people actually want to do with Morse, each as a short path with real commands and the failure modes you will hit on testnet.
+
+> **INFO: How these differ from the reference cookbooks**
+>
+> The [CLI](https://docs.morsecms.xyz/cli-workflows.html), [SDK](https://docs.morsecms.xyz/sdk-workflows.html) and [contracts](https://docs.morsecms.xyz/contracts-workflows.html) cookbooks show every operation once. These recipes start from a goal, take ten to twenty minutes end to end, and say what to do when a step fails on testnet.
+
+Every recipe assumes a funded Sui testnet wallet. If you do not have one yet, start with the first recipe, it walks through the faucet.
+
+## Publish
+
+Get content on chain and keep it right.
+
+- [Launch a blog in 10 minutes](https://docs.morsecms.xyz/launch-a-blog.html): Publication, collection and a first post on Sui testnet, nothing else. *(10 min · CLI)*
+- [Fix a typo without losing history](https://docs.morsecms.xyz/fix-a-typo.html): Publish a corrected revision and keep every earlier one readable. *(5 min · CLI)*
+- [Import an existing Markdown site](https://docs.morsecms.xyz/import-a-site.html): A folder of Markdown posts in, one entry per file, re-runnable. *(15 min · CLI + bash)*
+
+## Collaborate
+
+Other people, other wallets, same publication.
+
+- [Add a co-author](https://docs.morsecms.xyz/co-author.html): Issue a PublisherCap to another wallet, see who can write, revoke. *(10 min · CLI)*
+- [Encrypt a post for your team](https://docs.morsecms.xyz/team-only-content.html): Seal-encrypt a post so only cap holders can decrypt it. *(10 min · CLI)*
+
+## Automate
+
+Pipelines and agents as publishers.
+
+- [Publish from CI](https://docs.morsecms.xyz/publish-from-ci.html): Push to main, get a revision on chain, with a key you can revoke. *(20 min · CLI + GitHub Actions)*
+- [Let an AI agent publish](https://docs.morsecms.xyz/agent-publishes.html): A wallet, a cap and llms.txt, and an agent publishes unattended. *(15 min · CLI or SDK)*
+
+## Trust
+
+What a reader can check without asking you.
+
+- [Prove a post has not changed](https://docs.morsecms.xyz/verify-a-post.html): Check bytes, revision and author of any post from a clean machine. *(10 min · CLI, no key)*
+
+## Conventions
+
+| You see | It means |
+| --- | --- |
+| `$ command` | Type it in a shell. The Copy button strips the prompt. |
+| `0x69d4...f327` | A shortened id. Yours will differ, never copy these. |
+| `--via-aggregator` | Read through the public Walrus aggregator. Reliable on testnet, trusts the operator. |
+| `--epochs 14` | How long Walrus keeps the bytes. One epoch is about a day on testnet. |
+| Active context | The publication and collection `morse status` shows. Set with `morse use`. |
+
+> **WARNING: Testnet only**
+>
+> Morse is on Sui testnet with unaudited contracts. Testnets reset, blobs expire, tokens are free and worthless. Treat everything you publish as a rehearsal.
+
+
+---
+
+<!-- Source: https://docs.morsecms.xyz/launch-a-blog.html -->
+
+# Launch a blog in 10 minutes
+
+> Zero to a post whose bytes are on Walrus and whose record is on Sui, with nothing but your terminal. About ten minutes, most of it waiting for a faucet.
+
+- About 10 minutes
+- CLI only
+- Fresh Sui wallet
+- Testnet
+
+> **WARNING: Testnet only, unaudited**
+>
+> Everything here runs on Sui testnet and Walrus testnet. Testnets reset from time to time, blobs expire when their storage epochs run out, and the contracts have not been audited. Testnet tokens have no value. Do not publish anything you cannot afford to lose.
+
+## What you will have
+
+A publication on Sui that you own, one collection called `posts`, and one post whose body lives on Walrus and whose record lives on Sui. Nothing else: no server, no database, no account with us.
+
+| You end up with | Where it lives | How you prove it |
+| --- | --- | --- |
+| A Publication object | Sui testnet | Its object id, shown by `morse publication get` |
+| A `posts` collection | Sui testnet, inside the publication | `morse collection list` |
+| Entry `0` with one public revision | Record on Sui, bytes on Walrus | `morse entry get 0` and the blob id |
+
+## Get a wallet and testnet tokens
+
+You need a Sui address with a little SUI for gas and a little WAL for storage. Both are free on testnet and take about two minutes.
+
+| Step | Where | Why |
+| --- | --- | --- |
+| Install a wallet | Slush, Suiet, or any Sui Wallet Standard wallet | Holds your key and signs |
+| Get testnet SUI | [faucet.sui.io](https://faucet.sui.io/) | Gas for every on-chain action |
+| Swap a little SUI for WAL | [stake-wal.wal.app](https://stake-wal.wal.app/?network=testnet) | Walrus storage fees when you publish |
+| Export your private key | Wallet settings | A `suiprivkey1...` string the CLI can import |
+
+> **INFO: Use a throwaway key**
+>
+> Create a fresh wallet for Morse testnet. The CLI stores the key in an encrypted keystore under `~/.config/morse/keystores`, but a key you only use for testnet is one less thing to worry about.
+
+## Install the CLI
+
+```bash
+$ npm i -g @arcadiasystems/morse-cli
+$ morse --version
+```
+
+If you would rather not install anything, every command below also works as `npx @arcadiasystems/morse-cli ...`.
+
+## Point it at testnet and import your key
+
+```bash
+$ morse config add testnet --network testnet
+$ morse account import
+```
+
+`account import` asks for the `suiprivkey1...` string and a password, both hidden. Check that it took:
+
+```bash
+$ morse status
+```
+
+```output
+profile:     testnet
+network:     testnet
+account:     0x7be4...11d0
+publication: (none)
+collection:  (none)
+```
+
+## Create the publication
+
+Slugs are globally unique on the network, so add a suffix. The name and slug cannot be changed later, pick ones you like.
+
+```bash
+$ morse publication create --name "My Blog" --slug "my-blog-$(date +%s)"
+$ morse collection create posts
+```
+
+Both commands set what they created as your active context, so you do not have to pass `-P` or `-C` on every call. Two transactions have been signed with your key: one created the publication and minted your `OwnerCap` and `PublisherCap`, the other added the collection.
+
+## Write and publish the first post
+
+A post is just a file. Markdown is a good default because every reader can render it.
+
+```bash
+$ cat > hello.md <<'EOF'
+# Hello from Morse
+
+This post has no backend. Its bytes are on Walrus, its record is on Sui.
+EOF
+$ morse entry add hello --file hello.md --epochs 14
+```
+
+`--epochs` is how long Walrus keeps the blob. The default is 3, which is about three days on testnet. Fourteen is enough for a demo you want to show people next week. The content type is inferred from the file extension.
+
+```output
+Uploading 93 bytes to Walrus...
+Added entry #0 "hello". (tx: D9YfjkA3...9vB)
+  view: https://aggregator.walrus-testnet.walrus.space/v1/blobs/0iKeiiQ2...m7Xp
+```
+
+> **INFO: Two transactions, one command**
+>
+> `entry add` uploads the bytes to Walrus and registers the blob, then records the entry on Sui. If the second step fails you will see an error naming the blob that was already uploaded; rerun the command, the blob is not lost.
+
+## Read it back
+
+```bash
+$ morse entry read 0 --via-aggregator
+```
+
+On testnet the direct read path often fails for a few minutes right after upload while storage nodes catch up, which is why the command goes through the public aggregator. Without the flag the CLI verifies the bytes client side; with it you trust the aggregator operator. Fine for a blog, worth knowing.
+
+## Share the record
+
+This is the part a hosted CMS cannot do. Print the record and hand it to anyone:
+
+```bash
+$ morse --json entry get 0 | jq .
+```
+
+The output includes the public head and the revision list, and for each revision the address that wrote it and the Sui object id of its Walrus blob. Paste your publication id (`morse status` shows it) into [suiscan.xyz/testnet](https://suiscan.xyz/testnet/home) and anyone can see who published to it and when, without a Morse account, without trusting you.
+
+> **TIP: You are live**
+>
+> Your publication, collection and first post exist on Sui testnet. Run `morse entry list` to see them, or go straight to [Fix a typo without losing history](https://docs.morsecms.xyz/fix-a-typo.html) for the second thing every blog needs.
+
+## If something fails
+
+| Symptom | Likely cause | Fix |
+| --- | --- | --- |
+| `exit 2` and "No account selected" on `publication create` | No active account, or wrong profile | `morse status`, then `morse account use <address>` |
+| Insufficient gas / balance | No SUI or no WAL on the address | Faucet for SUI, swap for WAL, check the address matches `morse status` |
+| `ESlugAlreadyExists` | Someone used that slug | Add a suffix, the `$(date +%s)` trick above does this |
+| `entry read` says no valid blob metadata | Storage nodes have not caught up yet | Use `--via-aggregator`, or wait a few minutes |
+| Post disappeared after a while | Blob epochs expired or testnet reset | Republish with a larger `--epochs`; the entry record on Sui is unaffected |
+
+## Next
+
+- [Fix a typo without losing history](https://docs.morsecms.xyz/fix-a-typo.html): Publish a second revision and keep the first readable.
+- [Import an existing Markdown site](https://docs.morsecms.xyz/import-a-site.html): Loop over a folder of posts and publish them all.
+- [Prove a post has not changed](https://docs.morsecms.xyz/verify-a-post.html): Check a post against its Sui record and Walrus blob.
+
+
+---
+
+<!-- Source: https://docs.morsecms.xyz/fix-a-typo.html -->
+
+# Fix a typo without losing history
+
+> Correct a published post without rewriting history. Two ways to do it, and how to read any revision back.
+
+- About 5 minutes
+- CLI
+- An existing entry
+- Testnet
+
+## Why revisions, not edits
+
+Morse never overwrites a post. Every change is a new revision appended to the entry, and every earlier revision stays readable forever. An entry keeps two pointers, the **public head** (what readers get) and the **draft head** (what you are working on). Fixing a typo moves the public head, it does not erase anything.
+
+```text
+entry 0
+  revision 0   public   "Hello from Morse"           <- still readable
+  revision 1   public   "Hello from Morse" (fixed)   <- public head
+```
+
+Everything below assumes you have the publication and collection from [Launch a blog](https://docs.morsecms.xyz/launch-a-blog.html) set as your active context. Check with `morse status`.
+
+## Publish a corrected revision in one step
+
+Edit the file, then publish it straight to the public head:
+
+```bash
+$ sed -i.bak 's/no backend/no backend at all/' hello.md
+$ morse revision publish-direct 0 --file hello.md --epochs 14
+```
+
+```output
+Uploading 100 bytes to Walrus...
+Blob uploaded (0xa3d0...2c1f). Submitting transaction...
+Published revision #1 on entry #0. (tx: 7Kq2mRv1...9v8)
+```
+
+One upload, one transaction. The old blob and the old revision are untouched.
+
+## Or stage a draft first
+
+For anything bigger than a typo, stage the change as a draft, read it back, and only then publish it. Drafts are real revisions on chain, they are just not the public head.
+
+```bash
+$ morse revision append-draft 0 --file hello.md --epochs 14
+$ morse entry list --drafts-only
+$ morse revision publish-from-draft 0 2
+```
+
+The second argument of `publish-from-draft` is the draft revision's index, which `entry list --drafts-only` or `morse entry get 0` shows you. The content is reused as is; pass `--file` if you want to replace it at the moment of publishing.
+
+> **INFO: Encrypted entries always start as drafts**
+>
+> An entry added with `entry add-encrypted` starts as a draft and stays one: published revisions are always public and unencrypted, so team-only content is read from the draft with `entry decrypt`. See [Encrypt a post for your team](https://docs.morsecms.xyz/team-only-content.html).
+
+## Read any earlier revision
+
+`entry read` takes an optional revision index. Without it you get the public head.
+
+```bash
+$ morse entry read 0 --via-aggregator            # public head
+$ morse entry read 0 0 --via-aggregator          # revision 0, the original
+$ morse entry read 0 0 --via-aggregator --out original.md
+$ diff original.md hello.md
+```
+
+That diff is the whole point. Anyone with the entry id can produce it, with no help from you.
+
+## What readers see
+
+A reader app that follows the public head sees the corrected post immediately. A reader who cares can fetch the entry record from Sui and walk the revision list, each revision pointing at its own Walrus blob and naming the address that wrote it. The demo blog shows this as a Revisions panel next to the post.
+
+| Operation | Command | Moves public head | Keeps history |
+| --- | --- | --- | --- |
+| Publish corrected text now | `revision publish-direct` | Yes | Yes |
+| Stage, review, then publish | `revision append-draft` + `publish-from-draft` | On publish | Yes |
+| Delete the entry | `entry delete` | n/a | No, and the id is retired for good |
+
+> **WARNING: Blobs expire, records do not**
+>
+> Each revision's bytes live on Walrus for the epochs you paid for. When they expire, the revision record on Sui still exists but the content cannot be fetched. Use a generous `--epochs` for anything you want readable next month, and expect testnet resets.
+
+## Next
+
+- [Prove a post has not changed](https://docs.morsecms.xyz/verify-a-post.html): Compare what a reader got with the chain record.
+- [Add a co-author](https://docs.morsecms.xyz/co-author.html): Let someone else publish revisions to your blog.
+- [CLI command reference](https://docs.morsecms.xyz/cli-commands.html): Every revision and entry flag.
+
+
+---
+
+<!-- Source: https://docs.morsecms.xyz/import-a-site.html -->
+
+# Import an existing Markdown site
+
+> Bring an existing Hugo, Astro or plain Markdown site into Morse. One entry per post, a map file so you can run it twice, and a way to push edits as revisions.
+
+- About 15 minutes
+- CLI + bash + jq
+- A folder of .md files
+- Testnet
+
+## What this does
+
+You have a folder of Markdown posts from Hugo, Astro, Jekyll, Obsidian or a plain repo. This recipe publishes each file as one Morse entry, writes a small map from filename to entry id, and lets you run it again later without duplicating anything. Morse stores bytes as they are, so front matter goes in untouched and your existing renderer keeps working.
+
+## Lay out the folder
+
+```text
+content/
+  posts/
+    2026-09-01-why-a-protocol.md
+    2026-09-14-dual-head-revisions.md
+    2026-10-02-publishing-from-an-agent.md
+morse-map.json        <- created by the script
+```
+
+Make sure your active context is the publication and collection you want to fill:
+
+```bash
+$ morse use my-blog-1760000000 posts
+$ morse status
+```
+
+## Dry run
+
+Count the files and estimate storage before spending WAL. Walrus charges per blob per epoch, so the total size and the epoch count are what matter.
+
+```bash
+$ ls content/posts/*.md | wc -l
+$ du -ch content/posts/*.md | tail -1
+```
+
+## Publish everything
+
+The script publishes every file that is not yet in the map. The entry name is the filename without the extension. `--json` gives machine-readable output, `-q` hides the progress lines, and `jq` pulls the entry id out.
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+MAP=morse-map.json
+EPOCHS=${EPOCHS:-30}
+[ -f "$MAP" ] || echo '{}' > "$MAP"
+
+for f in content/posts/*.md; do
+  name=$(basename "$f" .md)
+  if jq -e --arg n "$name" '.[$n]' "$MAP" >/dev/null; then
+    echo "skip  $name (already published)"; continue
+  fi
+  echo "add   $name"
+  out=$(morse --json -q entry add "$name" --file "$f" --epochs "$EPOCHS")
+  id=$(echo "$out" | jq -r '.entryId')
+  tmp=$(mktemp)
+  jq --arg n "$name" --arg id "$id" '.[$n] = {entryId: ($id|tonumber), file: $n}' "$MAP" > "$tmp" && mv "$tmp" "$MAP"
+done
+echo "done, $(jq length "$MAP") entries in $MAP"
+```
+
+```bash
+$ chmod +x import.sh
+$ EPOCHS=30 ./import.sh
+```
+
+> **INFO: One transaction pair per post**
+>
+> Each `entry add` signs two transactions. Thirty posts is sixty signatures and about a minute on testnet. If a run stops halfway, run it again, the map makes it pick up where it left off.
+
+## Keep the map
+
+Commit `morse-map.json` next to your content. It is the only thing that ties a filename to an entry id, and your site generator or reader app needs it to fetch bodies from Walrus.
+
+```json
+{
+  "2026-09-01-why-a-protocol": { "entryId": 0, "file": "2026-09-01-why-a-protocol" },
+  "2026-09-14-dual-head-revisions": { "entryId": 1, "file": "2026-09-14-dual-head-revisions" }
+}
+```
+
+## Re-running safely
+
+New files get added, existing ones are skipped. To push an edited post as a new revision rather than a new entry, look the id up in the map and use `revision publish-direct`:
+
+```bash
+$ id=$(jq -r '.["2026-09-14-dual-head-revisions"].entryId' morse-map.json)
+$ morse revision publish-direct "$id" --file content/posts/2026-09-14-dual-head-revisions.md --epochs 30
+```
+
+A simple way to automate that: store each file's content hash in the map and publish a revision whenever the hash changes. Left as a ten-line exercise, or ask your agent, see [Let an AI agent publish](https://docs.morsecms.xyz/agent-publishes.html).
+
+## Pitfalls
+
+| Pitfall | What happens | What to do |
+| --- | --- | --- |
+| Entry names are not unique on chain | Running without the map creates duplicates | Always keep and commit the map |
+| Images and other assets | A Markdown file only carries text | Publish each asset as its own entry, or keep assets on a plain host for now |
+| Big files | Walrus storage cost scales with size and epochs | Keep posts as Markdown, strip embedded base64 |
+| Testnet reset | Entries and blobs are gone, the map is stale | Delete the map and re-run |
+
+## Next
+
+- [Publish from CI](https://docs.morsecms.xyz/publish-from-ci.html): Run this script on every push to main.
+- [Fix a typo without losing history](https://docs.morsecms.xyz/fix-a-typo.html): How revisions work.
+- [SDK reference cookbooks](https://docs.morsecms.xyz/sdk-workflows.html): The same loop in TypeScript with addEntryFromBytes.
+
+
+---
+
+<!-- Source: https://docs.morsecms.xyz/co-author.html -->
+
+# Add a co-author
+
+> Let a second person publish to your blog without sharing a key, see who can write at any time, and revoke in one command.
+
+- About 10 minutes
+- CLI, two machines
+- Owner plus one more wallet
+- Testnet
+
+## How write access works
+
+There are no user accounts in Morse. Write access is an object. When you created your publication you received an `OwnerCap` (full control) and a `PublisherCap` (can add entries and revisions). To let someone else publish, the owner mints a new `PublisherCap` bound to their address. To take it away, the owner revokes it. The co-author never needs your key, and you never need theirs.
+
+| Capability | Who holds it | Can do |
+| --- | --- | --- |
+| `OwnerCap` | You, one per publication | Issue and revoke publisher caps, transfer ownership, delete |
+| `PublisherCap` | You and anyone you issue one to | Create collections, add entries, append and publish revisions, decrypt team content |
+| Nothing | Everyone else | Read public entries |
+
+## Owner: issue a cap
+
+You need the co-author's Sui address. From your machine, with the publication active:
+
+```bash
+$ morse status                                   # confirm the active publication
+$ morse cap issue 0xCOAUTHOR_ADDRESS
+```
+
+```output
+Issued PublisherCap 0x3f8a...c21e to 0xCOAUTHOR_ADDRESS. (tx: 4Hn9xT...q2Wd)
+```
+
+Save the cap id, you will need it to revoke. The cap is sent to the co-author's address as part of the same transaction, there is nothing for you to hand over.
+
+## Co-author: set up and publish
+
+On the co-author's machine, same setup as [Launch a blog](https://docs.morsecms.xyz/launch-a-blog.html), then point at your publication by slug:
+
+```bash
+$ npm i -g @arcadiasystems/morse-cli
+$ morse config add testnet --network testnet
+$ morse account import
+$ morse cap list                                 # the new cap shows up here
+$ morse use my-blog-1760000000 posts
+$ morse entry add guest-post --file guest-post.md --epochs 14
+```
+
+The CLI finds the right `PublisherCap` automatically from the active account. If the co-author holds caps for several publications, `--publisher-cap <id>` picks one explicitly.
+
+> **INFO: Reads by slug need an account, reads by id do not**
+>
+> `morse use <slug>` resolves the slug through the active account. Anyone can read a publication by object id with no key at all: `morse publication get 0x69d4...f327`.
+
+## Owner: see who can write
+
+```bash
+$ morse cap list 0xCOAUTHOR_ADDRESS
+```
+
+There is no team page. The list of who can write is the list of live caps, and anyone can query it on chain. That is the audit trail.
+
+## Revoke, and what the co-author sees
+
+```bash
+$ morse cap revoke 0x3f8a...c21e
+```
+
+From the next transaction on, every write the co-author attempts with that cap aborts on chain with exit code 4. Everything they published before stays. A revoked cap still sits in their wallet as a dead object; they can tidy it with `morse cap destroy 0x3f8a...c21e`.
+
+## Rotate instead of transfer
+
+> **WARNING: Do not transfer caps between people**
+>
+> A cap's holder is fixed when it is issued. `cap transfer` moves the object but not the binding, so the recipient cannot use it and the original holder cannot either. To hand write access to a new person: owner revokes the old cap, owner issues a new one.
+
+```bash
+$ morse cap revoke 0xOLD_CAP_ID
+$ morse cap issue 0xNEW_PERSON_ADDRESS
+```
+
+Transferring the whole publication is different and final: `morse publication transfer-ownership 0xNEW_OWNER` hands over the `OwnerCap` with no undo. Existing publisher caps keep working until the new owner revokes them.
+
+## Next
+
+- [Encrypt a post for your team](https://docs.morsecms.xyz/team-only-content.html): Cap holders can also decrypt.
+- [Let an AI agent publish](https://docs.morsecms.xyz/agent-publishes.html): An agent is just another cap holder.
+- [Access control reference](https://docs.morsecms.xyz/access-control.html): Caps, policies and the Move checks behind them.
+
+
+---
+
+<!-- Source: https://docs.morsecms.xyz/team-only-content.html -->
+
+# Encrypt a post for your team
+
+> Client-side encryption with the access rule living on Sui. Who can read is who holds a live cap, and revoking is one command.
+
+- About 10 minutes
+- CLI
+- A publication with a blob collection
+- Testnet
+
+## What encryption gives you today
+
+Morse encrypts content client side with [Seal](https://seal-docs.wal.app/) before it goes to Walrus. The decryption rule is a Move function on Sui: a Seal key server only releases its share if the caller holds an active `PublisherCap` for that publication. So today, encrypted means **readable by your team**: everyone with write access, nobody else, and no server of yours in the middle.
+
+| Policy | Who can read | Status |
+| --- | --- | --- |
+| Public (0) | Anyone with the blob id | Live |
+| Publisher (1) | Active `PublisherCap` holders of the publication | Live, this recipe |
+| Subscription (2) | Holders of a subscription token | Reserved on chain, approval function not built yet |
+
+## Publish an encrypted entry
+
+With your publication and collection active:
+
+```bash
+$ cat > q4-plan.md <<'EOF'
+# Q4 plan (internal)
+Ship mainnet, then the indexer.
+EOF
+$ morse entry add-encrypted q4-plan --file q4-plan.md --epochs 30
+```
+
+```output
+Encrypting and uploading 53 bytes...
+Added encrypted entry #5 "q4-plan". (tx: 8Bq1mVr0...2kLs)
+```
+
+Three things happened: the CLI generated a fresh Seal identity scoped to your publication, encrypted the file locally, and uploaded only ciphertext. The entry was created as a **draft**. Encrypted entries always start as drafts, because publishing is a separate decision.
+
+> **INFO: Collection mode**
+>
+> Encrypted entries need a `blob` mode collection, which is the default. If you created the collection with `--mode quilt`, make another one for encrypted content.
+
+## Read it as a cap holder
+
+Reading is `entry decrypt`, not `entry read`. The CLI signs a short-lived session key with your account, asks the key servers for shares, and decrypts locally.
+
+```bash
+$ morse entry decrypt 5 --via-aggregator --out q4-plan.recovered.md
+$ diff q4-plan.md q4-plan.recovered.md && echo identical
+```
+
+Anyone you issued a cap to in [Add a co-author](https://docs.morsecms.xyz/co-author.html) can run the same command from their own wallet. Anyone else gets the ciphertext from Walrus and nothing from the key servers.
+
+## Publish the draft
+
+A draft is visible as an entry on chain but is not the public head, and for encrypted content it stays that way: published revisions are always public and unencrypted, so the team keeps reading the draft with `entry decrypt`. If you decide to release the text to everyone, publish it from the draft with the plaintext file:
+
+```bash
+$ morse revision publish-from-draft 5 0 --file q4-plan.md
+```
+
+Always pass `--file`. Without it the CLI reuses the draft's blob, which is ciphertext, and readers of the public head would get bytes nobody can decrypt. `morse revision publish-direct 5 --file q4-plan.md` does the same in one step.
+
+## Rotate a key, revoke a reader
+
+Access is enforced at decryption time, every time. Revoking a cap cuts off a reader even for content they could read yesterday:
+
+```bash
+$ morse cap revoke 0xTHEIR_CAP_ID
+```
+
+Note what this does and does not do. It stops the key servers from serving that wallet from now on. It does not un-read anything they already decrypted and saved. Same as any system, but worth saying out loud to a team.
+
+## Honest limits
+
+| Question | Answer today |
+| --- | --- |
+| Can I sell access to a post? | Not yet. The subscription policy exists on chain but its approval function is not built. It is on the roadmap. |
+| Can a reader get read access without write access? | Not with Seal gating. A `PublisherCap` is both. Keep the team small. |
+| Who runs the key servers? | Seal key servers on testnet, two of three shares needed by default. If they are down, nobody can decrypt, including you. |
+| Is the ciphertext safe on Walrus? | Walrus stores the bytes anyone can fetch. The key never leaves the key servers and your client. |
+
+## Next
+
+- [Add a co-author](https://docs.morsecms.xyz/co-author.html): Issue the caps your readers need.
+- [Fix a typo without losing history](https://docs.morsecms.xyz/fix-a-typo.html): Drafts and heads explained.
+- [Access control reference](https://docs.morsecms.xyz/access-control.html): seal_approve_publisher and friends.
+
+
+---
+
+<!-- Source: https://docs.morsecms.xyz/publish-from-ci.html -->
+
+# Publish from CI
+
+> Push to main, get a revision on chain. A separate pipeline key you can revoke, the environment variables the CLI reads, and a workflow file to copy.
+
+- About 20 minutes
+- CLI + GitHub Actions
+- A repo of posts
+- Testnet
+
+## The idea
+
+Your posts live in a git repo. On every push to `main`, CI publishes new files as entries and changed files as revisions. No deploy step, no server to keep up: the published state is on Sui and Walrus, the source of truth is the repo, and the map file links the two.
+
+## A CI-only publisher key
+
+Do not put your owner key in CI. Make a separate wallet for the pipeline, fund it with a little SUI and WAL, and issue it a `PublisherCap` from your owner wallet. If CI ever leaks the key, you revoke one cap and move on.
+
+```bash
+$ morse cap issue 0xCI_WALLET_ADDRESS
+$ morse --json publication get | jq -r .id      # you will need this id
+```
+
+## Environment variables the CLI reads
+
+In a non-interactive shell the CLI takes everything from the environment. Flags beat variables, variables beat the config file.
+
+| Variable | Set it to | Why |
+| --- | --- | --- |
+| `MORSE_PRIVATE_KEY` | The CI wallet's `suiprivkey1...` | Highest-priority key source, never written to disk |
+| `MORSE_NETWORK` | `testnet` | No profile needed |
+| `MORSE_PUBLICATION` | The publication object id | Active publication without `morse use` |
+| `MORSE_COLLECTION` | `posts` | Active collection |
+
+With those four set, `morse status` in CI shows the same context you have locally, with no keystore and no prompts.
+
+## GitHub Actions workflow
+
+This reuses `import.sh` from [Import an existing Markdown site](https://docs.morsecms.xyz/import-a-site.html) and commits the updated map back to the repo so the next run knows what exists.
+
+```yaml
+name: Publish to Morse
+on:
+  push:
+    branches: [main]
+    paths: ["content/posts/**", "morse-map.json"]
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      MORSE_PRIVATE_KEY: ${{ secrets.MORSE_CI_PRIVATE_KEY }}
+      MORSE_NETWORK: testnet
+      MORSE_PUBLICATION: ${{ vars.MORSE_PUBLICATION_ID }}
+      MORSE_COLLECTION: posts
+      EPOCHS: "30"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm i -g @arcadiasystems/morse-cli
+      - run: morse --yes -q status
+      - run: ./import.sh
+      - name: Commit the map
+        run: |
+          git config user.name "morse-ci"
+          git config user.email "ci@users.noreply.github.com"
+          git add morse-map.json
+          git diff --cached --quiet || git commit -m "chore: update morse map" && git push
+```
+
+Store the key as a repository **secret** and the publication id as a repository **variable**. The `paths` filter keeps the job from running on unrelated commits.
+
+## Idempotency and exit codes
+
+The map is what makes a rerun safe: a file already in it is skipped. Everything else you need for scripting is in the CLI's exit codes and `--json`.
+
+| Exit code | Meaning | In a pipeline |
+| --- | --- | --- |
+| 0 | Success | Carry on |
+| 1 | Any other failure | For example a contract abort such as `ESlugAlreadyExists`; read the message and fail the job |
+| 2 | Usage error | Your command line is wrong, fix the script |
+| 3 | Not found | Wrong publication id or entry id |
+| 4 | Auth or permission | Cap revoked, wrong key, or no cap for this publication |
+| 5 | Network or transport | Retry once after a pause, then fail the job |
+
+```bash
+publish() { morse --json -q entry add "$@"; }
+out=$(publish "$name" --file "$f" --epochs "$EPOCHS") || { [ $? -eq 5 ] && sleep 20 && out=$(publish "$name" --file "$f" --epochs "$EPOCHS"); }
+```
+
+> **INFO: --yes and -q**
+>
+> `--yes` answers every confirmation, which matters for `delete` commands. `-q` keeps progress bars out of your logs so the JSON on stdout is the only thing the script sees.
+
+## Lock it down
+
+| Risk | Mitigation |
+| --- | --- |
+| Key leaks from CI | It is a publisher key, not the owner. `morse cap revoke` and rotate. |
+| Someone pushes garbage to main | Branch protection, and the chain keeps every revision so nothing is lost |
+| Pipeline publishes twice | The map, committed back after every run |
+| WAL runs out | Check the CI wallet balance in the job and fail early with a clear message |
+
+## Next
+
+- [Import an existing Markdown site](https://docs.morsecms.xyz/import-a-site.html): The script this workflow runs.
+- [Let an AI agent publish](https://docs.morsecms.xyz/agent-publishes.html): Same key model, different author.
+- [CLI overview](https://docs.morsecms.xyz/cli-overview.html): All environment variables and exit codes.
+
+
+---
+
+<!-- Source: https://docs.morsecms.xyz/agent-publishes.html -->
+
+# Let an AI agent publish
+
+> No signup, no API console. A wallet, a cap, the docs in llms.txt, and an agent can publish on its own while you keep the owner key.
+
+- About 15 minutes
+- CLI or SDK
+- An agent runtime with a shell
+- Testnet
+
+## Why this works at all
+
+Most CMSs need a human to click through signup, create an API key and paste it somewhere. Morse has no signup. An agent with a funded Sui wallet and a `PublisherCap` can publish on its own, every write returns a transaction digest, and you can revoke it in one command without touching the agent. That makes Morse a natural output channel for an agent that writes: a changelog bot, a research digest, a status page, a newsletter drafted overnight.
+
+## Give the agent its own wallet and cap
+
+Treat the agent like a contractor, not like yourself. Fresh wallet, small balance, its own cap.
+
+```bash
+$ morse cap issue 0xAGENT_WALLET_ADDRESS
+$ morse --json publication get | jq -r .id
+```
+
+Fund the agent wallet from the faucet and swap a little WAL, as in [Launch a blog](https://docs.morsecms.xyz/launch-a-blog.html). Keep the owner key on your machine only.
+
+## Give the agent the docs
+
+The docs ship in agent-readable form. Put this in the project's `CLAUDE.md`, `AGENTS.md` or Cursor rules so every session starts with Morse context:
+
+```markdown
+# Morse
+This project publishes to a Morse publication on Sui testnet.
+Before using the Morse CLI or SDK, read https://docs.morsecms.xyz/llms-full.txt
+(or https://docs.morsecms.xyz/llms.txt for the index and fetch pages as .md).
+
+Rules
+- Use the CLI non-interactively: `morse --json -q --yes ...`
+- Never run `account export`, never print MORSE_PRIVATE_KEY.
+- New post: `morse entry add <name> --file <path> --epochs 30`
+- Edit an existing post: `morse revision publish-direct <entryId> --file <path> --epochs 30`
+- Look up entry ids in morse-map.json; update it after every add.
+- Read back with `--via-aggregator` on testnet.
+```
+
+## Give the agent a job
+
+Environment for the agent's shell, same four variables as [Publish from CI](https://docs.morsecms.xyz/publish-from-ci.html):
+
+```bash
+export MORSE_PRIVATE_KEY=suiprivkey1...      # the agent wallet, not yours
+export MORSE_NETWORK=testnet
+export MORSE_PUBLICATION=0x69d4...f327
+export MORSE_COLLECTION=posts
+```
+
+Then a prompt that describes the outcome, not the commands. The agent has the docs.
+
+```text
+Every Friday, summarise the week's merged pull requests in this repo as a short
+Markdown post under content/posts/YYYY-MM-DD-weekly.md, then publish it to Morse
+as a new entry. Print the entry id and the Sui transaction digest when done.
+```
+
+## What the agent runs
+
+Under the hood the agent ends up running something like this, which you can also run yourself to check the setup:
+
+```bash
+$ morse --json -q --yes status
+$ morse --json -q --yes entry add 2026-10-17-weekly --file content/posts/2026-10-17-weekly.md --epochs 30
+$ morse --json -q entry get 7
+```
+
+For an agent built on the SDK rather than shelling out, the equivalent is `addEntryFromBytes` with a `KeypairAdapter` from the agent's key; the [SDK reference cookbooks](https://docs.morsecms.xyz/sdk-workflows.html) have the exact call.
+
+> **INFO: Why --json --yes -q**
+>
+> The agent should never sit at a prompt. `--yes` removes confirmations, `-q` removes progress output, `--json` gives it something to parse instead of guess.
+
+## Watch, audit, revoke
+
+Every write the agent makes is a transaction signed by its wallet, so the audit log is Sui itself:
+
+```bash
+$ morse entry list                               # what exists now
+$ morse cap list 0xAGENT_WALLET_ADDRESS          # what it is allowed to do
+$ morse cap revoke 0xAGENT_CAP_ID                 # and when you are done
+```
+
+Revocation takes effect on the next transaction. Nothing the agent already published disappears, and if it published something wrong, you append a revision (or delete the entry) from your own wallet.
+
+| Do | Do not |
+| --- | --- |
+| Give the agent a wallet with days of budget, not months | Give it the owner key |
+| Point it at `llms-full.txt` | Paste commands you have not tested into its prompt |
+| Keep `morse-map.json` in the repo | Let it guess entry ids |
+| Review the first few posts before you stop reviewing | Assume it read the docs |
+
+## Next
+
+- [Publish from CI](https://docs.morsecms.xyz/publish-from-ci.html): The same key model on a schedule.
+- [Use Morse with AI](https://docs.morsecms.xyz/use-morse-with-ai.html): llms.txt, Markdown twins and the Ask AI shortcut.
+- [Add a co-author](https://docs.morsecms.xyz/co-author.html): What a cap is and how to revoke it.
+
+
+---
+
+<!-- Source: https://docs.morsecms.xyz/verify-a-post.html -->
+
+# Prove a post has not changed
+
+> Three claims, three commands. Verify the bytes, the revision and the author of any post from a clean machine.
+
+- About 10 minutes
+- CLI, no key needed
+- A publication id and entry id
+- Testnet
+
+## What you are checking
+
+A Morse post makes three claims you can test without trusting the publisher or us: the content you are reading is the bytes that were registered, the revision you are reading is the one the publisher marked public, and the wallet that published it is the one that holds a cap. Each claim has a command.
+
+| Claim | Where the proof lives | Command |
+| --- | --- | --- |
+| These bytes are the registered bytes | The Walrus blob object the revision points to | `entry read` without `--via-aggregator` |
+| This is the public revision | Entry record on Sui, inside the collection | `entry get` |
+| A cap holder published it | The revision's author on Sui | `entry get`, then `cap list` |
+
+## Get the record
+
+All you need is the publication id, the collection name and the entry id. No key: reads by object id do not use an account.
+
+```bash
+$ morse --json entry get 0 -P 0x69d4...f327 -C posts | jq .
+```
+
+Keep three values from the output: `publicHead` (the index of the public revision), that revision's `blobRef.blobObjectId` (the Sui object of its Walrus blob) and its `author`. Those three are the record.
+
+## Fetch the bytes two ways
+
+The aggregator is convenient. The direct path is the proof.
+
+```bash
+$ morse entry read 0 -P 0x69d4...f327 -C posts --via-aggregator --out a.md     # fast, trusts the aggregator
+$ morse entry read 0 -P 0x69d4...f327 -C posts --out b.md                     # verifies against storage nodes
+$ cmp a.md b.md && echo "bytes match"
+```
+
+Without the flag, the CLI fetches slivers from Walrus storage nodes and checks them against the blob's metadata before writing a byte. If it succeeds, the file matches the blob id on chain. If the bytes had been swapped anywhere, this step fails rather than returning something else.
+
+> **WARNING: Testnet timing**
+>
+> Right after an upload the direct read can fail with a metadata error for a few minutes while nodes catch up. That is a liveness issue, not a verification failure. Wait and retry; if it still fails days later the blob has probably expired.
+
+## Walk the revisions
+
+Every earlier revision is still there. Read the first one and diff it against the current public head:
+
+```bash
+$ morse entry read 0 0 -P 0x69d4...f327 -C posts --via-aggregator --out v0.md
+$ diff v0.md b.md
+```
+
+This is what the demo blog's Revisions panel does for a reader with a browser. A reporter, a lawyer or a regulator can do it with these two lines and no relationship to the publisher.
+
+## Check who published it
+
+The record names the wallet that wrote each revision, so no explorer is needed: `jq -r '.revisions[.publicHead].author'` on the `entry get` output prints it. To see the transactions themselves, open the publication id on a Sui explorer, for example `suiscan.xyz/testnet/object/<PUBLICATION_ID>`. Then check that the author held a cap for the publication:
+
+```bash
+$ morse cap list 0xAUTHOR_ADDRESS
+```
+
+A live cap, or a cap that was active at that time, means the publication's owner authorised that wallet. A revoked cap still proves the write was authorised when it happened, because the chain would have rejected it otherwise.
+
+## Do it from a script
+
+The whole check as one script, suitable for a cron job or a CI step that guards a site built from Morse content:
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+PUB=$1; COL=$2; ENTRY=$3
+tmp=$(mktemp -d)
+morse --json entry get "$ENTRY" -P "$PUB" -C "$COL" > "$tmp/record.json"
+morse -q entry read "$ENTRY" -P "$PUB" -C "$COL" --out "$tmp/verified" \
+  || { echo "direct read failed: blob unavailable or expired"; exit 5; }
+morse -q entry read "$ENTRY" -P "$PUB" -C "$COL" --via-aggregator --out "$tmp/served"
+cmp -s "$tmp/verified" "$tmp/served" && echo "OK: served bytes match the verified blob" \
+  || { echo "MISMATCH: aggregator served different bytes"; exit 1; }
+```
+
+```bash
+$ ./verify.sh 0x69d4...f327 posts 0
+```
+
+## Next
+
+- [Fix a typo without losing history](https://docs.morsecms.xyz/fix-a-typo.html): Where revisions come from.
+- [Contracts reference](https://docs.morsecms.xyz/contracts-reference.html): The Entry and Revision objects you just read.
+- [Core concepts](https://docs.morsecms.xyz/core-concepts.html): Publications, collections, entries, revisions.
+
+
+---
+
 <!-- Source: https://docs.morsecms.xyz/publications.html -->
 
 # Publications

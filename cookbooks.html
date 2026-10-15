@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookbooks · Morse Docs</title>
+  <meta name="theme-color" content="#F2EFE8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="assets/docs.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="description" content="Goal-first recipes for Morse: launch a blog, fix a typo, add a co-author, encrypt for a team, publish from CI or an agent, verify a post.">
+  <link rel="canonical" href="https://docs.morsecms.xyz/cookbooks.html">
+  <meta property="og:title" content="Cookbooks · Morse Docs">
+  <meta property="og:description" content="Goal-first recipes for Morse: launch a blog, fix a typo, add a co-author, encrypt for a team, publish from CI or an agent, verify a post.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://docs.morsecms.xyz/cookbooks.html">
+  <meta property="og:site_name" content="Morse Docs">
+  <meta name="twitter:card" content="summary">
+  <link rel="alternate" type="text/markdown" href="https://docs.morsecms.xyz/cookbooks.md" title="Markdown version">
+</head>
+<body>
+
+<header class="top">
+  <div class="top__in">
+    <button class="menu-btn" type="button" id="menu" aria-label="Open navigation" aria-expanded="false" aria-controls="side">
+      <svg class="menu-btn__open" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg class="menu-btn__close" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <a class="brand" href="index.html" aria-label="Morse docs home">
+      <svg aria-hidden="true" width="26" height="26" viewBox="0 0 100 100"><path d="M8 72 V30 H36 V72 H64 V30 H92 V72" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>morse</span><em>DOCS</em>
+    </a>
+    <button class="search" type="button" id="search-open" aria-label="Search documentation (⌘K)">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span class="search__label">Search documentation</span><kbd>⌘K</kbd>
+    </button>
+    <nav class="top__right" aria-label="Site">
+      <button class="askai" type="button" data-askai title="Ask AI (⌘I)"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>Ask AI</button>
+      <a class="agents" href="use-morse-with-ai.html"><i aria-hidden="true"></i>For agents</a>
+      <a class="gh" href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener">GitHub</a>
+      <a class="site" href="https://www.morsecms.xyz" target="_blank" rel="noopener">morsecms.xyz</a>
+    </nav>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="side" id="side"></aside>
+
+  <main class="main">
+    <nav class="crumbs" aria-label="Breadcrumb"><span aria-current="page">Cookbooks</span></nav>
+    <article class="article">
+        <h1>Cookbooks</h1>
+        <p class="article-lead">
+          Eight things people actually want to do with Morse, each as a short path with real commands and the failure modes you will hit on testnet.
+        </p>
+        <div class="page-actions">
+          <div class="copybtn-group">
+            <button class="copybtn" type="button" id="copy-page"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-flash-label>Copy page</span></button>
+            <button class="copybtn copybtn-caret" type="button" id="page-menu-btn" aria-label="More page actions" aria-haspopup="true" aria-expanded="false" aria-controls="page-menu"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+          </div>
+          <div class="page-menu" id="page-menu" hidden>
+            <button class="page-menu__item" type="button" data-page-copy><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy page as Markdown</button>
+            <a class="page-menu__item" href="cookbooks.md" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>View as Markdown</a>
+            <a class="page-menu__item" id="page-chatgpt" href="https://chatgpt.com/" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>Open in ChatGPT</a>
+            <a class="page-menu__item" id="page-claude" href="https://claude.ai/new" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>Open in Claude</a>
+          </div>
+        </div>
+        <div class="callout callout-info">
+          <div class="callout-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01M11 12h1v4h1"></path></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">How these differ from the reference cookbooks</div>
+            <div class="callout-text">The <a href="cli-workflows.html">CLI</a>, <a href="sdk-workflows.html">SDK</a> and <a href="contracts-workflows.html">contracts</a> cookbooks show every operation once. These recipes start from a goal, take ten to twenty minutes end to end, and say what to do when a step fails on testnet.</div>
+          </div>
+        </div>
+
+        <p>Every recipe assumes a funded Sui testnet wallet. If you do not have one yet, start with the first recipe, it walks through the faucet.</p>
+
+        <h2 id="publish">Publish</h2>
+
+        <p>Get content on chain and keep it right.</p>
+
+        <div class="card-grid recipes">
+          <a href="launch-a-blog.html" class="card recipe">
+            <div class="card-meta recipe-tags"><span>10 min</span><span class="recipe-tags-sep"> · </span><span>CLI</span></div>
+            <div class="card-title">Launch a blog in 10 minutes</div>
+            <div class="card-desc">Publication, collection and a first post on Sui testnet, nothing else.</div>
+            <span class="card-cta">Open recipe →</span>
+          </a>
+          <a href="fix-a-typo.html" class="card recipe">
+            <div class="card-meta recipe-tags"><span>5 min</span><span class="recipe-tags-sep"> · </span><span>CLI</span></div>
+            <div class="card-title">Fix a typo without losing history</div>
+            <div class="card-desc">Publish a corrected revision and keep every earlier one readable.</div>
+            <span class="card-cta">Open recipe →</span>
+          </a>
+          <a href="import-a-site.html" class="card recipe">
+            <div class="card-meta recipe-tags"><span>15 min</span><span class="recipe-tags-sep"> · </span><span>CLI + bash</span></div>
+            <div class="card-title">Import an existing Markdown site</div>
+            <div class="card-desc">A folder of Markdown posts in, one entry per file, re-runnable.</div>
+            <span class="card-cta">Open recipe →</span>
+          </a>
+        </div>
+
+        <h2 id="collaborate">Collaborate</h2>
+
+        <p>Other people, other wallets, same publication.</p>
+
+        <div class="card-grid recipes">
+          <a href="co-author.html" class="card recipe">
+            <div class="card-meta recipe-tags"><span>10 min</span><span class="recipe-tags-sep"> · </span><span>CLI</span></div>
+            <div class="card-title">Add a co-author</div>
+            <div class="card-desc">Issue a PublisherCap to another wallet, see who can write, revoke.</div>
+            <span class="card-cta">Open recipe →</span>
+          </a>
+          <a href="team-only-content.html" class="card recipe">
+            <div class="card-meta recipe-tags"><span>10 min</span><span class="recipe-tags-sep"> · </span><span>CLI</span></div>
+            <div class="card-title">Encrypt a post for your team</div>
+            <div class="card-desc">Seal-encrypt a post so only cap holders can decrypt it.</div>
+            <span class="card-cta">Open recipe →</span>
+          </a>
+        </div>
+
+        <h2 id="automate">Automate</h2>
+
+        <p>Pipelines and agents as publishers.</p>
+
+        <div class="card-grid recipes">
+          <a href="publish-from-ci.html" class="card recipe">
+            <div class="card-meta recipe-tags"><span>20 min</span><span class="recipe-tags-sep"> · </span><span>CLI + GitHub Actions</span></div>
+            <div class="card-title">Publish from CI</div>
+            <div class="card-desc">Push to main, get a revision on chain, with a key you can revoke.</div>
+            <span class="card-cta">Open recipe →</span>
+          </a>
+          <a href="agent-publishes.html" class="card recipe">
+            <div class="card-meta recipe-tags"><span>15 min</span><span class="recipe-tags-sep"> · </span><span>CLI or SDK</span></div>
+            <div class="card-title">Let an AI agent publish</div>
+            <div class="card-desc">A wallet, a cap and llms.txt, and an agent publishes unattended.</div>
+            <span class="card-cta">Open recipe →</span>
+          </a>
+        </div>
+
+        <h2 id="trust">Trust</h2>
+
+        <p>What a reader can check without asking you.</p>
+
+        <div class="card-grid recipes">
+          <a href="verify-a-post.html" class="card recipe">
+            <div class="card-meta recipe-tags"><span>10 min</span><span class="recipe-tags-sep"> · </span><span>CLI, no key</span></div>
+            <div class="card-title">Prove a post has not changed</div>
+            <div class="card-desc">Check bytes, revision and author of any post from a clean machine.</div>
+            <span class="card-cta">Open recipe →</span>
+          </a>
+        </div>
+
+        <h2 id="conventions">Conventions</h2>
+
+        <div class="table-wrap">
+          <table><thead><tr><th>You see</th><th>It means</th></tr></thead><tbody><tr><td><code>$ command</code></td><td>Type it in a shell. The Copy button strips the prompt.</td></tr><tr><td><code>0x69d4...f327</code></td><td>A shortened id. Yours will differ, never copy these.</td></tr><tr><td><code>--via-aggregator</code></td><td>Read through the public Walrus aggregator. Reliable on testnet, trusts the operator.</td></tr><tr><td><code>--epochs 14</code></td><td>How long Walrus keeps the bytes. One epoch is about a day on testnet.</td></tr><tr><td>Active context</td><td>The publication and collection <code>morse status</code> shows. Set with <code>morse use</code>.</td></tr></tbody></table>
+        </div>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">Testnet only</div>
+            <div class="callout-text">Morse is on Sui testnet with unaudited contracts. Testnets reset, blobs expire, tokens are free and worthless. Treat everything you publish as a rehearsal.</div>
+          </div>
+        </div>
+      </article>
+
+    <div class="feedback">
+      <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
+      <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20cookbooks.html" target="_blank" rel="noopener">Report an issue</a>
+      <span class="feedback__upd">Updated 2026-10-15</span>
+    </div>
+    <nav class="pager" aria-label="Previous and next">
+      <a href="quick-start-contracts.html" rel="prev"><small>Previous</small><b>← Quick Start: Smart Contracts</b></a>
+      <a href="launch-a-blog.html" rel="next"><small>Next</small><b>Launch a blog in 10 minutes →</b></a>
+    </nav>
+  </main>
+
+  <aside class="toc" aria-label="On this page">
+    <p class="toc__title">On this page</p>
+    <div class="toc__list"></div>
+  </aside>
+</div>
+
+<script src="assets/sidebar.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>
