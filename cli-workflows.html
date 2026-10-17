@@ -354,7 +354,6 @@ morse publication get 0x00 || echo "exit $?"</pre>
               <tr><td><code>3</code></td><td>No publication at 0x…</td><td>The ID does not exist on this network.</td></tr>
               <tr><td><code>1</code></td><td>Move abort <code>ESlugAlreadyExists</code></td><td>The slug is already registered; slugs are globally unique on the network. Re-run with a different slug (e.g. append a timestamp).</td></tr>
               <tr><td><code>5</code></td><td>Too many failures while writing blob to nodes</td><td>Walrus storage nodes are degraded. Retry; check WAL balance.</td></tr>
-              <tr><td><code>2</code></td><td>Morse is not yet deployed on mainnet</td><td>Use <code>--network testnet</code>.</td></tr>
               <tr><td><code>5</code></td><td>InsufficientGas / out of SUI gas</td><td>The active account does not have enough SUI for gas fees. Run <code>sui client faucet</code> to request testnet SUI.</td></tr>
               <tr><td><code>5</code></td><td>Insufficient WAL balance</td><td>Walrus storage requires WAL tokens. Get WAL from the <a href="https://stake-wal.wal.app/?network=testnet" target="_blank" rel="noopener">Walrus testnet faucet</a>.</td></tr>
               <tr><td><code>3</code></td><td>No valid blob metadata could be retrieved from any storage node</td><td>The default direct-node read path fails for every blob collection entry in morse-cli 0.10.1, because of a bug in how the SDK passes the blob id. Re-run with <code>--via-aggregator</code>. See <a href="#reading-it-back">Reading It Back</a>.</td></tr>

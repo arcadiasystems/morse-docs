@@ -11,7 +11,7 @@
 
 > **WARNING: Network status**
 >
-> Morse runs on **Walrus Mainnet and testnet**, and the contracts are **unaudited**. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.
+> Morse runs on **Walrus Mainnet and testnet**, and the contracts are **unaudited**. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first, and read [Walrus Mainnet](https://docs.morsecms.xyz/mainnet.html) before you switch. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.
 
 ## What is Morse?
 
@@ -56,7 +56,7 @@ Morse is composed of five layers. Only the contracts are the source of truth; al
 
 | Component | Status | Description |
 | --- | --- | --- |
-| **Move Contracts** | Active | Publication, collection, entry, and revision management. Deployed on testnet and mainnet. |
+| **Move Contracts** | Active | Publication, collection, entry, and revision management. Deployed on testnet and [mainnet](https://docs.morsecms.xyz/mainnet.html). |
 | **TypeScript SDK** | Active | Wraps Sui, Walrus, and Seal behind a small adapter pattern. Published as `@arcadiasystems/morse-sdk` on npm (testnet and mainnet). |
 | **CLI** | Active | Terminal tool for managing publications, collections, and entries. Published as `@arcadiasystems/morse-cli` on npm (testnet and mainnet). |
 | **Indexer** | Planned | Listens to on-chain events and builds read-optimized state. |
@@ -214,7 +214,7 @@ All three guides sign transactions on Sui testnet and store content on Walrus te
 
 > **WARNING: Network status**
 >
-> Morse runs on **Walrus Mainnet and testnet**, and the contracts are **unaudited**. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.
+> Morse runs on **Walrus Mainnet and testnet**, and the contracts are **unaudited**. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first, and read [Walrus Mainnet](https://docs.morsecms.xyz/mainnet.html) before you switch. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.
 
 ## Prerequisites
 
@@ -367,7 +367,7 @@ The `--via-aggregator` flag routes reads through the Walrus aggregator, and for 
 
 > **WARNING: Network status**
 >
-> Morse runs on **Walrus Mainnet and testnet**, and the contracts are **unaudited**. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.
+> Morse runs on **Walrus Mainnet and testnet**, and the contracts are **unaudited**. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first, and read [Walrus Mainnet](https://docs.morsecms.xyz/mainnet.html) before you switch. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.
 
 ## Prerequisites
 
@@ -527,7 +527,7 @@ Revisions: 1
 
 > **WARNING: Network status**
 >
-> Morse runs on **Walrus Mainnet and testnet**, and the contracts are **unaudited**. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.
+> Morse runs on **Walrus Mainnet and testnet**, and the contracts are **unaudited**. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first, and read [Walrus Mainnet](https://docs.morsecms.xyz/mainnet.html) before you switch. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.
 
 ## Prerequisites
 
@@ -542,11 +542,11 @@ Revisions: 1
 Install the Morse SDK (for network configuration and Walrus uploads) and the Sui SDK (for transaction construction and signing).
 
 ```bash
-bun add @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal
+bun add @arcadiasystems/morse-sdk@~0.8.0 @mysten/sui@~2.16.2 @mysten/walrus@~1.1.6 @mysten/seal@~1.1.3
 ```
 
 ```bash
-npm install @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal
+npm install @arcadiasystems/morse-sdk@~0.8.0 @mysten/sui@~2.16.2 @mysten/walrus@~1.1.6 @mysten/seal@~1.1.3
 ```
 
 > **INFO: Why the SDK if we are using raw PTBs?**
@@ -559,7 +559,7 @@ Save this as `quickstart-contracts.ts`. It creates a publication, adds a collect
 
 > **INFO: Transport: gRPC**
 >
-> This guide uses `SuiGrpcClient` for its typed interface and lower latency. The Morse SDK also supports JSON-RPC via `SuiHTTPTransport` from `@mysten/sui/client` if your environment requires it. See [SDK Client Setup](https://docs.morsecms.xyz/sdk-client-setup.html) for details.
+> This guide uses `SuiGrpcClient` for its typed interface and lower latency. The Morse SDK is gRPC-only: its readers and adapters are typed against `SuiGrpcClient` from `@mysten/sui/grpc`, and a JSON-RPC fallback is planned but has not shipped. Environments that block gRPC must proxy through a gRPC-compatible RPC endpoint. See [SDK Client Setup](https://docs.morsecms.xyz/sdk-client-setup.html) for details.
 
 ```typescript
 import { SuiGrpcClient } from "@mysten/sui/grpc";
@@ -732,6 +732,144 @@ Entry added: hello-world (ID 0)
 - [Contract Cookbooks](https://docs.morsecms.xyz/contracts-workflows.html): Revisions, drafts, encrypted content, delegating access, and teardown, all via raw PTBs.
 - [Contract Reference](https://docs.morsecms.xyz/contracts-reference.html): Full function signatures, argument types, error codes, and Move struct definitions.
 - [Core Concepts](https://docs.morsecms.xyz/core-concepts.html): Understand the data model: publications, collections, entries, and revisions.
+
+
+---
+
+<!-- Source: https://docs.morsecms.xyz/mainnet.html -->
+
+# Walrus Mainnet
+
+> Morse runs on Walrus Mainnet. This page covers what changes when you move from testnet: the deployment, the risks, setup, uploads, encrypted content and one known issue.
+
+> **WARNING: Read this before you switch**
+>
+> The contracts are **unaudited**. Gas and Walrus storage cost **real SUI and WAL**, and there is **no faucet**. **Deletions can't be undone.** Test every flow on testnet first, then repeat it on Walrus Mainnet.
+
+## Status
+
+Morse has been live on Walrus Mainnet since 2026-09-09. The CLI and SDK ship with the mainnet addresses built in, so there are no addresses to supply. These are the current releases:
+
+| Package | Current release |
+| --- | --- |
+| [`@arcadiasystems/morse-sdk`](https://docs.morsecms.xyz/sdk-overview.html) | 0.8.2 |
+| [`@arcadiasystems/morse-cli`](https://docs.morsecms.xyz/cli-overview.html) | 0.10.1 |
+| [`@arcadiasystems/morse-uploader`](https://docs.morsecms.xyz/uploader.html) | 0.2.0 |
+
+Public publications, collections, entries and files work on both networks. Encrypted content needs your own Seal credentials on mainnet. See [Encrypted content](#encrypted-content).
+
+## The deployment
+
+Mainnet runs version 1 of the Morse Move package. It has never been upgraded, so `published-at` and `original-id` are the same address.
+
+| Field | Value |
+| --- | --- |
+| Package (`published-at`) | [`0x4fc7af5d1e19f96e5fab4e677948214eec35e238b252a106c7d5036dcebdcae2`](https://suiscan.xyz/mainnet/object/0x4fc7af5d1e19f96e5fab4e677948214eec35e238b252a106c7d5036dcebdcae2) |
+| `original-id` | `0x4fc7af5d1e19f96e5fab4e677948214eec35e238b252a106c7d5036dcebdcae2` |
+| `PublicationRegistry` | `0x8d8b23c7acd7c1b260c793f2c648c5be8eb06db7c107b9f06ca3f39b700868ea` |
+| Version | 1 |
+| Published | 2026-09-09 |
+
+You only need these ids for raw contract calls. Use `published-at` as the target of Move calls, and `original-id` for type-filtered queries. The source of truth is [`Published.toml`](https://github.com/arcadiasystems/morse-dcms/blob/main/morse-contracts/Published.toml). To build those calls yourself, see [Quick Start: Smart Contracts](https://docs.morsecms.xyz/quick-start-contracts.html).
+
+## Setting up
+
+Fund the address you will use with SUI for gas and WAL for Walrus storage. There is no faucet on mainnet, so you have to acquire both.
+
+Nothing carries over from testnet. Mainnet has its own package and its own `PublicationRegistry`, so you create your publications and collections again.
+
+### CLI
+
+Keep mainnet in its own profile, so your testnet profile stays as it is. Create the profile, make it the default, import the key that pays on mainnet, and check the result:
+
+```bash
+morse config add mainnet --network mainnet
+morse config use mainnet
+morse account import
+morse status
+```
+
+`account import` prompts for the key and a password. If the key is already in your keystore, run `morse account use <address>` instead.
+
+Nothing selects mainnet for you. With no `--network`, `MORSE_NETWORK` or profile setting, the CLI targets testnet. Every command that spends gas prints the network it used, and `--json` output has a `network` field. To go back to the testnet profile from the quick start, run `morse config use testnet`.
+
+### SDK
+
+`morseConfig({ network: "mainnet" })` returns the full mainnet config, with the contract addresses built in. Use the same network for the gRPC client and the Walrus adapters. Start from the [server setup](https://docs.morsecms.xyz/sdk-client-setup.html#server-setup) and change every network literal to `"mainnet"`:
+
+```typescript
+const config = morseConfig({ network: "mainnet" });
+const client = new SuiGrpcClient({
+  network: "mainnet",
+  baseUrl: config.rpcUrl,
+});
+const walrus = DefaultWalrusWriteAdapter.fromConfig(
+  { network: "mainnet", suiClient: client },
+  keypair,
+);
+```
+
+## Uploads and the upload relay
+
+A direct upload sends slivers to every storage node in the Walrus committee at once: about 95 on mainnet. Many networks can't sustain that burst. The upload then fails with `NotEnoughBlobConfirmationsError` or "Unable to connect", even when the nodes are healthy. If uploads fail while reads work, this is almost certainly why. It is not a fault in your config.
+
+Retry through the upload relay, which takes one connection instead of about 95. `--upload-relay` is a global option, so it goes before the subcommand:
+
+```bash
+morse --upload-relay auto entry add hello --file post.json
+```
+
+`auto` picks Mysten's canonical relay for the network. To use the relay for every upload, save it on the profile. Running `config add` on an existing profile updates it and keeps its other settings:
+
+```bash
+morse config add mainnet --network mainnet --upload-relay auto
+```
+
+Three things to know before you use it:
+
+- **It charges a small tip per upload**, on top of WAL and gas.
+- **The tip is capped.** `--max-tip` sets the cap in MIST and defaults to 10000000 (0.01 SUI). Over the cap, the upload is refused before anything is spent.
+- **The relay sees your bytes.** Encrypt first if that matters.
+
+The relay is opt-in. The direct path is free and trustless, and most networks handle it fine. In the SDK, pass `uploadRelay` with a `host` and a `sendTip.max` cap to `DefaultWalrusWriteAdapter.fromConfig`. For browser apps, see [React Uploader → Walrus upload relay](https://docs.morsecms.xyz/uploader.html#upload-relay). The CLI README covers the relay in [When uploads fail: the upload relay](https://github.com/arcadiasystems/morse-dcms/blob/main/morse-cli/README.md#when-uploads-fail-the-upload-relay).
+
+Storage is paid per epoch. A testnet epoch is roughly a day, and mainnet epochs are much longer, so the same `--epochs` value buys a very different duration.
+
+## Encrypted content
+
+Encrypted commands need Seal key servers. Testnet pins an open set, so they work there with no setup. Walrus Mainnet pins none, because every Seal operator there is commercial. You bring your own credential. Without one, the CLI's encrypted commands exit with code 2 and an explanation.
+
+In the CLI, set one of these environment variables:
+
+| Variable | Use |
+| --- | --- |
+| `MORSE_SEAL_API_KEY` | Credential for Mysten's Seal committee. The CLI already knows the committee's object id and aggregator. |
+| `MORSE_SEAL_API_KEY_NAME` | Header name for that credential. Defaults to `X-API-Key`. |
+| `MORSE_SEAL_KEY_SERVERS` | JSON array of `{ objectId, weight }` for an operator that is not the committee. Wins over `MORSE_SEAL_API_KEY`. |
+
+They are environment variables, not flags, so the credential stays out of `ps` and shell history. Before it encrypts anything, the CLI checks the credential and refuses if the operator answers `401` or `403`. Without that check, a bad credential would let encryption succeed and decryption fail, and you would pay to store content nobody can read.
+
+In the SDK, `DefaultSealAdapter.fromMorseConfig` throws `ConfigurationError` on mainnet until you supply key servers. `MAINNET_SEAL_COMMITTEE` is Mysten's committee in the right shape. Add the `apiKeyName` and `apiKey` that Mysten issues you, and pass the result to `morseConfig` as `sealKeyServers`. For browser apps, see [React Uploader → Encrypted files and Seal on Walrus Mainnet](https://docs.morsecms.xyz/uploader.html#seal-on-walrus-mainnet).
+
+Encryption has not been verified end to end on Walrus Mainnet, because that needs a commercial credential. The CLI README covers the setup in [Seal on mainnet](https://github.com/arcadiasystems/morse-dcms/blob/main/morse-cli/README.md#seal-on-mainnet).
+
+## Known issue in morse-cli 0.10.1
+
+`morse entry read` and `morse entry decrypt` fail on the default storage-node read path with `No valid blob metadata could be retrieved from any storage node`. Pass `--via-aggregator` until a fixed morse-sdk release ships:
+
+```bash
+morse entry read 0 --via-aggregator
+morse entry decrypt 0 --via-aggregator
+```
+
+This was reproduced on testnet on 2026-10-17, and mainnet runs the same code path. The aggregator path skips client-side blob verification, so you trust the aggregator's bytes. See [CLI Cookbooks → Reading it back](https://docs.morsecms.xyz/cli-workflows.html#reading-it-back).
+
+## Next steps
+
+- [Quick Start: CLI](https://docs.morsecms.xyz/quick-start-cli.html): Run the whole flow on testnet from your terminal before you switch.
+- [Quick Start: SDK](https://docs.morsecms.xyz/quick-start-sdk.html): Run the same flow on testnet as a TypeScript script.
+- [CLI: Command Reference](https://docs.morsecms.xyz/cli-commands.html): Every command and flag, including profiles and the global options.
+- [SDK: Setup](https://docs.morsecms.xyz/sdk-client-setup.html): Install, wire a wallet, pick a Walrus adapter, handle errors.
 
 
 ---
@@ -3134,7 +3272,7 @@ morse file download --share <string> --out <path> [--via-aggregator]
 ```
 
 - `--share` carries the file ID, prefix, and nonce in one token. Alternatively pass the file ID positionally with `--prefix <hex> --nonce <hex>`.
-- `--raw` writes the stored bytes without decrypting. For a file with a recipient list and no decrypt input, the CLI refuses by default (the ciphertext is unusable), and `--raw` is the explicit opt-in.
+- `--raw` writes the stored bytes without decrypting. For an encrypted file (one with a Seal prefix attached on-chain) and no decrypt input, the CLI refuses by default (the ciphertext is unusable), and `--raw` is the explicit opt-in.
 - `--out` writes to a file; omitting it streams to stdout (not available in `--json` mode).
 
 The encrypted round-trip is byte-for-byte: the downloaded plaintext is identical to the uploaded file (verified on testnet). A non-member running the same command gets `SealError` code `no-access`; a tampered ciphertext fails with `decrypt-failed`.
@@ -3266,7 +3404,7 @@ const types = buildRecipientFileEventTypes(
   config.recipientFileEventOriginPackageId ?? config.packageId,
 );
 
-// Fetch events of these types from your event source (indexer or RPC),
+// Fetch events of these types from your event source (Sui GraphQL or an indexer),
 // normalized to { type, json, timestampMs }, oldest first. Then reduce:
 const owned = reconcileRecipientFilesOwnedBy(events, myAddress, types);
 const accessible = reconcileRecipientFilesAccessibleBy(events, myAddress, types);
@@ -3274,7 +3412,7 @@ const accessible = reconcileRecipientFilesAccessibleBy(events, myAddress, types)
 // individual files via filesReader.getRecipientFile(summary.id).
 ```
 
-The reducers handle creation, metadata updates, recipient add/remove, ownership transfer, and deletion. One known gap: `reconcileRecipientFilesOwnedBy` does not add files transferred *to* the queried address, because the transfer event does not carry the file's metadata. Re-fetch those with `getRecipientFile`. The CLI's `morse file list` uses these same reducers over `suix_queryEvents` (a deprecated Sui RPC endpoint; pass `--indexer-url` to point at your own event source).
+The reducers handle creation, metadata updates, recipient add/remove, ownership transfer, and deletion. One known gap: `reconcileRecipientFilesOwnedBy` does not add files transferred *to* the queried address, because the transfer event does not carry the file's metadata. Re-fetch those with `getRecipientFile`. The CLI's `morse file list` uses these same reducers over events read from Sui GraphQL (the canonical Mysten endpoint for the network by default; pass `--indexer-url` to point at another GraphQL endpoint, which localnet requires).
 
 ### Types & config reference
 
@@ -3857,7 +3995,6 @@ morse publication get 0x00 || echo "exit $?"
 | `3` | No publication at 0x… | The ID does not exist on this network. |
 | `1` | Move abort `ESlugAlreadyExists` | The slug is already registered; slugs are globally unique on the network. Re-run with a different slug (e.g. append a timestamp). |
 | `5` | Too many failures while writing blob to nodes | Walrus storage nodes are degraded. Retry; check WAL balance. |
-| `2` | Morse is not yet deployed on mainnet | Use `--network testnet`. |
 | `5` | InsufficientGas / out of SUI gas | The active account does not have enough SUI for gas fees. Run `sui client faucet` to request testnet SUI. |
 | `5` | Insufficient WAL balance | Walrus storage requires WAL tokens. Get WAL from the [Walrus testnet faucet](https://stake-wal.wal.app/?network=testnet). |
 | `3` | No valid blob metadata could be retrieved from any storage node | The default direct-node read path fails for every blob collection entry in morse-cli 0.10.1, because of a bug in how the SDK passes the blob id. Re-run with `--via-aggregator`. See [Reading It Back](#reading-it-back). |
@@ -3938,14 +4075,14 @@ The rest of the SDK (functions like `createPublication`, `addEntryFromBytes`, th
 
 | Package | Version | Required |
 | --- | --- | --- |
-| `@arcadiasystems/morse-sdk` | 0.4.x | (this package) |
+| `@arcadiasystems/morse-sdk` | 0.8.x | (this package) |
 | `@mysten/sui` | >=2.16.2 <2.17.0 | Yes: types, gRPC client, keypairs |
-| `@mysten/walrus` | >=1.1.6 <1.2.0 | Optional: for default Walrus adapters (read + write) |
-| `@mysten/seal` | >=1.1.3 <1.2.0 | Optional: for encryption |
+| `@mysten/walrus` | >=1.1.6 <1.2.0 | Yes: default Walrus adapters (read + write) |
+| `@mysten/seal` | >=1.1.3 <1.2.0 | Yes: encryption |
 
 > **WARNING: Pin to the verified minor version**
 >
-> Mysten packages may ship breaking changes within the same major version. When a new version like `@mysten/walrus@1.2.0` is released, `morse-sdk` needs a coordinated bump and re-verification. Use `bun add @arcadiasystems/morse-sdk@~0.4.0` to lock to patch-level updates only.
+> Mysten packages may ship breaking changes within the same major version. When a new version like `@mysten/walrus@1.2.0` is released, `morse-sdk` needs a coordinated bump and re-verification. Use `bun add @arcadiasystems/morse-sdk@~0.8.0` to lock to patch-level updates only.
 
 The verified matrix is also exported programmatically as `TESTED_SUBSTRATE`, a frozen record of the tested `@mysten/sui`, `@mysten/seal`, and `@mysten/walrus` versions plus `verifiedOn` and `suiNetwork`. Log it during initialization or compare it against bundler-resolved versions in CI:
 
@@ -3969,7 +4106,7 @@ The SDK works in both Node and browser environments. It does not depend on Node-
 
 ## Installing
 
-`@mysten/sui` is a required peer dependency. `@mysten/walrus` is needed for the `DefaultWalrusWriteAdapter`. `@mysten/seal` is required at runtime even for non-encrypted workflows.
+`@mysten/sui`, `@mysten/walrus`, and `@mysten/seal` are all required peer dependencies. The SDK's main entry imports the default Walrus and Seal adapters, so both packages must be installed even for workflows that never upload or encrypt.
 
 ```bash
 bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3
@@ -3977,14 +4114,14 @@ bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @myste
 
 ## morseConfig() shape
 
-`morseConfig({ network })` takes the target network (`"testnet"` or `"localnet"`) and returns a read-only object with the contract addresses and endpoints the SDK needs. Mainnet is not yet supported. All other fields have built-in defaults but can be overridden for custom deployments. Every SDK function takes this object as its `config` argument.
+`morseConfig({ network })` takes the target network (`"mainnet"`, `"testnet"`, or `"localnet"`) and returns a read-only object with the contract addresses and endpoints the SDK needs. All other fields have built-in defaults but can be overridden for custom deployments. Every SDK function takes this object as its `config` argument.
 
 The returned object contains the following fields:
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `network` | `"testnet" \| "localnet"` | Sui network the config targets. Mainnet is not yet supported. |
-| `rpcUrl` | `string` | Sui JSON-RPC / gRPC endpoint. Defaults to the public fullnode for the chosen network; override for a custom node. |
+| `network` | `"mainnet" \| "testnet" \| "localnet"` | Sui network the config targets. |
+| `rpcUrl` | `string` | Sui fullnode URL to pass as `baseUrl` when you construct `SuiGrpcClient`. The SDK never reads it itself; its readers and adapters take the client you build. Defaults to the public fullnode for the chosen network; override for a custom node. |
 | `packageId` | `PackageId` | Current `published-at` address of the Morse Move package. Used as the target for all transaction calls. |
 | `originalPackageId` | `PackageId \| undefined` | Genesis publish address (`original-id`). Sui uses this in `objectType` strings and type filters. Defaults to `packageId` when the package has never been upgraded. |
 | `registryId` | `RegistryId` | Sui object ID of the shared `PublicationRegistry`. Required for publication creation and deletion. |
@@ -4959,7 +5096,7 @@ const entry = await addEntry(adapter, config, {
 
 > **WARNING: Network status**
 >
-> Morse runs on **Walrus Mainnet and testnet**, and the contracts are **unaudited**. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.
+> Morse runs on **Walrus Mainnet and testnet**, and the contracts are **unaudited**. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first, and read [Walrus Mainnet](https://docs.morsecms.xyz/mainnet.html) before you switch. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.
 
 ## What it is
 

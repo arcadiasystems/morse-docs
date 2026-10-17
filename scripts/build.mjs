@@ -26,6 +26,7 @@ const PAGES = [
   ['quick-start-cli.html',       'Getting Started'],
   ['quick-start-sdk.html',       'Getting Started'],
   ['quick-start-contracts.html', 'Getting Started'],
+  ['mainnet.html',               'Getting Started'],
   ['cookbooks.html',            'Cookbooks'],
   ['launch-a-blog.html',        'Cookbooks'],
   ['fix-a-typo.html',           'Cookbooks'],
