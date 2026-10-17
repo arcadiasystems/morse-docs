@@ -37,6 +37,7 @@ const NAV_SECTIONS = [
     { page: 'sdk-overview.html', label: 'Overview' },
     { page: 'sdk-client-setup.html', label: 'Setup' },
     { page: 'sdk-workflows.html', label: 'Reference cookbooks' },
+    { page: 'uploader.html', label: 'React uploader' },
   ] },
   { title: 'Smart contracts', items: [
     { page: 'contracts-overview.html', label: 'Overview' },

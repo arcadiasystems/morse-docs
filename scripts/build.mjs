@@ -46,6 +46,7 @@ const PAGES = [
   ['sdk-overview.html',          'SDK'],
   ['sdk-client-setup.html',      'SDK'],
   ['sdk-workflows.html',         'SDK'],
+  ['uploader.html',              'SDK'],
   ['contracts-overview.html',    'Smart Contracts'],
   ['contracts-reference.html',   'Smart Contracts'],
   ['contracts-workflows.html',   'Smart Contracts'],
