@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CLI Command Reference · Morse Docs</title>
-  <meta name="description" content="Full command reference for morse-cli: global options, context, config, account, publication, collection, entry, revision, and cap commands.">
+  <meta name="description" content="Full command reference for morse-cli: global options, context, config, account, publication, collection, entry, revision, cap, and file commands.">
   <meta name="theme-color" content="#F2EFE8">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +15,7 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="canonical" href="https://docs.morsecms.xyz/cli-commands.html">
   <meta property="og:title" content="CLI Command Reference · Morse Docs">
-  <meta property="og:description" content="Full command reference for morse-cli: global options, context, config, account, publication, collection, entry, revision, and cap commands.">
+  <meta property="og:description" content="Full command reference for morse-cli: global options, context, config, account, publication, collection, entry, revision, cap, and file commands.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://docs.morsecms.xyz/cli-commands.html">
   <meta property="og:site_name" content="Morse Docs">
@@ -56,7 +56,7 @@
     <article class="article">
         <h1>CLI Command Reference</h1>
         <p class="article-lead">
-          Complete reference for every <code>morse-cli</code> command, organized by resource: context, config, account, publication, collection, entry, revision, and cap.
+          Complete reference for every <code>morse-cli</code> command, organized by resource: context, config, account, publication, collection, entry, revision, cap, and file.
         </p>
         <div class="page-actions">
           <div class="copybtn-group">
@@ -77,9 +77,11 @@
           <table>
             <thead><tr><th>Option</th><th>Purpose</th></tr></thead>
             <tbody>
-              <tr><td><code>--network &lt;testnet|localnet&gt;</code></td><td>Network to target (default: testnet).</td></tr>
+              <tr><td><code>--network &lt;mainnet|testnet|localnet&gt;</code></td><td>Network to target (default: testnet).</td></tr>
               <tr><td><code>-p, --profile &lt;name&gt;</code></td><td>Config profile to use.</td></tr>
               <tr><td><code>--rpc &lt;url&gt;</code></td><td>Override the Sui RPC URL.</td></tr>
+              <tr><td><code>--upload-relay &lt;url|auto&gt;</code></td><td>Upload Walrus blobs through a relay instead of sending them to every storage node; <code>auto</code> picks the network's canonical relay. Costs a tip per upload.</td></tr>
+              <tr><td><code>--max-tip &lt;mist&gt;</code></td><td>Cap the relay's per-upload tip, in MIST (default: 10000000). Only applies with <code>--upload-relay</code>.</td></tr>
               <tr><td><code>--json</code></td><td>Machine-readable JSON on stdout.</td></tr>
               <tr><td><code>-q, --quiet</code></td><td>Suppress progress and informational output.</td></tr>
               <tr><td><code>-y, --yes</code></td><td>Assume yes for confirmation prompts.</td></tr>
@@ -99,14 +101,14 @@
               <tr><td><code>-P</code></td><td><code>--publication &lt;slug|id&gt;</code></td><td>Target publication (default: active context).</td></tr>
               <tr><td><code>-C</code></td><td><code>--collection &lt;name&gt;</code></td><td>Target collection (default: active context).</td></tr>
               <tr><td><code>-f</code></td><td><code>--file &lt;path&gt;</code></td><td>Input file (<code>-</code> for stdin). Used by content commands.</td></tr>
-              <tr><td><code>-n</code></td><td><code>--name &lt;name&gt;</code></td><td>Publication name (used by <code>publication create</code>).</td></tr>
+              <tr><td><code>-n</code></td><td><code>--name &lt;name&gt;</code></td><td>Name of a publication (<code>publication create</code>) or a file (<code>file upload</code>, <code>file register</code>, <code>file update</code>).</td></tr>
               <tr><td><code>-s</code></td><td><code>--slug &lt;slug&gt;</code></td><td>URL slug (used by <code>publication create</code>).</td></tr>
             </tbody>
           </table>
         </div>
 
         <h2 id="argument-notation">Argument notation</h2>
-        <p>Values in <code>&lt;angle brackets&gt;</code> are required; values in <code>[square brackets]</code> are optional; <code>(a | b)</code> means one of the two is required.</p>
+        <p>Values in <code>&lt;angle brackets&gt;</code> are required; values in <code>[square brackets]</code> are optional; <code>(a | b)</code> means one of the two is required; <code>...</code> means the flag can be repeated.</p>
         <div class="table-wrap">
           <table>
             <thead><tr><th>Argument</th><th>Format</th><th>Example</th></tr></thead>
@@ -115,8 +117,9 @@
               <tr><td><code>[revisionIndex]</code></td><td>Zero-based integer index within the entry. Latest when omitted.</td><td><code>0</code></td></tr>
               <tr><td><code>&lt;draftRevisionId&gt;</code></td><td>Zero-based integer revision ID of the draft to publish.</td><td><code>1</code></td></tr>
               <tr><td><code>&lt;publisherCapId&gt;</code></td><td>Sui object ID of a PublisherCap.</td><td><code>0x3a…</code></td></tr>
-              <tr><td><code>&lt;address&gt;</code>, <code>&lt;recipient&gt;</code>, <code>&lt;holder&gt;</code></td><td>Sui address.</td><td><code>0xf1…</code></td></tr>
+              <tr><td><code>&lt;address&gt;</code>, <code>&lt;recipient&gt;</code>, <code>&lt;holder&gt;</code>, <code>&lt;newOwner&gt;</code></td><td>Sui address.</td><td><code>0xf1…</code></td></tr>
               <tr><td><code>&lt;publication&gt;</code></td><td>Publication slug or Sui object ID.</td><td><code>my-blog</code>, <code>0x7c…</code></td></tr>
+              <tr><td><code>&lt;file&gt;</code></td><td>Sui object ID of a RecipientFile.</td><td><code>0x5f…</code></td></tr>
             </tbody>
           </table>
         </div>
@@ -153,7 +156,7 @@
           <table>
             <thead><tr><th>Command</th><th>Purpose</th></tr></thead>
             <tbody>
-              <tr><td><code>config add &lt;name&gt; --network &lt;net&gt; [--rpc &lt;url&gt;]</code></td><td>Create or update a profile.</td></tr>
+              <tr><td><code>config add &lt;name&gt; --network &lt;net&gt; [--rpc &lt;url&gt;] [--upload-relay &lt;url|auto&gt;]</code></td><td>Create or update a profile. <code>--upload-relay</code> saves a Walrus upload relay on the profile.</td></tr>
               <tr><td><code>config list</code></td><td>List profiles; <code>*</code> marks the active.</td></tr>
               <tr><td><code>config use &lt;name&gt;</code></td><td>Set the active profile.</td></tr>
               <tr><td><code>config remove &lt;name&gt;</code></td><td>Delete a profile.</td></tr>
@@ -173,7 +176,7 @@
           <table>
             <thead><tr><th>Command</th><th>Purpose</th></tr></thead>
             <tbody>
-              <tr><td><code>account import</code></td><td>Import a key into an encrypted keystore (hidden prompts for key + password).</td></tr>
+              <tr><td><code>account import</code></td><td>Import a key into an encrypted keystore. Reads the key from stdin when it is piped; otherwise prompts for key + password (hidden).</td></tr>
               <tr><td><code>account list</code></td><td>List imported accounts; <code>*</code> marks the active one.</td></tr>
               <tr><td><code>account show</code></td><td>Print the active account address.</td></tr>
               <tr><td><code>account use &lt;address&gt;</code></td><td>Set the active account for the current profile.</td></tr>
@@ -181,6 +184,7 @@
             </tbody>
           </table>
         </div>
+        <p>To import in a script, pipe the key on stdin and set <code>MORSE_KEYSTORE_PASSWORD</code>. With stdin piped there is no terminal to prompt on, so the password must come from that variable. <code>MORSE_PRIVATE_KEY</code>, when set, takes priority over stdin. The key is never a flag, because command-line arguments leak through <code>ps</code> and shell history.</p>
         <div class="code-block code-block-output">
           <div class="code-header"><span class="code-lang">example</span></div>
           <pre><span class="p" aria-hidden="true">$ </span>morse account list
@@ -237,8 +241,8 @@
             <tbody>
               <tr><td><code>entry get &lt;entryId&gt;</code></td><td>Fetch a single entry's metadata.</td></tr>
               <tr><td><code>entry read &lt;entryId&gt; [&lt;revisionIndex&gt;] [--out &lt;path&gt;] [--via-aggregator]</code></td><td>Fetch a public entry's content to stdout or a file. Reads the latest revision unless <code>revisionIndex</code> is specified; <code>--via-aggregator</code> fetches through a Walrus aggregator instead of directly. Recommended on testnet, where direct reads frequently fail right after an upload (see <a href="cli-workflows.html#reading-it-back">CLI Cookbooks &rarr; Reading it back</a>).</td></tr>
-              <tr><td><code>entry list [--limit &lt;n&gt;] [--cursor &lt;cursor&gt;] [--drafts-only]</code></td><td>List entries. <code>--drafts-only</code> filters to unpublished entries.</td></tr>
-              <tr><td><code>entry scan [--drafts-only]</code></td><td>List every entry (auto-paginated). <code>--drafts-only</code> filters to unpublished entries.</td></tr>
+              <tr><td><code>entry list [--limit &lt;n&gt;] [--cursor &lt;cursor&gt;] [--all] [--drafts-only]</code></td><td>List entries. <code>--all</code> fetches every page, the same as <code>entry scan</code>, and cannot be combined with <code>--limit</code> or <code>--cursor</code>. <code>--drafts-only</code> filters to unpublished entries.</td></tr>
+              <tr><td><code>entry scan [--drafts-only]</code></td><td>List every entry (auto-paginated), the same as <code>entry list --all</code>. <code>--drafts-only</code> filters to unpublished entries.</td></tr>
               <tr><td><code>entry add &lt;name&gt; (--file &lt;path&gt; | --stdin) [--content-type &lt;type&gt;] [--epochs &lt;n&gt;] [--publisher-cap &lt;id&gt;]</code></td><td>Upload content and add a new entry. <code>--file</code> reads from a file path, <code>--stdin</code> reads from standard input; <code>--content-type</code> is inferred from file extension when omitted; <code>--epochs</code> sets Walrus storage duration (default 3, roughly 3 days on testnet; renew or re-upload before expiry for longer-lived content).</td></tr>
               <tr><td><code>entry delete &lt;entryId&gt; [--publisher-cap &lt;id&gt;]</code></td><td>Delete an entry and its revisions.</td></tr>
               <tr><td><code>entry add-encrypted &lt;name&gt; (--file &lt;path&gt; | --stdin) [--content-type &lt;type&gt;] [--epochs &lt;n&gt;] [--publisher-cap &lt;id&gt;]</code></td><td>Encrypt with Seal, upload, and add a new entry.</td></tr>
@@ -298,6 +302,54 @@
 <span class="ok">Issued PublisherCap 0xCAP_ID to 0x71a3...9f2b.</span> <span class="m">(tx: AbCdEf...)</span></pre>
         </div>
         <p><code>OwnerCap</code> and <code>PublisherCap</code> IDs are auto-resolved from the active account when the <code>--owner-cap</code> / <code>--publisher-cap</code> override is omitted. Morse separates ownership from publishing. <br>See <a href="access-control.html#ownercap">Access Control &rarr; OwnerCap</a> and <a href="access-control.html#publishercap">Access Control &rarr; PublisherCap</a> for how capability-based authorization works.</p>
+
+        <h2 id="file">File</h2>
+        <p>Upload, register, read, list, and manage RecipientFiles on Walrus. A RecipientFile carries its own recipient list: the addresses allowed to decrypt it. See <a href="recipient-files.html#cli-workflows">Recipient Files &rarr; CLI workflows</a> for a full walkthrough.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Command</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><td><code>file upload &lt;path&gt; --name &lt;name&gt; (--public | --encrypt | -r &lt;addr&gt;...) [--content-type &lt;mime&gt;] [--epochs &lt;n&gt;]</code></td><td>Upload a file to Walrus and register it on-chain. <code>--public</code> stores it unencrypted and prints a view link. <code>--encrypt</code> encrypts it with Seal and prints a share string. <code>-r, --recipient</code> adds an address that can decrypt it and implies <code>--encrypt</code>; the sender is always a recipient. <code>--content-type</code> is inferred from the path when omitted; <code>--epochs</code> sets Walrus storage duration (default 3).</td></tr>
+              <tr><td><code>file register --blob-id &lt;id&gt; --name &lt;name&gt; --content-type &lt;mime&gt; --size &lt;bytes&gt; (--public | --encrypted --seal-prefix &lt;hex&gt;) [-r &lt;addr&gt;...] [--blob-object-id &lt;id&gt;]</code></td><td>Register on-chain metadata for a blob already on Walrus. <code>--size</code> is the plaintext byte length. <code>--encrypted</code> needs the <code>--seal-prefix</code> the blob was encrypted under; <code>-r</code> applies to encrypted files only. <code>--blob-object-id</code> records the Walrus Blob object ID, if known.</td></tr>
+              <tr><td><code>file download [&lt;file&gt;] [--out &lt;path&gt;] [--share &lt;string&gt;] [--prefix &lt;hex&gt; --nonce &lt;hex&gt;] [--raw] [--via-aggregator]</code></td><td>Download a file's content to stdout or a file. Pass a file ID or <code>--share</code>. <code>--share</code>, or <code>--prefix</code> with <code>--nonce</code>, decrypts an encrypted file and signs a SessionKey with the active account. Without one, an encrypted file is refused unless <code>--raw</code> writes the ciphertext as is. <code>--via-aggregator</code> fetches through a Walrus aggregator instead of directly. In <code>--json</code> mode, <code>--out</code> is required.</td></tr>
+              <tr><td><code>file list [--address &lt;addr&gt;] [--accessible] [--hydrate] [--limit &lt;n&gt;] [--indexer-url &lt;url&gt;]</code></td><td>List files owned by an address (default: active account), rebuilt from contract events. <code>--accessible</code> lists files the address can decrypt as a recipient, not just the ones it owns. <code>--hydrate</code> fetches each full record (one read per file); <code>--limit</code> caps the results. <code>--indexer-url</code> sets the Sui GraphQL endpoint to read events from (default: Mysten's endpoint for the network; required on localnet).</td></tr>
+              <tr><td><code>file get &lt;file&gt;</code></td><td>Fetch a file's on-chain metadata and recipient list.</td></tr>
+              <tr><td><code>file update &lt;file&gt; --name &lt;name&gt; --content-type &lt;mime&gt;</code></td><td>Update a file's name and content type. Owner only.</td></tr>
+              <tr><td><code>file transfer-ownership &lt;file&gt; &lt;newOwner&gt;</code></td><td>Transfer a file's ownership. Recipient access does not move with it; the recipient list governs that. Asks for confirmation unless the global <code>--yes</code> is passed.</td></tr>
+              <tr><td><code>file delete &lt;file&gt;</code></td><td>Delete a file's metadata record. The Walrus blob is not deleted; it expires with its storage lease. Asks for confirmation unless the global <code>--yes</code> is passed.</td></tr>
+              <tr><td><code>file recipient add &lt;file&gt; &lt;address&gt;</code></td><td>Allow an address to decrypt the file.</td></tr>
+              <tr><td><code>file recipient remove &lt;file&gt; &lt;address&gt;</code></td><td>Revoke an address's access to the file.</td></tr>
+              <tr><td><code>file recipient list &lt;file&gt;</code></td><td>List the file's recipients.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>An encrypted upload prints a share string (<code>mf1.&lt;fileId&gt;.&lt;prefix&gt;.&lt;nonce&gt;</code>). Save it: the prefix and nonce cannot be recovered from the ciphertext. Recipients need the share string, plus a place on the recipient list, to decrypt with <code>file download --share</code>.</p>
+        <div class="code-block code-block-output">
+          <div class="code-header"><span class="code-lang">example</span></div>
+          <pre><span class="p" aria-hidden="true">$ </span>morse file upload ./logo.png --name logo.png --public
+<span class="ok">Uploaded public file 0x5f0a...c37e.</span> <span class="m">(tx: AbCdEf...)</span>
+  <span class="m">view: https://aggregator.walrus-testnet.walrus.space/v1/blobs/...</span></pre>
+        </div>
+
+        <h2 id="command-spellings">Command spellings</h2>
+        <p>Some commands accept a second spelling for the same action. Both spellings do the same thing.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Command</th><th>Also accepts</th></tr></thead>
+            <tbody>
+              <tr><td><code>account show</code></td><td><code>account get</code></td></tr>
+              <tr><td><code>publication get</code></td><td><code>publication show</code></td></tr>
+              <tr><td><code>entry get</code></td><td><code>entry show</code></td></tr>
+              <tr><td><code>file get</code></td><td><code>file show</code></td></tr>
+              <tr><td><code>entry read</code></td><td><code>entry download</code></td></tr>
+              <tr><td><code>file download</code></td><td><code>file read</code></td></tr>
+              <tr><td><code>config remove</code></td><td><code>config delete</code></td></tr>
+              <tr><td><code>cap transfer</code></td><td><code>cap transfer-ownership</code></td></tr>
+              <tr><td><code>entry scan</code></td><td><code>entry list --all</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>The <code>publication</code> group also answers to <code>pub</code>, as in <code>morse pub list</code>.</p>
 
         <h2 id="next-steps">Next steps</h2>
         <div class="card-grid">
