@@ -35,7 +35,7 @@ The rest of the SDK (functions like `createPublication`, `addEntryFromBytes`, th
 
 ## Known limitations
 
-- **Testnet only at v0.x.** Mainnet config is released once the contracts are stable.
+- **Unaudited contracts.** `morseConfig({ network: "mainnet" })` returns the mainnet deployment, but the Move contracts have not been audited and mainnet spends real SUI and WAL. Test on testnet first.
 - **gRPC client only.** Reader and adapter interfaces are typed against `SuiGrpcClient` from `@mysten/sui/grpc`. JSON-RPC fallback is planned.
 - **No encrypted publish path.** The Move contract hardcodes `encrypted=false` on `publish_from_draft` and `publish_direct`. Encrypted content stays as drafts. See [SDK Cookbooks → Encrypted content](https://docs.morsecms.xyz/sdk-workflows.html#encrypted-content) for the full lifecycle.
 - **Only the `Publisher` access policy is enforced.** The `Subscription` policy is not yet active.

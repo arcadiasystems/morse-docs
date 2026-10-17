@@ -3,11 +3,11 @@
 
 # CLI Overview
 
-> `morse-cli` is the command-line client for the Morse decentralized CMS. It signs with a locally encrypted key, stores content on Walrus, and encrypts private entries with Seal: the same protocol surface as the SDK, driven from your terminal. Runs on Node or Bun, pre-release on testnet.
+> `morse-cli` is the command-line client for the Morse decentralized CMS. It signs with a locally encrypted key, stores content on Walrus, and encrypts private entries with Seal: the same protocol surface as the SDK, driven from your terminal. Runs on Node or Bun and targets Sui testnet or mainnet.
 
-> **INFO: Published on npm · testnet only**
+> **INFO: Published on npm · testnet and mainnet**
 >
-> Install `@arcadiasystems/morse-cli` from npm. The CLI is currently configured for testnet only. Mainnet support to be added soon.
+> Install `@arcadiasystems/morse-cli` from npm. It targets testnet unless you choose mainnet with `--network`, `MORSE_NETWORK` or a profile. The contracts are unaudited and mainnet spends real SUI and WAL, so test on testnet first.
 
 ## Installing
 
@@ -56,7 +56,7 @@ Settings resolve with the precedence `flags` > `MORSE_* env` > `config file` > `
 | Variable | Overrides | Notes |
 | --- | --- | --- |
 | `MORSE_PROFILE` | `-p, --profile` | Profile to use. |
-| `MORSE_NETWORK` | `--network` | `testnet` or `localnet`. |
+| `MORSE_NETWORK` | `--network` | `testnet`, `mainnet` or `localnet`. |
 | `MORSE_RPC_URL` | `--rpc` | Sui RPC URL override. |
 | `MORSE_ADDRESS` | (no flag) | Active account address. |
 | `MORSE_PUBLICATION` | `-P, --publication` | Active publication ID. |

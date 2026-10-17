@@ -49,6 +49,6 @@ What a reader can check without asking you.
 | `--epochs 14` | How long Walrus keeps the bytes. One epoch is about a day on testnet. |
 | Active context | The publication and collection `morse status` shows. Set with `morse use`. |
 
-> **WARNING: Testnet only**
+> **WARNING: Testnet first**
 >
-> Morse is on Sui testnet with unaudited contracts. Testnets reset, blobs expire, tokens are free and worthless. Treat everything you publish as a rehearsal.
+> Morse runs on Sui testnet and mainnet, and the contracts are unaudited. These recipes use testnet: it resets, blobs expire, tokens are free and worthless. Treat everything you publish as a rehearsal. Mainnet spends real SUI and WAL, so get a recipe working here first.
