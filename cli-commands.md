@@ -3,7 +3,7 @@
 
 # CLI Command Reference
 
-> Complete reference for every `morse-cli` command, organized by resource: context, config, account, publication, collection, entry, revision, and cap.
+> Complete reference for every `morse-cli` command, organized by resource: context, config, account, publication, collection, entry, revision, cap, and file.
 
 ## Global options
 
@@ -11,9 +11,11 @@ Global options apply to every command and must appear before the subcommand (e.g
 
 | Option | Purpose |
 | --- | --- |
-| `--network <testnet\|localnet>` | Network to target (default: testnet). |
+| `--network <mainnet\|testnet\|localnet>` | Network to target (default: testnet). |
 | `-p, --profile <name>` | Config profile to use. |
 | `--rpc <url>` | Override the Sui RPC URL. |
+| `--upload-relay <url\|auto>` | Upload Walrus blobs through a relay instead of sending them to every storage node; `auto` picks the network's canonical relay. Costs a tip per upload. |
+| `--max-tip <mist>` | Cap the relay's per-upload tip, in MIST (default: 10000000). Only applies with `--upload-relay`. |
 | `--json` | Machine-readable JSON on stdout. |
 | `-q, --quiet` | Suppress progress and informational output. |
 | `-y, --yes` | Assume yes for confirmation prompts. |
@@ -30,12 +32,12 @@ These flags appear across multiple command groups. Command-specific flags are sh
 | `-P` | `--publication <slug\|id>` | Target publication (default: active context). |
 | `-C` | `--collection <name>` | Target collection (default: active context). |
 | `-f` | `--file <path>` | Input file (`-` for stdin). Used by content commands. |
-| `-n` | `--name <name>` | Publication name (used by `publication create`). |
+| `-n` | `--name <name>` | Name of a publication (`publication create`) or a file (`file upload`, `file register`, `file update`). |
 | `-s` | `--slug <slug>` | URL slug (used by `publication create`). |
 
 ## Argument notation
 
-Values in `<angle brackets>` are required; values in `[square brackets]` are optional; `(a | b)` means one of the two is required.
+Values in `<angle brackets>` are required; values in `[square brackets]` are optional; `(a | b)` means one of the two is required; `...` means the flag can be repeated.
 
 | Argument | Format | Example |
 | --- | --- | --- |
@@ -43,8 +45,9 @@ Values in `<angle brackets>` are required; values in `[square brackets]` are opt
 | `[revisionIndex]` | Zero-based integer index within the entry. Latest when omitted. | `0` |
 | `<draftRevisionId>` | Zero-based integer revision ID of the draft to publish. | `1` |
 | `<publisherCapId>` | Sui object ID of a PublisherCap. | `0x3a…` |
-| `<address>`, `<recipient>`, `<holder>` | Sui address. | `0xf1…` |
+| `<address>`, `<recipient>`, `<holder>`, `<newOwner>` | Sui address. | `0xf1…` |
 | `<publication>` | Publication slug or Sui object ID. | `my-blog`, `0x7c…` |
+| `<file>` | Sui object ID of a RecipientFile. | `0x5f…` |
 
 ## Context
 
@@ -74,7 +77,7 @@ Configure CLI profiles, each pointing to a different network and account.
 
 | Command | Purpose |
 | --- | --- |
-| `config add <name> --network <net> [--rpc <url>]` | Create or update a profile. |
+| `config add <name> --network <net> [--rpc <url>] [--upload-relay <url\|auto>]` | Create or update a profile. `--upload-relay` saves a Walrus upload relay on the profile. |
 | `config list` | List profiles; `*` marks the active. |
 | `config use <name>` | Set the active profile. |
 | `config remove <name>` | Delete a profile. |
@@ -91,11 +94,13 @@ Import, list, and manage keypairs used for signing transactions.
 
 | Command | Purpose |
 | --- | --- |
-| `account import` | Import a key into an encrypted keystore (hidden prompts for key + password). |
+| `account import` | Import a key into an encrypted keystore. Reads the key from stdin when it is piped; otherwise prompts for key + password (hidden). |
 | `account list` | List imported accounts; `*` marks the active one. |
 | `account show` | Print the active account address. |
 | `account use <address>` | Set the active account for the current profile. |
 | `account export <address>` | Reveal a decrypted key (interactive-only, dangerous). |
+
+To import in a script, pipe the key on stdin and set `MORSE_KEYSTORE_PASSWORD`. With stdin piped there is no terminal to prompt on, so the password must come from that variable. `MORSE_PRIVATE_KEY`, when set, takes priority over stdin. The key is never a flag, because command-line arguments leak through `ps` and shell history.
 
 ```example
 $ morse account list
@@ -146,8 +151,8 @@ Add, read, and delete entries within a collection.
 | --- | --- |
 | `entry get <entryId>` | Fetch a single entry's metadata. |
 | `entry read <entryId> [<revisionIndex>] [--out <path>] [--via-aggregator]` | Fetch a public entry's content to stdout or a file. Reads the latest revision unless `revisionIndex` is specified; `--via-aggregator` fetches through a Walrus aggregator instead of directly. Recommended on testnet, where direct reads frequently fail right after an upload (see [CLI Cookbooks → Reading it back](https://docs.morsecms.xyz/cli-workflows.html#reading-it-back)). |
-| `entry list [--limit <n>] [--cursor <cursor>] [--drafts-only]` | List entries. `--drafts-only` filters to unpublished entries. |
-| `entry scan [--drafts-only]` | List every entry (auto-paginated). `--drafts-only` filters to unpublished entries. |
+| `entry list [--limit <n>] [--cursor <cursor>] [--all] [--drafts-only]` | List entries. `--all` fetches every page, the same as `entry scan`, and cannot be combined with `--limit` or `--cursor`. `--drafts-only` filters to unpublished entries. |
+| `entry scan [--drafts-only]` | List every entry (auto-paginated), the same as `entry list --all`. `--drafts-only` filters to unpublished entries. |
 | `entry add <name> (--file <path> \| --stdin) [--content-type <type>] [--epochs <n>] [--publisher-cap <id>]` | Upload content and add a new entry. `--file` reads from a file path, `--stdin` reads from standard input; `--content-type` is inferred from file extension when omitted; `--epochs` sets Walrus storage duration (default 3, roughly 3 days on testnet; renew or re-upload before expiry for longer-lived content). |
 | `entry delete <entryId> [--publisher-cap <id>]` | Delete an entry and its revisions. |
 | `entry add-encrypted <name> (--file <path> \| --stdin) [--content-type <type>] [--epochs <n>] [--publisher-cap <id>]` | Encrypt with Seal, upload, and add a new entry. |
@@ -197,6 +202,50 @@ Issued PublisherCap 0xCAP_ID to 0x71a3...9f2b. (tx: AbCdEf...)
 
 `OwnerCap` and `PublisherCap` IDs are auto-resolved from the active account when the `--owner-cap` / `--publisher-cap` override is omitted. Morse separates ownership from publishing. 
 See [Access Control → OwnerCap](https://docs.morsecms.xyz/access-control.html#ownercap) and [Access Control → PublisherCap](https://docs.morsecms.xyz/access-control.html#publishercap) for how capability-based authorization works.
+
+## File
+
+Upload, register, read, list, and manage RecipientFiles on Walrus. A RecipientFile carries its own recipient list: the addresses allowed to decrypt it. See [Recipient Files → CLI workflows](https://docs.morsecms.xyz/recipient-files.html#cli-workflows) for a full walkthrough.
+
+| Command | Purpose |
+| --- | --- |
+| `file upload <path> --name <name> (--public \| --encrypt \| -r <addr>...) [--content-type <mime>] [--epochs <n>]` | Upload a file to Walrus and register it on-chain. `--public` stores it unencrypted and prints a view link. `--encrypt` encrypts it with Seal and prints a share string. `-r, --recipient` adds an address that can decrypt it and implies `--encrypt`; the sender is always a recipient. `--content-type` is inferred from the path when omitted; `--epochs` sets Walrus storage duration (default 3). |
+| `file register --blob-id <id> --name <name> --content-type <mime> --size <bytes> (--public \| --encrypted --seal-prefix <hex>) [-r <addr>...] [--blob-object-id <id>]` | Register on-chain metadata for a blob already on Walrus. `--size` is the plaintext byte length. `--encrypted` needs the `--seal-prefix` the blob was encrypted under; `-r` applies to encrypted files only. `--blob-object-id` records the Walrus Blob object ID, if known. |
+| `file download [<file>] [--out <path>] [--share <string>] [--prefix <hex> --nonce <hex>] [--raw] [--via-aggregator]` | Download a file's content to stdout or a file. Pass a file ID or `--share`. `--share`, or `--prefix` with `--nonce`, decrypts an encrypted file and signs a SessionKey with the active account. Without one, an encrypted file is refused unless `--raw` writes the ciphertext as is. `--via-aggregator` fetches through a Walrus aggregator instead of directly. In `--json` mode, `--out` is required. |
+| `file list [--address <addr>] [--accessible] [--hydrate] [--limit <n>] [--indexer-url <url>]` | List files owned by an address (default: active account), rebuilt from contract events. `--accessible` lists files the address can decrypt as a recipient, not just the ones it owns. `--hydrate` fetches each full record (one read per file); `--limit` caps the results. `--indexer-url` sets the Sui GraphQL endpoint to read events from (default: Mysten's endpoint for the network; required on localnet). |
+| `file get <file>` | Fetch a file's on-chain metadata and recipient list. |
+| `file update <file> --name <name> --content-type <mime>` | Update a file's name and content type. Owner only. |
+| `file transfer-ownership <file> <newOwner>` | Transfer a file's ownership. Recipient access does not move with it; the recipient list governs that. Asks for confirmation unless the global `--yes` is passed. |
+| `file delete <file>` | Delete a file's metadata record. The Walrus blob is not deleted; it expires with its storage lease. Asks for confirmation unless the global `--yes` is passed. |
+| `file recipient add <file> <address>` | Allow an address to decrypt the file. |
+| `file recipient remove <file> <address>` | Revoke an address's access to the file. |
+| `file recipient list <file>` | List the file's recipients. |
+
+An encrypted upload prints a share string (`mf1.<fileId>.<prefix>.<nonce>`). Save it: the prefix and nonce cannot be recovered from the ciphertext. Recipients need the share string, plus a place on the recipient list, to decrypt with `file download --share`.
+
+```example
+$ morse file upload ./logo.png --name logo.png --public
+Uploaded public file 0x5f0a...c37e. (tx: AbCdEf...)
+  view: https://aggregator.walrus-testnet.walrus.space/v1/blobs/...
+```
+
+## Command spellings
+
+Some commands accept a second spelling for the same action. Both spellings do the same thing.
+
+| Command | Also accepts |
+| --- | --- |
+| `account show` | `account get` |
+| `publication get` | `publication show` |
+| `entry get` | `entry show` |
+| `file get` | `file show` |
+| `entry read` | `entry download` |
+| `file download` | `file read` |
+| `config remove` | `config delete` |
+| `cap transfer` | `cap transfer-ownership` |
+| `entry scan` | `entry list --all` |
+
+The `publication` group also answers to `pub`, as in `morse pub list`.
 
 ## Next steps
 

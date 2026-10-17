@@ -11,14 +11,14 @@
 
 | Package | Version | Required |
 | --- | --- | --- |
-| `@arcadiasystems/morse-sdk` | 0.4.x | (this package) |
+| `@arcadiasystems/morse-sdk` | 0.8.x | (this package) |
 | `@mysten/sui` | >=2.16.2 <2.17.0 | Yes: types, gRPC client, keypairs |
-| `@mysten/walrus` | >=1.1.6 <1.2.0 | Optional: for default Walrus adapters (read + write) |
-| `@mysten/seal` | >=1.1.3 <1.2.0 | Optional: for encryption |
+| `@mysten/walrus` | >=1.1.6 <1.2.0 | Yes: default Walrus adapters (read + write) |
+| `@mysten/seal` | >=1.1.3 <1.2.0 | Yes: encryption |
 
 > **WARNING: Pin to the verified minor version**
 >
-> Mysten packages may ship breaking changes within the same major version. When a new version like `@mysten/walrus@1.2.0` is released, `morse-sdk` needs a coordinated bump and re-verification. Use `bun add @arcadiasystems/morse-sdk@~0.4.0` to lock to patch-level updates only.
+> Mysten packages may ship breaking changes within the same major version. When a new version like `@mysten/walrus@1.2.0` is released, `morse-sdk` needs a coordinated bump and re-verification. Use `bun add @arcadiasystems/morse-sdk@~0.8.0` to lock to patch-level updates only.
 
 The verified matrix is also exported programmatically as `TESTED_SUBSTRATE`, a frozen record of the tested `@mysten/sui`, `@mysten/seal`, and `@mysten/walrus` versions plus `verifiedOn` and `suiNetwork`. Log it during initialization or compare it against bundler-resolved versions in CI:
 
@@ -42,7 +42,7 @@ The SDK works in both Node and browser environments. It does not depend on Node-
 
 ## Installing
 
-`@mysten/sui` is a required peer dependency. `@mysten/walrus` is needed for the `DefaultWalrusWriteAdapter`. `@mysten/seal` is required at runtime even for non-encrypted workflows.
+`@mysten/sui`, `@mysten/walrus`, and `@mysten/seal` are all required peer dependencies. The SDK's main entry imports the default Walrus and Seal adapters, so both packages must be installed even for workflows that never upload or encrypt.
 
 ```bash
 bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3
@@ -50,14 +50,14 @@ bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @myste
 
 ## morseConfig() shape
 
-`morseConfig({ network })` takes the target network (`"testnet"` or `"localnet"`) and returns a read-only object with the contract addresses and endpoints the SDK needs. Mainnet is not yet supported. All other fields have built-in defaults but can be overridden for custom deployments. Every SDK function takes this object as its `config` argument.
+`morseConfig({ network })` takes the target network (`"mainnet"`, `"testnet"`, or `"localnet"`) and returns a read-only object with the contract addresses and endpoints the SDK needs. All other fields have built-in defaults but can be overridden for custom deployments. Every SDK function takes this object as its `config` argument.
 
 The returned object contains the following fields:
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `network` | `"testnet" \| "localnet"` | Sui network the config targets. Mainnet is not yet supported. |
-| `rpcUrl` | `string` | Sui JSON-RPC / gRPC endpoint. Defaults to the public fullnode for the chosen network; override for a custom node. |
+| `network` | `"mainnet" \| "testnet" \| "localnet"` | Sui network the config targets. |
+| `rpcUrl` | `string` | Sui fullnode URL to pass as `baseUrl` when you construct `SuiGrpcClient`. The SDK never reads it itself; its readers and adapters take the client you build. Defaults to the public fullnode for the chosen network; override for a custom node. |
 | `packageId` | `PackageId` | Current `published-at` address of the Morse Move package. Used as the target for all transaction calls. |
 | `originalPackageId` | `PackageId \| undefined` | Genesis publish address (`original-id`). Sui uses this in `objectType` strings and type filters. Defaults to `packageId` when the package has never been upgraded. |
 | `registryId` | `RegistryId` | Sui object ID of the shared `PublicationRegistry`. Required for publication creation and deletion. |

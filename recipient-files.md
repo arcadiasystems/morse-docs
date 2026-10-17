@@ -145,7 +145,7 @@ morse file download --share <string> --out <path> [--via-aggregator]
 ```
 
 - `--share` carries the file ID, prefix, and nonce in one token. Alternatively pass the file ID positionally with `--prefix <hex> --nonce <hex>`.
-- `--raw` writes the stored bytes without decrypting. For a file with a recipient list and no decrypt input, the CLI refuses by default (the ciphertext is unusable), and `--raw` is the explicit opt-in.
+- `--raw` writes the stored bytes without decrypting. For an encrypted file (one with a Seal prefix attached on-chain) and no decrypt input, the CLI refuses by default (the ciphertext is unusable), and `--raw` is the explicit opt-in.
 - `--out` writes to a file; omitting it streams to stdout (not available in `--json` mode).
 
 The encrypted round-trip is byte-for-byte: the downloaded plaintext is identical to the uploaded file (verified on testnet). A non-member running the same command gets `SealError` code `no-access`; a tampered ciphertext fails with `decrypt-failed`.
@@ -277,7 +277,7 @@ const types = buildRecipientFileEventTypes(
   config.recipientFileEventOriginPackageId ?? config.packageId,
 );
 
-// Fetch events of these types from your event source (indexer or RPC),
+// Fetch events of these types from your event source (Sui GraphQL or an indexer),
 // normalized to { type, json, timestampMs }, oldest first. Then reduce:
 const owned = reconcileRecipientFilesOwnedBy(events, myAddress, types);
 const accessible = reconcileRecipientFilesAccessibleBy(events, myAddress, types);
@@ -285,7 +285,7 @@ const accessible = reconcileRecipientFilesAccessibleBy(events, myAddress, types)
 // individual files via filesReader.getRecipientFile(summary.id).
 ```
 
-The reducers handle creation, metadata updates, recipient add/remove, ownership transfer, and deletion. One known gap: `reconcileRecipientFilesOwnedBy` does not add files transferred *to* the queried address, because the transfer event does not carry the file's metadata. Re-fetch those with `getRecipientFile`. The CLI's `morse file list` uses these same reducers over `suix_queryEvents` (a deprecated Sui RPC endpoint; pass `--indexer-url` to point at your own event source).
+The reducers handle creation, metadata updates, recipient add/remove, ownership transfer, and deletion. One known gap: `reconcileRecipientFilesOwnedBy` does not add files transferred *to* the queried address, because the transfer event does not carry the file's metadata. Re-fetch those with `getRecipientFile`. The CLI's `morse file list` uses these same reducers over events read from Sui GraphQL (the canonical Mysten endpoint for the network by default; pass `--indexer-url` to point at another GraphQL endpoint, which localnet requires).
 
 ### Types & config reference
 

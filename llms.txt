@@ -19,6 +19,7 @@ Every page below is also available as Markdown: replace `.html` with `.md` in an
 - [Quick Start: CLI](https://docs.morsecms.xyz/quick-start-cli.md): Install morse-cli and go from zero to published content on Sui testnet in under five minutes. No contracts, no code, just your terminal.
 - [Quick Start: SDK](https://docs.morsecms.xyz/quick-start-sdk.md): Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter: no browser, no wallet popups. Want to see the result first? Browse the live demo blog built on this SDK.
 - [Quick Start: Smart Contracts](https://docs.morsecms.xyz/quick-start-contracts.md): Create a publication, add a collection, and publish an entry using raw Programmable Transaction Blocks against the deployed Morse contracts on testnet. No SDK wrappers, just tx.moveCall.
+- [Walrus Mainnet](https://docs.morsecms.xyz/mainnet.md): Move from testnet to Walrus Mainnet: the deployment, the risks, CLI and SDK setup, the upload relay, Seal credentials and a known read issue.
 
 ## Cookbooks
 
@@ -43,7 +44,7 @@ Every page below is also available as Markdown: replace `.html` with `.md` in an
 ## CLI
 
 - [CLI Overview](https://docs.morsecms.xyz/cli-overview.md): morse-cli: a command-line client for the Morse dCMS on Sui. Encrypted keystore, active context, content on Walrus, encryption with Seal. Runs on Node or Bun.
-- [CLI Command Reference](https://docs.morsecms.xyz/cli-commands.md): Full command reference for morse-cli: global options, context, config, account, publication, collection, entry, revision, and cap commands.
+- [CLI Command Reference](https://docs.morsecms.xyz/cli-commands.md): Full command reference for morse-cli: global options, context, config, account, publication, collection, entry, revision, cap, and file commands.
 - [CLI Cookbooks](https://docs.morsecms.xyz/cli-workflows.md): End-to-end morse CLI recipes: publish content, read it back, encrypt and decrypt, delegate write access, and script it in CI, with troubleshooting.
 
 ## SDK
@@ -51,6 +52,7 @@ Every page below is also available as Markdown: replace `.html` with `.md` in an
 - [SDK Overview](https://docs.morsecms.xyz/sdk-overview.md): TypeScript SDK for Morse: Sui transaction building, Walrus uploads, and Seal encryption behind a small adapter pattern.
 - [SDK Setup](https://docs.morsecms.xyz/sdk-client-setup.md): Install @arcadiasystems/morse-sdk, wire a wallet adapter (server or browser), and pick a Walrus access pattern.
 - [SDK Cookbooks](https://docs.morsecms.xyz/sdk-workflows.md): End-to-end SDK recipes: publish content, revise entries, encrypt and decrypt, delegate write access, and tear down resources.
+- [React Uploader](https://docs.morsecms.xyz/uploader.md): Drop-in React components and hooks for uploading Morse recipient files to Walrus, public or encrypted, and sharing them with a link.
 
 ## Smart Contracts
 

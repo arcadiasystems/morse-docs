@@ -4,7 +4,7 @@
     "pageTitle": "Morse: The Decentralized Headless CMS Protocol",
     "section": "Getting Started",
     "heading": "Morse: The Decentralized Headless CMS Protocol",
-    "text": "A headless CMS protocol built on Sui and Walrus, for developers building content applications with on-chain ownership and decentralized storage. Network status Morse runs on Walrus Mainnet and testnet, and the contracts are unaudited. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose."
+    "text": "A headless CMS protocol built on Sui and Walrus, for developers building content applications with on-chain ownership and decentralized storage. Network status Morse runs on Walrus Mainnet and testnet, and the contracts are unaudited. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first, and read Walrus Mainnet before you switch. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose."
   },
   {
     "url": "index.html#what-is-morse",
@@ -46,7 +46,7 @@
     "pageTitle": "Morse: The Decentralized Headless CMS Protocol",
     "section": "Getting Started",
     "heading": "Next steps",
-    "text": "Quick Start Choose your path (CLI, SDK, or contracts) and go from zero to published content on testnet. Live Demo A working blog running on Morse: wallet-native publishing, on-chain revisions, Seal-gated premium posts. No wallet needed to read. Core Concepts Understand the Publication → Collection → Entry model. CLI Manage publications and content from your terminal. Encrypted keystore, active context, no IDs to paste. SDK Build on Morse from Node or the browser. Adapter pattern, branded IDs, structured errors."
+    "text": "Quick Start Choose your path (CLI, SDK, or contracts) and go from zero to published content on testnet. Live Demo A working blog running on Morse: wallet-native publishing, on-chain revisions, Seal-gated premium posts. No wallet needed to read. Core Concepts Understand the Publication → Collection → Entry model. CLI Manage publications and content from your terminal. Encrypted keystore, active context, no IDs to paste. SDK Build on Morse from Node or the browser. Adapter pattern, branded IDs, structured errors. React Uploader Drop-in React components and hooks to upload files to Walrus, public"
   },
   {
     "url": "core-concepts.html",
@@ -151,7 +151,7 @@
     "pageTitle": "Quick Start: CLI",
     "section": "Getting Started",
     "heading": "Quick Start: CLI",
-    "text": "Install morse-cli and go from zero to published content on testnet in under five minutes. No contracts, no code, just your terminal. About 5 minutesBun or NodeFunded Sui walletSui testnet Network status Morse runs on Walrus Mainnet and testnet, and the contracts are unaudited. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose."
+    "text": "Install morse-cli and go from zero to published content on testnet in under five minutes. No contracts, no code, just your terminal. About 5 minutesBun or NodeFunded Sui walletSui testnet Network status Morse runs on Walrus Mainnet and testnet, and the contracts are unaudited. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first, and read Walrus Mainnet before you switch. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to l"
   },
   {
     "url": "quick-start-cli.html#prerequisites",
@@ -221,7 +221,7 @@
     "pageTitle": "Quick Start: SDK",
     "section": "Getting Started",
     "heading": "Quick Start: SDK",
-    "text": "Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter: no browser, no wallet popups. Want to see the result first? Browse the live demo blog built on this SDK. Network status Morse runs on Walrus Mainnet and testnet, and the contracts are unaudited. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose."
+    "text": "Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter: no browser, no wallet popups. Want to see the result first? Browse the live demo blog built on this SDK. Network status Morse runs on Walrus Mainnet and testnet, and the contracts are unaudited. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first, and read Walrus Mainnet before you switch. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish an"
   },
   {
     "url": "quick-start-sdk.html#prerequisites",
@@ -263,7 +263,7 @@
     "pageTitle": "Quick Start: Smart Contracts",
     "section": "Getting Started",
     "heading": "Quick Start: Smart Contracts",
-    "text": "Create a publication, add a collection, and publish an entry using raw Programmable Transaction Blocks against the deployed Morse contracts on testnet. No SDK wrappers, just tx.moveCall. Network status Morse runs on Walrus Mainnet and testnet, and the contracts are unaudited. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose."
+    "text": "Create a publication, add a collection, and publish an entry using raw Programmable Transaction Blocks against the deployed Morse contracts on testnet. No SDK wrappers, just tx.moveCall. Network status Morse runs on Walrus Mainnet and testnet, and the contracts are unaudited. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first, and read Walrus Mainnet before you switch. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lo"
   },
   {
     "url": "quick-start-contracts.html#prerequisites",
@@ -277,14 +277,14 @@
     "pageTitle": "Quick Start: Smart Contracts",
     "section": "Getting Started",
     "heading": "Installing",
-    "text": "Install the Morse SDK (for network configuration and Walrus uploads) and the Sui SDK (for transaction construction and signing). bashbun Copy bun add @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal bashnpm Copy npm install @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal Why the SDK if we are using raw PTBs? This guide uses raw tx.moveCall. No SDK wrappers for contract calls. The SDK packages provide three things: morseConfig: resolves the deployed package ID, registry ID, and RPC URL so you do not hard-code addresses DefaultWalrusWriteAdapter: handles blob u"
+    "text": "Install the Morse SDK (for network configuration and Walrus uploads) and the Sui SDK (for transaction construction and signing). bashbun Copy bun add @arcadiasystems/morse-sdk@~0.8.0 @mysten/sui@~2.16.2 @mysten/walrus@~1.1.6 @mysten/seal@~1.1.3 bashnpm Copy npm install @arcadiasystems/morse-sdk@~0.8.0 @mysten/sui@~2.16.2 @mysten/walrus@~1.1.6 @mysten/seal@~1.1.3 Why the SDK if we are using raw PTBs? This guide uses raw tx.moveCall. No SDK wrappers for contract calls. The SDK packages provide three things: morseConfig: resolves the deployed package ID, registry ID, and RPC URL so you do not har"
   },
   {
     "url": "quick-start-contracts.html#writing-the-script",
     "pageTitle": "Quick Start: Smart Contracts",
     "section": "Getting Started",
     "heading": "Writing the script",
-    "text": "Save this as quickstart-contracts.ts. It creates a publication, adds a collection, uploads content to Walrus, and registers an on-chain entry, all using raw PTBs. Transport: gRPC This guide uses SuiGrpcClient for its typed interface and lower latency. The Morse SDK also supports JSON-RPC via SuiHTTPTransport from @mysten/sui/client if your environment requires it. See SDK Client Setup for details. typescript Copy import { SuiGrpcClient } from \"@mysten/sui/grpc\"; import { Transaction } from \"@mysten/sui/transactions\"; import { Ed25519Keypair } from \"@mysten/sui/keypairs/ed25519\"; import { bcs }"
+    "text": "Save this as quickstart-contracts.ts. It creates a publication, adds a collection, uploads content to Walrus, and registers an on-chain entry, all using raw PTBs. Transport: gRPC This guide uses SuiGrpcClient for its typed interface and lower latency. The Morse SDK is gRPC-only: its readers and adapters are typed against SuiGrpcClient from @mysten/sui/grpc, and a JSON-RPC fallback is planned but has not shipped. Environments that block gRPC must proxy through a gRPC-compatible RPC endpoint. See SDK Client Setup for details. typescript Copy import { SuiGrpcClient } from \"@mysten/sui/grpc\"; impo"
   },
   {
     "url": "quick-start-contracts.html#running-it",
@@ -299,6 +299,76 @@
     "section": "Getting Started",
     "heading": "Next steps",
     "text": "Contract Cookbooks Revisions, drafts, encrypted content, delegating access, and teardown, all via raw PTBs. Contract Reference Full function signatures, argument types, error codes, and Move struct definitions. Core Concepts Understand the data model: publications, collections, entries, and revisions."
+  },
+  {
+    "url": "mainnet.html",
+    "pageTitle": "Walrus Mainnet",
+    "section": "Getting Started",
+    "heading": "Walrus Mainnet",
+    "text": "Morse runs on Walrus Mainnet. This page covers what changes when you move from testnet: the deployment, the risks, setup, uploads, encrypted content and one known issue. Read this before you switch The contracts are unaudited. Gas and Walrus storage cost real SUI and WAL, and there is no faucet. Deletions can't be undone. Test every flow on testnet first, then repeat it on Walrus Mainnet."
+  },
+  {
+    "url": "mainnet.html#status",
+    "pageTitle": "Walrus Mainnet",
+    "section": "Getting Started",
+    "heading": "Status",
+    "text": "Morse has been live on Walrus Mainnet since 2026-09-09. The CLI and SDK ship with the mainnet addresses built in, so there are no addresses to supply. These are the current releases: PackageCurrent release @arcadiasystems/morse-sdk0.8.2 @arcadiasystems/morse-cli0.10.1 @arcadiasystems/morse-uploader0.2.0 Public publications, collections, entries and files work on both networks. Encrypted content needs your own Seal credentials on mainnet. See Encrypted content."
+  },
+  {
+    "url": "mainnet.html#deployment",
+    "pageTitle": "Walrus Mainnet",
+    "section": "Getting Started",
+    "heading": "The deployment",
+    "text": "Mainnet runs version 1 of the Morse Move package. It has never been upgraded, so published-at and original-id are the same address. FieldValue Package (published-at)0x4fc7af5d1e19f96e5fab4e677948214eec35e238b252a106c7d5036dcebdcae2 original-id0x4fc7af5d1e19f96e5fab4e677948214eec35e238b252a106c7d5036dcebdcae2 PublicationRegistry0x8d8b23c7acd7c1b260c793f2c648c5be8eb06db7c107b9f06ca3f39b700868ea Version1 Published2026-09-09 You only need these ids for raw contract calls. Use published-at as the target of Move calls, and original-id for type-filtered queries. The source of truth is Published.toml."
+  },
+  {
+    "url": "mainnet.html#setup",
+    "pageTitle": "Walrus Mainnet",
+    "section": "Getting Started",
+    "heading": "Setting up",
+    "text": "Fund the address you will use with SUI for gas and WAL for Walrus storage. There is no faucet on mainnet, so you have to acquire both. Nothing carries over from testnet. Mainnet has its own package and its own PublicationRegistry, so you create your publications and collections again."
+  },
+  {
+    "url": "mainnet.html#cli-setup",
+    "pageTitle": "Walrus Mainnet",
+    "section": "Getting Started",
+    "heading": "CLI",
+    "text": "Keep mainnet in its own profile, so your testnet profile stays as it is. Create the profile, make it the default, import the key that pays on mainnet, and check the result: bash Copy morse config add mainnet --network mainnet morse config use mainnet morse account import morse status account import prompts for the key and a password. If the key is already in your keystore, run morse account use <address> instead. Nothing selects mainnet for you. With no --network, MORSE_NETWORK or profile setting, the CLI targets testnet. Every command that spends gas prints the network it used, and --json out"
+  },
+  {
+    "url": "mainnet.html#sdk-setup",
+    "pageTitle": "Walrus Mainnet",
+    "section": "Getting Started",
+    "heading": "SDK",
+    "text": "morseConfig({ network: \"mainnet\" }) returns the full mainnet config, with the contract addresses built in. Use the same network for the gRPC client and the Walrus adapters. Start from the server setup and change every network literal to \"mainnet\": typescript Copy const config = morseConfig({ network: \"mainnet\" }); const client = new SuiGrpcClient({ network: \"mainnet\", baseUrl: config.rpcUrl, }); const walrus = DefaultWalrusWriteAdapter.fromConfig( { network: \"mainnet\", suiClient: client }, keypair, );"
+  },
+  {
+    "url": "mainnet.html#uploads",
+    "pageTitle": "Walrus Mainnet",
+    "section": "Getting Started",
+    "heading": "Uploads and the upload relay",
+    "text": "A direct upload sends slivers to every storage node in the Walrus committee at once: about 95 on mainnet. Many networks can't sustain that burst. The upload then fails with NotEnoughBlobConfirmationsError or \"Unable to connect\", even when the nodes are healthy. If uploads fail while reads work, this is almost certainly why. It is not a fault in your config. Retry through the upload relay, which takes one connection instead of about 95. --upload-relay is a global option, so it goes before the subcommand: bash Copy morse --upload-relay auto entry add hello --file post.json auto picks Mysten's ca"
+  },
+  {
+    "url": "mainnet.html#encrypted-content",
+    "pageTitle": "Walrus Mainnet",
+    "section": "Getting Started",
+    "heading": "Encrypted content",
+    "text": "Encrypted commands need Seal key servers. Testnet pins an open set, so they work there with no setup. Walrus Mainnet pins none, because every Seal operator there is commercial. You bring your own credential. Without one, the CLI's encrypted commands exit with code 2 and an explanation. In the CLI, set one of these environment variables: VariableUse MORSE_SEAL_API_KEYCredential for Mysten's Seal committee. The CLI already knows the committee's object id and aggregator. MORSE_SEAL_API_KEY_NAMEHeader name for that credential. Defaults to X-API-Key. MORSE_SEAL_KEY_SERVERSJSON array of { objectId, "
+  },
+  {
+    "url": "mainnet.html#known-issue",
+    "pageTitle": "Walrus Mainnet",
+    "section": "Getting Started",
+    "heading": "Known issue in morse-cli 0.10.1",
+    "text": "morse entry read and morse entry decrypt fail on the default storage-node read path with No valid blob metadata could be retrieved from any storage node. Pass --via-aggregator until a fixed morse-sdk release ships: bash Copy morse entry read 0 --via-aggregator morse entry decrypt 0 --via-aggregator This was reproduced on testnet on 2026-10-17, and mainnet runs the same code path. The aggregator path skips client-side blob verification, so you trust the aggregator's bytes. See CLI Cookbooks → Reading it back."
+  },
+  {
+    "url": "mainnet.html#next-steps",
+    "pageTitle": "Walrus Mainnet",
+    "section": "Getting Started",
+    "heading": "Next steps",
+    "text": "Quick Start: CLI Run the whole flow on testnet from your terminal before you switch. Quick Start: SDK Run the same flow on testnet as a TypeScript script. CLI: Command Reference Every command and flag, including profiles and the global options. SDK: Setup Install, wire a wallet, pick a Walrus adapter, handle errors."
   },
   {
     "url": "cookbooks.html",
@@ -1278,7 +1348,7 @@
     "pageTitle": "Recipient Files",
     "section": "Protocol",
     "heading": "Download",
-    "text": "Recipients decrypt with the share string. The CLI reads the on-chain record, fetches the ciphertext from Walrus, signs a short-lived SessionKey (10 minutes) with the active account, and decrypts locally: bash Copy morse file download --share <string> --out <path> [--via-aggregator] --share carries the file ID, prefix, and nonce in one token. Alternatively pass the file ID positionally with --prefix <hex> --nonce <hex>. --raw writes the stored bytes without decrypting. For a file with a recipient list and no decrypt input, the CLI refuses by default (the ciphertext is unusable), and --raw is th"
+    "text": "Recipients decrypt with the share string. The CLI reads the on-chain record, fetches the ciphertext from Walrus, signs a short-lived SessionKey (10 minutes) with the active account, and decrypts locally: bash Copy morse file download --share <string> --out <path> [--via-aggregator] --share carries the file ID, prefix, and nonce in one token. Alternatively pass the file ID positionally with --prefix <hex> --nonce <hex>. --raw writes the stored bytes without decrypting. For an encrypted file (one with a Seal prefix attached on-chain) and no decrypt input, the CLI refuses by default (the cipherte"
   },
   {
     "url": "recipient-files.html#managing-recipients",
@@ -1411,28 +1481,28 @@
     "pageTitle": "CLI Command Reference",
     "section": "CLI",
     "heading": "CLI Command Reference",
-    "text": "Complete reference for every morse-cli command, organized by resource: context, config, account, publication, collection, entry, revision, and cap."
+    "text": "Complete reference for every morse-cli command, organized by resource: context, config, account, publication, collection, entry, revision, cap, and file."
   },
   {
     "url": "cli-commands.html#global-options",
     "pageTitle": "CLI Command Reference",
     "section": "CLI",
     "heading": "Global options",
-    "text": "Global options apply to every command and must appear before the subcommand (e.g. morse --json publication list). OptionPurpose --network <testnet|localnet>Network to target (default: testnet). -p, --profile <name>Config profile to use. --rpc <url>Override the Sui RPC URL. --jsonMachine-readable JSON on stdout. -q, --quietSuppress progress and informational output. -y, --yesAssume yes for confirmation prompts. --debugPrint stack traces on error. -V, --versionPrint the version. -h, --helpShow help for any command."
+    "text": "Global options apply to every command and must appear before the subcommand (e.g. morse --json publication list). OptionPurpose --network <mainnet|testnet|localnet>Network to target (default: testnet). -p, --profile <name>Config profile to use. --rpc <url>Override the Sui RPC URL. --upload-relay <url|auto>Upload Walrus blobs through a relay instead of sending them to every storage node; auto picks the network's canonical relay. Costs a tip per upload. --max-tip <mist>Cap the relay's per-upload tip, in MIST (default: 10000000). Only applies with --upload-relay. --jsonMachine-readable JSON on st"
   },
   {
     "url": "cli-commands.html#shared-command-flags",
     "pageTitle": "CLI Command Reference",
     "section": "CLI",
     "heading": "Shared command flags",
-    "text": "These flags appear across multiple command groups. Command-specific flags are shown inline in each category below. ShortLongPurpose -P--publication <slug|id>Target publication (default: active context). -C--collection <name>Target collection (default: active context). -f--file <path>Input file (- for stdin). Used by content commands. -n--name <name>Publication name (used by publication create). -s--slug <slug>URL slug (used by publication create)."
+    "text": "These flags appear across multiple command groups. Command-specific flags are shown inline in each category below. ShortLongPurpose -P--publication <slug|id>Target publication (default: active context). -C--collection <name>Target collection (default: active context). -f--file <path>Input file (- for stdin). Used by content commands. -n--name <name>Name of a publication (publication create) or a file (file upload, file register, file update). -s--slug <slug>URL slug (used by publication create)."
   },
   {
     "url": "cli-commands.html#argument-notation",
     "pageTitle": "CLI Command Reference",
     "section": "CLI",
     "heading": "Argument notation",
-    "text": "Values in <angle brackets> are required; values in [square brackets] are optional; (a | b) means one of the two is required. ArgumentFormatExample <entryId>Zero-based integer index within the collection.0 [revisionIndex]Zero-based integer index within the entry. Latest when omitted.0 <draftRevisionId>Zero-based integer revision ID of the draft to publish.1 <publisherCapId>Sui object ID of a PublisherCap.0x3a… <address>, <recipient>, <holder>Sui address.0xf1… <publication>Publication slug or Sui object ID.my-blog, 0x7c…"
+    "text": "Values in <angle brackets> are required; values in [square brackets] are optional; (a | b) means one of the two is required; ... means the flag can be repeated. ArgumentFormatExample <entryId>Zero-based integer index within the collection.0 [revisionIndex]Zero-based integer index within the entry. Latest when omitted.0 <draftRevisionId>Zero-based integer revision ID of the draft to publish.1 <publisherCapId>Sui object ID of a PublisherCap.0x3a… <address>, <recipient>, <holder>, <newOwner>Sui address.0xf1… <publication>Publication slug or Sui object ID.my-blog, 0x7c… <file>Sui object ID of a Re"
   },
   {
     "url": "cli-commands.html#context",
@@ -1446,14 +1516,14 @@
     "pageTitle": "CLI Command Reference",
     "section": "CLI",
     "heading": "Config",
-    "text": "Configure CLI profiles, each pointing to a different network and account. CommandPurpose config add <name> --network <net> [--rpc <url>]Create or update a profile. config listList profiles; * marks the active. config use <name>Set the active profile. config remove <name>Delete a profile. config pathPrint the config file path. example $ morse config add testnet --network testnet Profile \"testnet\" created and set as default."
+    "text": "Configure CLI profiles, each pointing to a different network and account. CommandPurpose config add <name> --network <net> [--rpc <url>] [--upload-relay <url|auto>]Create or update a profile. --upload-relay saves a Walrus upload relay on the profile. config listList profiles; * marks the active. config use <name>Set the active profile. config remove <name>Delete a profile. config pathPrint the config file path. example $ morse config add testnet --network testnet Profile \"testnet\" created and set as default."
   },
   {
     "url": "cli-commands.html#account",
     "pageTitle": "CLI Command Reference",
     "section": "CLI",
     "heading": "Account",
-    "text": "Import, list, and manage keypairs used for signing transactions. CommandPurpose account importImport a key into an encrypted keystore (hidden prompts for key + password). account listList imported accounts; * marks the active one. account showPrint the active account address. account use <address>Set the active account for the current profile. account export <address>Reveal a decrypted key (interactive-only, dangerous). example $ morse account list * 0x71a3...9f2b 0xd4e5...6f7a"
+    "text": "Import, list, and manage keypairs used for signing transactions. CommandPurpose account importImport a key into an encrypted keystore. Reads the key from stdin when it is piped; otherwise prompts for key + password (hidden). account listList imported accounts; * marks the active one. account showPrint the active account address. account use <address>Set the active account for the current profile. account export <address>Reveal a decrypted key (interactive-only, dangerous). To import in a script, pipe the key on stdin and set MORSE_KEYSTORE_PASSWORD. With stdin piped there is no terminal to pro"
   },
   {
     "url": "cli-commands.html#publication",
@@ -1474,7 +1544,7 @@
     "pageTitle": "CLI Command Reference",
     "section": "CLI",
     "heading": "Entry",
-    "text": "Add, read, and delete entries within a collection. CommandPurpose entry get <entryId>Fetch a single entry's metadata. entry read <entryId> [<revisionIndex>] [--out <path>] [--via-aggregator]Fetch a public entry's content to stdout or a file. Reads the latest revision unless revisionIndex is specified; --via-aggregator fetches through a Walrus aggregator instead of directly. Recommended on testnet, where direct reads frequently fail right after an upload (see CLI Cookbooks → Reading it back). entry list [--limit <n>] [--cursor <cursor>] [--drafts-only]List entries. --drafts-only filters to unpu"
+    "text": "Add, read, and delete entries within a collection. CommandPurpose entry get <entryId>Fetch a single entry's metadata. entry read <entryId> [<revisionIndex>] [--out <path>] [--via-aggregator]Fetch a public entry's content to stdout or a file. Reads the latest revision unless revisionIndex is specified; --via-aggregator fetches through a Walrus aggregator instead of directly. Recommended on testnet, where direct reads frequently fail right after an upload (see CLI Cookbooks → Reading it back). entry list [--limit <n>] [--cursor <cursor>] [--all] [--drafts-only]List entries. --all fetches every p"
   },
   {
     "url": "cli-commands.html#revision",
@@ -1489,6 +1559,20 @@
     "section": "CLI",
     "heading": "Cap",
     "text": "Issue, revoke, and transfer publisher capabilities. CommandPurpose cap list [<address>] [--limit <n>] [--cursor <cursor>]List PublisherCaps held by an address. cap issue <holder> [-P <slug|id>] [--owner-cap <id>]Issue a PublisherCap bound to an address. cap revoke <publisherCapId> [-P <slug|id>] [--owner-cap <id>]Revoke a PublisherCap. Asks for confirmation; in scripts pass the global --yes before the subcommand (morse --yes cap revoke <id>). cap destroy <publisherCapId> [-P <slug|id>]Destroy a PublisherCap you hold. cap transfer <publisherCapId> <recipient>Transfer a PublisherCap object. Does"
+  },
+  {
+    "url": "cli-commands.html#file",
+    "pageTitle": "CLI Command Reference",
+    "section": "CLI",
+    "heading": "File",
+    "text": "Upload, register, read, list, and manage RecipientFiles on Walrus. A RecipientFile carries its own recipient list: the addresses allowed to decrypt it. See Recipient Files → CLI workflows for a full walkthrough. CommandPurpose file upload <path> --name <name> (--public | --encrypt | -r <addr>...) [--content-type <mime>] [--epochs <n>]Upload a file to Walrus and register it on-chain. --public stores it unencrypted and prints a view link. --encrypt encrypts it with Seal and prints a share string. -r, --recipient adds an address that can decrypt it and implies --encrypt; the sender is always a re"
+  },
+  {
+    "url": "cli-commands.html#command-spellings",
+    "pageTitle": "CLI Command Reference",
+    "section": "CLI",
+    "heading": "Command spellings",
+    "text": "Some commands accept a second spelling for the same action. Both spellings do the same thing. CommandAlso accepts account showaccount get publication getpublication show entry getentry show file getfile show entry readentry download file downloadfile read config removeconfig delete cap transfercap transfer-ownership entry scanentry list --all The publication group also answers to pub, as in morse pub list."
   },
   {
     "url": "cli-commands.html#next-steps",
@@ -1656,7 +1740,7 @@
     "pageTitle": "SDK Setup",
     "section": "SDK",
     "heading": "Compatibility",
-    "text": "@arcadiasystems/morse-sdk is built and tested against specific minor versions of its Mysten substrate. Newer or older versions are not validated and may produce runtime errors. The peer-dependency ranges in package.json enforce these bounds. Package Version Required @arcadiasystems/morse-sdk0.4.x(this package) @mysten/sui>=2.16.2 <2.17.0Yes: types, gRPC client, keypairs @mysten/walrus>=1.1.6 <1.2.0Optional: for default Walrus adapters (read + write) @mysten/seal>=1.1.3 <1.2.0Optional: for encryption Pin to the verified minor version Mysten packages may ship breaking changes within the same maj"
+    "text": "@arcadiasystems/morse-sdk is built and tested against specific minor versions of its Mysten substrate. Newer or older versions are not validated and may produce runtime errors. The peer-dependency ranges in package.json enforce these bounds. Package Version Required @arcadiasystems/morse-sdk0.8.x(this package) @mysten/sui>=2.16.2 <2.17.0Yes: types, gRPC client, keypairs @mysten/walrus>=1.1.6 <1.2.0Yes: default Walrus adapters (read + write) @mysten/seal>=1.1.3 <1.2.0Yes: encryption Pin to the verified minor version Mysten packages may ship breaking changes within the same major version. When a"
   },
   {
     "url": "sdk-client-setup.html#runtime",
@@ -1670,14 +1754,14 @@
     "pageTitle": "SDK Setup",
     "section": "SDK",
     "heading": "Installing",
-    "text": "@mysten/sui is a required peer dependency. @mysten/walrus is needed for the DefaultWalrusWriteAdapter. @mysten/seal is required at runtime even for non-encrypted workflows. bash Copy bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3"
+    "text": "@mysten/sui, @mysten/walrus, and @mysten/seal are all required peer dependencies. The SDK's main entry imports the default Walrus and Seal adapters, so both packages must be installed even for workflows that never upload or encrypt. bash Copy bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3"
   },
   {
     "url": "sdk-client-setup.html#morse-config",
     "pageTitle": "SDK Setup",
     "section": "SDK",
     "heading": "morseConfig() shape",
-    "text": "morseConfig({ network }) takes the target network (\"testnet\" or \"localnet\") and returns a read-only object with the contract addresses and endpoints the SDK needs. Mainnet is not yet supported. All other fields have built-in defaults but can be overridden for custom deployments. Every SDK function takes this object as its config argument. The returned object contains the following fields: FieldTypeDescription network\"testnet\" | \"localnet\"Sui network the config targets. Mainnet is not yet supported. rpcUrlstringSui JSON-RPC / gRPC endpoint. Defaults to the public fullnode for the chosen network"
+    "text": "morseConfig({ network }) takes the target network (\"mainnet\", \"testnet\", or \"localnet\") and returns a read-only object with the contract addresses and endpoints the SDK needs. All other fields have built-in defaults but can be overridden for custom deployments. Every SDK function takes this object as its config argument. The returned object contains the following fields: FieldTypeDescription network\"mainnet\" | \"testnet\" | \"localnet\"Sui network the config targets. rpcUrlstringSui fullnode URL to pass as baseUrl when you construct SuiGrpcClient. The SDK never reads it itself; its readers and ada"
   },
   {
     "url": "sdk-client-setup.html#server-setup",
@@ -1895,6 +1979,97 @@
     "section": "SDK",
     "heading": "Next steps",
     "text": "CLI: Overview Interactive command-line tool for managing publications, collections, and entries without writing code. Smart Contracts: Overview Architecture of the Morse Move package: modules, shared objects, and the on-chain data model."
+  },
+  {
+    "url": "uploader.html",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "React Uploader",
+    "text": "@arcadiasystems/morse-uploader gives React apps drop-in components and hooks for Morse recipient files. Upload a file to Walrus, optionally encrypt it for a list of wallets, and share a link. The connected wallet pays for and signs everything. Network status Morse runs on Walrus Mainnet and testnet, and the contracts are unaudited. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first, and read Walrus Mainnet before you switch. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost "
+  },
+  {
+    "url": "uploader.html#what-it-is",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "What it is",
+    "text": "The package wraps the recipient file flow of morse-sdk 0.8 for React. Each upload creates a RecipientFile: a Walrus blob plus an on-chain record that carries its own recipient set. Every step is a headless hook, and an optional set of styled components sits on top. Headless hooks One hook per step: setup, upload, download, decrypt, file metadata and storage cost. Drop-in components MorseFileUploader and MorseFileDownloader, themed with CSS variables. Two wallet popups Any upload, public or encrypted, takes two wallet popups, whatever the number of recipients. Share links A link carries the fil"
+  },
+  {
+    "url": "uploader.html#install",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "Install",
+    "text": "The package is on npm as @arcadiasystems/morse-uploader. This page covers version 0.2.0. Install it with its peer dependencies: bashnpm Copy npm install @arcadiasystems/morse-uploader @arcadiasystems/morse-sdk@~0.8.1 @mysten/sui@~2.16.2 @mysten/walrus@~1.1.6 @mysten/seal@~1.1.3 Keep the peers inside the ranges below, so your app does not end up with two copies of the Sui, Walrus or Seal packages. A tilde range such as ~0.8.1 means >=0.8.1 <0.9.0, so the command above stays inside them. React and React DOM are assumed to be in your app already. Peer dependencyRange @arcadiasystems/morse-sdk>=0."
+  },
+  {
+    "url": "uploader.html#setup",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "Provider and setup",
+    "text": "Wallet connection is your app's job. The examples here use @mysten/dapp-kit. Once a wallet is connected, useMorseFiles turns it into the SDK handles that every other hook and component reads: a wallet adapter, a signer, the Walrus read and write adapters, the Seal adapter and a file reader. When the handles are ready, wrap your tree in MorseFilesProvider. tsx Copy import type { WalletStandardAccount } from \"@arcadiasystems/morse-sdk\"; import { MorseFilesProvider, useMorseFiles } from \"@arcadiasystems/morse-uploader\"; import { useSignAndExecuteTransaction, useSignPersonalMessage, useSignTransac"
+  },
+  {
+    "url": "uploader.html#setup-options",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "Options",
+    "text": "OptionTypeDescription network\"testnet\" | \"mainnet\"The network to build for. Required. accountWalletStandardAccountThe connected wallet account. Required. callbacksMorseFilesWalletCallbackssignTransaction, signPersonalMessage and signAndExecuteTransaction from your wallet. Required. suiClientSuiGrpcClientThe client to build transactions and read with. Defaults to a gRPC client on the network's public RPC. It must be a gRPC client. walrusWriteConfig{ wasmUrl?, uploadRelay? }Options for the default Walrus write adapter. See Walrus upload relay. walrusWriteWalrusWriteAdapter & WalrusFlowCapableA p"
+  },
+  {
+    "url": "uploader.html#components",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "Components",
+    "text": "The styled components live in the /ui entry. Import the stylesheet once. tsx Copy import { toSuiAddress } from \"@arcadiasystems/morse-sdk\"; import { MorseFileUploader } from \"@arcadiasystems/morse-uploader/ui\"; import \"@arcadiasystems/morse-uploader/styles.css\"; // Public upload <MorseFileUploader onUploaded={(result) => console.log(result.shareLink)} /> // Encrypted upload. The connected wallet is always added as a recipient. const recipients = [\"0x71a3...9f2b\", \"0x88c2...41de\"].map((address) => toSuiAddress(address)); <MorseFileUploader encrypt recipients={recipients} onUploaded={(result) =>"
+  },
+  {
+    "url": "uploader.html#hooks",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "Hooks",
+    "text": "Build your own UI from the same hooks the components use. The file hooks read their handles from MorseFilesProvider, so call them inside it. HookWhat it does useMorseFiles(options)Builds the handles from a connected wallet. Call it once, above the provider. useMorseFilesContext()Returns the handles. Throws outside the provider. useFileUpload()Uploads one file. upload({ file, epochs, recipients?, encrypt?, deletable? }) resolves to { fileId, blobId, encrypted, sealIdPrefix, sealNonce, shareLink }. phase tracks progress. useFileDownload(fileId, seal)Drives a download page. Loads the on-chain rec"
+  },
+  {
+    "url": "uploader.html#upload-from-a-hook",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "Upload from a hook",
+    "text": "tsx Copy import { uploadErrorMessage, uploadPhaseLabel, useFileUpload, useMorseFilesContext, } from \"@arcadiasystems/morse-uploader\"; export function UploadButton({ file }: { file: File }) { const { network } = useMorseFilesContext(); const { upload, status, phase, data, error } = useFileUpload(); const message = error === null ? null : uploadErrorMessage(error, network); return ( <div> <button type=\"button\" disabled={status === \"uploading\"} onClick={() => { // upload() rejects on failure; the hook also keeps the error in `error`. upload({ file, epochs: 5 }).catch(() => undefined); }} > Upload"
+  },
+  {
+    "url": "uploader.html#share-links",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "Share links",
+    "text": "buildShareLink({ fileId, network, sealIdPrefix, sealNonce }) builds a link of the form <origin>/#/f/<fileId>?net=<network>&p=<hex>&n=<hex> on the current origin. useFileUpload already returns one as shareLink. The baseUrl and pattern options change the origin and the path. Everything after # stays in the browser, so none of it reaches a server log. The Seal material in the link is not a secret: decryption is still gated by the file's recipient set. parseShareLink(href) reads a link back into { fileId, network, sealIdPrefix, sealNonce }. The Seal fields are null for a public file. It returns nu"
+  },
+  {
+    "url": "uploader.html#upload-relay",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "Walrus upload relay",
+    "text": "A direct Walrus write sends slivers to every storage node at once, a burst that many networks cannot sustain. In a browser, write through the upload relay instead: it does that fan-out for you over one connection. The default write adapter uses it when you set walrusWriteConfig.uploadRelay, which the uploader hands unchanged to @mysten/walrus. NetworkRelay host Testnethttps://upload-relay.testnet.walrus.space Walrus Mainnethttps://upload-relay.mainnet.walrus.space tsx Copy const UPLOAD_RELAY_HOSTS = { testnet: \"https://upload-relay.testnet.walrus.space\", mainnet: \"https://upload-relay.mainnet."
+  },
+  {
+    "url": "uploader.html#seal-on-walrus-mainnet",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "Encrypted files and Seal on Walrus Mainnet",
+    "text": "An encrypted upload encrypts the file under Seal before it leaves the browser, then creates the file and binds its Seal identity in one transaction. The connected wallet is always a recipient, so the owner can always decrypt. At decrypt time, Seal key servers check the file's recipient set on-chain, and a wallet outside it gets no key. Decrypting takes one wallet popup to create a Seal SessionKey, which is reused across files until it expires (10 minutes by default; set it with ttlMin). Testnet pins an open set of key servers, so encryption works there with no setup. Walrus Mainnet pins none, "
+  },
+  {
+    "url": "uploader.html#limitations",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "Limitations",
+    "text": "Storage is a lease. Walrus stores a file for at most 53 epochs ahead, then it expires. An epoch is about 1 day on testnet and about 2 weeks on Walrus Mainnet. No file listing yet. A RecipientFile is a shared object, so it never shows up in a wallet's owned objects. Listing a wallet's files needs an event indexer, and the package ships no listing UI until one exists. Recipients are set at upload. The components do not change recipients afterwards. The SDK's owner-only addRecipient and removeRecipient do."
+  },
+  {
+    "url": "uploader.html#next-steps",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "Next steps",
+    "text": "Recipient Files The on-chain model behind each upload: the recipient set, Seal identities and decryption. SDK: Setup Wallet adapters, Walrus adapters and error handling in morse-sdk. morse-uploader on npm The package page, with versions and install details."
   },
   {
     "url": "contracts-overview.html",

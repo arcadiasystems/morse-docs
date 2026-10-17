@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Uploader · Morse Docs</title>
+  <meta name="description" content="Drop-in React components and hooks for uploading Morse recipient files to Walrus, public or encrypted, and sharing them with a link.">
+  <meta name="theme-color" content="#F2EFE8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="assets/docs.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="canonical" href="https://docs.morsecms.xyz/uploader.html">
+  <meta property="og:title" content="React Uploader · Morse Docs">
+  <meta property="og:description" content="Drop-in React components and hooks for uploading Morse recipient files to Walrus, public or encrypted, and sharing them with a link.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://docs.morsecms.xyz/uploader.html">
+  <meta property="og:site_name" content="Morse Docs">
+  <meta name="twitter:card" content="summary">
+  <link rel="alternate" type="text/markdown" href="https://docs.morsecms.xyz/uploader.md" title="Markdown version">
+</head>
+<body>
+
+<header class="top">
+  <div class="top__in">
+    <button class="menu-btn" type="button" id="menu" aria-label="Open navigation" aria-expanded="false" aria-controls="side">
+      <svg class="menu-btn__open" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg class="menu-btn__close" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <a class="brand" href="index.html" aria-label="Morse docs home">
+      <svg aria-hidden="true" width="26" height="26" viewBox="0 0 100 100"><path d="M8 72 V30 H36 V72 H64 V30 H92 V72" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>morse</span><em>DOCS</em>
+    </a>
+    <button class="search" type="button" id="search-open" aria-label="Search documentation (⌘K)">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span class="search__label">Search documentation</span><kbd>⌘K</kbd>
+    </button>
+    <nav class="top__right" aria-label="Site">
+      <button class="askai" type="button" data-askai title="Ask AI (⌘I)"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>Ask AI</button>
+      <a class="agents" href="use-morse-with-ai.html"><i aria-hidden="true"></i>For agents</a>
+      <a class="gh" href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener">GitHub</a>
+      <a class="site" href="https://www.morsecms.xyz" target="_blank" rel="noopener">morsecms.xyz</a>
+    </nav>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="side" id="side"></aside>
+
+  <main class="main">
+    <nav class="crumbs" aria-label="Breadcrumb"><span>SDK</span><span class="crumbs__sep" aria-hidden="true">/</span><span aria-current="page">React Uploader</span></nav>
+
+    <article class="article">
+        <h1>React Uploader</h1>
+        <p class="article-lead">
+          <code>@arcadiasystems/morse-uploader</code> gives React apps drop-in components and hooks for Morse recipient files. Upload a file to Walrus, optionally encrypt it for a list of wallets, and share a link. The connected wallet pays for and signs everything.
+        </p>
+        <div class="page-actions">
+          <div class="copybtn-group">
+            <button class="copybtn" type="button" id="copy-page"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-flash-label>Copy page</span></button>
+            <button class="copybtn copybtn-caret" type="button" id="page-menu-btn" aria-label="More page actions" aria-haspopup="true" aria-expanded="false" aria-controls="page-menu"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+          </div>
+          <div class="page-menu" id="page-menu" hidden>
+            <button class="page-menu__item" type="button" data-page-copy><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy page as Markdown</button>
+            <a class="page-menu__item" href="uploader.md" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>View as Markdown</a>
+            <a class="page-menu__item" id="page-chatgpt" href="https://chatgpt.com/" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>Open in ChatGPT</a>
+            <a class="page-menu__item" id="page-claude" href="https://claude.ai/new" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>Open in Claude</a>
+          </div>
+        </div>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">Network status</div>
+            <div class="callout-text">Morse runs on <strong>Walrus Mainnet and testnet</strong>, and the contracts are <strong>unaudited</strong>. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first, and read <a href="mainnet.html">Walrus Mainnet</a> before you switch. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.</div>
+          </div>
+        </div>
+
+        <h2 id="what-it-is">What it is</h2>
+        <p>The package wraps the <a href="recipient-files.html">recipient file</a> flow of <code>morse-sdk</code> 0.8 for React. Each upload creates a <code>RecipientFile</code>: a Walrus blob plus an on-chain record that carries its own recipient set. Every step is a headless hook, and an optional set of styled components sits on top.</p>
+
+        <div class="feature-grid">
+          <div class="feature-item">
+            <div class="feature-title">Headless hooks</div>
+            <div class="feature-desc">One hook per step: setup, upload, download, decrypt, file metadata and storage cost.</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-title">Drop-in components</div>
+            <div class="feature-desc"><code>MorseFileUploader</code> and <code>MorseFileDownloader</code>, themed with CSS variables.</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-title">Two wallet popups</div>
+            <div class="feature-desc">Any upload, public or encrypted, takes two wallet popups, whatever the number of recipients.</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-title">Share links</div>
+            <div class="feature-desc">A link carries the file ID, the network and the Seal material in the URL fragment, so none of it reaches a server log.</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-title">Your wallet stack</div>
+            <div class="feature-desc">You pass in the network and the wallet callbacks. Wallet connection stays in your app.</div>
+          </div>
+        </div>
+
+        <p>The package is ESM only and has four entry points:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Import path</th><th>Contents</th></tr></thead>
+            <tbody>
+              <tr><td><code>@arcadiasystems/morse-uploader</code></td><td>The setup hook, the provider, the headless hooks, and the share-link and cost helpers.</td></tr>
+              <tr><td><code>@arcadiasystems/morse-uploader/ui</code></td><td>The styled components: <code>MorseFileUploader</code> and <code>MorseFileDownloader</code>.</td></tr>
+              <tr><td><code>@arcadiasystems/morse-uploader/styles.css</code></td><td>The stylesheet for the styled components.</td></tr>
+              <tr><td><code>@arcadiasystems/morse-uploader/wallet-standard</code></td><td><code>WalletStandardAdapter</code>, an optional browser <code>WalletAdapter</code> backed by a sign-and-execute callback.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 id="install">Install</h2>
+        <p>The package is on npm as <a href="https://www.npmjs.com/package/@arcadiasystems/morse-uploader" target="_blank" rel="noopener"><code>@arcadiasystems/morse-uploader</code></a>. This page covers version 0.2.0. Install it with its peer dependencies:</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span><span class="code-note">npm</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre>npm install @arcadiasystems/morse-uploader @arcadiasystems/morse-sdk@~0.8.1 @mysten/sui@~2.16.2 @mysten/walrus@~1.1.6 @mysten/seal@~1.1.3</pre>
+        </div>
+
+        <p>Keep the peers inside the ranges below, so your app does not end up with two copies of the Sui, Walrus or Seal packages. A tilde range such as <code>~0.8.1</code> means <code>&gt;=0.8.1 &lt;0.9.0</code>, so the command above stays inside them. React and React DOM are assumed to be in your app already.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Peer dependency</th><th>Range</th></tr></thead>
+            <tbody>
+              <tr><td><code>@arcadiasystems/morse-sdk</code></td><td>&gt;=0.8.1 &lt;0.9.0</td></tr>
+              <tr><td><code>@mysten/sui</code></td><td>&gt;=2.16.2 &lt;2.17.0</td></tr>
+              <tr><td><code>@mysten/walrus</code></td><td>&gt;=1.1.6 &lt;1.2.0</td></tr>
+              <tr><td><code>@mysten/seal</code></td><td>&gt;=1.1.3 &lt;1.2.0</td></tr>
+              <tr><td><code>react</code>, <code>react-dom</code></td><td>&gt;=18.0.0</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>The package marks <code>@mysten/walrus</code> and <code>@mysten/seal</code> as optional peers, but <code>morse-sdk</code> requires all three Mysten packages. Install them all.</p>
+
+        <h2 id="setup">Provider and setup</h2>
+        <p>Wallet connection is your app's job. The examples here use <code>@mysten/dapp-kit</code>. Once a wallet is connected, <code>useMorseFiles</code> turns it into the SDK handles that every other hook and component reads: a wallet adapter, a signer, the Walrus read and write adapters, the Seal adapter and a file reader. When the handles are ready, wrap your tree in <code>MorseFilesProvider</code>.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">tsx</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="kw">import type</span> { WalletStandardAccount } <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
+<span class="kw">import</span> { MorseFilesProvider, useMorseFiles } <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-uploader"</span>;
+<span class="kw">import</span> {
+  useSignAndExecuteTransaction,
+  useSignPersonalMessage,
+  useSignTransaction,
+} <span class="kw">from</span> <span class="st">"@mysten/dapp-kit"</span>;
+<span class="kw">import</span> walrusWasmUrl <span class="kw">from</span> <span class="st">"@mysten/walrus-wasm/web/walrus_wasm_bg.wasm?url"</span>;
+<span class="kw">import type</span> { ReactNode } <span class="kw">from</span> <span class="st">"react"</span>;
+
+<span class="cm">// Mount only while a wallet is connected, e.g. with dapp-kit's useCurrentAccount().</span>
+<span class="kw">export function</span> <span class="fn">MorseFiles</span>({
+  account,
+  children,
+}: {
+  account: <span class="ty">WalletStandardAccount</span>;
+  children: <span class="ty">ReactNode</span>;
+}) {
+  <span class="kw">const</span> { mutateAsync: signTransaction } = <span class="fn">useSignTransaction</span>();
+  <span class="kw">const</span> { mutateAsync: signPersonalMessage } = <span class="fn">useSignPersonalMessage</span>();
+  <span class="kw">const</span> { mutateAsync: signAndExecuteTransaction } = <span class="fn">useSignAndExecuteTransaction</span>();
+
+  <span class="kw">const</span> setup = <span class="fn">useMorseFiles</span>({
+    network: <span class="st">"testnet"</span>,
+    account,
+    callbacks: {
+      signTransaction: ({ transaction }) =&gt; <span class="fn">signTransaction</span>({ transaction }),
+      signPersonalMessage: ({ message }) =&gt; <span class="fn">signPersonalMessage</span>({ message }),
+      signAndExecuteTransaction: ({ transaction }) =&gt;
+        <span class="fn">signAndExecuteTransaction</span>({ transaction }),
+    },
+    walrusWriteConfig: {
+      wasmUrl: walrusWasmUrl,
+      uploadRelay: {
+        host: <span class="st">"https://upload-relay.testnet.walrus.space"</span>,
+        sendTip: { max: <span class="nu">10_000_000</span> }, <span class="cm">// MIST; see "Walrus upload relay"</span>
+      },
+    },
+  });
+
+  <span class="kw">if</span> (setup.status === <span class="st">"error"</span>) {
+    <span class="kw">return</span> &lt;<span class="ty">p</span>&gt;Could not prepare your wallet.&lt;/<span class="ty">p</span>&gt;;
+  }
+  <span class="kw">if</span> (setup.status !== <span class="st">"ready"</span> || setup.handles === <span class="kw">null</span>) {
+    <span class="kw">return</span> &lt;<span class="ty">p</span>&gt;Preparing your wallet...&lt;/<span class="ty">p</span>&gt;;
+  }
+  <span class="kw">return</span> &lt;<span class="ty">MorseFilesProvider</span> value={setup.handles}&gt;{children}&lt;/<span class="ty">MorseFilesProvider</span>&gt;;
+}</pre>
+        </div>
+
+        <p><code>useMorseFiles</code> returns <code>{ status, handles, error }</code>. <code>status</code> moves from <code>"idle"</code> to <code>"preparing"</code>, then to <code>"ready"</code> or <code>"error"</code>. The hook rebuilds only when the network or the wallet address changes, so passing new callback objects on every render is safe.</p>
+
+        <h3 id="setup-options">Options</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Option</th><th>Type</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>network</code></td><td><code>"testnet" | "mainnet"</code></td><td>The network to build for. Required.</td></tr>
+              <tr><td><code>account</code></td><td><code>WalletStandardAccount</code></td><td>The connected wallet account. Required.</td></tr>
+              <tr><td><code>callbacks</code></td><td><code>MorseFilesWalletCallbacks</code></td><td><code>signTransaction</code>, <code>signPersonalMessage</code> and <code>signAndExecuteTransaction</code> from your wallet. Required.</td></tr>
+              <tr><td><code>suiClient</code></td><td><code>SuiGrpcClient</code></td><td>The client to build transactions and read with. Defaults to a gRPC client on the network's public RPC. It must be a gRPC client.</td></tr>
+              <tr><td><code>walrusWriteConfig</code></td><td><code>{ wasmUrl?, uploadRelay? }</code></td><td>Options for the default Walrus write adapter. See <a href="#upload-relay">Walrus upload relay</a>.</td></tr>
+              <tr><td><code>walrusWrite</code></td><td><code>WalrusWriteAdapter &amp; WalrusFlowCapable</code></td><td>A prebuilt write adapter. It replaces the default one, so <code>walrusWriteConfig</code> is ignored.</td></tr>
+              <tr><td><code>walrusRead</code></td><td><code>WalrusReadAdapter</code></td><td>A prebuilt read adapter. Defaults to the Walrus aggregator.</td></tr>
+              <tr><td><code>sealKeyServers</code></td><td><code>readonly KeyServerConfig[]</code></td><td>Seal key servers for the default Seal adapter. Needed for encrypted files on Walrus Mainnet. See <a href="#seal-on-walrus-mainnet">Seal on Walrus Mainnet</a>.</td></tr>
+              <tr><td><code>seal</code></td><td><code>SealAdapter</code></td><td>A prebuilt Seal adapter. It overrides <code>sealKeyServers</code>.</td></tr>
+              <tr><td><code>pubkeyCache</code></td><td><code>PubkeyCache</code></td><td>Cache for the wallet's public key. Defaults to a <code>localStorage</code> cache in the browser.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">Point the wallet and the SDK at one RPC</div>
+            <div class="callout-text">The SDK builds and reads over gRPC, while dapp-kit 1.0.6 executes over its own JSON-RPC client. Mysten's public fullnodes have retired JSON-RPC, so dapp-kit fails with <code>TypeError: Failed to fetch</code> before the wallet opens unless its <code>SuiClientProvider</code> points at an endpoint that still serves it. When the two clients sit on different nodes, the certify step can also fail with an object-version conflict. For reliable uploads, point <code>SuiClientProvider</code> and the <code>suiClient</code> option at one dedicated node.</div>
+          </div>
+        </div>
+
+        <h2 id="components">Components</h2>
+        <p>The styled components live in the <code>/ui</code> entry. Import the stylesheet once.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">tsx</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="kw">import</span> { toSuiAddress } <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
+<span class="kw">import</span> { MorseFileUploader } <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-uploader/ui"</span>;
+<span class="kw">import</span> <span class="st">"@arcadiasystems/morse-uploader/styles.css"</span>;
+
+<span class="cm">// Public upload</span>
+&lt;<span class="ty">MorseFileUploader</span> onUploaded={(result) =&gt; console.<span class="fn">log</span>(result.shareLink)} /&gt;
+
+<span class="cm">// Encrypted upload. The connected wallet is always added as a recipient.</span>
+<span class="kw">const</span> recipients = [<span class="st">"0x71a3...9f2b"</span>, <span class="st">"0x88c2...41de"</span>].<span class="fn">map</span>((address) =&gt; <span class="fn">toSuiAddress</span>(address));
+
+&lt;<span class="ty">MorseFileUploader</span>
+  encrypt
+  recipients={recipients}
+  onUploaded={(result) =&gt; console.<span class="fn">log</span>(result.shareLink)}
+/&gt;</pre>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th><code>MorseFileUploader</code> prop</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>encrypt</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Encrypt under Seal so only the recipients can decrypt.</td></tr>
+              <tr><td><code>recipients</code></td><td><code>readonly SuiAddress[]</code></td><td>None</td><td>Wallets that can decrypt. The connected wallet is always added on-chain.</td></tr>
+              <tr><td><code>defaultEpochs</code></td><td><code>number</code></td><td><code>5</code></td><td>Starting storage duration, in Walrus epochs.</td></tr>
+              <tr><td><code>minEpochs</code></td><td><code>number</code></td><td><code>1</code></td><td>Shortest duration a user can pick.</td></tr>
+              <tr><td><code>maxEpochs</code></td><td><code>number</code></td><td><code>53</code></td><td>Longest duration a user can pick. 53 epochs is the Walrus lease cap.</td></tr>
+              <tr><td><code>onUploaded</code></td><td><code>(result: CompletedFileUpload) =&gt; void</code></td><td>None</td><td>Called when an upload completes, with the file ID, the Seal material and the share link.</td></tr>
+              <tr><td><code>className</code></td><td><code>string</code></td><td>None</td><td>Extra class on the root element.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>The uploader shows a USD storage-cost estimate before upload, a progress stepper during it, and a share link with a copy button after it. It renders failures with <code>uploadErrorMessage</code>.</p>
+
+        <p><code>MorseFileDownloader</code> opens one file from a share link. It reads the on-chain record, then downloads a public file or decrypts an encrypted one, with the original file name and type. Images get a preview.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">tsx</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="kw">import type</span> { RecipientFileId } <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
+<span class="kw">import</span> { parseShareLink } <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-uploader"</span>;
+<span class="kw">import</span> { MorseFileDownloader } <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-uploader/ui"</span>;
+
+<span class="kw">export function</span> <span class="fn">SharedFile</span>() {
+  <span class="kw">const</span> link = <span class="fn">parseShareLink</span>(window.location.href);
+  <span class="kw">if</span> (link === <span class="kw">null</span>) {
+    <span class="kw">return</span> &lt;<span class="ty">p</span>&gt;This link is damaged or is not a Morse share link.&lt;/<span class="ty">p</span>&gt;;
+  }
+  <span class="kw">return</span> (
+    &lt;<span class="ty">MorseFileDownloader</span>
+      fileId={link.fileId <span class="kw">as</span> <span class="ty">RecipientFileId</span>}
+      sealIdPrefix={link.sealIdPrefix}
+      sealNonce={link.sealNonce}
+    /&gt;
+  );
+}</pre>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th><code>MorseFileDownloader</code> prop</th><th>Type</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>fileId</code></td><td><code>RecipientFileId</code></td><td>The file's on-chain ID, from the share link. Required.</td></tr>
+              <tr><td><code>sealIdPrefix</code></td><td><code>Uint8Array | null</code></td><td>Seal material for an encrypted file. Leave it out, or pass <code>null</code>, for a public file.</td></tr>
+              <tr><td><code>sealNonce</code></td><td><code>Uint8Array | null</code></td><td>The other half of the Seal material. Pass it together with <code>sealIdPrefix</code>.</td></tr>
+              <tr><td><code>className</code></td><td><code>string</code></td><td>Extra class on the root element.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>To theme the components, set the <code>--mu-*</code> CSS variables on any ancestor, such as <code>--mu-accent-color</code>, <code>--mu-surface-color</code> and <code>--mu-fg-color</code>. Or restyle the <code>mu-*</code> classes directly.</p>
+
+        <h2 id="hooks">Hooks</h2>
+        <p>Build your own UI from the same hooks the components use. The file hooks read their handles from <code>MorseFilesProvider</code>, so call them inside it.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Hook</th><th>What it does</th></tr></thead>
+            <tbody>
+              <tr><td><code>useMorseFiles(options)</code></td><td>Builds the handles from a connected wallet. Call it once, above the provider.</td></tr>
+              <tr><td><code>useMorseFilesContext()</code></td><td>Returns the handles. Throws outside the provider.</td></tr>
+              <tr><td><code>useFileUpload()</code></td><td>Uploads one file. <code>upload({ file, epochs, recipients?, encrypt?, deletable? })</code> resolves to <code>{ fileId, blobId, encrypted, sealIdPrefix, sealNonce, shareLink }</code>. <code>phase</code> tracks progress.</td></tr>
+              <tr><td><code>useFileDownload(fileId, seal)</code></td><td>Drives a download page. Loads the on-chain record, then <code>load()</code>, <code>save()</code> and <code>download()</code> read a public file or decrypt an encrypted one. Pass <code>seal</code> as <code>{ sealIdPrefix, sealNonce }</code> for an encrypted file, or <code>null</code>.</td></tr>
+              <tr><td><code>useFileDecrypt()</code></td><td>Lower-level decrypt. <code>decrypt({ file, sealIdPrefix, sealNonce, ttlMin? })</code> resolves to the plaintext bytes.</td></tr>
+              <tr><td><code>useRecipientFile(fileId)</code></td><td>Loads a file's on-chain record: name, content type, size, members and blob ID.</td></tr>
+              <tr><td><code>useStorageCostEstimate({ sizeBytes, epochs, encrypt?, usdPerGbPerMonth? })</code></td><td>Estimates storage cost in USD from the Walrus price of $0.023 per GB per month and the network's nominal epoch length.</td></tr>
+              <tr><td><code>useDropzone(options)</code></td><td>Headless drag-and-drop file picker with prop getters. Works without the provider.</td></tr>
+              <tr><td><code>useClipboard(resetMs?)</code></td><td>Copies text and sets <code>copied</code> for <code>resetMs</code> (2000 ms by default). Works without the provider.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="upload-from-a-hook">Upload from a hook</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">tsx</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="kw">import</span> {
+  uploadErrorMessage,
+  uploadPhaseLabel,
+  useFileUpload,
+  useMorseFilesContext,
+} <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-uploader"</span>;
+
+<span class="kw">export function</span> <span class="fn">UploadButton</span>({ file }: { file: <span class="ty">File</span> }) {
+  <span class="kw">const</span> { network } = <span class="fn">useMorseFilesContext</span>();
+  <span class="kw">const</span> { upload, status, phase, data, error } = <span class="fn">useFileUpload</span>();
+  <span class="kw">const</span> message = error === <span class="kw">null</span> ? <span class="kw">null</span> : <span class="fn">uploadErrorMessage</span>(error, network);
+
+  <span class="kw">return</span> (
+    &lt;<span class="ty">div</span>&gt;
+      &lt;<span class="ty">button</span>
+        type=<span class="st">"button"</span>
+        disabled={status === <span class="st">"uploading"</span>}
+        onClick={() =&gt; {
+          <span class="cm">// upload() rejects on failure; the hook also keeps the error in `error`.</span>
+          <span class="fn">upload</span>({ file, epochs: <span class="nu">5</span> }).<span class="fn">catch</span>(() =&gt; <span class="kw">undefined</span>);
+        }}
+      &gt;
+        Upload
+      &lt;/<span class="ty">button</span>&gt;
+      {phase !== <span class="kw">null</span> &amp;&amp; &lt;<span class="ty">p</span>&gt;{<span class="fn">uploadPhaseLabel</span>(phase)}&lt;/<span class="ty">p</span>&gt;}
+      {data !== <span class="kw">null</span> &amp;&amp; &lt;<span class="ty">p</span>&gt;{data.shareLink}&lt;/<span class="ty">p</span>&gt;}
+      {message !== <span class="kw">null</span> &amp;&amp; &lt;<span class="ty">p</span>&gt;{message.title}: {message.description}&lt;/<span class="ty">p</span>&gt;}
+    &lt;/<span class="ty">div</span>&gt;
+  );
+}</pre>
+        </div>
+
+        <p>An upload moves through the phases <code>encrypting</code>, <code>uploading</code>, <code>submitting</code> and <code>complete</code>. Public uploads skip <code>encrypting</code>. <code>uploadPhases(encrypted)</code> returns the ordered list for a progress stepper, and <code>uploadPhaseLabel(phase)</code> returns a readable label. Blobs are created deletable unless you pass <code>deletable: false</code>.</p>
+        <p><code>uploadErrorMessage(error, network)</code> returns the SDK's <code>{ title, description, cause }</code> for any failure. It rewrites an insufficient-balance error as "Not enough WAL" or "Not enough SUI", with the amounts in whole coins and how to top up on that network.</p>
+
+        <h3 id="share-links">Share links</h3>
+        <p><code>buildShareLink({ fileId, network, sealIdPrefix, sealNonce })</code> builds a link of the form <code>&lt;origin&gt;/#/f/&lt;fileId&gt;?net=&lt;network&gt;&amp;p=&lt;hex&gt;&amp;n=&lt;hex&gt;</code> on the current origin. <code>useFileUpload</code> already returns one as <code>shareLink</code>. The <code>baseUrl</code> and <code>pattern</code> options change the origin and the path.</p>
+        <p>Everything after <code>#</code> stays in the browser, so none of it reaches a server log. The Seal material in the link is not a secret: decryption is still gated by the file's recipient set.</p>
+        <p><code>parseShareLink(href)</code> reads a link back into <code>{ fileId, network, sealIdPrefix, sealNonce }</code>. The Seal fields are <code>null</code> for a public file. It returns <code>null</code> for a damaged link, including one that carries only one of <code>p</code> and <code>n</code>. A file ID exists on one network only, so check <code>network</code> before you look the file up.</p>
+
+        <h2 id="upload-relay">Walrus upload relay</h2>
+        <p>A direct Walrus write sends slivers to every storage node at once, a burst that many networks cannot sustain. In a browser, write through the upload relay instead: it does that fan-out for you over one connection. The default write adapter uses it when you set <code>walrusWriteConfig.uploadRelay</code>, which the uploader hands unchanged to <code>@mysten/walrus</code>.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Network</th><th>Relay host</th></tr></thead>
+            <tbody>
+              <tr><td>Testnet</td><td><code>https://upload-relay.testnet.walrus.space</code></td></tr>
+              <tr><td>Walrus Mainnet</td><td><code>https://upload-relay.mainnet.walrus.space</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">tsx</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="kw">const</span> UPLOAD_RELAY_HOSTS = {
+  testnet: <span class="st">"https://upload-relay.testnet.walrus.space"</span>,
+  mainnet: <span class="st">"https://upload-relay.mainnet.walrus.space"</span>,
+} <span class="kw">as const</span>;
+
+<span class="kw">const</span> setup = <span class="fn">useMorseFiles</span>({
+  network,
+  account,
+  callbacks,
+  walrusWriteConfig: {
+    wasmUrl: walrusWasmUrl,
+    uploadRelay: {
+      host: UPLOAD_RELAY_HOSTS[network],
+      sendTip: { max: <span class="nu">10_000_000</span> }, <span class="cm">// the most you will pay per upload, in MIST</span>
+    },
+  },
+});</pre>
+        </div>
+
+        <p>The relay charges a tip on every upload, paid in SUI on top of WAL storage and gas. Set <code>sendTip: { max }</code>, with <code>max</code> in MIST. <code>@mysten/walrus</code> then reads the relay's live tip from <code>/v1/tip-config</code> and pays it, up to <code>max</code>.</p>
+        <ul>
+          <li><strong>Always set <code>sendTip</code>.</strong> Without it, no tip is sent and the relay refuses the upload.</li>
+          <li><strong>Leave room in <code>max</code>.</strong> If the tip is higher, <code>@mysten/walrus</code> throws <code>Tip amount (N) exceeds the maximum allowed tip (M)</code> before it uploads anything. On Walrus Mainnet the tip grows with the file's encoded size, and even a small file costs more than 1,000,000 MIST, so a cap sized for testnet rejects every Walrus Mainnet upload. The example app uses 10,000,000 MIST.</li>
+          <li><strong>The relay sees your bytes.</strong> Encrypt the file if that matters.</li>
+        </ul>
+
+        <p>In a browser, the Walrus client also needs the URL of its wasm file. It comes from <code>@mysten/walrus-wasm</code>, a dependency of <code>@mysten/walrus</code>. The example app installs it directly and imports the URL with Vite's <code>?url</code> suffix. Without an explicit URL, Vite serves <code>index.html</code> in place of the wasm file and the Walrus client fails to start.</p>
+        <p>To skip the default adapter, pass a prebuilt <code>walrusWrite</code> adapter instead. It must implement <code>WalrusFlowCapable</code>, which the two-popup upload needs.</p>
+
+        <h2 id="seal-on-walrus-mainnet">Encrypted files and Seal on Walrus Mainnet</h2>
+        <p>An encrypted upload encrypts the file under Seal before it leaves the browser, then creates the file and binds its Seal identity in one transaction. The connected wallet is always a recipient, so the owner can always decrypt. At decrypt time, Seal key servers check the file's recipient set on-chain, and a wallet outside it gets no key. Decrypting takes one wallet popup to create a Seal <code>SessionKey</code>, which is reused across files until it expires (10 minutes by default; set it with <code>ttlMin</code>).</p>
+        <p>Testnet pins an open set of key servers, so encryption works there with no setup. Walrus Mainnet pins none, because every Seal operator there is commercial. To encrypt on Walrus Mainnet, pass <code>sealKeyServers</code>. Start from the SDK's <code>MAINNET_SEAL_COMMITTEE</code> and add the <code>apiKeyName</code> and <code>apiKey</code> your operator issues:</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">tsx</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="kw">import</span> { MAINNET_SEAL_COMMITTEE } <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
+
+<span class="kw">const</span> setup = <span class="fn">useMorseFiles</span>({
+  network: <span class="st">"mainnet"</span>,
+  account,
+  callbacks,
+  walrusWriteConfig: {
+    wasmUrl: walrusWasmUrl,
+    uploadRelay: {
+      host: <span class="st">"https://upload-relay.mainnet.walrus.space"</span>,
+      sendTip: { max: <span class="nu">10_000_000</span> },
+    },
+  },
+  sealKeyServers: MAINNET_SEAL_COMMITTEE.<span class="fn">map</span>((server) =&gt; ({
+    ...server,
+    apiKeyName: <span class="st">"X-API-Key"</span>,
+    apiKey: sealApiKey, <span class="cm">// issued by your Seal operator</span>
+  })),
+});</pre>
+        </div>
+
+        <p>For full control, pass a prebuilt <code>seal</code> adapter instead. It overrides <code>sealKeyServers</code>.</p>
+        <p>Without either, setup still succeeds and <code>handles.seal</code> is <code>null</code>. Public upload and download keep working, and the encrypted paths reject with an error that names <code>sealKeyServers</code>. Read <code>useMorseFilesContext().seal</code> and hide the encrypt option when it is <code>null</code>. Note that <code>morse-sdk</code> verifies its Walrus paths end to end on Walrus Mainnet, but not Seal, because that needs commercial credentials.</p>
+
+        <div class="callout callout-warning">
+          <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+          <div class="callout-body">
+            <div class="callout-title">Keep the Seal credential out of the browser bundle</div>
+            <div class="callout-text">Anything in a browser bundle is visible to whoever opens devtools. Do not ship the key in client code you do not control. If the credential is not meant to be public, proxy it through your own backend.</div>
+          </div>
+        </div>
+
+        <p>The Seal material that decrypts a file (<code>sealIdPrefix</code> and <code>sealNonce</code>) is not stored on-chain. The share link carries it. If your app lists files in its own UI, store both values next to the file ID.</p>
+
+        <h2 id="limitations">Limitations</h2>
+        <ul>
+          <li><strong>Storage is a lease.</strong> Walrus stores a file for at most 53 epochs ahead, then it expires. An epoch is about 1 day on testnet and about 2 weeks on Walrus Mainnet.</li>
+          <li><strong>No file listing yet.</strong> A <code>RecipientFile</code> is a shared object, so it never shows up in a wallet's owned objects. Listing a wallet's files needs an event indexer, and the package ships no listing UI until one exists.</li>
+          <li><strong>Recipients are set at upload.</strong> The components do not change recipients afterwards. The SDK's owner-only <code>addRecipient</code> and <code>removeRecipient</code> do.</li>
+        </ul>
+
+        <h2 id="next-steps">Next steps</h2>
+        <div class="card-grid">
+          <a href="recipient-files.html" class="card">
+            <div class="card-title">Recipient Files</div>
+            <div class="card-desc">The on-chain model behind each upload: the recipient set, Seal identities and decryption.</div>
+          </a>
+          <a href="sdk-client-setup.html" class="card">
+            <div class="card-title">SDK: Setup</div>
+            <div class="card-desc">Wallet adapters, Walrus adapters and error handling in <code>morse-sdk</code>.</div>
+          </a>
+          <a href="https://www.npmjs.com/package/@arcadiasystems/morse-uploader" target="_blank" rel="noopener" class="card">
+            <div class="card-title">morse-uploader on npm</div>
+            <div class="card-desc">The package page, with versions and install details.</div>
+          </a>
+        </div>
+      </article>
+
+    <div class="feedback">
+      <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
+      <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20uploader.html" target="_blank" rel="noopener">Report an issue</a>
+      <span class="feedback__upd">Updated 2026-10-17</span>
+    </div>
+    <nav class="pager" aria-label="Previous and next">
+      <a href="sdk-workflows.html" rel="prev"><small>Previous</small><b>← SDK: Cookbooks</b></a>
+      <a href="contracts-overview.html" rel="next"><small>Next</small><b>Smart Contracts: Overview →</b></a>
+    </nav>
+  </main>
+
+  <aside class="toc" aria-label="On this page">
+    <p class="toc__title">On this page</p>
+    <div class="toc__list"></div>
+  </aside>
+</div>
+
+<script src="assets/sidebar.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>

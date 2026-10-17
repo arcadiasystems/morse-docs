@@ -236,7 +236,7 @@ Give the share string to recipients; they need it (plus membership) to decrypt.<
 
       <ul>
         <li><code>--share</code> carries the file ID, prefix, and nonce in one token. Alternatively pass the file ID positionally with <code>--prefix &lt;hex&gt; --nonce &lt;hex&gt;</code>.</li>
-        <li><code>--raw</code> writes the stored bytes without decrypting. For a file with a recipient list and no decrypt input, the CLI refuses by default (the ciphertext is unusable), and <code>--raw</code> is the explicit opt-in.</li>
+        <li><code>--raw</code> writes the stored bytes without decrypting. For an encrypted file (one with a Seal prefix attached on-chain) and no decrypt input, the CLI refuses by default (the ciphertext is unusable), and <code>--raw</code> is the explicit opt-in.</li>
         <li><code>--out</code> writes to a file; omitting it streams to stdout (not available in <code>--json</code> mode).</li>
       </ul>
 
@@ -394,7 +394,7 @@ console.<span class="fn">log</span>(<span class="kw">new</span> <span class="fn"
   config.recipientFileEventOriginPackageId ?? config.packageId,
 );
 
-<span class="cm">// Fetch events of these types from your event source (indexer or RPC),</span>
+<span class="cm">// Fetch events of these types from your event source (Sui GraphQL or an indexer),</span>
 <span class="cm">// normalized to { type, json, timestampMs }, oldest first. Then reduce:</span>
 <span class="kw">const</span> owned = <span class="fn">reconcileRecipientFilesOwnedBy</span>(events, myAddress, types);
 <span class="kw">const</span> accessible = <span class="fn">reconcileRecipientFilesAccessibleBy</span>(events, myAddress, types);
@@ -402,7 +402,7 @@ console.<span class="fn">log</span>(<span class="kw">new</span> <span class="fn"
 <span class="cm">// individual files via filesReader.getRecipientFile(summary.id).</span></pre>
       </div>
 
-      <p>The reducers handle creation, metadata updates, recipient add/remove, ownership transfer, and deletion. One known gap: <code>reconcileRecipientFilesOwnedBy</code> does not add files transferred <em>to</em> the queried address, because the transfer event does not carry the file's metadata. Re-fetch those with <code>getRecipientFile</code>. The CLI's <code>morse file list</code> uses these same reducers over <code>suix_queryEvents</code> (a deprecated Sui RPC endpoint; pass <code>--indexer-url</code> to point at your own event source).</p>
+      <p>The reducers handle creation, metadata updates, recipient add/remove, ownership transfer, and deletion. One known gap: <code>reconcileRecipientFilesOwnedBy</code> does not add files transferred <em>to</em> the queried address, because the transfer event does not carry the file's metadata. Re-fetch those with <code>getRecipientFile</code>. The CLI's <code>morse file list</code> uses these same reducers over events read from Sui GraphQL (the canonical Mysten endpoint for the network by default; pass <code>--indexer-url</code> to point at another GraphQL endpoint, which localnet requires).</p>
 
       <h3 id="types-and-config">Types &amp; config reference</h3>
       <div class="table-wrap"><table>

@@ -8,6 +8,7 @@ const NAV_SECTIONS = [
       { page: 'quick-start-sdk.html', label: 'SDK' },
       { page: 'quick-start-contracts.html', label: 'Smart Contracts' },
     ] },
+    { page: 'mainnet.html', label: 'Walrus Mainnet' },
   ] },
   { title: 'Cookbooks', items: [
     { page: 'cookbooks.html', label: 'All recipes', children: [
@@ -37,6 +38,7 @@ const NAV_SECTIONS = [
     { page: 'sdk-overview.html', label: 'Overview' },
     { page: 'sdk-client-setup.html', label: 'Setup' },
     { page: 'sdk-workflows.html', label: 'Reference cookbooks' },
+    { page: 'uploader.html', label: 'React uploader' },
   ] },
   { title: 'Smart contracts', items: [
     { page: 'contracts-overview.html', label: 'Overview' },
