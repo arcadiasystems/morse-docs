@@ -56,7 +56,7 @@
     <article class="article">
         <h1>CLI Overview</h1>
         <p class="article-lead">
-          <code>morse-cli</code> is the command-line client for the Morse decentralized CMS. It signs with a locally encrypted key, stores content on Walrus, and encrypts private entries with Seal: the same protocol surface as the SDK, driven from your terminal. Runs on Node or Bun, pre-release on testnet.
+          <code>morse-cli</code> is the command-line client for the Morse decentralized CMS. It signs with a locally encrypted key, stores content on Walrus, and encrypts private entries with Seal: the same protocol surface as the SDK, driven from your terminal. Runs on Node or Bun and targets Sui testnet or mainnet.
         </p>
         <div class="page-actions">
           <div class="copybtn-group">
@@ -74,8 +74,8 @@
         <div class="callout callout-info">
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
           <div class="callout-body">
-            <div class="callout-title">Published on npm · testnet only</div>
-            <div class="callout-text">Install <code>@arcadiasystems/morse-cli</code> from npm. The CLI is currently configured for testnet only. Mainnet support to be added soon.</div>
+            <div class="callout-title">Published on npm · testnet and mainnet</div>
+            <div class="callout-text">Install <code>@arcadiasystems/morse-cli</code> from npm. It targets testnet unless you choose mainnet with <code>--network</code>, <code>MORSE_NETWORK</code> or a profile. The contracts are unaudited and mainnet spends real SUI and WAL, so test on testnet first.</div>
           </div>
         </div>
 
@@ -129,7 +129,7 @@ morse --help</pre>
             </thead>
             <tbody>
               <tr><td><code>MORSE_PROFILE</code></td><td><code>-p, --profile</code></td><td>Profile to use.</td></tr>
-              <tr><td><code>MORSE_NETWORK</code></td><td><code>--network</code></td><td><code>testnet</code> or <code>localnet</code>.</td></tr>
+              <tr><td><code>MORSE_NETWORK</code></td><td><code>--network</code></td><td><code>testnet</code>, <code>mainnet</code> or <code>localnet</code>.</td></tr>
               <tr><td><code>MORSE_RPC_URL</code></td><td><code>--rpc</code></td><td>Sui RPC URL override.</td></tr>
               <tr><td><code>MORSE_ADDRESS</code></td><td>(no flag)</td><td>Active account address.</td></tr>
               <tr><td><code>MORSE_PUBLICATION</code></td><td><code>-P, --publication</code></td><td>Active publication ID.</td></tr>
