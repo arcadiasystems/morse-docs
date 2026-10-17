@@ -8,6 +8,7 @@ const NAV_SECTIONS = [
       { page: 'quick-start-sdk.html', label: 'SDK' },
       { page: 'quick-start-contracts.html', label: 'Smart Contracts' },
     ] },
+    { page: 'mainnet.html', label: 'Walrus Mainnet' },
   ] },
   { title: 'Cookbooks', items: [
     { page: 'cookbooks.html', label: 'All recipes', children: [
