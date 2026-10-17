@@ -84,10 +84,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td><code>@arcadiasystems/morse-sdk</code></td><td>0.4.x</td><td>(this package)</td></tr>
+              <tr><td><code>@arcadiasystems/morse-sdk</code></td><td>0.8.x</td><td>(this package)</td></tr>
               <tr><td><code>@mysten/sui</code></td><td>&gt;=2.16.2 &lt;2.17.0</td><td>Yes: types, gRPC client, keypairs</td></tr>
-              <tr><td><code>@mysten/walrus</code></td><td>&gt;=1.1.6 &lt;1.2.0</td><td>Optional: for default Walrus adapters (read + write)</td></tr>
-              <tr><td><code>@mysten/seal</code></td><td>&gt;=1.1.3 &lt;1.2.0</td><td>Optional: for encryption</td></tr>
+              <tr><td><code>@mysten/walrus</code></td><td>&gt;=1.1.6 &lt;1.2.0</td><td>Yes: default Walrus adapters (read + write)</td></tr>
+              <tr><td><code>@mysten/seal</code></td><td>&gt;=1.1.3 &lt;1.2.0</td><td>Yes: encryption</td></tr>
             </tbody>
           </table>
         </div>
@@ -96,7 +96,7 @@
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">Pin to the verified minor version</div>
-            <div class="callout-text">Mysten packages may ship breaking changes within the same major version. When a new version like <code>@mysten/walrus@1.2.0</code> is released, <code>morse-sdk</code> needs a coordinated bump and re-verification. Use <code>bun add @arcadiasystems/morse-sdk@~0.4.0</code> to lock to patch-level updates only.</div>
+            <div class="callout-text">Mysten packages may ship breaking changes within the same major version. When a new version like <code>@mysten/walrus@1.2.0</code> is released, <code>morse-sdk</code> needs a coordinated bump and re-verification. Use <code>bun add @arcadiasystems/morse-sdk@~0.8.0</code> to lock to patch-level updates only.</div>
           </div>
         </div>
 
@@ -131,7 +131,7 @@ console.<span class="fn">log</span>(TESTED_SUBSTRATE[<span class="st">"@mysten/w
         <p>The SDK works in both Node and browser environments. It does not depend on Node-specific APIs like <code>fs</code>, <code>path</code>, <code>process</code>, or <code>node:crypto</code>. Some <code>@mysten/*</code> packages may need polyfills in the browser. Check their docs if needed, though modern bundlers usually handle this automatically.</p>
 
         <h2 id="installing">Installing</h2>
-        <p><code>@mysten/sui</code> is a required peer dependency. <code>@mysten/walrus</code> is needed for the <code>DefaultWalrusWriteAdapter</code>. <code>@mysten/seal</code> is required at runtime even for non-encrypted workflows.</p>
+        <p><code>@mysten/sui</code>, <code>@mysten/walrus</code>, and <code>@mysten/seal</code> are all required peer dependencies. The SDK's main entry imports the default Walrus and Seal adapters, so both packages must be installed even for workflows that never upload or encrypt.</p>
 
         <div class="code-block">
           <div class="code-header">
@@ -142,13 +142,13 @@ console.<span class="fn">log</span>(TESTED_SUBSTRATE[<span class="st">"@mysten/w
         </div>
 
         <h2 id="morse-config">morseConfig() shape</h2>
-        <p><code>morseConfig({ network })</code> takes the target network (<code>"testnet"</code> or <code>"localnet"</code>) and returns a read-only object with the contract addresses and endpoints the SDK needs. Mainnet is not yet supported. All other fields have built-in defaults but can be overridden for custom deployments. Every SDK function takes this object as its <code>config</code> argument.</p>
+        <p><code>morseConfig({ network })</code> takes the target network (<code>"mainnet"</code>, <code>"testnet"</code>, or <code>"localnet"</code>) and returns a read-only object with the contract addresses and endpoints the SDK needs. All other fields have built-in defaults but can be overridden for custom deployments. Every SDK function takes this object as its <code>config</code> argument.</p>
         <p>The returned object contains the following fields:</p>
         <div class="table-wrap">
           <table>
             <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
             <tbody>
-              <tr><td><code>network</code></td><td><code>"testnet" | "localnet"</code></td><td>Sui network the config targets. Mainnet is not yet supported.</td></tr>
+              <tr><td><code>network</code></td><td><code>"mainnet" | "testnet" | "localnet"</code></td><td>Sui network the config targets.</td></tr>
               <tr><td><code>rpcUrl</code></td><td><code>string</code></td><td>Sui JSON-RPC / gRPC endpoint. Defaults to the public fullnode for the chosen network; override for a custom node.</td></tr>
               <tr><td><code>packageId</code></td><td><code>PackageId</code></td><td>Current <code>published-at</code> address of the Morse Move package. Used as the target for all transaction calls.</td></tr>
               <tr><td><code>originalPackageId</code></td><td><code>PackageId | undefined</code></td><td>Genesis publish address (<code>original-id</code>). Sui uses this in <code>objectType</code> strings and type filters. Defaults to <code>packageId</code> when the package has never been upgraded.</td></tr>
