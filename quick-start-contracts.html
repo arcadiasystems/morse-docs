@@ -75,7 +75,7 @@
         <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
         <div class="callout-body">
           <div class="callout-title">Network status</div>
-          <div class="callout-text">Morse runs on <strong>Walrus Mainnet and testnet</strong>, and the contracts are <strong>unaudited</strong>. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.</div>
+          <div class="callout-text">Morse runs on <strong>Walrus Mainnet and testnet</strong>, and the contracts are <strong>unaudited</strong>. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first, and read <a href="mainnet.html">Walrus Mainnet</a> before you switch. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.</div>
         </div>
       </div>
 
@@ -98,14 +98,14 @@
             <span class="code-lang">bash</span><span class="code-note">bun</span>
             <button class="code-copy" type="button">Copy</button>
           </div>
-          <pre>bun add @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal</pre>
+          <pre>bun add @arcadiasystems/morse-sdk@~0.8.0 @mysten/sui@~2.16.2 @mysten/walrus@~1.1.6 @mysten/seal@~1.1.3</pre>
         </div>
         <div class="code-block">
           <div class="code-header">
             <span class="code-lang">bash</span><span class="code-note">npm</span>
             <button class="code-copy" type="button">Copy</button>
           </div>
-          <pre>npm install @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal</pre>
+          <pre>npm install @arcadiasystems/morse-sdk@~0.8.0 @mysten/sui@~2.16.2 @mysten/walrus@~1.1.6 @mysten/seal@~1.1.3</pre>
         </div>
 
         <div class="callout callout-info">
@@ -130,7 +130,7 @@
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">Transport: gRPC</div>
-            <div class="callout-text">This guide uses <code>SuiGrpcClient</code> for its typed interface and lower latency. The Morse SDK also supports JSON-RPC via <code>SuiHTTPTransport</code> from <code>@mysten/sui/client</code> if your environment requires it. See <a href="sdk-client-setup.html">SDK Client Setup</a> for details.</div>
+            <div class="callout-text">This guide uses <code>SuiGrpcClient</code> for its typed interface and lower latency. The Morse SDK is gRPC-only: its readers and adapters are typed against <code>SuiGrpcClient</code> from <code>@mysten/sui/grpc</code>, and a JSON-RPC fallback is planned but has not shipped. Environments that block gRPC must proxy through a gRPC-compatible RPC endpoint. See <a href="sdk-client-setup.html">SDK Client Setup</a> for details.</div>
           </div>
         </div>
 
@@ -345,7 +345,7 @@ PublisherCap: 0x9c0d...1e2f</span>
     </div>
     <nav class="pager" aria-label="Previous and next">
       <a href="quick-start-sdk.html" rel="prev"><small>Previous</small><b>← Quick Start: SDK</b></a>
-      <a href="cookbooks.html" rel="next"><small>Next</small><b>Cookbooks →</b></a>
+      <a href="mainnet.html" rel="next"><small>Next</small><b>Walrus Mainnet →</b></a>
     </nav>
   </main>
 

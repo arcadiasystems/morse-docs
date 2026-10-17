@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Walrus Mainnet · Morse Docs</title>
+  <meta name="theme-color" content="#F2EFE8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="assets/docs.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta name="description" content="Move from testnet to Walrus Mainnet: the deployment, the risks, CLI and SDK setup, the upload relay, Seal credentials and a known read issue.">
+  <link rel="canonical" href="https://docs.morsecms.xyz/mainnet.html">
+  <meta property="og:title" content="Walrus Mainnet · Morse Docs">
+  <meta property="og:description" content="Move from testnet to Walrus Mainnet: the deployment, the risks, CLI and SDK setup, the upload relay, Seal credentials and a known read issue.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://docs.morsecms.xyz/mainnet.html">
+  <meta property="og:site_name" content="Morse Docs">
+  <meta name="twitter:card" content="summary">
+  <link rel="alternate" type="text/markdown" href="https://docs.morsecms.xyz/mainnet.md" title="Markdown version">
+</head>
+<body>
+
+<header class="top">
+  <div class="top__in">
+    <button class="menu-btn" type="button" id="menu" aria-label="Open navigation" aria-expanded="false" aria-controls="side">
+      <svg class="menu-btn__open" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg class="menu-btn__close" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <a class="brand" href="index.html" aria-label="Morse docs home">
+      <svg aria-hidden="true" width="26" height="26" viewBox="0 0 100 100"><path d="M8 72 V30 H36 V72 H64 V30 H92 V72" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>morse</span><em>DOCS</em>
+    </a>
+    <button class="search" type="button" id="search-open" aria-label="Search documentation (⌘K)">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span class="search__label">Search documentation</span><kbd>⌘K</kbd>
+    </button>
+    <nav class="top__right" aria-label="Site">
+      <button class="askai" type="button" data-askai title="Ask AI (⌘I)"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>Ask AI</button>
+      <a class="agents" href="use-morse-with-ai.html"><i aria-hidden="true"></i>For agents</a>
+      <a class="gh" href="https://github.com/arcadiasystems/morse-dcms" target="_blank" rel="noopener">GitHub</a>
+      <a class="site" href="https://www.morsecms.xyz" target="_blank" rel="noopener">morsecms.xyz</a>
+    </nav>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="side" id="side"></aside>
+
+  <main class="main">
+    <nav class="crumbs" aria-label="Breadcrumb"><span>Getting started</span><span class="crumbs__sep" aria-hidden="true">/</span><span aria-current="page">Walrus Mainnet</span></nav>
+
+    <article class="article">
+        <h1>Walrus Mainnet</h1>
+        <p class="article-lead">
+          Morse runs on Walrus Mainnet. This page covers what changes when you move from testnet: the deployment, the risks, setup, uploads, encrypted content and one known issue.
+        </p>
+        <div class="page-actions">
+          <div class="copybtn-group">
+            <button class="copybtn" type="button" id="copy-page"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-flash-label>Copy page</span></button>
+            <button class="copybtn copybtn-caret" type="button" id="page-menu-btn" aria-label="More page actions" aria-haspopup="true" aria-expanded="false" aria-controls="page-menu"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+          </div>
+          <div class="page-menu" id="page-menu" hidden>
+            <button class="page-menu__item" type="button" data-page-copy><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy page as Markdown</button>
+            <a class="page-menu__item" href="mainnet.md" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>View as Markdown</a>
+            <a class="page-menu__item" id="page-chatgpt" href="https://chatgpt.com/" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>Open in ChatGPT</a>
+            <a class="page-menu__item" id="page-claude" href="https://claude.ai/new" target="_blank" rel="noopener"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-2a2 2 0 0 0 1.3-1.3L12 3z"/></svg>Open in Claude</a>
+          </div>
+        </div>
+
+      <div class="callout callout-warning">
+        <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <div class="callout-body">
+          <div class="callout-title">Read this before you switch</div>
+          <div class="callout-text">The contracts are <strong>unaudited</strong>. Gas and Walrus storage cost <strong>real SUI and WAL</strong>, and there is <strong>no faucet</strong>. <strong>Deletions can't be undone.</strong> Test every flow on testnet first, then repeat it on Walrus Mainnet.</div>
+        </div>
+      </div>
+
+        <h2 id="status">Status</h2>
+        <p>Morse has been live on Walrus Mainnet since 2026-09-09. The CLI and SDK ship with the mainnet addresses built in, so there are no addresses to supply. These are the current releases:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Package</th><th>Current release</th></tr></thead>
+            <tbody>
+              <tr><td><a href="sdk-overview.html"><code>@arcadiasystems/morse-sdk</code></a></td><td>0.8.2</td></tr>
+              <tr><td><a href="cli-overview.html"><code>@arcadiasystems/morse-cli</code></a></td><td>0.10.1</td></tr>
+              <tr><td><a href="uploader.html"><code>@arcadiasystems/morse-uploader</code></a></td><td>0.2.0</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Public publications, collections, entries and files work on both networks. Encrypted content needs your own Seal credentials on mainnet. See <a href="#encrypted-content">Encrypted content</a>.</p>
+
+        <h2 id="deployment">The deployment</h2>
+        <p>Mainnet runs version 1 of the Morse Move package. It has never been upgraded, so <code>published-at</code> and <code>original-id</code> are the same address.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Field</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>Package (<code>published-at</code>)</td><td><a href="https://suiscan.xyz/mainnet/object/0x4fc7af5d1e19f96e5fab4e677948214eec35e238b252a106c7d5036dcebdcae2" target="_blank" rel="noopener"><code>0x4fc7af5d1e19f96e5fab4e677948214eec35e238b252a106c7d5036dcebdcae2</code></a></td></tr>
+              <tr><td><code>original-id</code></td><td><code>0x4fc7af5d1e19f96e5fab4e677948214eec35e238b252a106c7d5036dcebdcae2</code></td></tr>
+              <tr><td><code>PublicationRegistry</code></td><td><code>0x8d8b23c7acd7c1b260c793f2c648c5be8eb06db7c107b9f06ca3f39b700868ea</code></td></tr>
+              <tr><td>Version</td><td>1</td></tr>
+              <tr><td>Published</td><td>2026-09-09</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>You only need these ids for raw contract calls. Use <code>published-at</code> as the target of Move calls, and <code>original-id</code> for type-filtered queries. The source of truth is <a href="https://github.com/arcadiasystems/morse-dcms/blob/main/morse-contracts/Published.toml" target="_blank" rel="noopener"><code>Published.toml</code></a>. To build those calls yourself, see <a href="quick-start-contracts.html">Quick Start: Smart Contracts</a>.</p>
+
+        <h2 id="setup">Setting up</h2>
+        <p>Fund the address you will use with SUI for gas and WAL for Walrus storage. There is no faucet on mainnet, so you have to acquire both.</p>
+        <p>Nothing carries over from testnet. Mainnet has its own package and its own <code>PublicationRegistry</code>, so you create your publications and collections again.</p>
+
+        <h3 id="cli-setup">CLI</h3>
+        <p>Keep mainnet in its own profile, so your testnet profile stays as it is. Create the profile, make it the default, import the key that pays on mainnet, and check the result:</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre>morse config add mainnet --network mainnet
+morse config use mainnet
+morse account import
+morse status</pre>
+        </div>
+        <p><code>account import</code> prompts for the key and a password. If the key is already in your keystore, run <code>morse account use &lt;address&gt;</code> instead.</p>
+        <p>Nothing selects mainnet for you. With no <code>--network</code>, <code>MORSE_NETWORK</code> or profile setting, the CLI targets testnet. Every command that spends gas prints the network it used, and <code>--json</code> output has a <code>network</code> field. To go back to the testnet profile from the quick start, run <code>morse config use testnet</code>.</p>
+
+        <h3 id="sdk-setup">SDK</h3>
+        <p><code>morseConfig({ network: "mainnet" })</code> returns the full mainnet config, with the contract addresses built in. Use the same network for the gRPC client and the Walrus adapters. Start from the <a href="sdk-client-setup.html#server-setup">server setup</a> and change every network literal to <code>"mainnet"</code>:</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">typescript</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="kw">const</span> config = <span class="fn">morseConfig</span>({ network: <span class="st">"mainnet"</span> });
+<span class="kw">const</span> client = <span class="kw">new</span> <span class="fn">SuiGrpcClient</span>({
+  network: <span class="st">"mainnet"</span>,
+  baseUrl: config.rpcUrl,
+});
+<span class="kw">const</span> walrus = DefaultWalrusWriteAdapter.<span class="fn">fromConfig</span>(
+  { network: <span class="st">"mainnet"</span>, suiClient: client },
+  keypair,
+);</pre>
+        </div>
+
+        <h2 id="uploads">Uploads and the upload relay</h2>
+        <p>A direct upload sends slivers to every storage node in the Walrus committee at once: about 95 on mainnet. Many networks can't sustain that burst. The upload then fails with <code>NotEnoughBlobConfirmationsError</code> or "Unable to connect", even when the nodes are healthy. If uploads fail while reads work, this is almost certainly why. It is not a fault in your config.</p>
+        <p>Retry through the upload relay, which takes one connection instead of about 95. <code>--upload-relay</code> is a global option, so it goes before the subcommand:</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre>morse --upload-relay auto entry add hello --file post.json</pre>
+        </div>
+        <p><code>auto</code> picks Mysten's canonical relay for the network. To use the relay for every upload, save it on the profile. Running <code>config add</code> on an existing profile updates it and keeps its other settings:</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre>morse config add mainnet --network mainnet --upload-relay auto</pre>
+        </div>
+        <p>Three things to know before you use it:</p>
+        <ul>
+          <li><strong>It charges a small tip per upload</strong>, on top of WAL and gas.</li>
+          <li><strong>The tip is capped.</strong> <code>--max-tip</code> sets the cap in MIST and defaults to 10000000 (0.01 SUI). Over the cap, the upload is refused before anything is spent.</li>
+          <li><strong>The relay sees your bytes.</strong> Encrypt first if that matters.</li>
+        </ul>
+        <p>The relay is opt-in. The direct path is free and trustless, and most networks handle it fine. In the SDK, pass <code>uploadRelay</code> with a <code>host</code> and a <code>sendTip.max</code> cap to <code>DefaultWalrusWriteAdapter.fromConfig</code>. For browser apps, see <a href="uploader.html#upload-relay">React Uploader &rarr; Walrus upload relay</a>. The CLI README covers the relay in <a href="https://github.com/arcadiasystems/morse-dcms/blob/main/morse-cli/README.md#when-uploads-fail-the-upload-relay" target="_blank" rel="noopener">When uploads fail: the upload relay</a>.</p>
+        <p>Storage is paid per epoch. A testnet epoch is roughly a day, and mainnet epochs are much longer, so the same <code>--epochs</code> value buys a very different duration.</p>
+
+        <h2 id="encrypted-content">Encrypted content</h2>
+        <p>Encrypted commands need Seal key servers. Testnet pins an open set, so they work there with no setup. Walrus Mainnet pins none, because every Seal operator there is commercial. You bring your own credential. Without one, the CLI's encrypted commands exit with code 2 and an explanation.</p>
+        <p>In the CLI, set one of these environment variables:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Variable</th><th>Use</th></tr></thead>
+            <tbody>
+              <tr><td><code>MORSE_SEAL_API_KEY</code></td><td>Credential for Mysten's Seal committee. The CLI already knows the committee's object id and aggregator.</td></tr>
+              <tr><td><code>MORSE_SEAL_API_KEY_NAME</code></td><td>Header name for that credential. Defaults to <code>X-API-Key</code>.</td></tr>
+              <tr><td><code>MORSE_SEAL_KEY_SERVERS</code></td><td>JSON array of <code>{ objectId, weight }</code> for an operator that is not the committee. Wins over <code>MORSE_SEAL_API_KEY</code>.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>They are environment variables, not flags, so the credential stays out of <code>ps</code> and shell history. Before it encrypts anything, the CLI checks the credential and refuses if the operator answers <code>401</code> or <code>403</code>. Without that check, a bad credential would let encryption succeed and decryption fail, and you would pay to store content nobody can read.</p>
+        <p>In the SDK, <code>DefaultSealAdapter.fromMorseConfig</code> throws <code>ConfigurationError</code> on mainnet until you supply key servers. <code>MAINNET_SEAL_COMMITTEE</code> is Mysten's committee in the right shape. Add the <code>apiKeyName</code> and <code>apiKey</code> that Mysten issues you, and pass the result to <code>morseConfig</code> as <code>sealKeyServers</code>. For browser apps, see <a href="uploader.html#seal-on-walrus-mainnet">React Uploader &rarr; Encrypted files and Seal on Walrus Mainnet</a>.</p>
+        <p>Encryption has not been verified end to end on Walrus Mainnet, because that needs a commercial credential. The CLI README covers the setup in <a href="https://github.com/arcadiasystems/morse-dcms/blob/main/morse-cli/README.md#seal-on-mainnet" target="_blank" rel="noopener">Seal on mainnet</a>.</p>
+
+        <h2 id="known-issue">Known issue in morse-cli 0.10.1</h2>
+        <p><code>morse entry read</code> and <code>morse entry decrypt</code> fail on the default storage-node read path with <code>No valid blob metadata could be retrieved from any storage node</code>. Pass <code>--via-aggregator</code> until a fixed morse-sdk release ships:</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">bash</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre>morse entry read 0 --via-aggregator
+morse entry decrypt 0 --via-aggregator</pre>
+        </div>
+        <p>This was reproduced on testnet on 2026-10-17, and mainnet runs the same code path. The aggregator path skips client-side blob verification, so you trust the aggregator's bytes. See <a href="cli-workflows.html#reading-it-back">CLI Cookbooks &rarr; Reading it back</a>.</p>
+
+        <h2 id="next-steps">Next steps</h2>
+        <div class="card-grid">
+          <a href="quick-start-cli.html" class="card">
+            <div class="card-title">Quick Start: CLI</div>
+            <div class="card-desc">Run the whole flow on testnet from your terminal before you switch.</div>
+          </a>
+          <a href="quick-start-sdk.html" class="card">
+            <div class="card-title">Quick Start: SDK</div>
+            <div class="card-desc">Run the same flow on testnet as a TypeScript script.</div>
+          </a>
+          <a href="cli-commands.html" class="card">
+            <div class="card-title">CLI: Command Reference</div>
+            <div class="card-desc">Every command and flag, including profiles and the global options.</div>
+          </a>
+          <a href="sdk-client-setup.html" class="card">
+            <div class="card-title">SDK: Setup</div>
+            <div class="card-desc">Install, wire a wallet, pick a Walrus adapter, handle errors.</div>
+          </a>
+        </div>
+      </article>
+
+    <div class="feedback">
+      <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
+      <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20mainnet.html" target="_blank" rel="noopener">Report an issue</a>
+      <span class="feedback__upd">Updated 2026-10-17</span>
+    </div>
+    <nav class="pager" aria-label="Previous and next">
+      <a href="quick-start-contracts.html" rel="prev"><small>Previous</small><b>← Quick Start: Smart Contracts</b></a>
+      <a href="cookbooks.html" rel="next"><small>Next</small><b>Cookbooks →</b></a>
+    </nav>
+  </main>
+
+  <aside class="toc" aria-label="On this page">
+    <p class="toc__title">On this page</p>
+    <div class="toc__list"></div>
+  </aside>
+</div>
+
+<script src="assets/sidebar.js"></script>
+<script src="assets/search-index.js"></script>
+<script src="assets/script.js"></script>
+</body>
+</html>
