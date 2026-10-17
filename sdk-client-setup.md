@@ -57,7 +57,7 @@ The returned object contains the following fields:
 | Field | Type | Description |
 | --- | --- | --- |
 | `network` | `"mainnet" \| "testnet" \| "localnet"` | Sui network the config targets. |
-| `rpcUrl` | `string` | Sui JSON-RPC / gRPC endpoint. Defaults to the public fullnode for the chosen network; override for a custom node. |
+| `rpcUrl` | `string` | Sui fullnode URL to pass as `baseUrl` when you construct `SuiGrpcClient`. The SDK never reads it itself; its readers and adapters take the client you build. Defaults to the public fullnode for the chosen network; override for a custom node. |
 | `packageId` | `PackageId` | Current `published-at` address of the Morse Move package. Used as the target for all transaction calls. |
 | `originalPackageId` | `PackageId \| undefined` | Genesis publish address (`original-id`). Sui uses this in `objectType` strings and type filters. Defaults to `packageId` when the package has never been upgraded. |
 | `registryId` | `RegistryId` | Sui object ID of the shared `PublicationRegistry`. Required for publication creation and deletion. |

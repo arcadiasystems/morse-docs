@@ -559,7 +559,7 @@ Save this as `quickstart-contracts.ts`. It creates a publication, adds a collect
 
 > **INFO: Transport: gRPC**
 >
-> This guide uses `SuiGrpcClient` for its typed interface and lower latency. The Morse SDK also supports JSON-RPC via `SuiHTTPTransport` from `@mysten/sui/client` if your environment requires it. See [SDK Client Setup](https://docs.morsecms.xyz/sdk-client-setup.html) for details.
+> This guide uses `SuiGrpcClient` for its typed interface and lower latency. The Morse SDK is gRPC-only: its readers and adapters are typed against `SuiGrpcClient` from `@mysten/sui/grpc`, and a JSON-RPC fallback is planned but has not shipped. Environments that block gRPC must proxy through a gRPC-compatible RPC endpoint. See [SDK Client Setup](https://docs.morsecms.xyz/sdk-client-setup.html) for details.
 
 ```typescript
 import { SuiGrpcClient } from "@mysten/sui/grpc";
@@ -3983,7 +3983,7 @@ The returned object contains the following fields:
 | Field | Type | Description |
 | --- | --- | --- |
 | `network` | `"mainnet" \| "testnet" \| "localnet"` | Sui network the config targets. |
-| `rpcUrl` | `string` | Sui JSON-RPC / gRPC endpoint. Defaults to the public fullnode for the chosen network; override for a custom node. |
+| `rpcUrl` | `string` | Sui fullnode URL to pass as `baseUrl` when you construct `SuiGrpcClient`. The SDK never reads it itself; its readers and adapters take the client you build. Defaults to the public fullnode for the chosen network; override for a custom node. |
 | `packageId` | `PackageId` | Current `published-at` address of the Morse Move package. Used as the target for all transaction calls. |
 | `originalPackageId` | `PackageId \| undefined` | Genesis publish address (`original-id`). Sui uses this in `objectType` strings and type filters. Defaults to `packageId` when the package has never been upgraded. |
 | `registryId` | `RegistryId` | Sui object ID of the shared `PublicationRegistry`. Required for publication creation and deletion. |

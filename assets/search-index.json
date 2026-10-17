@@ -284,7 +284,7 @@
     "pageTitle": "Quick Start: Smart Contracts",
     "section": "Getting Started",
     "heading": "Writing the script",
-    "text": "Save this as quickstart-contracts.ts. It creates a publication, adds a collection, uploads content to Walrus, and registers an on-chain entry, all using raw PTBs. Transport: gRPC This guide uses SuiGrpcClient for its typed interface and lower latency. The Morse SDK also supports JSON-RPC via SuiHTTPTransport from @mysten/sui/client if your environment requires it. See SDK Client Setup for details. typescript Copy import { SuiGrpcClient } from \"@mysten/sui/grpc\"; import { Transaction } from \"@mysten/sui/transactions\"; import { Ed25519Keypair } from \"@mysten/sui/keypairs/ed25519\"; import { bcs }"
+    "text": "Save this as quickstart-contracts.ts. It creates a publication, adds a collection, uploads content to Walrus, and registers an on-chain entry, all using raw PTBs. Transport: gRPC This guide uses SuiGrpcClient for its typed interface and lower latency. The Morse SDK is gRPC-only: its readers and adapters are typed against SuiGrpcClient from @mysten/sui/grpc, and a JSON-RPC fallback is planned but has not shipped. Environments that block gRPC must proxy through a gRPC-compatible RPC endpoint. See SDK Client Setup for details. typescript Copy import { SuiGrpcClient } from \"@mysten/sui/grpc\"; impo"
   },
   {
     "url": "quick-start-contracts.html#running-it",
@@ -1691,7 +1691,7 @@
     "pageTitle": "SDK Setup",
     "section": "SDK",
     "heading": "morseConfig() shape",
-    "text": "morseConfig({ network }) takes the target network (\"mainnet\", \"testnet\", or \"localnet\") and returns a read-only object with the contract addresses and endpoints the SDK needs. All other fields have built-in defaults but can be overridden for custom deployments. Every SDK function takes this object as its config argument. The returned object contains the following fields: FieldTypeDescription network\"mainnet\" | \"testnet\" | \"localnet\"Sui network the config targets. rpcUrlstringSui JSON-RPC / gRPC endpoint. Defaults to the public fullnode for the chosen network; override for a custom node. packag"
+    "text": "morseConfig({ network }) takes the target network (\"mainnet\", \"testnet\", or \"localnet\") and returns a read-only object with the contract addresses and endpoints the SDK needs. All other fields have built-in defaults but can be overridden for custom deployments. Every SDK function takes this object as its config argument. The returned object contains the following fields: FieldTypeDescription network\"mainnet\" | \"testnet\" | \"localnet\"Sui network the config targets. rpcUrlstringSui fullnode URL to pass as baseUrl when you construct SuiGrpcClient. The SDK never reads it itself; its readers and ada"
   },
   {
     "url": "sdk-client-setup.html#server-setup",
