@@ -130,7 +130,7 @@
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">Transport: gRPC</div>
-            <div class="callout-text">This guide uses <code>SuiGrpcClient</code> for its typed interface and lower latency. The Morse SDK also supports JSON-RPC via <code>SuiHTTPTransport</code> from <code>@mysten/sui/client</code> if your environment requires it. See <a href="sdk-client-setup.html">SDK Client Setup</a> for details.</div>
+            <div class="callout-text">This guide uses <code>SuiGrpcClient</code> for its typed interface and lower latency. The Morse SDK is gRPC-only: its readers and adapters are typed against <code>SuiGrpcClient</code> from <code>@mysten/sui/grpc</code>, and a JSON-RPC fallback is planned but has not shipped. Environments that block gRPC must proxy through a gRPC-compatible RPC endpoint. See <a href="sdk-client-setup.html">SDK Client Setup</a> for details.</div>
           </div>
         </div>
 
