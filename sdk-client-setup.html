@@ -72,7 +72,7 @@
         </div>
 
         <h2 id="compatibility">Compatibility</h2>
-        <p><code>@arcadiasystems/morse-sdk</code> is built and tested against specific minor versions of its Mysten substrate. Newer or older versions are not validated and may produce runtime errors. The peer-dependency ranges in <code>package.json</code> enforce these bounds.</p>
+        <p><code>@arcadiasystems/morse-sdk</code> is built and tested against specific minor versions of its Mysten substrate. Newer or older versions are not validated and may produce runtime errors. The peer-dependency ranges in <code>package.json</code> enforce these bounds. Version 0.9.0 moved all three ranges, so upgrading from 0.8.x means upgrading the three Mysten packages with it.</p>
 
         <div class="table-wrap">
           <table>
@@ -84,10 +84,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td><code>@arcadiasystems/morse-sdk</code></td><td>0.8.x</td><td>(this package)</td></tr>
-              <tr><td><code>@mysten/sui</code></td><td>&gt;=2.16.2 &lt;2.17.0</td><td>Yes: types, gRPC client, keypairs</td></tr>
-              <tr><td><code>@mysten/walrus</code></td><td>&gt;=1.1.6 &lt;1.2.0</td><td>Yes: default Walrus adapters (read + write)</td></tr>
-              <tr><td><code>@mysten/seal</code></td><td>&gt;=1.1.3 &lt;1.2.0</td><td>Yes: encryption</td></tr>
+              <tr><td><code>@arcadiasystems/morse-sdk</code></td><td>0.9.x</td><td>(this package)</td></tr>
+              <tr><td><code>@mysten/sui</code></td><td>&gt;=2.36.0 &lt;2.37.0</td><td>Yes: types, gRPC client, keypairs</td></tr>
+              <tr><td><code>@mysten/walrus</code></td><td>&gt;=1.2.35 &lt;1.3.0</td><td>Yes: default Walrus adapters (read + write)</td></tr>
+              <tr><td><code>@mysten/seal</code></td><td>&gt;=1.5.0 &lt;1.6.0</td><td>Yes: encryption</td></tr>
             </tbody>
           </table>
         </div>
@@ -96,7 +96,7 @@
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">Pin to the verified minor version</div>
-            <div class="callout-text">Mysten packages may ship breaking changes within the same major version. When a new version like <code>@mysten/walrus@1.2.0</code> is released, <code>morse-sdk</code> needs a coordinated bump and re-verification. Use <code>bun add @arcadiasystems/morse-sdk@~0.8.0</code> to lock to patch-level updates only.</div>
+            <div class="callout-text">Mysten packages may ship breaking changes within the same major version. When a new version like <code>@mysten/walrus@1.3.0</code> is released, <code>morse-sdk</code> needs a coordinated bump and re-verification. Use <code>bun add @arcadiasystems/morse-sdk@~0.9.0</code> to lock to patch-level updates only.</div>
           </div>
         </div>
 
@@ -109,7 +109,7 @@
           </div>
           <pre><span class="kw">import</span> { TESTED_SUBSTRATE } <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
 
-console.<span class="fn">log</span>(TESTED_SUBSTRATE[<span class="st">"@mysten/walrus"</span>]);  <span class="cm">// "1.1.6"</span></pre>
+console.<span class="fn">log</span>(TESTED_SUBSTRATE[<span class="st">"@mysten/walrus"</span>]);  <span class="cm">// "1.2.35"</span></pre>
         </div>
 
         <h2 id="runtime">Runtime requirements</h2>
@@ -138,7 +138,7 @@ console.<span class="fn">log</span>(TESTED_SUBSTRATE[<span class="st">"@mysten/w
             <span class="code-lang">bash</span>
             <button class="code-copy" type="button">Copy</button>
           </div>
-          <pre>bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3</pre>
+          <pre>bun add @arcadiasystems/morse-sdk @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0</pre>
         </div>
 
         <h2 id="morse-config">morseConfig() shape</h2>
@@ -533,14 +533,6 @@ console.<span class="fn">log</span>(TESTED_SUBSTRATE[<span class="st">"@mysten/w
           <div class="callout-body">
             <div class="callout-title">HTTP adapters skip the 2-transaction optimization</div>
             <div class="callout-text">The HTTP adapters are NOT compatible with <code>addEntryFromBytes</code> / <code>addEncryptedEntryFromBytes</code>. Those functions require <code>WalrusFlowCapable</code> for the combined PTB; the publisher-paid path is naturally 1 transaction through <code>uploadBlob</code> + <code>addEntry</code>. Check any <code>WalrusWriteAdapter</code> at runtime with the <code>isWalrusFlowCapable(walrus)</code> type guard.</div>
-          </div>
-        </div>
-
-        <div class="callout callout-warning">
-          <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
-          <div class="callout-body">
-            <div class="callout-title">Use <code>HttpAggregatorReadAdapter</code> for reads</div>
-            <div class="callout-text">In morse-sdk 0.8.2, <code>DefaultWalrusReadAdapter.readBlobRef</code> and <code>readBlobByObjectId</code> (direct-node fanout with client-side verification) fail for every blob in a blob collection with <code>No valid blob metadata could be retrieved from any storage node</code>, on both plain and encrypted reads: they pass the decimal <code>blob_id</code> from the Sui object to Walrus instead of its base64url form. It is a bug, not storage nodes catching up, so waiting does not help. <code>HttpAggregatorReadAdapter</code> succeeds against the same blobs: it fetches from a single aggregator endpoint and skips client-side blob verification, so you trust the operator's bytes (pass <code>verifyBlobIntegrity</code> to add a check).</div>
           </div>
         </div>
 

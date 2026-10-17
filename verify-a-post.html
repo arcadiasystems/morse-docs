@@ -108,14 +108,6 @@
 
         <p>Without the flag, the CLI fetches slivers from Walrus storage nodes and checks them against the blob's metadata before writing a byte. If it succeeds, the file matches the blob id on chain. If the bytes had been swapped anywhere, this step fails rather than returning something else.</p>
 
-        <div class="callout callout-warning">
-          <div class="callout-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path></svg></div>
-          <div class="callout-body">
-            <div class="callout-title">The direct read is broken in morse-cli 0.10.1</div>
-            <div class="callout-text">In morse-cli 0.10.1 and morse-sdk 0.8.2 the verified read fails for every entry in a blob collection (the default mode) with <code>No valid blob metadata could be retrieved from any storage node</code>: the SDK passes the blob id to Walrus in the wrong format. It is a bug, not storage nodes catching up, so waiting does not help. It exits with code 3. Until a fixed release, the CLI cannot complete the byte check on this page, and the script below exits 5 at the direct read. The record checks (<code>entry get</code>, the revision walk and the author) work.</div>
-          </div>
-        </div>
-
         <h2 id="walk-the-revisions">Walk the revisions</h2>
 
         <p>Every earlier revision is still there. Read the first one and diff it against the current public head:</p>
@@ -125,7 +117,7 @@
             <span class="code-lang">bash</span>
             <button class="code-copy" type="button">Copy</button>
           </div>
-          <pre><span class="p" aria-hidden="true">$ </span>morse entry read 0 0 -P 0x69d4...f327 -C posts --via-aggregator --out v0.md
+          <pre><span class="p" aria-hidden="true">$ </span>morse entry read 0 0 -P 0x69d4...f327 -C posts --out v0.md
 <span class="p" aria-hidden="true">$ </span>diff v0.md b.md</pre>
         </div>
 
