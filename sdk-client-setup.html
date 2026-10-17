@@ -149,7 +149,7 @@ console.<span class="fn">log</span>(TESTED_SUBSTRATE[<span class="st">"@mysten/w
             <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
             <tbody>
               <tr><td><code>network</code></td><td><code>"mainnet" | "testnet" | "localnet"</code></td><td>Sui network the config targets.</td></tr>
-              <tr><td><code>rpcUrl</code></td><td><code>string</code></td><td>Sui JSON-RPC / gRPC endpoint. Defaults to the public fullnode for the chosen network; override for a custom node.</td></tr>
+              <tr><td><code>rpcUrl</code></td><td><code>string</code></td><td>Sui fullnode URL to pass as <code>baseUrl</code> when you construct <code>SuiGrpcClient</code>. The SDK never reads it itself; its readers and adapters take the client you build. Defaults to the public fullnode for the chosen network; override for a custom node.</td></tr>
               <tr><td><code>packageId</code></td><td><code>PackageId</code></td><td>Current <code>published-at</code> address of the Morse Move package. Used as the target for all transaction calls.</td></tr>
               <tr><td><code>originalPackageId</code></td><td><code>PackageId | undefined</code></td><td>Genesis publish address (<code>original-id</code>). Sui uses this in <code>objectType</code> strings and type filters. Defaults to <code>packageId</code> when the package has never been upgraded.</td></tr>
               <tr><td><code>registryId</code></td><td><code>RegistryId</code></td><td>Sui object ID of the shared <code>PublicationRegistry</code>. Required for publication creation and deletion.</td></tr>
