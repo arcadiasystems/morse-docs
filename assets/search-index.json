@@ -46,7 +46,7 @@
     "pageTitle": "Morse: The Decentralized Headless CMS Protocol",
     "section": "Getting Started",
     "heading": "Next steps",
-    "text": "Quick Start Choose your path (CLI, SDK, or contracts) and go from zero to published content on testnet. Live Demo A working blog running on Morse: wallet-native publishing, on-chain revisions, Seal-gated premium posts. No wallet needed to read. Core Concepts Understand the Publication → Collection → Entry model. CLI Manage publications and content from your terminal. Encrypted keystore, active context, no IDs to paste. SDK Build on Morse from Node or the browser. Adapter pattern, branded IDs, structured errors."
+    "text": "Quick Start Choose your path (CLI, SDK, or contracts) and go from zero to published content on testnet. Live Demo A working blog running on Morse: wallet-native publishing, on-chain revisions, Seal-gated premium posts. No wallet needed to read. Core Concepts Understand the Publication → Collection → Entry model. CLI Manage publications and content from your terminal. Encrypted keystore, active context, no IDs to paste. SDK Build on Morse from Node or the browser. Adapter pattern, branded IDs, structured errors. React Uploader Drop-in React components and hooks to upload files to Walrus, public"
   },
   {
     "url": "core-concepts.html",
@@ -1909,6 +1909,97 @@
     "section": "SDK",
     "heading": "Next steps",
     "text": "CLI: Overview Interactive command-line tool for managing publications, collections, and entries without writing code. Smart Contracts: Overview Architecture of the Morse Move package: modules, shared objects, and the on-chain data model."
+  },
+  {
+    "url": "uploader.html",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "React Uploader",
+    "text": "@arcadiasystems/morse-uploader gives React apps drop-in components and hooks for Morse recipient files. Upload a file to Walrus, optionally encrypt it for a list of wallets, and share a link. The connected wallet pays for and signs everything. Network status Morse runs on Walrus Mainnet and testnet, and the contracts are unaudited. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you canno"
+  },
+  {
+    "url": "uploader.html#what-it-is",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "What it is",
+    "text": "The package wraps the recipient file flow of morse-sdk 0.8 for React. Each upload creates a RecipientFile: a Walrus blob plus an on-chain record that carries its own recipient set. Every step is a headless hook, and an optional set of styled components sits on top. Headless hooks One hook per step: setup, upload, download, decrypt, file metadata and storage cost. Drop-in components MorseFileUploader and MorseFileDownloader, themed with CSS variables. Two wallet popups Any upload, public or encrypted, takes two wallet popups, whatever the number of recipients. Share links A link carries the fil"
+  },
+  {
+    "url": "uploader.html#install",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "Install",
+    "text": "The package is on npm as @arcadiasystems/morse-uploader. This page covers version 0.2.0. Install it with its peer dependencies: bashnpm Copy npm install @arcadiasystems/morse-uploader @arcadiasystems/morse-sdk@~0.8.1 @mysten/sui@~2.16.2 @mysten/walrus@~1.1.6 @mysten/seal@~1.1.3 Keep the peers inside the ranges below, so your app does not end up with two copies of the Sui, Walrus or Seal packages. A tilde range such as ~0.8.1 means >=0.8.1 <0.9.0, so the command above stays inside them. React and React DOM are assumed to be in your app already. Peer dependencyRange @arcadiasystems/morse-sdk>=0."
+  },
+  {
+    "url": "uploader.html#setup",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "Provider and setup",
+    "text": "Wallet connection is your app's job. The examples here use @mysten/dapp-kit. Once a wallet is connected, useMorseFiles turns it into the SDK handles that every other hook and component reads: a wallet adapter, a signer, the Walrus read and write adapters, the Seal adapter and a file reader. When the handles are ready, wrap your tree in MorseFilesProvider. tsx Copy import type { WalletStandardAccount } from \"@arcadiasystems/morse-sdk\"; import { MorseFilesProvider, useMorseFiles } from \"@arcadiasystems/morse-uploader\"; import { useSignAndExecuteTransaction, useSignPersonalMessage, useSignTransac"
+  },
+  {
+    "url": "uploader.html#setup-options",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "Options",
+    "text": "OptionTypeDescription network\"testnet\" | \"mainnet\"The network to build for. Required. accountWalletStandardAccountThe connected wallet account. Required. callbacksMorseFilesWalletCallbackssignTransaction, signPersonalMessage and signAndExecuteTransaction from your wallet. Required. suiClientSuiGrpcClientThe client to build transactions and read with. Defaults to a gRPC client on the network's public RPC. It must be a gRPC client. walrusWriteConfig{ wasmUrl?, uploadRelay? }Options for the default Walrus write adapter. See Walrus upload relay. walrusWriteWalrusWriteAdapter & WalrusFlowCapableA p"
+  },
+  {
+    "url": "uploader.html#components",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "Components",
+    "text": "The styled components live in the /ui entry. Import the stylesheet once. tsx Copy import { toSuiAddress } from \"@arcadiasystems/morse-sdk\"; import { MorseFileUploader } from \"@arcadiasystems/morse-uploader/ui\"; import \"@arcadiasystems/morse-uploader/styles.css\"; // Public upload <MorseFileUploader onUploaded={(result) => console.log(result.shareLink)} /> // Encrypted upload. The connected wallet is always added as a recipient. const recipients = [\"0x71a3...9f2b\", \"0x88c2...41de\"].map((address) => toSuiAddress(address)); <MorseFileUploader encrypt recipients={recipients} onUploaded={(result) =>"
+  },
+  {
+    "url": "uploader.html#hooks",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "Hooks",
+    "text": "Build your own UI from the same hooks the components use. The file hooks read their handles from MorseFilesProvider, so call them inside it. HookWhat it does useMorseFiles(options)Builds the handles from a connected wallet. Call it once, above the provider. useMorseFilesContext()Returns the handles. Throws outside the provider. useFileUpload()Uploads one file. upload({ file, epochs, recipients?, encrypt?, deletable? }) resolves to { fileId, blobId, encrypted, sealIdPrefix, sealNonce, shareLink }. phase tracks progress. useFileDownload(fileId, seal)Drives a download page. Loads the on-chain rec"
+  },
+  {
+    "url": "uploader.html#upload-from-a-hook",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "Upload from a hook",
+    "text": "tsx Copy import { uploadErrorMessage, uploadPhaseLabel, useFileUpload, useMorseFilesContext, } from \"@arcadiasystems/morse-uploader\"; export function UploadButton({ file }: { file: File }) { const { network } = useMorseFilesContext(); const { upload, status, phase, data, error } = useFileUpload(); const message = error === null ? null : uploadErrorMessage(error, network); return ( <div> <button type=\"button\" disabled={status === \"uploading\"} onClick={() => { // upload() rejects on failure; the hook also keeps the error in `error`. upload({ file, epochs: 5 }).catch(() => undefined); }} > Upload"
+  },
+  {
+    "url": "uploader.html#share-links",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "Share links",
+    "text": "buildShareLink({ fileId, network, sealIdPrefix, sealNonce }) builds a link of the form <origin>/#/f/<fileId>?net=<network>&p=<hex>&n=<hex> on the current origin. useFileUpload already returns one as shareLink. The baseUrl and pattern options change the origin and the path. Everything after # stays in the browser, so none of it reaches a server log. The Seal material in the link is not a secret: decryption is still gated by the file's recipient set. parseShareLink(href) reads a link back into { fileId, network, sealIdPrefix, sealNonce }. The Seal fields are null for a public file. It returns nu"
+  },
+  {
+    "url": "uploader.html#upload-relay",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "Walrus upload relay",
+    "text": "A direct Walrus write sends slivers to every storage node at once, a burst that many networks cannot sustain. In a browser, write through the upload relay instead: it does that fan-out for you over one connection. The default write adapter uses it when you set walrusWriteConfig.uploadRelay, which the uploader hands unchanged to @mysten/walrus. NetworkRelay host Testnethttps://upload-relay.testnet.walrus.space Walrus Mainnethttps://upload-relay.mainnet.walrus.space tsx Copy const UPLOAD_RELAY_HOSTS = { testnet: \"https://upload-relay.testnet.walrus.space\", mainnet: \"https://upload-relay.mainnet."
+  },
+  {
+    "url": "uploader.html#seal-on-walrus-mainnet",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "Encrypted files and Seal on Walrus Mainnet",
+    "text": "An encrypted upload encrypts the file under Seal before it leaves the browser, then creates the file and binds its Seal identity in one transaction. The connected wallet is always a recipient, so the owner can always decrypt. At decrypt time, Seal key servers check the file's recipient set on-chain, and a wallet outside it gets no key. Decrypting takes one wallet popup to create a Seal SessionKey, which is reused across files until it expires (10 minutes by default; set it with ttlMin). Testnet pins an open set of key servers, so encryption works there with no setup. Walrus Mainnet pins none, "
+  },
+  {
+    "url": "uploader.html#limitations",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "Limitations",
+    "text": "Storage is a lease. Walrus stores a file for at most 53 epochs ahead, then it expires. An epoch is about 1 day on testnet and about 2 weeks on Walrus Mainnet. No file listing yet. A RecipientFile is a shared object, so it never shows up in a wallet's owned objects. Listing a wallet's files needs an event indexer, and the package ships no listing UI until one exists. Recipients are set at upload. The components do not change recipients afterwards. The SDK's owner-only addRecipient and removeRecipient do."
+  },
+  {
+    "url": "uploader.html#next-steps",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "Next steps",
+    "text": "Recipient Files The on-chain model behind each upload: the recipient set, Seal identities and decryption. SDK: Setup Wallet adapters, Walrus adapters and error handling in morse-sdk. morse-uploader on npm The package page, with versions and install details."
   },
   {
     "url": "contracts-overview.html",

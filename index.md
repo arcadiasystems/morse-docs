@@ -65,3 +65,4 @@ Morse is composed of five layers. Only the contracts are the source of truth; al
 - [Core Concepts](https://docs.morsecms.xyz/core-concepts.html): Understand the Publication → Collection → Entry model.
 - [CLI](https://docs.morsecms.xyz/cli-overview.html): Manage publications and content from your terminal. Encrypted keystore, active context, no IDs to paste.
 - [SDK](https://docs.morsecms.xyz/sdk-overview.html): Build on Morse from Node or the browser. Adapter pattern, branded IDs, structured errors.
+- [React Uploader](https://docs.morsecms.xyz/uploader.html): Drop-in React components and hooks to upload files to Walrus, public or encrypted, and share them with a link.

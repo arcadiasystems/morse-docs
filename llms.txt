@@ -51,6 +51,7 @@ Every page below is also available as Markdown: replace `.html` with `.md` in an
 - [SDK Overview](https://docs.morsecms.xyz/sdk-overview.md): TypeScript SDK for Morse: Sui transaction building, Walrus uploads, and Seal encryption behind a small adapter pattern.
 - [SDK Setup](https://docs.morsecms.xyz/sdk-client-setup.md): Install @arcadiasystems/morse-sdk, wire a wallet adapter (server or browser), and pick a Walrus access pattern.
 - [SDK Cookbooks](https://docs.morsecms.xyz/sdk-workflows.md): End-to-end SDK recipes: publish content, revise entries, encrypt and decrypt, delegate write access, and tear down resources.
+- [React Uploader](https://docs.morsecms.xyz/uploader.md): Drop-in React components and hooks for uploading Morse recipient files to Walrus, public or encrypted, and sharing them with a link.
 
 ## Smart Contracts
 
