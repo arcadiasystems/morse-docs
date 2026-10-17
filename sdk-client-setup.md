@@ -7,25 +7,25 @@
 
 ## Compatibility
 
-`@arcadiasystems/morse-sdk` is built and tested against specific minor versions of its Mysten substrate. Newer or older versions are not validated and may produce runtime errors. The peer-dependency ranges in `package.json` enforce these bounds.
+`@arcadiasystems/morse-sdk` is built and tested against specific minor versions of its Mysten substrate. Newer or older versions are not validated and may produce runtime errors. The peer-dependency ranges in `package.json` enforce these bounds. Version 0.9.0 moved all three ranges, so upgrading from 0.8.x means upgrading the three Mysten packages with it.
 
 | Package | Version | Required |
 | --- | --- | --- |
-| `@arcadiasystems/morse-sdk` | 0.8.x | (this package) |
-| `@mysten/sui` | >=2.16.2 <2.17.0 | Yes: types, gRPC client, keypairs |
-| `@mysten/walrus` | >=1.1.6 <1.2.0 | Yes: default Walrus adapters (read + write) |
-| `@mysten/seal` | >=1.1.3 <1.2.0 | Yes: encryption |
+| `@arcadiasystems/morse-sdk` | 0.9.x | (this package) |
+| `@mysten/sui` | >=2.36.0 <2.37.0 | Yes: types, gRPC client, keypairs |
+| `@mysten/walrus` | >=1.2.35 <1.3.0 | Yes: default Walrus adapters (read + write) |
+| `@mysten/seal` | >=1.5.0 <1.6.0 | Yes: encryption |
 
 > **WARNING: Pin to the verified minor version**
 >
-> Mysten packages may ship breaking changes within the same major version. When a new version like `@mysten/walrus@1.2.0` is released, `morse-sdk` needs a coordinated bump and re-verification. Use `bun add @arcadiasystems/morse-sdk@~0.8.0` to lock to patch-level updates only.
+> Mysten packages may ship breaking changes within the same major version. When a new version like `@mysten/walrus@1.3.0` is released, `morse-sdk` needs a coordinated bump and re-verification. Use `bun add @arcadiasystems/morse-sdk@~0.9.0` to lock to patch-level updates only.
 
 The verified matrix is also exported programmatically as `TESTED_SUBSTRATE`, a frozen record of the tested `@mysten/sui`, `@mysten/seal`, and `@mysten/walrus` versions plus `verifiedOn` and `suiNetwork`. Log it during initialization or compare it against bundler-resolved versions in CI:
 
 ```typescript
 import { TESTED_SUBSTRATE } from "@arcadiasystems/morse-sdk";
 
-console.log(TESTED_SUBSTRATE["@mysten/walrus"]);  // "1.1.6"
+console.log(TESTED_SUBSTRATE["@mysten/walrus"]);  // "1.2.35"
 ```
 
 ## Runtime requirements
@@ -45,7 +45,7 @@ The SDK works in both Node and browser environments. It does not depend on Node-
 `@mysten/sui`, `@mysten/walrus`, and `@mysten/seal` are all required peer dependencies. The SDK's main entry imports the default Walrus and Seal adapters, so both packages must be installed even for workflows that never upload or encrypt.
 
 ```bash
-bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3
+bun add @arcadiasystems/morse-sdk @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0
 ```
 
 ## morseConfig() shape
@@ -392,10 +392,6 @@ const walrusWriter = HttpPublisherWriteAdapter.fromConfig({
 > **WARNING: HTTP adapters skip the 2-transaction optimization**
 >
 > The HTTP adapters are NOT compatible with `addEntryFromBytes` / `addEncryptedEntryFromBytes`. Those functions require `WalrusFlowCapable` for the combined PTB; the publisher-paid path is naturally 1 transaction through `uploadBlob` + `addEntry`. Check any `WalrusWriteAdapter` at runtime with the `isWalrusFlowCapable(walrus)` type guard.
-
-> **WARNING: Use `HttpAggregatorReadAdapter` for reads**
->
-> In morse-sdk 0.8.2, `DefaultWalrusReadAdapter.readBlobRef` and `readBlobByObjectId` (direct-node fanout with client-side verification) fail for every blob in a blob collection with `No valid blob metadata could be retrieved from any storage node`, on both plain and encrypted reads: they pass the decimal `blob_id` from the Sui object to Walrus instead of its base64url form. It is a bug, not storage nodes catching up, so waiting does not help. `HttpAggregatorReadAdapter` succeeds against the same blobs: it fetches from a single aggregator endpoint and skips client-side blob verification, so you trust the operator's bytes (pass `verifyBlobIntegrity` to add a check).
 
 ## Verifying setup
 

@@ -61,9 +61,9 @@ The second argument of `publish-from-draft` is the draft revision's index. `mors
 `entry read` takes an optional revision index. Without it you get the public head.
 
 ```bash
-$ morse entry read 0 --via-aggregator            # public head
-$ morse entry read 0 0 --via-aggregator          # revision 0, the original
-$ morse entry read 0 0 --via-aggregator --out original.md
+$ morse entry read 0            # public head
+$ morse entry read 0 0          # revision 0, the original
+$ morse entry read 0 0 --out original.md
 $ diff original.md hello.md
 ```
 

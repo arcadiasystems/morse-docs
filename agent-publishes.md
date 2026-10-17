@@ -41,7 +41,7 @@ Rules
 - New post: `morse entry add <name> --file <path> --epochs 30`
 - Edit an existing post: `morse revision publish-direct <entryId> --file <path> --epochs 30`
 - Look up entry ids in morse-map.json; update it after every add.
-- Read back with `--via-aggregator` on testnet.
+- Read back with `morse entry read <entryId>`.
 ```
 
 ## Give the agent a job

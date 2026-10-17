@@ -337,10 +337,10 @@ Uploading 65 bytes to Walrus...
 Fetch the entry content by its ID. Entry IDs are monotonic; your first entry is `0`.
 
 ```bash
-morse entry read 0 --via-aggregator
+morse entry read 0
 ```
 
-The `--via-aggregator` flag routes reads through the Walrus aggregator, and for now you need it. In morse-cli 0.10.1 and morse-sdk 0.8.2 the verified read fails for every entry in a blob collection (the default mode) with `No valid blob metadata could be retrieved from any storage node`: the SDK passes the blob id to Walrus in the wrong format. It is a bug, not storage nodes catching up, so waiting does not help. See [CLI Cookbooks → Reading it back](https://docs.morsecms.xyz/cli-workflows.html#reading-it-back).
+`entry read` fetches the content from the Walrus storage nodes and checks it against the blob id recorded on Sui. See [CLI Cookbooks → Reading it back](https://docs.morsecms.xyz/cli-workflows.html#reading-it-back).
 
 ```output
 {"title": "Hello World", "body": "My first post on Morse."}
@@ -382,15 +382,15 @@ The `--via-aggregator` flag routes reads through the Walrus aggregator, and for 
 Install the SDK and its peer dependencies using your preferred package manager. See [SDK Client Setup → Compatibility](https://docs.morsecms.xyz/sdk-client-setup.html#compatibility) for compatible dependency versions.
 
 ```bash
-bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3
+bun add @arcadiasystems/morse-sdk @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0
 ```
 
 ```bash
-npm install @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3
+npm install @arcadiasystems/morse-sdk @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0
 ```
 
 ```bash
-yarn add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3
+yarn add @arcadiasystems/morse-sdk @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0
 ```
 
 `@mysten/sui` is a required peer dependency. `@mysten/walrus` is needed for the `DefaultWalrusWriteAdapter` used below. `@mysten/seal` is required at runtime even for non-encrypted workflows.
@@ -542,11 +542,11 @@ Revisions: 1
 Install the Morse SDK (for network configuration and Walrus uploads) and the Sui SDK (for transaction construction and signing).
 
 ```bash
-bun add @arcadiasystems/morse-sdk@~0.8.0 @mysten/sui@~2.16.2 @mysten/walrus@~1.1.6 @mysten/seal@~1.1.3
+bun add @arcadiasystems/morse-sdk@~0.9.0 @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0
 ```
 
 ```bash
-npm install @arcadiasystems/morse-sdk@~0.8.0 @mysten/sui@~2.16.2 @mysten/walrus@~1.1.6 @mysten/seal@~1.1.3
+npm install @arcadiasystems/morse-sdk@~0.9.0 @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0
 ```
 
 > **INFO: Why the SDK if we are using raw PTBs?**
@@ -725,7 +725,7 @@ Entry added: hello-world (ID 0)
 
 > **TIP: You are live on-chain**
 >
-> Your publication, collection, and entry are on Sui testnet. The entry content is stored on Walrus. For a friendlier reading experience, use the [Morse CLI](https://docs.morsecms.xyz/quick-start-cli.html): `morse entry read 0 --via-aggregator`.
+> Your publication, collection, and entry are on Sui testnet. The entry content is stored on Walrus. For a friendlier reading experience, use the [Morse CLI](https://docs.morsecms.xyz/quick-start-cli.html): `morse entry read 0`.
 
 ## Next steps
 
@@ -740,7 +740,7 @@ Entry added: hello-world (ID 0)
 
 # Walrus Mainnet
 
-> Morse runs on Walrus Mainnet. This page covers what changes when you move from testnet: the deployment, the risks, setup, uploads, encrypted content and one known issue.
+> Morse runs on Walrus Mainnet. This page covers what changes when you move from testnet: the deployment, the risks, setup, uploads and encrypted content.
 
 > **WARNING: Read this before you switch**
 >
@@ -752,9 +752,11 @@ Morse has been live on Walrus Mainnet since 2026-09-09. The CLI and SDK ship wit
 
 | Package | Current release |
 | --- | --- |
-| [`@arcadiasystems/morse-sdk`](https://docs.morsecms.xyz/sdk-overview.html) | 0.8.2 |
-| [`@arcadiasystems/morse-cli`](https://docs.morsecms.xyz/cli-overview.html) | 0.10.1 |
+| [`@arcadiasystems/morse-sdk`](https://docs.morsecms.xyz/sdk-overview.html) | 0.9.0 |
+| [`@arcadiasystems/morse-cli`](https://docs.morsecms.xyz/cli-overview.html) | 0.11.0 |
 | [`@arcadiasystems/morse-uploader`](https://docs.morsecms.xyz/uploader.html) | 0.2.0 |
+
+The default storage-node read path for `morse entry read` and `morse entry decrypt` works from morse-cli 0.11.0 and morse-sdk 0.9.0. Upgrade if you are on an earlier release.
 
 Public publications, collections, entries and files work on both networks. Encrypted content needs your own Seal credentials on mainnet. See [Encrypted content](#encrypted-content).
 
@@ -852,17 +854,6 @@ They are environment variables, not flags, so the credential stays out of `ps` a
 In the SDK, `DefaultSealAdapter.fromMorseConfig` throws `ConfigurationError` on mainnet until you supply key servers. `MAINNET_SEAL_COMMITTEE` is Mysten's committee in the right shape. Add the `apiKeyName` and `apiKey` that Mysten issues you, and pass the result to `morseConfig` as `sealKeyServers`. For browser apps, see [React Uploader → Encrypted files and Seal on Walrus Mainnet](https://docs.morsecms.xyz/uploader.html#seal-on-walrus-mainnet).
 
 Encryption has not been verified end to end on Walrus Mainnet, because that needs a commercial credential. The CLI README covers the setup in [Seal on mainnet](https://github.com/arcadiasystems/morse-dcms/blob/main/morse-cli/README.md#seal-on-mainnet).
-
-## Known issue in morse-cli 0.10.1
-
-`morse entry read` and `morse entry decrypt` fail on the default storage-node read path with `No valid blob metadata could be retrieved from any storage node`. Pass `--via-aggregator` until a fixed morse-sdk release ships:
-
-```bash
-morse entry read 0 --via-aggregator
-morse entry decrypt 0 --via-aggregator
-```
-
-This was reproduced on testnet on 2026-10-17, and mainnet runs the same code path. The aggregator path skips client-side blob verification, so you trust the aggregator's bytes. See [CLI Cookbooks → Reading it back](https://docs.morsecms.xyz/cli-workflows.html#reading-it-back).
 
 ## Next steps
 
@@ -1041,10 +1032,10 @@ Added entry #0 "hello". (tx: D9YfjkA3...9vB)
 ## Read it back
 
 ```bash
-$ morse entry read 0 --via-aggregator
+$ morse entry read 0
 ```
 
-The command goes through the public aggregator because the verified path does not work yet. In morse-cli 0.10.1 and morse-sdk 0.8.2 the verified read fails for every entry in a blob collection (the default mode) with `No valid blob metadata could be retrieved from any storage node`: the SDK passes the blob id to Walrus in the wrong format. It is a bug, not storage nodes catching up, so waiting does not help. Without the flag the CLI would verify the bytes client side; with it you trust the aggregator operator. Fine for a blog, worth knowing.
+The CLI reads the post from the Walrus storage nodes and checks the bytes against the blob id recorded on Sui.
 
 ## Share the record
 
@@ -1067,7 +1058,7 @@ The output includes the public head and the revision list, and for each revision
 | `exit 2` and "No account selected" on `publication create` | No active account, or wrong profile | `morse status`, then `morse account use <address>` |
 | Insufficient gas / balance | No SUI or no WAL on the address | Faucet for SUI, swap for WAL, check the address matches `morse status` |
 | `ESlugAlreadyExists` | Someone used that slug | Add a suffix, the `$(date +%s)` trick above does this |
-| `entry read` says no valid blob metadata | A bug in the verified read in morse-cli 0.10.1, not a timing issue | Use `--via-aggregator`; waiting does not help |
+| `entry read` says no valid blob metadata | A bug in the verified read in morse-cli 0.10.1, not a timing issue | Upgrade to morse-cli 0.11.0; waiting does not help |
 | Post disappeared after a while | Blob epochs expired or testnet reset | Republish with a larger `--epochs`; the entry record on Sui is unaffected |
 
 ## Next
@@ -1141,9 +1132,9 @@ The second argument of `publish-from-draft` is the draft revision's index. `mors
 `entry read` takes an optional revision index. Without it you get the public head.
 
 ```bash
-$ morse entry read 0 --via-aggregator            # public head
-$ morse entry read 0 0 --via-aggregator          # revision 0, the original
-$ morse entry read 0 0 --via-aggregator --out original.md
+$ morse entry read 0            # public head
+$ morse entry read 0 0          # revision 0, the original
+$ morse entry read 0 0 --out original.md
 $ diff original.md hello.md
 ```
 
@@ -1435,7 +1426,7 @@ Three things happened: the CLI generated a fresh Seal identity scoped to your pu
 Reading is `entry decrypt`, not `entry read`. The CLI signs a short-lived session key with your account, asks the key servers for shares, and decrypts locally.
 
 ```bash
-$ morse entry decrypt 5 --via-aggregator --out q4-plan.recovered.md
+$ morse entry decrypt 5 --out q4-plan.recovered.md
 $ diff q4-plan.md q4-plan.recovered.md && echo identical
 ```
 
@@ -1639,7 +1630,7 @@ Rules
 - New post: `morse entry add <name> --file <path> --epochs 30`
 - Edit an existing post: `morse revision publish-direct <entryId> --file <path> --epochs 30`
 - Look up entry ids in morse-map.json; update it after every add.
-- Read back with `--via-aggregator` on testnet.
+- Read back with `morse entry read <entryId>`.
 ```
 
 ## Give the agent a job
@@ -1748,16 +1739,12 @@ $ cmp a.md b.md && echo "bytes match"
 
 Without the flag, the CLI fetches slivers from Walrus storage nodes and checks them against the blob's metadata before writing a byte. If it succeeds, the file matches the blob id on chain. If the bytes had been swapped anywhere, this step fails rather than returning something else.
 
-> **WARNING: The direct read is broken in morse-cli 0.10.1**
->
-> In morse-cli 0.10.1 and morse-sdk 0.8.2 the verified read fails for every entry in a blob collection (the default mode) with `No valid blob metadata could be retrieved from any storage node`: the SDK passes the blob id to Walrus in the wrong format. It is a bug, not storage nodes catching up, so waiting does not help. It exits with code 3. Until a fixed release, the CLI cannot complete the byte check on this page, and the script below exits 5 at the direct read. The record checks (`entry get`, the revision walk and the author) work.
-
 ## Walk the revisions
 
 Every earlier revision is still there. Read the first one and diff it against the current public head:
 
 ```bash
-$ morse entry read 0 0 -P 0x69d4...f327 -C posts --via-aggregator --out v0.md
+$ morse entry read 0 0 -P 0x69d4...f327 -C posts --out v0.md
 $ diff v0.md b.md
 ```
 
@@ -3704,7 +3691,7 @@ Add, read, and delete entries within a collection.
 | Command | Purpose |
 | --- | --- |
 | `entry get <entryId>` | Fetch a single entry's metadata. |
-| `entry read <entryId> [<revisionIndex>] [--out <path>] [--via-aggregator]` | Fetch a public entry's content to stdout or a file. Reads the latest revision unless `revisionIndex` is specified; `--via-aggregator` fetches through a Walrus aggregator instead of directly. Recommended on testnet, where direct reads frequently fail right after an upload (see [CLI Cookbooks → Reading it back](https://docs.morsecms.xyz/cli-workflows.html#reading-it-back)). |
+| `entry read <entryId> [<revisionIndex>] [--out <path>] [--via-aggregator]` | Fetch a public entry's content to stdout or a file. Reads the latest revision unless `revisionIndex` is specified; `--via-aggregator` fetches through a Walrus aggregator instead of the storage nodes: more reliable when storage nodes are flaky, with no client-side blob verification. |
 | `entry list [--limit <n>] [--cursor <cursor>] [--all] [--drafts-only]` | List entries. `--all` fetches every page, the same as `entry scan`, and cannot be combined with `--limit` or `--cursor`. `--drafts-only` filters to unpublished entries. |
 | `entry scan [--drafts-only]` | List every entry (auto-paginated), the same as `entry list --all`. `--drafts-only` filters to unpublished entries. |
 | `entry add <name> (--file <path> \| --stdin) [--content-type <type>] [--epochs <n>] [--publisher-cap <id>]` | Upload content and add a new entry. `--file` reads from a file path, `--stdin` reads from standard input; `--content-type` is inferred from file extension when omitted; `--epochs` sets Walrus storage duration (default 3, roughly 3 days on testnet; renew or re-upload before expiry for longer-lived content). |
@@ -3859,13 +3846,9 @@ See also: [SDK Cookbooks → Creating a publication](https://docs.morsecms.xyz/s
 
 ```bash
 morse entry get 0
-morse entry read 0 --via-aggregator
-morse entry read 0 --via-aggregator --out got.md
+morse entry read 0
+morse entry read 0 --out got.md
 ```
-
-> **WARNING: Use `--via-aggregator` for reads**
->
-> In morse-cli 0.10.1 and morse-sdk 0.8.2 the verified read fails for every entry in a blob collection (the default mode) with `No valid blob metadata could be retrieved from any storage node`: the SDK passes the blob id to Walrus in the wrong format. It is a bug, not storage nodes catching up, so waiting does not help. This affects plain reads and encrypted decrypts alike. Add `--via-aggregator` to `entry read` and `entry decrypt` to route through the Walrus aggregator, which succeeds against the same blobs. The tradeoff: the aggregator path skips client-side blob verification, so you trust the operator's bytes.
 
 See also: [SDK Cookbooks → Reading it back](https://docs.morsecms.xyz/sdk-workflows.html#reading-it-back)
 
@@ -3912,7 +3895,7 @@ Morse uses [Seal](https://docs.morsecms.xyz/access-control.html#seal-integration
 ```bash
 echo "members only" > secret.txt
 morse entry add-encrypted members --file secret.txt
-morse entry decrypt 1 --via-aggregator --out recovered.txt
+morse entry decrypt 1 --out recovered.txt
 ```
 
 > **WARNING: Encrypted entries are always drafts**
@@ -3997,7 +3980,7 @@ morse publication get 0x00 || echo "exit $?"
 | `5` | Too many failures while writing blob to nodes | Walrus storage nodes are degraded. Retry; check WAL balance. |
 | `5` | InsufficientGas / out of SUI gas | The active account does not have enough SUI for gas fees. Run `sui client faucet` to request testnet SUI. |
 | `5` | Insufficient WAL balance | Walrus storage requires WAL tokens. Get WAL from the [Walrus testnet faucet](https://stake-wal.wal.app/?network=testnet). |
-| `3` | No valid blob metadata could be retrieved from any storage node | The default direct-node read path fails for every blob collection entry in morse-cli 0.10.1, because of a bug in how the SDK passes the blob id. Re-run with `--via-aggregator`. See [Reading It Back](#reading-it-back). |
+| `3` | No valid blob metadata could be retrieved from any storage node | The default direct-node read path fails for every blob collection entry in morse-cli 0.10.1, because of a bug in how the SDK passes the blob id. Upgrade to morse-cli 0.11.0. |
 | `3` | Walrus blob not retrievable / blob expired | The blob's storage epoch has ended and it is no longer available on Walrus storage nodes. Re-upload the content and create a new revision with a longer `--epochs` value. |
 
 ## Next steps
@@ -4071,25 +4054,25 @@ The rest of the SDK (functions like `createPublication`, `addEntryFromBytes`, th
 
 ## Compatibility
 
-`@arcadiasystems/morse-sdk` is built and tested against specific minor versions of its Mysten substrate. Newer or older versions are not validated and may produce runtime errors. The peer-dependency ranges in `package.json` enforce these bounds.
+`@arcadiasystems/morse-sdk` is built and tested against specific minor versions of its Mysten substrate. Newer or older versions are not validated and may produce runtime errors. The peer-dependency ranges in `package.json` enforce these bounds. Version 0.9.0 moved all three ranges, so upgrading from 0.8.x means upgrading the three Mysten packages with it.
 
 | Package | Version | Required |
 | --- | --- | --- |
-| `@arcadiasystems/morse-sdk` | 0.8.x | (this package) |
-| `@mysten/sui` | >=2.16.2 <2.17.0 | Yes: types, gRPC client, keypairs |
-| `@mysten/walrus` | >=1.1.6 <1.2.0 | Yes: default Walrus adapters (read + write) |
-| `@mysten/seal` | >=1.1.3 <1.2.0 | Yes: encryption |
+| `@arcadiasystems/morse-sdk` | 0.9.x | (this package) |
+| `@mysten/sui` | >=2.36.0 <2.37.0 | Yes: types, gRPC client, keypairs |
+| `@mysten/walrus` | >=1.2.35 <1.3.0 | Yes: default Walrus adapters (read + write) |
+| `@mysten/seal` | >=1.5.0 <1.6.0 | Yes: encryption |
 
 > **WARNING: Pin to the verified minor version**
 >
-> Mysten packages may ship breaking changes within the same major version. When a new version like `@mysten/walrus@1.2.0` is released, `morse-sdk` needs a coordinated bump and re-verification. Use `bun add @arcadiasystems/morse-sdk@~0.8.0` to lock to patch-level updates only.
+> Mysten packages may ship breaking changes within the same major version. When a new version like `@mysten/walrus@1.3.0` is released, `morse-sdk` needs a coordinated bump and re-verification. Use `bun add @arcadiasystems/morse-sdk@~0.9.0` to lock to patch-level updates only.
 
 The verified matrix is also exported programmatically as `TESTED_SUBSTRATE`, a frozen record of the tested `@mysten/sui`, `@mysten/seal`, and `@mysten/walrus` versions plus `verifiedOn` and `suiNetwork`. Log it during initialization or compare it against bundler-resolved versions in CI:
 
 ```typescript
 import { TESTED_SUBSTRATE } from "@arcadiasystems/morse-sdk";
 
-console.log(TESTED_SUBSTRATE["@mysten/walrus"]);  // "1.1.6"
+console.log(TESTED_SUBSTRATE["@mysten/walrus"]);  // "1.2.35"
 ```
 
 ## Runtime requirements
@@ -4109,7 +4092,7 @@ The SDK works in both Node and browser environments. It does not depend on Node-
 `@mysten/sui`, `@mysten/walrus`, and `@mysten/seal` are all required peer dependencies. The SDK's main entry imports the default Walrus and Seal adapters, so both packages must be installed even for workflows that never upload or encrypt.
 
 ```bash
-bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3
+bun add @arcadiasystems/morse-sdk @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0
 ```
 
 ## morseConfig() shape
@@ -4456,10 +4439,6 @@ const walrusWriter = HttpPublisherWriteAdapter.fromConfig({
 > **WARNING: HTTP adapters skip the 2-transaction optimization**
 >
 > The HTTP adapters are NOT compatible with `addEntryFromBytes` / `addEncryptedEntryFromBytes`. Those functions require `WalrusFlowCapable` for the combined PTB; the publisher-paid path is naturally 1 transaction through `uploadBlob` + `addEntry`. Check any `WalrusWriteAdapter` at runtime with the `isWalrusFlowCapable(walrus)` type guard.
-
-> **WARNING: Use `HttpAggregatorReadAdapter` for reads**
->
-> In morse-sdk 0.8.2, `DefaultWalrusReadAdapter.readBlobRef` and `readBlobByObjectId` (direct-node fanout with client-side verification) fail for every blob in a blob collection with `No valid blob metadata could be retrieved from any storage node`, on both plain and encrypted reads: they pass the decimal `blob_id` from the Sui object to Walrus instead of its base64url form. It is a bug, not storage nodes catching up, so waiting does not help. `HttpAggregatorReadAdapter` succeeds against the same blobs: it fetches from a single aggregator endpoint and skips client-side blob verification, so you trust the operator's bytes (pass `verifyBlobIntegrity` to add a check).
 
 ## Verifying setup
 
@@ -4820,10 +4799,6 @@ const revision = await reader.getRevision(
   0,
 );
 ```
-
-> **WARNING: Use `HttpAggregatorReadAdapter` for reads**
->
-> In morse-sdk 0.8.2, `DefaultWalrusReadAdapter` (direct-node fanout) fails to read any blob collection entry by its blob ref with `No valid blob metadata could be retrieved from any storage node`, because it passes the blob id to Walrus in the wrong format. Waiting does not help. Use `HttpAggregatorReadAdapter` for reads instead; it routes through a single aggregator endpoint and succeeds against the same blobs, at the cost of skipping client-side blob verification. See [SDK Client Setup → Picking a Walrus adapter](https://docs.morsecms.xyz/sdk-client-setup.html#picking-a-walrus-adapter).
 
 > **INFO: Ordering caveat**
 >

@@ -22,11 +22,11 @@
 Install the Morse SDK (for network configuration and Walrus uploads) and the Sui SDK (for transaction construction and signing).
 
 ```bash
-bun add @arcadiasystems/morse-sdk@~0.8.0 @mysten/sui@~2.16.2 @mysten/walrus@~1.1.6 @mysten/seal@~1.1.3
+bun add @arcadiasystems/morse-sdk@~0.9.0 @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0
 ```
 
 ```bash
-npm install @arcadiasystems/morse-sdk@~0.8.0 @mysten/sui@~2.16.2 @mysten/walrus@~1.1.6 @mysten/seal@~1.1.3
+npm install @arcadiasystems/morse-sdk@~0.9.0 @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0
 ```
 
 > **INFO: Why the SDK if we are using raw PTBs?**
@@ -205,7 +205,7 @@ Entry added: hello-world (ID 0)
 
 > **TIP: You are live on-chain**
 >
-> Your publication, collection, and entry are on Sui testnet. The entry content is stored on Walrus. For a friendlier reading experience, use the [Morse CLI](https://docs.morsecms.xyz/quick-start-cli.html): `morse entry read 0 --via-aggregator`.
+> Your publication, collection, and entry are on Sui testnet. The entry content is stored on Walrus. For a friendlier reading experience, use the [Morse CLI](https://docs.morsecms.xyz/quick-start-cli.html): `morse entry read 0`.
 
 ## Next steps
 

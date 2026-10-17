@@ -135,10 +135,10 @@ Uploading 65 bytes to Walrus...
 Fetch the entry content by its ID. Entry IDs are monotonic; your first entry is `0`.
 
 ```bash
-morse entry read 0 --via-aggregator
+morse entry read 0
 ```
 
-The `--via-aggregator` flag routes reads through the Walrus aggregator, and for now you need it. In morse-cli 0.10.1 and morse-sdk 0.8.2 the verified read fails for every entry in a blob collection (the default mode) with `No valid blob metadata could be retrieved from any storage node`: the SDK passes the blob id to Walrus in the wrong format. It is a bug, not storage nodes catching up, so waiting does not help. See [CLI Cookbooks → Reading it back](https://docs.morsecms.xyz/cli-workflows.html#reading-it-back).
+`entry read` fetches the content from the Walrus storage nodes and checks it against the blob id recorded on Sui. See [CLI Cookbooks → Reading it back](https://docs.morsecms.xyz/cli-workflows.html#reading-it-back).
 
 ```output
 {"title": "Hello World", "body": "My first post on Morse."}
