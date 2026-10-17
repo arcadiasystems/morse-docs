@@ -35,6 +35,7 @@ $ morse entry add-encrypted q4-plan --file q4-plan.md --epochs 30
 ```output
 Encrypting and uploading 53 bytes...
 Added encrypted entry #5 "q4-plan". (tx: 8Bq1mVr0...2kLs)
+  network:      testnet
 ```
 
 Three things happened: the CLI generated a fresh Seal identity scoped to your publication, encrypted the file locally, and uploaded only ciphertext. The entry was created as a **draft**. Encrypted entries always start as drafts, because publishing is a separate decision.
@@ -54,15 +55,16 @@ $ diff q4-plan.md q4-plan.recovered.md && echo identical
 
 Anyone you issued a cap to in [Add a co-author](https://docs.morsecms.xyz/co-author.html) can run the same command from their own wallet. Anyone else gets the ciphertext from Walrus and nothing from the key servers.
 
-## Publish the draft
+## Release it to everyone
 
-A draft is visible as an entry on chain but is not the public head, and for encrypted content it stays that way: published revisions are always public and unencrypted, so the team keeps reading the draft with `entry decrypt`. If you decide to release the text to everyone, publish it from the draft with the plaintext file:
+A draft is visible as an entry on chain but is not the public head, and for encrypted content it stays that way: published revisions are always public and unencrypted, so the team keeps reading the draft with `entry decrypt`. The CLI will not add a public revision to an encrypted entry. Both of these exit with code 2 and "Encrypted revisions are not yet supported":
 
 ```bash
-$ morse revision publish-from-draft 5 0 --file q4-plan.md
+$ morse revision publish-from-draft 5 0 --file q4-plan.md   # refused
+$ morse revision publish-direct 5 --file q4-plan.md         # refused
 ```
 
-Always pass `--file`. Without it the CLI reuses the draft's blob, which is ciphertext, and readers of the public head would get bytes nobody can decrypt. `morse revision publish-direct 5 --file q4-plan.md` does the same in one step.
+To release the text, publish the plaintext as a new, ordinary entry with `morse entry add q4-plan-public --file q4-plan.md --epochs 30`. The encrypted entry stays a team-only draft.
 
 ## Rotate a key, revoke a reader
 

@@ -146,7 +146,7 @@ jobs:
         <p>The map is what makes a rerun safe: a file already in it is skipped. Everything else you need for scripting is in the CLI's exit codes and <code>--json</code>.</p>
 
         <div class="table-wrap">
-          <table><thead><tr><th>Exit code</th><th>Meaning</th><th>In a pipeline</th></tr></thead><tbody><tr><td>0</td><td>Success</td><td>Carry on</td></tr><tr><td>1</td><td>Any other failure</td><td>For example a contract abort such as <code>ESlugAlreadyExists</code>; read the message and fail the job</td></tr><tr><td>2</td><td>Usage error</td><td>Your command line is wrong, fix the script</td></tr><tr><td>3</td><td>Not found</td><td>Wrong publication id or entry id</td></tr><tr><td>4</td><td>Auth or permission</td><td>Cap revoked, wrong key, or no cap for this publication</td></tr><tr><td>5</td><td>Network or transport</td><td>Retry once after a pause, then fail the job</td></tr></tbody></table>
+          <table><thead><tr><th>Exit code</th><th>Meaning</th><th>In a pipeline</th></tr></thead><tbody><tr><td>0</td><td>Success</td><td>Carry on</td></tr><tr><td>1</td><td>Any other failure</td><td>For example a contract abort such as <code>ESlugAlreadyExists</code>, or a write that uploaded to Walrus and then failed on chain; read the message and fail the job</td></tr><tr><td>2</td><td>Usage error</td><td>Your command line is wrong, fix the script</td></tr><tr><td>3</td><td>Not found</td><td>Wrong publication id or entry id</td></tr><tr><td>4</td><td>Auth or permission</td><td>Cap revoked, wrong key, or no cap for this publication. A revoked cap on <code>entry add</code> or <code>entry add-encrypted</code> exits 1 instead, after the upload</td></tr><tr><td>5</td><td>Network or transport</td><td>Retry once after a pause, then fail the job</td></tr></tbody></table>
         </div>
 
         <div class="code-block" data-no-prompt>
@@ -162,7 +162,7 @@ out=$(publish "$name" --file "$f" --epochs "$EPOCHS") || { [ $? -eq 5 ] &amp;&am
           <div class="callout-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01M11 12h1v4h1"></path></svg></div>
           <div class="callout-body">
             <div class="callout-title">--yes and -q</div>
-            <div class="callout-text"><code>--yes</code> answers every confirmation, which matters for <code>delete</code> commands. <code>-q</code> keeps progress bars out of your logs so the JSON on stdout is the only thing the script sees.</div>
+            <div class="callout-text"><code>--yes</code> answers every confirmation, which matters for <code>delete</code> commands and <code>cap revoke</code>; it goes before the subcommand. <code>-q</code> keeps progress bars out of your logs so the JSON on stdout is the only thing the script sees.</div>
           </div>
         </div>
 

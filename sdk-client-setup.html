@@ -539,8 +539,8 @@ console.<span class="fn">log</span>(TESTED_SUBSTRATE[<span class="st">"@mysten/w
         <div class="callout callout-warning">
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="callout-body">
-            <div class="callout-title">Use <code>HttpAggregatorReadAdapter</code> for reads on testnet</div>
-            <div class="callout-text">On testnet, <code>DefaultWalrusReadAdapter</code> (direct-node fanout with client-side verification) frequently fails right after an upload with <code>No valid blob metadata could be retrieved from any storage node</code>, even for healthy blobs, on both plain and encrypted reads. <code>HttpAggregatorReadAdapter</code> succeeds against the same blobs: it fetches from a single aggregator endpoint and skips client-side blob verification, so you trust the operator's bytes (pass <code>verifyBlobIntegrity</code> to add a check). Mainnet storage nodes are expected to be more reliable.</div>
+            <div class="callout-title">Use <code>HttpAggregatorReadAdapter</code> for reads</div>
+            <div class="callout-text">In morse-sdk 0.8.2, <code>DefaultWalrusReadAdapter.readBlobRef</code> and <code>readBlobByObjectId</code> (direct-node fanout with client-side verification) fail for every blob in a blob collection with <code>No valid blob metadata could be retrieved from any storage node</code>, on both plain and encrypted reads: they pass the decimal <code>blob_id</code> from the Sui object to Walrus instead of its base64url form. It is a bug, not storage nodes catching up, so waiting does not help. <code>HttpAggregatorReadAdapter</code> succeeds against the same blobs: it fetches from a single aggregator endpoint and skips client-side blob verification, so you trust the operator's bytes (pass <code>verifyBlobIntegrity</code> to add a check).</div>
           </div>
         </div>
 

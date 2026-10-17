@@ -30,7 +30,9 @@ $ morse cap issue 0xCOAUTHOR_ADDRESS
 ```
 
 ```output
+Resolving OwnerCap...
 Issued PublisherCap 0x3f8a...c21e to 0xCOAUTHOR_ADDRESS. (tx: 4Hn9xT...q2Wd)
+  network:      testnet
 ```
 
 Save the cap id, you will need it to revoke. The cap is sent to the co-author's address as part of the same transaction, there is nothing for you to hand over.
@@ -60,7 +62,7 @@ The CLI finds the right `PublisherCap` automatically from the active account. If
 $ morse cap list 0xCOAUTHOR_ADDRESS
 ```
 
-There is no team page. The list of who can write is the list of live caps, and anyone can query it on chain. That is the audit trail.
+There is no team page, and anyone can run this query on chain. It lists every PublisherCap the address holds, revoked ones included, with no revoked marker: a cap in the list is not proof that it still works. To know for sure, keep the cap ids you issue and revoke, or watch for the publication's `PublisherCapIssued` and `PublisherCapRevoked` events.
 
 ## Revoke, and what the co-author sees
 
@@ -68,7 +70,9 @@ There is no team page. The list of who can write is the list of live caps, and a
 $ morse cap revoke 0x3f8a...c21e
 ```
 
-From the next transaction on, every write the co-author attempts with that cap aborts on chain with exit code 4. Everything they published before stays. A revoked cap still sits in their wallet as a dead object; they can tidy it with `morse cap destroy 0x3f8a...c21e`.
+The CLI asks you to confirm before it revokes. In a script, put the global `--yes` before the subcommand: `morse --yes cap revoke 0x3f8a...c21e`. Without it a non-interactive shell refuses with exit 2.
+
+From the next transaction on, every write the co-author attempts with that cap aborts on chain. `revision publish-from-draft`, for example, exits with code 4 and says the cap has been revoked. `entry add` and `entry add-encrypted` are the exception: they upload to Walrus first, so the upload is paid for, and then exit with code 1 and an "uploaded but the on-chain transaction failed" message that does not mention the revocation. Everything they published before stays. A revoked cap still sits in their wallet as a dead object; they can tidy it with `morse cap destroy 0x3f8a...c21e`.
 
 ## Rotate instead of transfer
 

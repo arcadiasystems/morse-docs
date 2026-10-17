@@ -186,7 +186,7 @@ Issue, revoke, and transfer publisher capabilities.
 | --- | --- |
 | `cap list [<address>] [--limit <n>] [--cursor <cursor>]` | List PublisherCaps held by an address. |
 | `cap issue <holder> [-P <slug\|id>] [--owner-cap <id>]` | Issue a PublisherCap bound to an address. |
-| `cap revoke <publisherCapId> [-P <slug\|id>] [--owner-cap <id>]` | Revoke a PublisherCap. |
+| `cap revoke <publisherCapId> [-P <slug\|id>] [--owner-cap <id>]` | Revoke a PublisherCap. Asks for confirmation; in scripts pass the global `--yes` before the subcommand (`morse --yes cap revoke <id>`). |
 | `cap destroy <publisherCapId> [-P <slug\|id>]` | Destroy a PublisherCap you hold. |
 | `cap transfer <publisherCapId> <recipient>` | Transfer a PublisherCap object. Does not change the `holder` binding; the recipient cannot use or destroy the cap unless they are the bound holder. To rotate access, destroy the old cap and issue a new one. |
 

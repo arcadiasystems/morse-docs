@@ -85,7 +85,7 @@ Every write the agent makes is a transaction signed by its wallet, so the audit 
 
 ```bash
 $ morse entry list                               # what exists now
-$ morse cap list 0xAGENT_WALLET_ADDRESS          # what it is allowed to do
+$ morse cap list 0xAGENT_WALLET_ADDRESS          # caps it holds, revoked ones included
 $ morse cap revoke 0xAGENT_CAP_ID                 # and when you are done
 ```
 

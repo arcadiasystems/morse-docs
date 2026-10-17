@@ -42,9 +42,9 @@ $ cmp a.md b.md && echo "bytes match"
 
 Without the flag, the CLI fetches slivers from Walrus storage nodes and checks them against the blob's metadata before writing a byte. If it succeeds, the file matches the blob id on chain. If the bytes had been swapped anywhere, this step fails rather than returning something else.
 
-> **WARNING: Testnet timing**
+> **WARNING: The direct read is broken in morse-cli 0.10.1**
 >
-> Right after an upload the direct read can fail with a metadata error for a few minutes while nodes catch up. That is a liveness issue, not a verification failure. Wait and retry; if it still fails days later the blob has probably expired.
+> In morse-cli 0.10.1 and morse-sdk 0.8.2 the verified read fails for every entry in a blob collection (the default mode) with `No valid blob metadata could be retrieved from any storage node`: the SDK passes the blob id to Walrus in the wrong format. It is a bug, not storage nodes catching up, so waiting does not help. It exits with code 3. Until a fixed release, the CLI cannot complete the byte check on this page, and the script below exits 5 at the direct read. The record checks (`entry get`, the revision walk and the author) work.
 
 ## Walk the revisions
 
@@ -65,7 +65,7 @@ The record names the wallet that wrote each revision, so no explorer is needed: 
 $ morse cap list 0xAUTHOR_ADDRESS
 ```
 
-A live cap, or a cap that was active at that time, means the publication's owner authorised that wallet. A revoked cap still proves the write was authorised when it happened, because the chain would have rejected it otherwise.
+The list includes revoked caps and does not mark them, so it shows which caps the author was issued, not which still work. That is enough here: the chain rejects any write made with a revoked cap, so a revision that exists was authorised by the owner when it was written.
 
 ## Do it from a script
 

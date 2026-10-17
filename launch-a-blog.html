@@ -187,6 +187,7 @@ EOF
           </div>
           <pre>Uploading 93 bytes to Walrus...
 <span class="ok">Added entry #0 "hello".</span> <span class="m">(tx: D9YfjkA3...9vB)</span>
+  <span class="m">network:      testnet</span>
   <span class="m">view: https://aggregator.walrus-testnet.walrus.space/v1/blobs/0iKeiiQ2...m7Xp</span></pre>
         </div>
 
@@ -208,7 +209,7 @@ EOF
           <pre><span class="p" aria-hidden="true">$ </span>morse entry read 0 --via-aggregator</pre>
         </div>
 
-        <p>On testnet the direct read path often fails for a few minutes right after upload while storage nodes catch up, which is why the command goes through the public aggregator. Without the flag the CLI verifies the bytes client side; with it you trust the aggregator operator. Fine for a blog, worth knowing.</p>
+        <p>The command goes through the public aggregator because the verified path does not work yet. In morse-cli 0.10.1 and morse-sdk 0.8.2 the verified read fails for every entry in a blob collection (the default mode) with <code>No valid blob metadata could be retrieved from any storage node</code>: the SDK passes the blob id to Walrus in the wrong format. It is a bug, not storage nodes catching up, so waiting does not help. Without the flag the CLI would verify the bytes client side; with it you trust the aggregator operator. Fine for a blog, worth knowing.</p>
 
         <h2 id="share-the-record">Share the record</h2>
 
@@ -235,7 +236,7 @@ EOF
         <h2 id="if-something-fails">If something fails</h2>
 
         <div class="table-wrap">
-          <table><thead><tr><th>Symptom</th><th>Likely cause</th><th>Fix</th></tr></thead><tbody><tr><td><code>exit 2</code> and "No account selected" on <code>publication create</code></td><td>No active account, or wrong profile</td><td><code>morse status</code>, then <code>morse account use &lt;address&gt;</code></td></tr><tr><td>Insufficient gas / balance</td><td>No SUI or no WAL on the address</td><td>Faucet for SUI, swap for WAL, check the address matches <code>morse status</code></td></tr><tr><td><code>ESlugAlreadyExists</code></td><td>Someone used that slug</td><td>Add a suffix, the <code>$(date +%s)</code> trick above does this</td></tr><tr><td><code>entry read</code> says no valid blob metadata</td><td>Storage nodes have not caught up yet</td><td>Use <code>--via-aggregator</code>, or wait a few minutes</td></tr><tr><td>Post disappeared after a while</td><td>Blob epochs expired or testnet reset</td><td>Republish with a larger <code>--epochs</code>; the entry record on Sui is unaffected</td></tr></tbody></table>
+          <table><thead><tr><th>Symptom</th><th>Likely cause</th><th>Fix</th></tr></thead><tbody><tr><td><code>exit 2</code> and "No account selected" on <code>publication create</code></td><td>No active account, or wrong profile</td><td><code>morse status</code>, then <code>morse account use &lt;address&gt;</code></td></tr><tr><td>Insufficient gas / balance</td><td>No SUI or no WAL on the address</td><td>Faucet for SUI, swap for WAL, check the address matches <code>morse status</code></td></tr><tr><td><code>ESlugAlreadyExists</code></td><td>Someone used that slug</td><td>Add a suffix, the <code>$(date +%s)</code> trick above does this</td></tr><tr><td><code>entry read</code> says no valid blob metadata</td><td>A bug in the verified read in morse-cli 0.10.1, not a timing issue</td><td>Use <code>--via-aggregator</code>; waiting does not help</td></tr><tr><td>Post disappeared after a while</td><td>Blob epochs expired or testnet reset</td><td>Republish with a larger <code>--epochs</code>; the entry record on Sui is unaffected</td></tr></tbody></table>
         </div>
 
         <h2 id="next">Next</h2>

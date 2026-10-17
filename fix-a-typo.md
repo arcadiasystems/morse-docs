@@ -35,6 +35,7 @@ $ morse revision publish-direct 0 --file hello.md --epochs 14
 Uploading 100 bytes to Walrus...
 Blob uploaded (0xa3d0...2c1f). Submitting transaction...
 Published revision #1 on entry #0. (tx: 7Kq2mRv1...9v8)
+  network:      testnet
 ```
 
 One upload, one transaction. The old blob and the old revision are untouched.
@@ -49,7 +50,7 @@ $ morse entry list --drafts-only
 $ morse revision publish-from-draft 0 2
 ```
 
-The second argument of `publish-from-draft` is the draft revision's index, which `entry list --drafts-only` or `morse entry get 0` shows you. The content is reused as is; pass `--file` if you want to replace it at the moment of publishing.
+The second argument of `publish-from-draft` is the draft revision's index. `morse entry get 0` shows it as `draftHead`; `entry list --drafts-only` only tells you which entries have a pending draft. The `2` above assumes you also ran the one-step publish, which made revision 1; on a fresh entry the draft would be revision 1. Publishing does not promote the draft in place: it appends a new public revision that reuses the draft's blob, so here the entry ends with revisions 0 to 3 and revision 3 is the public head. Pass `--file` if you want to replace the content at the moment of publishing.
 
 > **INFO: Encrypted entries always start as drafts**
 >

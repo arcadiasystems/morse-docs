@@ -278,9 +278,9 @@ const revision = await reader.getRevision(
 );
 ```
 
-> **WARNING: Use `HttpAggregatorReadAdapter` for reads on testnet**
+> **WARNING: Use `HttpAggregatorReadAdapter` for reads**
 >
-> On testnet, `DefaultWalrusReadAdapter` (direct-node fanout) frequently fails right after an upload with `No valid blob metadata could be retrieved from any storage node`, even for healthy blobs. Use `HttpAggregatorReadAdapter` for reads instead; it routes through a single aggregator endpoint and succeeds against the same blobs, at the cost of skipping client-side blob verification. Mainnet storage nodes are expected to be more reliable. See [SDK Client Setup → Picking a Walrus adapter](https://docs.morsecms.xyz/sdk-client-setup.html#picking-a-walrus-adapter).
+> In morse-sdk 0.8.2, `DefaultWalrusReadAdapter` (direct-node fanout) fails to read any blob collection entry by its blob ref with `No valid blob metadata could be retrieved from any storage node`, because it passes the blob id to Walrus in the wrong format. Waiting does not help. Use `HttpAggregatorReadAdapter` for reads instead; it routes through a single aggregator endpoint and succeeds against the same blobs, at the cost of skipping client-side blob verification. See [SDK Client Setup → Picking a Walrus adapter](https://docs.morsecms.xyz/sdk-client-setup.html#picking-a-walrus-adapter).
 
 > **INFO: Ordering caveat**
 >

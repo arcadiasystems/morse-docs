@@ -286,7 +286,7 @@
             <tbody>
               <tr><td><code>cap list [&lt;address&gt;] [--limit &lt;n&gt;] [--cursor &lt;cursor&gt;]</code></td><td>List PublisherCaps held by an address.</td></tr>
               <tr><td><code>cap issue &lt;holder&gt; [-P &lt;slug|id&gt;] [--owner-cap &lt;id&gt;]</code></td><td>Issue a PublisherCap bound to an address.</td></tr>
-              <tr><td><code>cap revoke &lt;publisherCapId&gt; [-P &lt;slug|id&gt;] [--owner-cap &lt;id&gt;]</code></td><td>Revoke a PublisherCap.</td></tr>
+              <tr><td><code>cap revoke &lt;publisherCapId&gt; [-P &lt;slug|id&gt;] [--owner-cap &lt;id&gt;]</code></td><td>Revoke a PublisherCap. Asks for confirmation; in scripts pass the global <code>--yes</code> before the subcommand (<code>morse --yes cap revoke &lt;id&gt;</code>).</td></tr>
               <tr><td><code>cap destroy &lt;publisherCapId&gt; [-P &lt;slug|id&gt;]</code></td><td>Destroy a PublisherCap you hold.</td></tr>
               <tr><td><code>cap transfer &lt;publisherCapId&gt; &lt;recipient&gt;</code></td><td>Transfer a PublisherCap object. Does not change the <code>holder</code> binding; the recipient cannot use or destroy the cap unless they are the bound holder. To rotate access, destroy the old cap and issue a new one.</td></tr>
             </tbody>

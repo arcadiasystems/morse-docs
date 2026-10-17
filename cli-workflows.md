@@ -53,9 +53,9 @@ morse entry read 0 --via-aggregator
 morse entry read 0 --via-aggregator --out got.md
 ```
 
-> **WARNING: Use `--via-aggregator` for reads on testnet**
+> **WARNING: Use `--via-aggregator` for reads**
 >
-> On testnet, the default direct-node read path frequently fails right after an upload with `No valid blob metadata could be retrieved from any storage node`, even though the blob is healthy, on both plain reads and encrypted decrypts. Add `--via-aggregator` to `entry read` and `entry decrypt` to route through the Walrus aggregator, which succeeds against the same blobs. The tradeoff: the aggregator path skips client-side blob verification, so you trust the operator's bytes. This applies to testnet only; mainnet storage nodes are expected to be more reliable.
+> In morse-cli 0.10.1 and morse-sdk 0.8.2 the verified read fails for every entry in a blob collection (the default mode) with `No valid blob metadata could be retrieved from any storage node`: the SDK passes the blob id to Walrus in the wrong format. It is a bug, not storage nodes catching up, so waiting does not help. This affects plain reads and encrypted decrypts alike. Add `--via-aggregator` to `entry read` and `entry decrypt` to route through the Walrus aggregator, which succeeds against the same blobs. The tradeoff: the aggregator path skips client-side blob verification, so you trust the operator's bytes.
 
 See also: [SDK Cookbooks → Reading it back](https://docs.morsecms.xyz/sdk-workflows.html#reading-it-back)
 
@@ -183,13 +183,13 @@ morse publication get 0x00 || echo "exit $?"
 | `4` | Incorrect password or corrupted keystore | Wrong keystore password (GCM auth-tag mismatch). |
 | `2` | No publication selected | No active publication. Pass `-P <slug\|id>` or run `morse use`. |
 | `3` | No publication at 0x… | The ID does not exist on this network. |
-| `5` | Move abort `ESlugAlreadyExists` | The slug is already registered; slugs are globally unique on the network. Re-run with a different slug (e.g. append a timestamp). |
+| `1` | Move abort `ESlugAlreadyExists` | The slug is already registered; slugs are globally unique on the network. Re-run with a different slug (e.g. append a timestamp). |
 | `5` | Too many failures while writing blob to nodes | Walrus storage nodes are degraded. Retry; check WAL balance. |
 | `2` | Morse is not yet deployed on mainnet | Use `--network testnet`. |
 | `5` | InsufficientGas / out of SUI gas | The active account does not have enough SUI for gas fees. Run `sui client faucet` to request testnet SUI. |
 | `5` | Insufficient WAL balance | Walrus storage requires WAL tokens. Get WAL from the [Walrus testnet faucet](https://stake-wal.wal.app/?network=testnet). |
-| `5` | No valid blob metadata could be retrieved from any storage node | Common on testnet, especially right after an upload. The default direct-node read path fails even for healthy blobs. Re-run with `--via-aggregator`. See [Reading It Back](#reading-it-back). |
-| `5` | Walrus blob not retrievable / blob expired | The blob's storage epoch has ended and it is no longer available on Walrus storage nodes. Re-upload the content and create a new revision with a longer `--epochs` value. |
+| `3` | No valid blob metadata could be retrieved from any storage node | The default direct-node read path fails for every blob collection entry in morse-cli 0.10.1, because of a bug in how the SDK passes the blob id. Re-run with `--via-aggregator`. See [Reading It Back](#reading-it-back). |
+| `3` | Walrus blob not retrievable / blob expired | The blob's storage epoch has ended and it is no longer available on Walrus storage nodes. Re-upload the content and create a new revision with a longer `--epochs` value. |
 
 ## Next steps
 

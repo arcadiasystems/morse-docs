@@ -104,7 +104,8 @@
           </div>
           <pre>Uploading 100 bytes to Walrus...
 Blob uploaded (0xa3d0...2c1f). Submitting transaction...
-<span class="ok">Published revision #1 on entry #0.</span> <span class="m">(tx: 7Kq2mRv1...9v8)</span></pre>
+<span class="ok">Published revision #1 on entry #0.</span> <span class="m">(tx: 7Kq2mRv1...9v8)</span>
+  <span class="m">network:      testnet</span></pre>
         </div>
 
         <p>One upload, one transaction. The old blob and the old revision are untouched.</p>
@@ -123,7 +124,7 @@ Blob uploaded (0xa3d0...2c1f). Submitting transaction...
 <span class="p" aria-hidden="true">$ </span>morse revision publish-from-draft 0 2</pre>
         </div>
 
-        <p>The second argument of <code>publish-from-draft</code> is the draft revision's index, which <code>entry list --drafts-only</code> or <code>morse entry get 0</code> shows you. The content is reused as is; pass <code>--file</code> if you want to replace it at the moment of publishing.</p>
+        <p>The second argument of <code>publish-from-draft</code> is the draft revision's index. <code>morse entry get 0</code> shows it as <code>draftHead</code>; <code>entry list --drafts-only</code> only tells you which entries have a pending draft. The <code>2</code> above assumes you also ran the one-step publish, which made revision 1; on a fresh entry the draft would be revision 1. Publishing does not promote the draft in place: it appends a new public revision that reuses the draft's blob, so here the entry ends with revisions 0 to 3 and revision 3 is the public head. Pass <code>--file</code> if you want to replace the content at the moment of publishing.</p>
 
         <div class="callout callout-info">
           <div class="callout-icon"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 8h.01M11 12h1v4h1"></path></svg></div>

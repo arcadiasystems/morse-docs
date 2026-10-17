@@ -95,7 +95,9 @@
           <div class="code-header">
             <span class="code-lang">output</span>
           </div>
-          <pre><span class="ok">Issued PublisherCap 0x3f8a...c21e to 0xCOAUTHOR_ADDRESS.</span> <span class="m">(tx: 4Hn9xT...q2Wd)</span></pre>
+          <pre>Resolving OwnerCap...
+<span class="ok">Issued PublisherCap 0x3f8a...c21e to 0xCOAUTHOR_ADDRESS.</span> <span class="m">(tx: 4Hn9xT...q2Wd)</span>
+  <span class="m">network:      testnet</span></pre>
         </div>
 
         <p>Save the cap id, you will need it to revoke. The cap is sent to the co-author's address as part of the same transaction, there is nothing for you to hand over.</p>
@@ -137,7 +139,7 @@
           <pre><span class="p" aria-hidden="true">$ </span>morse cap list 0xCOAUTHOR_ADDRESS</pre>
         </div>
 
-        <p>There is no team page. The list of who can write is the list of live caps, and anyone can query it on chain. That is the audit trail.</p>
+        <p>There is no team page, and anyone can run this query on chain. It lists every PublisherCap the address holds, revoked ones included, with no revoked marker: a cap in the list is not proof that it still works. To know for sure, keep the cap ids you issue and revoke, or watch for the publication's <code>PublisherCapIssued</code> and <code>PublisherCapRevoked</code> events.</p>
 
         <h2 id="revoke-and-what-the-co-author-sees">Revoke, and what the co-author sees</h2>
 
@@ -149,7 +151,9 @@
           <pre><span class="p" aria-hidden="true">$ </span>morse cap revoke 0x3f8a...c21e</pre>
         </div>
 
-        <p>From the next transaction on, every write the co-author attempts with that cap aborts on chain with exit code 4. Everything they published before stays. A revoked cap still sits in their wallet as a dead object; they can tidy it with <code>morse cap destroy 0x3f8a...c21e</code>.</p>
+        <p>The CLI asks you to confirm before it revokes. In a script, put the global <code>--yes</code> before the subcommand: <code>morse --yes cap revoke 0x3f8a...c21e</code>. Without it a non-interactive shell refuses with exit 2.</p>
+
+        <p>From the next transaction on, every write the co-author attempts with that cap aborts on chain. <code>revision publish-from-draft</code>, for example, exits with code 4 and says the cap has been revoked. <code>entry add</code> and <code>entry add-encrypted</code> are the exception: they upload to Walrus first, so the upload is paid for, and then exit with code 1 and an "uploaded but the on-chain transaction failed" message that does not mention the revocation. Everything they published before stays. A revoked cap still sits in their wallet as a dead object; they can tidy it with <code>morse cap destroy 0x3f8a...c21e</code>.</p>
 
         <h2 id="rotate-instead-of-transfer">Rotate instead of transfer</h2>
 

@@ -207,7 +207,7 @@
     "pageTitle": "Quick Start: CLI",
     "section": "Getting Started",
     "heading": "Reading it back",
-    "text": "Fetch the entry content by its ID. Entry IDs are monotonic; your first entry is 0. bash Copy morse entry read 0 --via-aggregator The optional --via-aggregator flag routes reads through the Walrus aggregator, which is more reliable on testnet. Without it, testnet reads frequently fail with No valid blob metadata could be retrieved from any storage node, especially right after an upload. See CLI Cookbooks → Reading it back. output {\"title\": \"Hello World\", \"body\": \"My first post on Morse.\"} You are live on-chain Your content is stored on Walrus and registered on Sui testnet. Run morse status to s"
+    "text": "Fetch the entry content by its ID. Entry IDs are monotonic; your first entry is 0. bash Copy morse entry read 0 --via-aggregator The --via-aggregator flag routes reads through the Walrus aggregator, and for now you need it. In morse-cli 0.10.1 and morse-sdk 0.8.2 the verified read fails for every entry in a blob collection (the default mode) with No valid blob metadata could be retrieved from any storage node: the SDK passes the blob id to Walrus in the wrong format. It is a bug, not storage nodes catching up, so waiting does not help. See CLI Cookbooks → Reading it back. output {\"title\": \"Hel"
   },
   {
     "url": "quick-start-cli.html#next-steps",
@@ -389,14 +389,14 @@
     "pageTitle": "Launch a blog in 10 minutes",
     "section": "Cookbooks",
     "heading": "Write and publish the first post",
-    "text": "A post is just a file. Markdown is a good default because every reader can render it. bash Copy $ cat > hello.md <<'EOF' # Hello from Morse This post has no backend. Its bytes are on Walrus, its record is on Sui. EOF $ morse entry add hello --file hello.md --epochs 14 --epochs is how long Walrus keeps the blob. The default is 3, which is about three days on testnet. Fourteen is enough for a demo you want to show people next week. The content type is inferred from the file extension. output Uploading 93 bytes to Walrus... Added entry #0 \"hello\". (tx: D9YfjkA3...9vB) view: https://aggregator.wal"
+    "text": "A post is just a file. Markdown is a good default because every reader can render it. bash Copy $ cat > hello.md <<'EOF' # Hello from Morse This post has no backend. Its bytes are on Walrus, its record is on Sui. EOF $ morse entry add hello --file hello.md --epochs 14 --epochs is how long Walrus keeps the blob. The default is 3, which is about three days on testnet. Fourteen is enough for a demo you want to show people next week. The content type is inferred from the file extension. output Uploading 93 bytes to Walrus... Added entry #0 \"hello\". (tx: D9YfjkA3...9vB) network: testnet view: https"
   },
   {
     "url": "launch-a-blog.html#read-it-back",
     "pageTitle": "Launch a blog in 10 minutes",
     "section": "Cookbooks",
     "heading": "Read it back",
-    "text": "bash Copy $ morse entry read 0 --via-aggregator On testnet the direct read path often fails for a few minutes right after upload while storage nodes catch up, which is why the command goes through the public aggregator. Without the flag the CLI verifies the bytes client side; with it you trust the aggregator operator. Fine for a blog, worth knowing."
+    "text": "bash Copy $ morse entry read 0 --via-aggregator The command goes through the public aggregator because the verified path does not work yet. In morse-cli 0.10.1 and morse-sdk 0.8.2 the verified read fails for every entry in a blob collection (the default mode) with No valid blob metadata could be retrieved from any storage node: the SDK passes the blob id to Walrus in the wrong format. It is a bug, not storage nodes catching up, so waiting does not help. Without the flag the CLI would verify the bytes client side; with it you trust the aggregator operator. Fine for a blog, worth knowing."
   },
   {
     "url": "launch-a-blog.html#share-the-record",
@@ -410,7 +410,7 @@
     "pageTitle": "Launch a blog in 10 minutes",
     "section": "Cookbooks",
     "heading": "If something fails",
-    "text": "SymptomLikely causeFixexit 2 and \"No account selected\" on publication createNo active account, or wrong profilemorse status, then morse account use <address>Insufficient gas / balanceNo SUI or no WAL on the addressFaucet for SUI, swap for WAL, check the address matches morse statusESlugAlreadyExistsSomeone used that slugAdd a suffix, the $(date +%s) trick above does thisentry read says no valid blob metadataStorage nodes have not caught up yetUse --via-aggregator, or wait a few minutesPost disappeared after a whileBlob epochs expired or testnet resetRepublish with a larger --epochs; the entry "
+    "text": "SymptomLikely causeFixexit 2 and \"No account selected\" on publication createNo active account, or wrong profilemorse status, then morse account use <address>Insufficient gas / balanceNo SUI or no WAL on the addressFaucet for SUI, swap for WAL, check the address matches morse statusESlugAlreadyExistsSomeone used that slugAdd a suffix, the $(date +%s) trick above does thisentry read says no valid blob metadataA bug in the verified read in morse-cli 0.10.1, not a timing issueUse --via-aggregator; waiting does not helpPost disappeared after a whileBlob epochs expired or testnet resetRepublish with"
   },
   {
     "url": "launch-a-blog.html#next",
@@ -438,14 +438,14 @@
     "pageTitle": "Fix a typo without losing history",
     "section": "Cookbooks",
     "heading": "Publish a corrected revision in one step",
-    "text": "Edit the file, then publish it straight to the public head: bash Copy $ sed -i.bak 's/no backend/no backend at all/' hello.md $ morse revision publish-direct 0 --file hello.md --epochs 14 output Uploading 100 bytes to Walrus... Blob uploaded (0xa3d0...2c1f). Submitting transaction... Published revision #1 on entry #0. (tx: 7Kq2mRv1...9v8) One upload, one transaction. The old blob and the old revision are untouched."
+    "text": "Edit the file, then publish it straight to the public head: bash Copy $ sed -i.bak 's/no backend/no backend at all/' hello.md $ morse revision publish-direct 0 --file hello.md --epochs 14 output Uploading 100 bytes to Walrus... Blob uploaded (0xa3d0...2c1f). Submitting transaction... Published revision #1 on entry #0. (tx: 7Kq2mRv1...9v8) network: testnet One upload, one transaction. The old blob and the old revision are untouched."
   },
   {
     "url": "fix-a-typo.html#or-stage-a-draft-first",
     "pageTitle": "Fix a typo without losing history",
     "section": "Cookbooks",
     "heading": "Or stage a draft first",
-    "text": "For anything bigger than a typo, stage the change as a draft, read it back, and only then publish it. Drafts are real revisions on chain, they are just not the public head. bash Copy $ morse revision append-draft 0 --file hello.md --epochs 14 $ morse entry list --drafts-only $ morse revision publish-from-draft 0 2 The second argument of publish-from-draft is the draft revision's index, which entry list --drafts-only or morse entry get 0 shows you. The content is reused as is; pass --file if you want to replace it at the moment of publishing. Encrypted entries always start as drafts An entry ad"
+    "text": "For anything bigger than a typo, stage the change as a draft, read it back, and only then publish it. Drafts are real revisions on chain, they are just not the public head. bash Copy $ morse revision append-draft 0 --file hello.md --epochs 14 $ morse entry list --drafts-only $ morse revision publish-from-draft 0 2 The second argument of publish-from-draft is the draft revision's index. morse entry get 0 shows it as draftHead; entry list --drafts-only only tells you which entries have a pending draft. The 2 above assumes you also ran the one-step publish, which made revision 1; on a fresh entry"
   },
   {
     "url": "fix-a-typo.html#read-any-earlier-revision",
@@ -550,7 +550,7 @@
     "pageTitle": "Add a co-author",
     "section": "Cookbooks",
     "heading": "Owner: issue a cap",
-    "text": "You need the co-author's Sui address. From your machine, with the publication active: bash Copy $ morse status # confirm the active publication $ morse cap issue 0xCOAUTHOR_ADDRESS output Issued PublisherCap 0x3f8a...c21e to 0xCOAUTHOR_ADDRESS. (tx: 4Hn9xT...q2Wd) Save the cap id, you will need it to revoke. The cap is sent to the co-author's address as part of the same transaction, there is nothing for you to hand over."
+    "text": "You need the co-author's Sui address. From your machine, with the publication active: bash Copy $ morse status # confirm the active publication $ morse cap issue 0xCOAUTHOR_ADDRESS output Resolving OwnerCap... Issued PublisherCap 0x3f8a...c21e to 0xCOAUTHOR_ADDRESS. (tx: 4Hn9xT...q2Wd) network: testnet Save the cap id, you will need it to revoke. The cap is sent to the co-author's address as part of the same transaction, there is nothing for you to hand over."
   },
   {
     "url": "co-author.html#co-author-set-up-and-publish",
@@ -564,14 +564,14 @@
     "pageTitle": "Add a co-author",
     "section": "Cookbooks",
     "heading": "Owner: see who can write",
-    "text": "bash Copy $ morse cap list 0xCOAUTHOR_ADDRESS There is no team page. The list of who can write is the list of live caps, and anyone can query it on chain. That is the audit trail."
+    "text": "bash Copy $ morse cap list 0xCOAUTHOR_ADDRESS There is no team page, and anyone can run this query on chain. It lists every PublisherCap the address holds, revoked ones included, with no revoked marker: a cap in the list is not proof that it still works. To know for sure, keep the cap ids you issue and revoke, or watch for the publication's PublisherCapIssued and PublisherCapRevoked events."
   },
   {
     "url": "co-author.html#revoke-and-what-the-co-author-sees",
     "pageTitle": "Add a co-author",
     "section": "Cookbooks",
     "heading": "Revoke, and what the co-author sees",
-    "text": "bash Copy $ morse cap revoke 0x3f8a...c21e From the next transaction on, every write the co-author attempts with that cap aborts on chain with exit code 4. Everything they published before stays. A revoked cap still sits in their wallet as a dead object; they can tidy it with morse cap destroy 0x3f8a...c21e."
+    "text": "bash Copy $ morse cap revoke 0x3f8a...c21e The CLI asks you to confirm before it revokes. In a script, put the global --yes before the subcommand: morse --yes cap revoke 0x3f8a...c21e. Without it a non-interactive shell refuses with exit 2. From the next transaction on, every write the co-author attempts with that cap aborts on chain. revision publish-from-draft, for example, exits with code 4 and says the cap has been revoked. entry add and entry add-encrypted are the exception: they upload to Walrus first, so the upload is paid for, and then exit with code 1 and an \"uploaded but the on-chain"
   },
   {
     "url": "co-author.html#rotate-instead-of-transfer",
@@ -606,7 +606,7 @@
     "pageTitle": "Encrypt a post for your team",
     "section": "Cookbooks",
     "heading": "Publish an encrypted entry",
-    "text": "With your publication and collection active: bash Copy $ cat > q4-plan.md <<'EOF' # Q4 plan (internal) Ship mainnet, then the indexer. EOF $ morse entry add-encrypted q4-plan --file q4-plan.md --epochs 30 output Encrypting and uploading 53 bytes... Added encrypted entry #5 \"q4-plan\". (tx: 8Bq1mVr0...2kLs) Three things happened: the CLI generated a fresh Seal identity scoped to your publication, encrypted the file locally, and uploaded only ciphertext. The entry was created as a draft. Encrypted entries always start as drafts, because publishing is a separate decision. Collection mode Encrypted"
+    "text": "With your publication and collection active: bash Copy $ cat > q4-plan.md <<'EOF' # Q4 plan (internal) Ship mainnet, then the indexer. EOF $ morse entry add-encrypted q4-plan --file q4-plan.md --epochs 30 output Encrypting and uploading 53 bytes... Added encrypted entry #5 \"q4-plan\". (tx: 8Bq1mVr0...2kLs) network: testnet Three things happened: the CLI generated a fresh Seal identity scoped to your publication, encrypted the file locally, and uploaded only ciphertext. The entry was created as a draft. Encrypted entries always start as drafts, because publishing is a separate decision. Collecti"
   },
   {
     "url": "team-only-content.html#read-it-as-a-cap-holder",
@@ -616,11 +616,11 @@
     "text": "Reading is entry decrypt, not entry read. The CLI signs a short-lived session key with your account, asks the key servers for shares, and decrypts locally. bash Copy $ morse entry decrypt 5 --via-aggregator --out q4-plan.recovered.md $ diff q4-plan.md q4-plan.recovered.md && echo identical Anyone you issued a cap to in Add a co-author can run the same command from their own wallet. Anyone else gets the ciphertext from Walrus and nothing from the key servers."
   },
   {
-    "url": "team-only-content.html#publish-the-draft",
+    "url": "team-only-content.html#release-it-to-everyone",
     "pageTitle": "Encrypt a post for your team",
     "section": "Cookbooks",
-    "heading": "Publish the draft",
-    "text": "A draft is visible as an entry on chain but is not the public head, and for encrypted content it stays that way: published revisions are always public and unencrypted, so the team keeps reading the draft with entry decrypt. If you decide to release the text to everyone, publish it from the draft with the plaintext file: bash Copy $ morse revision publish-from-draft 5 0 --file q4-plan.md Always pass --file. Without it the CLI reuses the draft's blob, which is ciphertext, and readers of the public head would get bytes nobody can decrypt. morse revision publish-direct 5 --file q4-plan.md does the"
+    "heading": "Release it to everyone",
+    "text": "A draft is visible as an entry on chain but is not the public head, and for encrypted content it stays that way: published revisions are always public and unencrypted, so the team keeps reading the draft with entry decrypt. The CLI will not add a public revision to an encrypted entry. Both of these exit with code 2 and \"Encrypted revisions are not yet supported\": bash Copy $ morse revision publish-from-draft 5 0 --file q4-plan.md # refused $ morse revision publish-direct 5 --file q4-plan.md # refused To release the text, publish the plaintext as a new, ordinary entry with morse entry add q4-pl"
   },
   {
     "url": "team-only-content.html#rotate-a-key-revoke-a-reader",
@@ -683,7 +683,7 @@
     "pageTitle": "Publish from CI",
     "section": "Cookbooks",
     "heading": "Idempotency and exit codes",
-    "text": "The map is what makes a rerun safe: a file already in it is skipped. Everything else you need for scripting is in the CLI's exit codes and --json. Exit codeMeaningIn a pipeline0SuccessCarry on1Any other failureFor example a contract abort such as ESlugAlreadyExists; read the message and fail the job2Usage errorYour command line is wrong, fix the script3Not foundWrong publication id or entry id4Auth or permissionCap revoked, wrong key, or no cap for this publication5Network or transportRetry once after a pause, then fail the job bashretry once on transport errors Copy publish() { morse --json -"
+    "text": "The map is what makes a rerun safe: a file already in it is skipped. Everything else you need for scripting is in the CLI's exit codes and --json. Exit codeMeaningIn a pipeline0SuccessCarry on1Any other failureFor example a contract abort such as ESlugAlreadyExists, or a write that uploaded to Walrus and then failed on chain; read the message and fail the job2Usage errorYour command line is wrong, fix the script3Not foundWrong publication id or entry id4Auth or permissionCap revoked, wrong key, or no cap for this publication. A revoked cap on entry add or entry add-encrypted exits 1 instead, a"
   },
   {
     "url": "publish-from-ci.html#lock-it-down",
@@ -746,7 +746,7 @@
     "pageTitle": "Let an AI agent publish",
     "section": "Cookbooks",
     "heading": "Watch, audit, revoke",
-    "text": "Every write the agent makes is a transaction signed by its wallet, so the audit log is Sui itself: bash Copy $ morse entry list # what exists now $ morse cap list 0xAGENT_WALLET_ADDRESS # what it is allowed to do $ morse cap revoke 0xAGENT_CAP_ID # and when you are done Revocation takes effect on the next transaction. Nothing the agent already published disappears, and if it published something wrong, you append a revision (or delete the entry) from your own wallet. DoDo notGive the agent a wallet with days of budget, not monthsGive it the owner keyPoint it at llms-full.txtPaste commands you h"
+    "text": "Every write the agent makes is a transaction signed by its wallet, so the audit log is Sui itself: bash Copy $ morse entry list # what exists now $ morse cap list 0xAGENT_WALLET_ADDRESS # caps it holds, revoked ones included $ morse cap revoke 0xAGENT_CAP_ID # and when you are done Revocation takes effect on the next transaction. Nothing the agent already published disappears, and if it published something wrong, you append a revision (or delete the entry) from your own wallet. DoDo notGive the agent a wallet with days of budget, not monthsGive it the owner keyPoint it at llms-full.txtPaste co"
   },
   {
     "url": "agent-publishes.html#next",
@@ -781,7 +781,7 @@
     "pageTitle": "Prove a post has not changed",
     "section": "Cookbooks",
     "heading": "Fetch the bytes two ways",
-    "text": "The aggregator is convenient. The direct path is the proof. bash Copy $ morse entry read 0 -P 0x69d4...f327 -C posts --via-aggregator --out a.md # fast, trusts the aggregator $ morse entry read 0 -P 0x69d4...f327 -C posts --out b.md # verifies against storage nodes $ cmp a.md b.md && echo \"bytes match\" Without the flag, the CLI fetches slivers from Walrus storage nodes and checks them against the blob's metadata before writing a byte. If it succeeds, the file matches the blob id on chain. If the bytes had been swapped anywhere, this step fails rather than returning something else. Testnet timi"
+    "text": "The aggregator is convenient. The direct path is the proof. bash Copy $ morse entry read 0 -P 0x69d4...f327 -C posts --via-aggregator --out a.md # fast, trusts the aggregator $ morse entry read 0 -P 0x69d4...f327 -C posts --out b.md # verifies against storage nodes $ cmp a.md b.md && echo \"bytes match\" Without the flag, the CLI fetches slivers from Walrus storage nodes and checks them against the blob's metadata before writing a byte. If it succeeds, the file matches the blob id on chain. If the bytes had been swapped anywhere, this step fails rather than returning something else. The direct r"
   },
   {
     "url": "verify-a-post.html#walk-the-revisions",
@@ -795,7 +795,7 @@
     "pageTitle": "Prove a post has not changed",
     "section": "Cookbooks",
     "heading": "Check who published it",
-    "text": "The record names the wallet that wrote each revision, so no explorer is needed: jq -r '.revisions[.publicHead].author' on the entry get output prints it. To see the transactions themselves, open the publication id on a Sui explorer, for example suiscan.xyz/testnet/object/<PUBLICATION_ID>. Then check that the author held a cap for the publication: bash Copy $ morse cap list 0xAUTHOR_ADDRESS A live cap, or a cap that was active at that time, means the publication's owner authorised that wallet. A revoked cap still proves the write was authorised when it happened, because the chain would have rej"
+    "text": "The record names the wallet that wrote each revision, so no explorer is needed: jq -r '.revisions[.publicHead].author' on the entry get output prints it. To see the transactions themselves, open the publication id on a Sui explorer, for example suiscan.xyz/testnet/object/<PUBLICATION_ID>. Then check that the author held a cap for the publication: bash Copy $ morse cap list 0xAUTHOR_ADDRESS The list includes revoked caps and does not mark them, so it shows which caps the author was issued, not which still work. That is enough here: the chain rejects any write made with a revoked cap, so a revis"
   },
   {
     "url": "verify-a-post.html#do-it-from-a-script",
@@ -1488,7 +1488,7 @@
     "pageTitle": "CLI Command Reference",
     "section": "CLI",
     "heading": "Cap",
-    "text": "Issue, revoke, and transfer publisher capabilities. CommandPurpose cap list [<address>] [--limit <n>] [--cursor <cursor>]List PublisherCaps held by an address. cap issue <holder> [-P <slug|id>] [--owner-cap <id>]Issue a PublisherCap bound to an address. cap revoke <publisherCapId> [-P <slug|id>] [--owner-cap <id>]Revoke a PublisherCap. cap destroy <publisherCapId> [-P <slug|id>]Destroy a PublisherCap you hold. cap transfer <publisherCapId> <recipient>Transfer a PublisherCap object. Does not change the holder binding; the recipient cannot use or destroy the cap unless they are the bound holder."
+    "text": "Issue, revoke, and transfer publisher capabilities. CommandPurpose cap list [<address>] [--limit <n>] [--cursor <cursor>]List PublisherCaps held by an address. cap issue <holder> [-P <slug|id>] [--owner-cap <id>]Issue a PublisherCap bound to an address. cap revoke <publisherCapId> [-P <slug|id>] [--owner-cap <id>]Revoke a PublisherCap. Asks for confirmation; in scripts pass the global --yes before the subcommand (morse --yes cap revoke <id>). cap destroy <publisherCapId> [-P <slug|id>]Destroy a PublisherCap you hold. cap transfer <publisherCapId> <recipient>Transfer a PublisherCap object. Does"
   },
   {
     "url": "cli-commands.html#next-steps",
@@ -1523,7 +1523,7 @@
     "pageTitle": "CLI Cookbooks",
     "section": "CLI",
     "heading": "Reading it back",
-    "text": "entry get shows metadata; entry read fetches the public content itself. The view link printed by entry add opens the same bytes in a browser. bash Copy morse entry get 0 morse entry read 0 --via-aggregator morse entry read 0 --via-aggregator --out got.md Use --via-aggregator for reads on testnet On testnet, the default direct-node read path frequently fails right after an upload with No valid blob metadata could be retrieved from any storage node, even though the blob is healthy, on both plain reads and encrypted decrypts. Add --via-aggregator to entry read and entry decrypt to route through t"
+    "text": "entry get shows metadata; entry read fetches the public content itself. The view link printed by entry add opens the same bytes in a browser. bash Copy morse entry get 0 morse entry read 0 --via-aggregator morse entry read 0 --via-aggregator --out got.md Use --via-aggregator for reads In morse-cli 0.10.1 and morse-sdk 0.8.2 the verified read fails for every entry in a blob collection (the default mode) with No valid blob metadata could be retrieved from any storage node: the SDK passes the blob id to Walrus in the wrong format. It is a bug, not storage nodes catching up, so waiting does not he"
   },
   {
     "url": "cli-workflows.html#listing-your-content",
@@ -1593,7 +1593,7 @@
     "pageTitle": "CLI Cookbooks",
     "section": "CLI",
     "heading": "Troubleshooting",
-    "text": "CodeMessageCause 2No account selectedNo key configured. Import one, set MORSE_PRIVATE_KEY, or run account use. 4Incorrect password or corrupted keystoreWrong keystore password (GCM auth-tag mismatch). 2No publication selectedNo active publication. Pass -P <slug|id> or run morse use. 3No publication at 0x…The ID does not exist on this network. 5Move abort ESlugAlreadyExistsThe slug is already registered; slugs are globally unique on the network. Re-run with a different slug (e.g. append a timestamp). 5Too many failures while writing blob to nodesWalrus storage nodes are degraded. Retry; check W"
+    "text": "CodeMessageCause 2No account selectedNo key configured. Import one, set MORSE_PRIVATE_KEY, or run account use. 4Incorrect password or corrupted keystoreWrong keystore password (GCM auth-tag mismatch). 2No publication selectedNo active publication. Pass -P <slug|id> or run morse use. 3No publication at 0x…The ID does not exist on this network. 1Move abort ESlugAlreadyExistsThe slug is already registered; slugs are globally unique on the network. Re-run with a different slug (e.g. append a timestamp). 5Too many failures while writing blob to nodesWalrus storage nodes are degraded. Retry; check W"
   },
   {
     "url": "cli-workflows.html#next-steps",

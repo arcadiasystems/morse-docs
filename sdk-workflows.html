@@ -391,8 +391,8 @@ console.<span class="fn">log</span>(page.results.length, <span class="st">"entri
         <div class="callout callout-warning">
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="callout-body">
-            <div class="callout-title">Use <code>HttpAggregatorReadAdapter</code> for reads on testnet</div>
-            <div class="callout-text">On testnet, <code>DefaultWalrusReadAdapter</code> (direct-node fanout) frequently fails right after an upload with <code>No valid blob metadata could be retrieved from any storage node</code>, even for healthy blobs. Use <code>HttpAggregatorReadAdapter</code> for reads instead; it routes through a single aggregator endpoint and succeeds against the same blobs, at the cost of skipping client-side blob verification. Mainnet storage nodes are expected to be more reliable. See <a href="sdk-client-setup.html#picking-a-walrus-adapter">SDK Client Setup &rarr; Picking a Walrus adapter</a>.</div>
+            <div class="callout-title">Use <code>HttpAggregatorReadAdapter</code> for reads</div>
+            <div class="callout-text">In morse-sdk 0.8.2, <code>DefaultWalrusReadAdapter</code> (direct-node fanout) fails to read any blob collection entry by its blob ref with <code>No valid blob metadata could be retrieved from any storage node</code>, because it passes the blob id to Walrus in the wrong format. Waiting does not help. Use <code>HttpAggregatorReadAdapter</code> for reads instead; it routes through a single aggregator endpoint and succeeds against the same blobs, at the cost of skipping client-side blob verification. See <a href="sdk-client-setup.html#picking-a-walrus-adapter">SDK Client Setup &rarr; Picking a Walrus adapter</a>.</div>
           </div>
         </div>
 

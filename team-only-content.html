@@ -99,7 +99,8 @@ EOF
             <span class="code-lang">output</span>
           </div>
           <pre>Encrypting and uploading 53 bytes...
-<span class="ok">Added encrypted entry #5 "q4-plan".</span> <span class="m">(tx: 8Bq1mVr0...2kLs)</span></pre>
+<span class="ok">Added encrypted entry #5 "q4-plan".</span> <span class="m">(tx: 8Bq1mVr0...2kLs)</span>
+  <span class="m">network:      testnet</span></pre>
         </div>
 
         <p>Three things happened: the CLI generated a fresh Seal identity scoped to your publication, encrypted the file locally, and uploaded only ciphertext. The entry was created as a <strong>draft</strong>. Encrypted entries always start as drafts, because publishing is a separate decision.</p>
@@ -127,19 +128,20 @@ EOF
 
         <p>Anyone you issued a cap to in <a href="co-author.html">Add a co-author</a> can run the same command from their own wallet. Anyone else gets the ciphertext from Walrus and nothing from the key servers.</p>
 
-        <h2 id="publish-the-draft">Publish the draft</h2>
+        <h2 id="release-it-to-everyone">Release it to everyone</h2>
 
-        <p>A draft is visible as an entry on chain but is not the public head, and for encrypted content it stays that way: published revisions are always public and unencrypted, so the team keeps reading the draft with <code>entry decrypt</code>. If you decide to release the text to everyone, publish it from the draft with the plaintext file:</p>
+        <p>A draft is visible as an entry on chain but is not the public head, and for encrypted content it stays that way: published revisions are always public and unencrypted, so the team keeps reading the draft with <code>entry decrypt</code>. The CLI will not add a public revision to an encrypted entry. Both of these exit with code 2 and "Encrypted revisions are not yet supported":</p>
 
         <div class="code-block">
           <div class="code-header">
             <span class="code-lang">bash</span>
             <button class="code-copy" type="button">Copy</button>
           </div>
-          <pre><span class="p" aria-hidden="true">$ </span>morse revision publish-from-draft 5 0 --file q4-plan.md</pre>
+          <pre><span class="p" aria-hidden="true">$ </span>morse revision publish-from-draft 5 0 --file q4-plan.md   # refused
+<span class="p" aria-hidden="true">$ </span>morse revision publish-direct 5 --file q4-plan.md         # refused</pre>
         </div>
 
-        <p>Always pass <code>--file</code>. Without it the CLI reuses the draft's blob, which is ciphertext, and readers of the public head would get bytes nobody can decrypt. <code>morse revision publish-direct 5 --file q4-plan.md</code> does the same in one step.</p>
+        <p>To release the text, publish the plaintext as a new, ordinary entry with <code>morse entry add q4-plan-public --file q4-plan.md --epochs 30</code>. The encrypted entry stays a team-only draft.</p>
 
         <h2 id="rotate-a-key-revoke-a-reader">Rotate a key, revoke a reader</h2>
 

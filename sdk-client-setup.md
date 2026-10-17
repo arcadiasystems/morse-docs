@@ -393,9 +393,9 @@ const walrusWriter = HttpPublisherWriteAdapter.fromConfig({
 >
 > The HTTP adapters are NOT compatible with `addEntryFromBytes` / `addEncryptedEntryFromBytes`. Those functions require `WalrusFlowCapable` for the combined PTB; the publisher-paid path is naturally 1 transaction through `uploadBlob` + `addEntry`. Check any `WalrusWriteAdapter` at runtime with the `isWalrusFlowCapable(walrus)` type guard.
 
-> **WARNING: Use `HttpAggregatorReadAdapter` for reads on testnet**
+> **WARNING: Use `HttpAggregatorReadAdapter` for reads**
 >
-> On testnet, `DefaultWalrusReadAdapter` (direct-node fanout with client-side verification) frequently fails right after an upload with `No valid blob metadata could be retrieved from any storage node`, even for healthy blobs, on both plain and encrypted reads. `HttpAggregatorReadAdapter` succeeds against the same blobs: it fetches from a single aggregator endpoint and skips client-side blob verification, so you trust the operator's bytes (pass `verifyBlobIntegrity` to add a check). Mainnet storage nodes are expected to be more reliable.
+> In morse-sdk 0.8.2, `DefaultWalrusReadAdapter.readBlobRef` and `readBlobByObjectId` (direct-node fanout with client-side verification) fail for every blob in a blob collection with `No valid blob metadata could be retrieved from any storage node`, on both plain and encrypted reads: they pass the decimal `blob_id` from the Sui object to Walrus instead of its base64url form. It is a bug, not storage nodes catching up, so waiting does not help. `HttpAggregatorReadAdapter` succeeds against the same blobs: it fetches from a single aggregator endpoint and skips client-side blob verification, so you trust the operator's bytes (pass `verifyBlobIntegrity` to add a check).
 
 ## Verifying setup
 

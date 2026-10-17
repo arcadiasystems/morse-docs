@@ -83,10 +83,10 @@ The map is what makes a rerun safe: a file already in it is skipped. Everything 
 | Exit code | Meaning | In a pipeline |
 | --- | --- | --- |
 | 0 | Success | Carry on |
-| 1 | Any other failure | For example a contract abort such as `ESlugAlreadyExists`; read the message and fail the job |
+| 1 | Any other failure | For example a contract abort such as `ESlugAlreadyExists`, or a write that uploaded to Walrus and then failed on chain; read the message and fail the job |
 | 2 | Usage error | Your command line is wrong, fix the script |
 | 3 | Not found | Wrong publication id or entry id |
-| 4 | Auth or permission | Cap revoked, wrong key, or no cap for this publication |
+| 4 | Auth or permission | Cap revoked, wrong key, or no cap for this publication. A revoked cap on `entry add` or `entry add-encrypted` exits 1 instead, after the upload |
 | 5 | Network or transport | Retry once after a pause, then fail the job |
 
 ```bash
@@ -96,7 +96,7 @@ out=$(publish "$name" --file "$f" --epochs "$EPOCHS") || { [ $? -eq 5 ] && sleep
 
 > **INFO: --yes and -q**
 >
-> `--yes` answers every confirmation, which matters for `delete` commands. `-q` keeps progress bars out of your logs so the JSON on stdout is the only thing the script sees.
+> `--yes` answers every confirmation, which matters for `delete` commands and `cap revoke`; it goes before the subcommand. `-q` keeps progress bars out of your logs so the JSON on stdout is the only thing the script sees.
 
 ## Lock it down
 
