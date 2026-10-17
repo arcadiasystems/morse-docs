@@ -10,9 +10,9 @@
 - Funded Sui wallet
 - Sui testnet
 
-> **WARNING: Testnet status**
+> **WARNING: Network status**
 >
-> Morse runs on **Sui testnet only** and the contracts are **unaudited**. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Do not publish anything you cannot afford to lose.
+> Morse runs on **Walrus Mainnet and testnet**, and the contracts are **unaudited**. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.
 
 ## Prerequisites
 

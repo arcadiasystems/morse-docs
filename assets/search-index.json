@@ -4,7 +4,7 @@
     "pageTitle": "Morse: The Decentralized Headless CMS Protocol",
     "section": "Getting Started",
     "heading": "Morse: The Decentralized Headless CMS Protocol",
-    "text": "A headless CMS protocol built on Sui and Walrus, for developers building content applications with on-chain ownership and decentralized storage. Testnet status Morse runs on Sui testnet only and the contracts are unaudited. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Do not publish anything you cannot afford to lose."
+    "text": "A headless CMS protocol built on Sui and Walrus, for developers building content applications with on-chain ownership and decentralized storage. Network status Morse runs on Walrus Mainnet and testnet, and the contracts are unaudited. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose."
   },
   {
     "url": "index.html#what-is-morse",
@@ -39,7 +39,7 @@
     "pageTitle": "Morse: The Decentralized Headless CMS Protocol",
     "section": "Getting Started",
     "heading": "Component status",
-    "text": "Component Status Description Move Contracts Active Publication, collection, entry, and revision management. Deployed on Sui Testnet. TypeScript SDK Active Wraps Sui, Walrus, and Seal behind a small adapter pattern. Published as @arcadiasystems/morse-sdk on npm (testnet). CLI Active Terminal tool for managing publications, collections, and entries. Published as @arcadiasystems/morse-cli on npm (testnet). Indexer Planned Listens to on-chain events and builds read-optimized state. Content API Planned REST API for querying publications, collections, and entries."
+    "text": "Component Status Description Move Contracts Active Publication, collection, entry, and revision management. Deployed on testnet and mainnet. TypeScript SDK Active Wraps Sui, Walrus, and Seal behind a small adapter pattern. Published as @arcadiasystems/morse-sdk on npm (testnet and mainnet). CLI Active Terminal tool for managing publications, collections, and entries. Published as @arcadiasystems/morse-cli on npm (testnet and mainnet). Indexer Planned Listens to on-chain events and builds read-optimized state. Content API Planned REST API for querying publications, collections, and entries."
   },
   {
     "url": "index.html#next-steps",
@@ -144,14 +144,14 @@
     "pageTitle": "Quick Start",
     "section": "Getting Started",
     "heading": "Every path needs a funded testnet wallet",
-    "text": "All three guides sign transactions on Sui testnet and store content on Walrus testnet. You need SUI for gas and WAL for storage. Both are free and take about two minutes. StepWhereWhy 1. Install a walletSui Wallet, Suiet, or any Sui-compatible walletHolds your key and signs transactions 2. Get testnet SUIfaucet.sui.ioGas for every on-chain action 3. Swap some SUI for WALstake-wal.wal.appWalrus storage fees when you publish Testnet only, for now Contracts are unaudited and testnets reset periodically. Testnet tokens have no monetary value. Mainnet is on the roadmap."
+    "text": "All three guides sign transactions on Sui testnet and store content on Walrus testnet. You need SUI for gas and WAL for storage. Both are free and take about two minutes. StepWhereWhy 1. Install a walletSui Wallet, Suiet, or any Sui-compatible walletHolds your key and signs transactions 2. Get testnet SUIfaucet.sui.ioGas for every on-chain action 3. Swap some SUI for WALstake-wal.wal.appWalrus storage fees when you publish Testnet first Contracts are unaudited and testnets reset periodically. Testnet tokens have no monetary value. Morse also runs on Walrus Mainnet, where gas and storage cost r"
   },
   {
     "url": "quick-start-cli.html",
     "pageTitle": "Quick Start: CLI",
     "section": "Getting Started",
     "heading": "Quick Start: CLI",
-    "text": "Install morse-cli and go from zero to published content on testnet in under five minutes. No contracts, no code, just your terminal. About 5 minutesBun or NodeFunded Sui walletSui testnet Testnet status Morse runs on Sui testnet only and the contracts are unaudited. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Do not publish anything you cannot afford to lose."
+    "text": "Install morse-cli and go from zero to published content on testnet in under five minutes. No contracts, no code, just your terminal. About 5 minutesBun or NodeFunded Sui walletSui testnet Network status Morse runs on Walrus Mainnet and testnet, and the contracts are unaudited. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose."
   },
   {
     "url": "quick-start-cli.html#prerequisites",
@@ -221,7 +221,7 @@
     "pageTitle": "Quick Start: SDK",
     "section": "Getting Started",
     "heading": "Quick Start: SDK",
-    "text": "Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter: no browser, no wallet popups. Want to see the result first? Browse the live demo blog built on this SDK. Testnet status Morse runs on Sui testnet only and the contracts are unaudited. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Do not publish anything you cannot afford to lose."
+    "text": "Create a publication, add an entry, and read it back in one TypeScript script. Server-side with KeypairAdapter: no browser, no wallet popups. Want to see the result first? Browse the live demo blog built on this SDK. Network status Morse runs on Walrus Mainnet and testnet, and the contracts are unaudited. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose."
   },
   {
     "url": "quick-start-sdk.html#prerequisites",
@@ -263,7 +263,7 @@
     "pageTitle": "Quick Start: Smart Contracts",
     "section": "Getting Started",
     "heading": "Quick Start: Smart Contracts",
-    "text": "Create a publication, add a collection, and publish an entry using raw Programmable Transaction Blocks against the deployed Morse contracts on testnet. No SDK wrappers, just tx.moveCall. Testnet status Morse runs on Sui testnet only and the contracts are unaudited. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Do not publish anything you cannot afford to lose."
+    "text": "Create a publication, add a collection, and publish an entry using raw Programmable Transaction Blocks against the deployed Morse contracts on testnet. No SDK wrappers, just tx.moveCall. Network status Morse runs on Walrus Mainnet and testnet, and the contracts are unaudited. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose."
   },
   {
     "url": "quick-start-contracts.html#prerequisites",
@@ -340,14 +340,14 @@
     "pageTitle": "Cookbooks",
     "section": "Cookbooks",
     "heading": "Conventions",
-    "text": "You seeIt means$ commandType it in a shell. The Copy button strips the prompt.0x69d4...f327A shortened id. Yours will differ, never copy these.--via-aggregatorRead through the public Walrus aggregator. Reliable on testnet, trusts the operator.--epochs 14How long Walrus keeps the bytes. One epoch is about a day on testnet.Active contextThe publication and collection morse status shows. Set with morse use. Testnet only Morse is on Sui testnet with unaudited contracts. Testnets reset, blobs expire, tokens are free and worthless. Treat everything you publish as a rehearsal."
+    "text": "You seeIt means$ commandType it in a shell. The Copy button strips the prompt.0x69d4...f327A shortened id. Yours will differ, never copy these.--via-aggregatorRead through the public Walrus aggregator. Reliable on testnet, trusts the operator.--epochs 14How long Walrus keeps the bytes. One epoch is about a day on testnet.Active contextThe publication and collection morse status shows. Set with morse use. Testnet first Morse runs on Walrus Mainnet and testnet, and the contracts are unaudited. These recipes use testnet: it resets, blobs expire, tokens are free and worthless. Treat everything you"
   },
   {
     "url": "launch-a-blog.html",
     "pageTitle": "Launch a blog in 10 minutes",
     "section": "Cookbooks",
     "heading": "Launch a blog in 10 minutes",
-    "text": "Zero to a post whose bytes are on Walrus and whose record is on Sui, with nothing but your terminal. About ten minutes, most of it waiting for a faucet. About 10 minutesCLI onlyFresh Sui walletTestnet Testnet only, unaudited Everything here runs on Sui testnet and Walrus testnet. Testnets reset from time to time, blobs expire when their storage epochs run out, and the contracts have not been audited. Testnet tokens have no value. Do not publish anything you cannot afford to lose."
+    "text": "Zero to a post whose bytes are on Walrus and whose record is on Sui, with nothing but your terminal. About ten minutes, most of it waiting for a faucet. About 10 minutesCLI onlyFresh Sui walletTestnet Runs on testnet, unaudited Everything here runs on Sui testnet and Walrus testnet. Testnets reset from time to time, blobs expire when their storage epochs run out, and the contracts have not been audited. Testnet tokens have no value. Morse also runs on Walrus Mainnet, where the same steps cost real SUI and WAL, so get them working here first. Do not publish anything you cannot afford to lose."
   },
   {
     "url": "launch-a-blog.html#what-you-will-have",
@@ -1348,7 +1348,7 @@
     "pageTitle": "CLI Overview",
     "section": "CLI",
     "heading": "CLI Overview",
-    "text": "morse-cli is the command-line client for the Morse decentralized CMS. It signs with a locally encrypted key, stores content on Walrus, and encrypts private entries with Seal: the same protocol surface as the SDK, driven from your terminal. Runs on Node or Bun, pre-release on testnet. Published on npm · testnet only Install @arcadiasystems/morse-cli from npm. The CLI is currently configured for testnet only. Mainnet support to be added soon."
+    "text": "morse-cli is the command-line client for the Morse decentralized CMS. It signs with a locally encrypted key, stores content on Walrus, and encrypts private entries with Seal: the same protocol surface as the SDK, driven from your terminal. Runs on Node or Bun and targets testnet or Walrus Mainnet. Published on npm · testnet and mainnet Install @arcadiasystems/morse-cli from npm. It targets testnet unless you choose mainnet with --network, MORSE_NETWORK or a profile. The contracts are unaudited and mainnet spends real SUI and WAL, so test on testnet first."
   },
   {
     "url": "cli-overview.html#installing",
@@ -1383,7 +1383,7 @@
     "pageTitle": "CLI Overview",
     "section": "CLI",
     "heading": "Configuration",
-    "text": "Settings resolve with the precedence flags > MORSE_* env > config file > defaults. The config file lives under $XDG_CONFIG_HOME/morse (default ~/.config/morse); encrypted keystores live in keystores/ beside it. VariableOverridesNotes MORSE_PROFILE-p, --profileProfile to use. MORSE_NETWORK--networktestnet or localnet. MORSE_RPC_URL--rpcSui RPC URL override. MORSE_ADDRESS(no flag)Active account address. MORSE_PUBLICATION-P, --publicationActive publication ID. MORSE_COLLECTION-C, --collectionActive collection name. MORSE_PRIVATE_KEY(no flag)Raw Bech32 secret key. Highest-priority key source; neve"
+    "text": "Settings resolve with the precedence flags > MORSE_* env > config file > defaults. The config file lives under $XDG_CONFIG_HOME/morse (default ~/.config/morse); encrypted keystores live in keystores/ beside it. VariableOverridesNotes MORSE_PROFILE-p, --profileProfile to use. MORSE_NETWORK--networktestnet, mainnet or localnet. MORSE_RPC_URL--rpcSui RPC URL override. MORSE_ADDRESS(no flag)Active account address. MORSE_PUBLICATION-P, --publicationActive publication ID. MORSE_COLLECTION-C, --collectionActive collection name. MORSE_PRIVATE_KEY(no flag)Raw Bech32 secret key. Highest-priority key sou"
   },
   {
     "url": "cli-overview.html#output-and-scripting",
@@ -1635,7 +1635,7 @@
     "pageTitle": "SDK Overview",
     "section": "SDK",
     "heading": "Known limitations",
-    "text": "Testnet only at v0.x. Mainnet config is released once the contracts are stable. gRPC client only. Reader and adapter interfaces are typed against SuiGrpcClient from @mysten/sui/grpc. JSON-RPC fallback is planned. No encrypted publish path. The Move contract hardcodes encrypted=false on publish_from_draft and publish_direct. Encrypted content stays as drafts. See SDK Cookbooks → Encrypted content for the full lifecycle. Only the Publisher access policy is enforced. The Subscription policy is not yet active. listEntries is not sorted chronologically. Results follow on-chain storage order. Sort b"
+    "text": "Unaudited contracts. morseConfig({ network: \"mainnet\" }) returns the mainnet deployment, but the Move contracts have not been audited and mainnet spends real SUI and WAL. Test on testnet first. gRPC client only. Reader and adapter interfaces are typed against SuiGrpcClient from @mysten/sui/grpc. JSON-RPC fallback is planned. No encrypted publish path. The Move contract hardcodes encrypted=false on publish_from_draft and publish_direct. Encrypted content stays as drafts. See SDK Cookbooks → Encrypted content for the full lifecycle. Only the Publisher access policy is enforced. The Subscription "
   },
   {
     "url": "sdk-overview.html#next-steps",

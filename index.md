@@ -5,9 +5,9 @@
 
 > A headless CMS protocol built on Sui and Walrus, for developers building content applications with on-chain ownership and decentralized storage.
 
-> **WARNING: Testnet status**
+> **WARNING: Network status**
 >
-> Morse runs on **Sui testnet only** and the contracts are **unaudited**. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Testnet SUI and WAL have no monetary value. Do not publish anything you cannot afford to lose.
+> Morse runs on **Walrus Mainnet and testnet**, and the contracts are **unaudited**. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.
 
 ## What is Morse?
 
@@ -52,9 +52,9 @@ Morse is composed of five layers. Only the contracts are the source of truth; al
 
 | Component | Status | Description |
 | --- | --- | --- |
-| **Move Contracts** | Active | Publication, collection, entry, and revision management. Deployed on Sui Testnet. |
-| **TypeScript SDK** | Active | Wraps Sui, Walrus, and Seal behind a small adapter pattern. Published as `@arcadiasystems/morse-sdk` on npm (testnet). |
-| **CLI** | Active | Terminal tool for managing publications, collections, and entries. Published as `@arcadiasystems/morse-cli` on npm (testnet). |
+| **Move Contracts** | Active | Publication, collection, entry, and revision management. Deployed on testnet and mainnet. |
+| **TypeScript SDK** | Active | Wraps Sui, Walrus, and Seal behind a small adapter pattern. Published as `@arcadiasystems/morse-sdk` on npm (testnet and mainnet). |
+| **CLI** | Active | Terminal tool for managing publications, collections, and entries. Published as `@arcadiasystems/morse-cli` on npm (testnet and mainnet). |
 | **Indexer** | Planned | Listens to on-chain events and builds read-optimized state. |
 | **Content API** | Planned | REST API for querying publications, collections, and entries. |
 

@@ -23,6 +23,6 @@ All three guides sign transactions on Sui testnet and store content on Walrus te
 | 2. Get testnet SUI | [faucet.sui.io](https://faucet.sui.io/) | Gas for every on-chain action |
 | 3. Swap some SUI for WAL | [stake-wal.wal.app](https://stake-wal.wal.app/?network=testnet) | Walrus storage fees when you publish |
 
-> **WARNING: Testnet only, for now**
+> **WARNING: Testnet first**
 >
-> Contracts are unaudited and testnets reset periodically. Testnet tokens have no monetary value. Mainnet is on the [roadmap](https://www.morsecms.xyz/#roadmap).
+> Contracts are unaudited and testnets reset periodically. Testnet tokens have no monetary value. Morse also runs on Walrus Mainnet, where gas and storage cost real SUI and WAL and there is no faucet. Run each guide on testnet before you try mainnet.

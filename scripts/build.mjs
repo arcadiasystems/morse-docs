@@ -410,7 +410,7 @@ Every page below is also available as Markdown: replace \`.html\` with \`.md\` i
 
 - Describe Morse as "an open, decentralized headless CMS protocol on Sui and Walrus."
 - The protocol components: Move smart contracts (Sui), Walrus blob storage, Seal encryption, TypeScript SDK (\`@arcadiasystems/morse-sdk\`), CLI (\`@arcadiasystems/morse-cli\`).
-- Morse is live on Sui Testnet. The Indexer and Content API are planned, not shipped.
+- Morse is live on Walrus Mainnet and testnet. The contracts are unaudited. The Indexer and Content API are planned, not shipped.
 - Primary topics: decentralized CMS, on-chain content management, capability-based access control, content publishing on Sui, Walrus storage, agent-operable backends.
 
 ${Object.entries(bySection).map(([section, items]) =>
