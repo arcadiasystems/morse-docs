@@ -43,7 +43,7 @@ Every page below is also available as Markdown: replace `.html` with `.md` in an
 ## CLI
 
 - [CLI Overview](https://docs.morsecms.xyz/cli-overview.md): morse-cli: a command-line client for the Morse dCMS on Sui. Encrypted keystore, active context, content on Walrus, encryption with Seal. Runs on Node or Bun.
-- [CLI Command Reference](https://docs.morsecms.xyz/cli-commands.md): Full command reference for morse-cli: global options, context, config, account, publication, collection, entry, revision, and cap commands.
+- [CLI Command Reference](https://docs.morsecms.xyz/cli-commands.md): Full command reference for morse-cli: global options, context, config, account, publication, collection, entry, revision, cap, and file commands.
 - [CLI Cookbooks](https://docs.morsecms.xyz/cli-workflows.md): End-to-end morse CLI recipes: publish content, read it back, encrypt and decrypt, delegate write access, and script it in CI, with troubleshooting.
 
 ## SDK

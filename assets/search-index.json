@@ -1411,28 +1411,28 @@
     "pageTitle": "CLI Command Reference",
     "section": "CLI",
     "heading": "CLI Command Reference",
-    "text": "Complete reference for every morse-cli command, organized by resource: context, config, account, publication, collection, entry, revision, and cap."
+    "text": "Complete reference for every morse-cli command, organized by resource: context, config, account, publication, collection, entry, revision, cap, and file."
   },
   {
     "url": "cli-commands.html#global-options",
     "pageTitle": "CLI Command Reference",
     "section": "CLI",
     "heading": "Global options",
-    "text": "Global options apply to every command and must appear before the subcommand (e.g. morse --json publication list). OptionPurpose --network <testnet|localnet>Network to target (default: testnet). -p, --profile <name>Config profile to use. --rpc <url>Override the Sui RPC URL. --jsonMachine-readable JSON on stdout. -q, --quietSuppress progress and informational output. -y, --yesAssume yes for confirmation prompts. --debugPrint stack traces on error. -V, --versionPrint the version. -h, --helpShow help for any command."
+    "text": "Global options apply to every command and must appear before the subcommand (e.g. morse --json publication list). OptionPurpose --network <mainnet|testnet|localnet>Network to target (default: testnet). -p, --profile <name>Config profile to use. --rpc <url>Override the Sui RPC URL. --upload-relay <url|auto>Upload Walrus blobs through a relay instead of sending them to every storage node; auto picks the network's canonical relay. Costs a tip per upload. --max-tip <mist>Cap the relay's per-upload tip, in MIST (default: 10000000). Only applies with --upload-relay. --jsonMachine-readable JSON on st"
   },
   {
     "url": "cli-commands.html#shared-command-flags",
     "pageTitle": "CLI Command Reference",
     "section": "CLI",
     "heading": "Shared command flags",
-    "text": "These flags appear across multiple command groups. Command-specific flags are shown inline in each category below. ShortLongPurpose -P--publication <slug|id>Target publication (default: active context). -C--collection <name>Target collection (default: active context). -f--file <path>Input file (- for stdin). Used by content commands. -n--name <name>Publication name (used by publication create). -s--slug <slug>URL slug (used by publication create)."
+    "text": "These flags appear across multiple command groups. Command-specific flags are shown inline in each category below. ShortLongPurpose -P--publication <slug|id>Target publication (default: active context). -C--collection <name>Target collection (default: active context). -f--file <path>Input file (- for stdin). Used by content commands. -n--name <name>Name of a publication (publication create) or a file (file upload, file register, file update). -s--slug <slug>URL slug (used by publication create)."
   },
   {
     "url": "cli-commands.html#argument-notation",
     "pageTitle": "CLI Command Reference",
     "section": "CLI",
     "heading": "Argument notation",
-    "text": "Values in <angle brackets> are required; values in [square brackets] are optional; (a | b) means one of the two is required. ArgumentFormatExample <entryId>Zero-based integer index within the collection.0 [revisionIndex]Zero-based integer index within the entry. Latest when omitted.0 <draftRevisionId>Zero-based integer revision ID of the draft to publish.1 <publisherCapId>Sui object ID of a PublisherCap.0x3a… <address>, <recipient>, <holder>Sui address.0xf1… <publication>Publication slug or Sui object ID.my-blog, 0x7c…"
+    "text": "Values in <angle brackets> are required; values in [square brackets] are optional; (a | b) means one of the two is required; ... means the flag can be repeated. ArgumentFormatExample <entryId>Zero-based integer index within the collection.0 [revisionIndex]Zero-based integer index within the entry. Latest when omitted.0 <draftRevisionId>Zero-based integer revision ID of the draft to publish.1 <publisherCapId>Sui object ID of a PublisherCap.0x3a… <address>, <recipient>, <holder>, <newOwner>Sui address.0xf1… <publication>Publication slug or Sui object ID.my-blog, 0x7c… <file>Sui object ID of a Re"
   },
   {
     "url": "cli-commands.html#context",
@@ -1446,14 +1446,14 @@
     "pageTitle": "CLI Command Reference",
     "section": "CLI",
     "heading": "Config",
-    "text": "Configure CLI profiles, each pointing to a different network and account. CommandPurpose config add <name> --network <net> [--rpc <url>]Create or update a profile. config listList profiles; * marks the active. config use <name>Set the active profile. config remove <name>Delete a profile. config pathPrint the config file path. example $ morse config add testnet --network testnet Profile \"testnet\" created and set as default."
+    "text": "Configure CLI profiles, each pointing to a different network and account. CommandPurpose config add <name> --network <net> [--rpc <url>] [--upload-relay <url|auto>]Create or update a profile. --upload-relay saves a Walrus upload relay on the profile. config listList profiles; * marks the active. config use <name>Set the active profile. config remove <name>Delete a profile. config pathPrint the config file path. example $ morse config add testnet --network testnet Profile \"testnet\" created and set as default."
   },
   {
     "url": "cli-commands.html#account",
     "pageTitle": "CLI Command Reference",
     "section": "CLI",
     "heading": "Account",
-    "text": "Import, list, and manage keypairs used for signing transactions. CommandPurpose account importImport a key into an encrypted keystore (hidden prompts for key + password). account listList imported accounts; * marks the active one. account showPrint the active account address. account use <address>Set the active account for the current profile. account export <address>Reveal a decrypted key (interactive-only, dangerous). example $ morse account list * 0x71a3...9f2b 0xd4e5...6f7a"
+    "text": "Import, list, and manage keypairs used for signing transactions. CommandPurpose account importImport a key into an encrypted keystore. Reads the key from stdin when it is piped; otherwise prompts for key + password (hidden). account listList imported accounts; * marks the active one. account showPrint the active account address. account use <address>Set the active account for the current profile. account export <address>Reveal a decrypted key (interactive-only, dangerous). To import in a script, pipe the key on stdin and set MORSE_KEYSTORE_PASSWORD. With stdin piped there is no terminal to pro"
   },
   {
     "url": "cli-commands.html#publication",
@@ -1474,7 +1474,7 @@
     "pageTitle": "CLI Command Reference",
     "section": "CLI",
     "heading": "Entry",
-    "text": "Add, read, and delete entries within a collection. CommandPurpose entry get <entryId>Fetch a single entry's metadata. entry read <entryId> [<revisionIndex>] [--out <path>] [--via-aggregator]Fetch a public entry's content to stdout or a file. Reads the latest revision unless revisionIndex is specified; --via-aggregator fetches through a Walrus aggregator instead of directly. Recommended on testnet, where direct reads frequently fail right after an upload (see CLI Cookbooks → Reading it back). entry list [--limit <n>] [--cursor <cursor>] [--drafts-only]List entries. --drafts-only filters to unpu"
+    "text": "Add, read, and delete entries within a collection. CommandPurpose entry get <entryId>Fetch a single entry's metadata. entry read <entryId> [<revisionIndex>] [--out <path>] [--via-aggregator]Fetch a public entry's content to stdout or a file. Reads the latest revision unless revisionIndex is specified; --via-aggregator fetches through a Walrus aggregator instead of directly. Recommended on testnet, where direct reads frequently fail right after an upload (see CLI Cookbooks → Reading it back). entry list [--limit <n>] [--cursor <cursor>] [--all] [--drafts-only]List entries. --all fetches every p"
   },
   {
     "url": "cli-commands.html#revision",
@@ -1489,6 +1489,20 @@
     "section": "CLI",
     "heading": "Cap",
     "text": "Issue, revoke, and transfer publisher capabilities. CommandPurpose cap list [<address>] [--limit <n>] [--cursor <cursor>]List PublisherCaps held by an address. cap issue <holder> [-P <slug|id>] [--owner-cap <id>]Issue a PublisherCap bound to an address. cap revoke <publisherCapId> [-P <slug|id>] [--owner-cap <id>]Revoke a PublisherCap. Asks for confirmation; in scripts pass the global --yes before the subcommand (morse --yes cap revoke <id>). cap destroy <publisherCapId> [-P <slug|id>]Destroy a PublisherCap you hold. cap transfer <publisherCapId> <recipient>Transfer a PublisherCap object. Does"
+  },
+  {
+    "url": "cli-commands.html#file",
+    "pageTitle": "CLI Command Reference",
+    "section": "CLI",
+    "heading": "File",
+    "text": "Upload, register, read, list, and manage RecipientFiles on Walrus. A RecipientFile carries its own recipient list: the addresses allowed to decrypt it. See Recipient Files → CLI workflows for a full walkthrough. CommandPurpose file upload <path> --name <name> (--public | --encrypt | -r <addr>...) [--content-type <mime>] [--epochs <n>]Upload a file to Walrus and register it on-chain. --public stores it unencrypted and prints a view link. --encrypt encrypts it with Seal and prints a share string. -r, --recipient adds an address that can decrypt it and implies --encrypt; the sender is always a re"
+  },
+  {
+    "url": "cli-commands.html#command-spellings",
+    "pageTitle": "CLI Command Reference",
+    "section": "CLI",
+    "heading": "Command spellings",
+    "text": "Some commands accept a second spelling for the same action. Both spellings do the same thing. CommandAlso accepts account showaccount get publication getpublication show entry getentry show file getfile show entry readentry download file downloadfile read config removeconfig delete cap transfercap transfer-ownership entry scanentry list --all The publication group also answers to pub, as in morse pub list."
   },
   {
     "url": "cli-commands.html#next-steps",
