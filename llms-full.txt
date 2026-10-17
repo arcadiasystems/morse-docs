@@ -11,7 +11,7 @@
 
 > **WARNING: Network status**
 >
-> Morse runs on **Sui testnet and mainnet**, and the contracts are **unaudited**. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.
+> Morse runs on **Walrus Mainnet and testnet**, and the contracts are **unaudited**. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.
 
 ## What is Morse?
 
@@ -56,7 +56,7 @@ Morse is composed of five layers. Only the contracts are the source of truth; al
 
 | Component | Status | Description |
 | --- | --- | --- |
-| **Move Contracts** | Active | Publication, collection, entry, and revision management. Deployed on Sui testnet and mainnet. |
+| **Move Contracts** | Active | Publication, collection, entry, and revision management. Deployed on testnet and mainnet. |
 | **TypeScript SDK** | Active | Wraps Sui, Walrus, and Seal behind a small adapter pattern. Published as `@arcadiasystems/morse-sdk` on npm (testnet and mainnet). |
 | **CLI** | Active | Terminal tool for managing publications, collections, and entries. Published as `@arcadiasystems/morse-cli` on npm (testnet and mainnet). |
 | **Indexer** | Planned | Listens to on-chain events and builds read-optimized state. |
@@ -195,7 +195,7 @@ All three guides sign transactions on Sui testnet and store content on Walrus te
 
 > **WARNING: Testnet first**
 >
-> Contracts are unaudited and testnets reset periodically. Testnet tokens have no monetary value. Morse also runs on mainnet, where gas and storage cost real SUI and WAL and there is no faucet. Run each guide on testnet before you try mainnet.
+> Contracts are unaudited and testnets reset periodically. Testnet tokens have no monetary value. Morse also runs on Walrus Mainnet, where gas and storage cost real SUI and WAL and there is no faucet. Run each guide on testnet before you try mainnet.
 
 
 ---
@@ -213,7 +213,7 @@ All three guides sign transactions on Sui testnet and store content on Walrus te
 
 > **WARNING: Network status**
 >
-> Morse runs on **Sui testnet and mainnet**, and the contracts are **unaudited**. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.
+> Morse runs on **Walrus Mainnet and testnet**, and the contracts are **unaudited**. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.
 
 ## Prerequisites
 
@@ -366,7 +366,7 @@ The `--via-aggregator` flag routes reads through the Walrus aggregator, and for 
 
 > **WARNING: Network status**
 >
-> Morse runs on **Sui testnet and mainnet**, and the contracts are **unaudited**. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.
+> Morse runs on **Walrus Mainnet and testnet**, and the contracts are **unaudited**. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.
 
 ## Prerequisites
 
@@ -526,7 +526,7 @@ Revisions: 1
 
 > **WARNING: Network status**
 >
-> Morse runs on **Sui testnet and mainnet**, and the contracts are **unaudited**. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.
+> Morse runs on **Walrus Mainnet and testnet**, and the contracts are **unaudited**. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.
 
 ## Prerequisites
 
@@ -787,7 +787,7 @@ What a reader can check without asking you.
 
 > **WARNING: Testnet first**
 >
-> Morse runs on Sui testnet and mainnet, and the contracts are unaudited. These recipes use testnet: it resets, blobs expire, tokens are free and worthless. Treat everything you publish as a rehearsal. Mainnet spends real SUI and WAL, so get a recipe working here first.
+> Morse runs on Walrus Mainnet and testnet, and the contracts are unaudited. These recipes use testnet: it resets, blobs expire, tokens are free and worthless. Treat everything you publish as a rehearsal. Mainnet spends real SUI and WAL, so get a recipe working here first.
 
 
 ---
@@ -805,7 +805,7 @@ What a reader can check without asking you.
 
 > **WARNING: Runs on testnet, unaudited**
 >
-> Everything here runs on Sui testnet and Walrus testnet. Testnets reset from time to time, blobs expire when their storage epochs run out, and the contracts have not been audited. Testnet tokens have no value. Morse also runs on mainnet, where the same steps cost real SUI and WAL, so get them working here first. Do not publish anything you cannot afford to lose.
+> Everything here runs on Sui testnet and Walrus testnet. Testnets reset from time to time, blobs expire when their storage epochs run out, and the contracts have not been audited. Testnet tokens have no value. Morse also runs on Walrus Mainnet, where the same steps cost real SUI and WAL, so get them working here first. Do not publish anything you cannot afford to lose.
 
 ## What you will have
 
@@ -3325,7 +3325,7 @@ Move abort codes from the `recipient_file` module. The SDK surfaces them as `Con
 
 # CLI Overview
 
-> `morse-cli` is the command-line client for the Morse decentralized CMS. It signs with a locally encrypted key, stores content on Walrus, and encrypts private entries with Seal: the same protocol surface as the SDK, driven from your terminal. Runs on Node or Bun and targets Sui testnet or mainnet.
+> `morse-cli` is the command-line client for the Morse decentralized CMS. It signs with a locally encrypted key, stores content on Walrus, and encrypts private entries with Seal: the same protocol surface as the SDK, driven from your terminal. Runs on Node or Bun and targets testnet or Walrus Mainnet.
 
 > **INFO: Published on npm · testnet and mainnet**
 >

@@ -25,4 +25,4 @@ All three guides sign transactions on Sui testnet and store content on Walrus te
 
 > **WARNING: Testnet first**
 >
-> Contracts are unaudited and testnets reset periodically. Testnet tokens have no monetary value. Morse also runs on mainnet, where gas and storage cost real SUI and WAL and there is no faucet. Run each guide on testnet before you try mainnet.
+> Contracts are unaudited and testnets reset periodically. Testnet tokens have no monetary value. Morse also runs on Walrus Mainnet, where gas and storage cost real SUI and WAL and there is no faucet. Run each guide on testnet before you try mainnet.

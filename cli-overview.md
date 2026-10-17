@@ -3,7 +3,7 @@
 
 # CLI Overview
 
-> `morse-cli` is the command-line client for the Morse decentralized CMS. It signs with a locally encrypted key, stores content on Walrus, and encrypts private entries with Seal: the same protocol surface as the SDK, driven from your terminal. Runs on Node or Bun and targets Sui testnet or mainnet.
+> `morse-cli` is the command-line client for the Morse decentralized CMS. It signs with a locally encrypted key, stores content on Walrus, and encrypts private entries with Seal: the same protocol surface as the SDK, driven from your terminal. Runs on Node or Bun and targets testnet or Walrus Mainnet.
 
 > **INFO: Published on npm · testnet and mainnet**
 >

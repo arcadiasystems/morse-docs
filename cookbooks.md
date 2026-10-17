@@ -51,4 +51,4 @@ What a reader can check without asking you.
 
 > **WARNING: Testnet first**
 >
-> Morse runs on Sui testnet and mainnet, and the contracts are unaudited. These recipes use testnet: it resets, blobs expire, tokens are free and worthless. Treat everything you publish as a rehearsal. Mainnet spends real SUI and WAL, so get a recipe working here first.
+> Morse runs on Walrus Mainnet and testnet, and the contracts are unaudited. These recipes use testnet: it resets, blobs expire, tokens are free and worthless. Treat everything you publish as a rehearsal. Mainnet spends real SUI and WAL, so get a recipe working here first.

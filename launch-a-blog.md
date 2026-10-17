@@ -12,7 +12,7 @@
 
 > **WARNING: Runs on testnet, unaudited**
 >
-> Everything here runs on Sui testnet and Walrus testnet. Testnets reset from time to time, blobs expire when their storage epochs run out, and the contracts have not been audited. Testnet tokens have no value. Morse also runs on mainnet, where the same steps cost real SUI and WAL, so get them working here first. Do not publish anything you cannot afford to lose.
+> Everything here runs on Sui testnet and Walrus testnet. Testnets reset from time to time, blobs expire when their storage epochs run out, and the contracts have not been audited. Testnet tokens have no value. Morse also runs on Walrus Mainnet, where the same steps cost real SUI and WAL, so get them working here first. Do not publish anything you cannot afford to lose.
 
 ## What you will have
 
