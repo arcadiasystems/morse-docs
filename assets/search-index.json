@@ -277,7 +277,7 @@
     "pageTitle": "Quick Start: Smart Contracts",
     "section": "Getting Started",
     "heading": "Installing",
-    "text": "Install the Morse SDK (for network configuration and Walrus uploads) and the Sui SDK (for transaction construction and signing). bashbun Copy bun add @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal bashnpm Copy npm install @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal Why the SDK if we are using raw PTBs? This guide uses raw tx.moveCall. No SDK wrappers for contract calls. The SDK packages provide three things: morseConfig: resolves the deployed package ID, registry ID, and RPC URL so you do not hard-code addresses DefaultWalrusWriteAdapter: handles blob u"
+    "text": "Install the Morse SDK (for network configuration and Walrus uploads) and the Sui SDK (for transaction construction and signing). bashbun Copy bun add @arcadiasystems/morse-sdk@~0.8.0 @mysten/sui@~2.16.2 @mysten/walrus@~1.1.6 @mysten/seal@~1.1.3 bashnpm Copy npm install @arcadiasystems/morse-sdk@~0.8.0 @mysten/sui@~2.16.2 @mysten/walrus@~1.1.6 @mysten/seal@~1.1.3 Why the SDK if we are using raw PTBs? This guide uses raw tx.moveCall. No SDK wrappers for contract calls. The SDK packages provide three things: morseConfig: resolves the deployed package ID, registry ID, and RPC URL so you do not har"
   },
   {
     "url": "quick-start-contracts.html#writing-the-script",
@@ -1278,7 +1278,7 @@
     "pageTitle": "Recipient Files",
     "section": "Protocol",
     "heading": "Download",
-    "text": "Recipients decrypt with the share string. The CLI reads the on-chain record, fetches the ciphertext from Walrus, signs a short-lived SessionKey (10 minutes) with the active account, and decrypts locally: bash Copy morse file download --share <string> --out <path> [--via-aggregator] --share carries the file ID, prefix, and nonce in one token. Alternatively pass the file ID positionally with --prefix <hex> --nonce <hex>. --raw writes the stored bytes without decrypting. For a file with a recipient list and no decrypt input, the CLI refuses by default (the ciphertext is unusable), and --raw is th"
+    "text": "Recipients decrypt with the share string. The CLI reads the on-chain record, fetches the ciphertext from Walrus, signs a short-lived SessionKey (10 minutes) with the active account, and decrypts locally: bash Copy morse file download --share <string> --out <path> [--via-aggregator] --share carries the file ID, prefix, and nonce in one token. Alternatively pass the file ID positionally with --prefix <hex> --nonce <hex>. --raw writes the stored bytes without decrypting. For an encrypted file (one with a Seal prefix attached on-chain) and no decrypt input, the CLI refuses by default (the cipherte"
   },
   {
     "url": "recipient-files.html#managing-recipients",
@@ -1670,7 +1670,7 @@
     "pageTitle": "SDK Setup",
     "section": "SDK",
     "heading": "Compatibility",
-    "text": "@arcadiasystems/morse-sdk is built and tested against specific minor versions of its Mysten substrate. Newer or older versions are not validated and may produce runtime errors. The peer-dependency ranges in package.json enforce these bounds. Package Version Required @arcadiasystems/morse-sdk0.4.x(this package) @mysten/sui>=2.16.2 <2.17.0Yes: types, gRPC client, keypairs @mysten/walrus>=1.1.6 <1.2.0Optional: for default Walrus adapters (read + write) @mysten/seal>=1.1.3 <1.2.0Optional: for encryption Pin to the verified minor version Mysten packages may ship breaking changes within the same maj"
+    "text": "@arcadiasystems/morse-sdk is built and tested against specific minor versions of its Mysten substrate. Newer or older versions are not validated and may produce runtime errors. The peer-dependency ranges in package.json enforce these bounds. Package Version Required @arcadiasystems/morse-sdk0.8.x(this package) @mysten/sui>=2.16.2 <2.17.0Yes: types, gRPC client, keypairs @mysten/walrus>=1.1.6 <1.2.0Yes: default Walrus adapters (read + write) @mysten/seal>=1.1.3 <1.2.0Yes: encryption Pin to the verified minor version Mysten packages may ship breaking changes within the same major version. When a"
   },
   {
     "url": "sdk-client-setup.html#runtime",
@@ -1684,14 +1684,14 @@
     "pageTitle": "SDK Setup",
     "section": "SDK",
     "heading": "Installing",
-    "text": "@mysten/sui is a required peer dependency. @mysten/walrus is needed for the DefaultWalrusWriteAdapter. @mysten/seal is required at runtime even for non-encrypted workflows. bash Copy bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3"
+    "text": "@mysten/sui, @mysten/walrus, and @mysten/seal are all required peer dependencies. The SDK's main entry imports the default Walrus and Seal adapters, so both packages must be installed even for workflows that never upload or encrypt. bash Copy bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3"
   },
   {
     "url": "sdk-client-setup.html#morse-config",
     "pageTitle": "SDK Setup",
     "section": "SDK",
     "heading": "morseConfig() shape",
-    "text": "morseConfig({ network }) takes the target network (\"testnet\" or \"localnet\") and returns a read-only object with the contract addresses and endpoints the SDK needs. Mainnet is not yet supported. All other fields have built-in defaults but can be overridden for custom deployments. Every SDK function takes this object as its config argument. The returned object contains the following fields: FieldTypeDescription network\"testnet\" | \"localnet\"Sui network the config targets. Mainnet is not yet supported. rpcUrlstringSui JSON-RPC / gRPC endpoint. Defaults to the public fullnode for the chosen network"
+    "text": "morseConfig({ network }) takes the target network (\"mainnet\", \"testnet\", or \"localnet\") and returns a read-only object with the contract addresses and endpoints the SDK needs. All other fields have built-in defaults but can be overridden for custom deployments. Every SDK function takes this object as its config argument. The returned object contains the following fields: FieldTypeDescription network\"mainnet\" | \"testnet\" | \"localnet\"Sui network the config targets. rpcUrlstringSui JSON-RPC / gRPC endpoint. Defaults to the public fullnode for the chosen network; override for a custom node. packag"
   },
   {
     "url": "sdk-client-setup.html#server-setup",

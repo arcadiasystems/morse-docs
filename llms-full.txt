@@ -542,11 +542,11 @@ Revisions: 1
 Install the Morse SDK (for network configuration and Walrus uploads) and the Sui SDK (for transaction construction and signing).
 
 ```bash
-bun add @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal
+bun add @arcadiasystems/morse-sdk@~0.8.0 @mysten/sui@~2.16.2 @mysten/walrus@~1.1.6 @mysten/seal@~1.1.3
 ```
 
 ```bash
-npm install @arcadiasystems/morse-sdk @mysten/sui @mysten/walrus @mysten/seal
+npm install @arcadiasystems/morse-sdk@~0.8.0 @mysten/sui@~2.16.2 @mysten/walrus@~1.1.6 @mysten/seal@~1.1.3
 ```
 
 > **INFO: Why the SDK if we are using raw PTBs?**
@@ -3134,7 +3134,7 @@ morse file download --share <string> --out <path> [--via-aggregator]
 ```
 
 - `--share` carries the file ID, prefix, and nonce in one token. Alternatively pass the file ID positionally with `--prefix <hex> --nonce <hex>`.
-- `--raw` writes the stored bytes without decrypting. For a file with a recipient list and no decrypt input, the CLI refuses by default (the ciphertext is unusable), and `--raw` is the explicit opt-in.
+- `--raw` writes the stored bytes without decrypting. For an encrypted file (one with a Seal prefix attached on-chain) and no decrypt input, the CLI refuses by default (the ciphertext is unusable), and `--raw` is the explicit opt-in.
 - `--out` writes to a file; omitting it streams to stdout (not available in `--json` mode).
 
 The encrypted round-trip is byte-for-byte: the downloaded plaintext is identical to the uploaded file (verified on testnet). A non-member running the same command gets `SealError` code `no-access`; a tampered ciphertext fails with `decrypt-failed`.
@@ -3266,7 +3266,7 @@ const types = buildRecipientFileEventTypes(
   config.recipientFileEventOriginPackageId ?? config.packageId,
 );
 
-// Fetch events of these types from your event source (indexer or RPC),
+// Fetch events of these types from your event source (Sui GraphQL or an indexer),
 // normalized to { type, json, timestampMs }, oldest first. Then reduce:
 const owned = reconcileRecipientFilesOwnedBy(events, myAddress, types);
 const accessible = reconcileRecipientFilesAccessibleBy(events, myAddress, types);
@@ -3274,7 +3274,7 @@ const accessible = reconcileRecipientFilesAccessibleBy(events, myAddress, types)
 // individual files via filesReader.getRecipientFile(summary.id).
 ```
 
-The reducers handle creation, metadata updates, recipient add/remove, ownership transfer, and deletion. One known gap: `reconcileRecipientFilesOwnedBy` does not add files transferred *to* the queried address, because the transfer event does not carry the file's metadata. Re-fetch those with `getRecipientFile`. The CLI's `morse file list` uses these same reducers over `suix_queryEvents` (a deprecated Sui RPC endpoint; pass `--indexer-url` to point at your own event source).
+The reducers handle creation, metadata updates, recipient add/remove, ownership transfer, and deletion. One known gap: `reconcileRecipientFilesOwnedBy` does not add files transferred *to* the queried address, because the transfer event does not carry the file's metadata. Re-fetch those with `getRecipientFile`. The CLI's `morse file list` uses these same reducers over events read from Sui GraphQL (the canonical Mysten endpoint for the network by default; pass `--indexer-url` to point at another GraphQL endpoint, which localnet requires).
 
 ### Types & config reference
 
@@ -3857,7 +3857,6 @@ morse publication get 0x00 || echo "exit $?"
 | `3` | No publication at 0x… | The ID does not exist on this network. |
 | `1` | Move abort `ESlugAlreadyExists` | The slug is already registered; slugs are globally unique on the network. Re-run with a different slug (e.g. append a timestamp). |
 | `5` | Too many failures while writing blob to nodes | Walrus storage nodes are degraded. Retry; check WAL balance. |
-| `2` | Morse is not yet deployed on mainnet | Use `--network testnet`. |
 | `5` | InsufficientGas / out of SUI gas | The active account does not have enough SUI for gas fees. Run `sui client faucet` to request testnet SUI. |
 | `5` | Insufficient WAL balance | Walrus storage requires WAL tokens. Get WAL from the [Walrus testnet faucet](https://stake-wal.wal.app/?network=testnet). |
 | `3` | No valid blob metadata could be retrieved from any storage node | The default direct-node read path fails for every blob collection entry in morse-cli 0.10.1, because of a bug in how the SDK passes the blob id. Re-run with `--via-aggregator`. See [Reading It Back](#reading-it-back). |
@@ -3938,14 +3937,14 @@ The rest of the SDK (functions like `createPublication`, `addEntryFromBytes`, th
 
 | Package | Version | Required |
 | --- | --- | --- |
-| `@arcadiasystems/morse-sdk` | 0.4.x | (this package) |
+| `@arcadiasystems/morse-sdk` | 0.8.x | (this package) |
 | `@mysten/sui` | >=2.16.2 <2.17.0 | Yes: types, gRPC client, keypairs |
-| `@mysten/walrus` | >=1.1.6 <1.2.0 | Optional: for default Walrus adapters (read + write) |
-| `@mysten/seal` | >=1.1.3 <1.2.0 | Optional: for encryption |
+| `@mysten/walrus` | >=1.1.6 <1.2.0 | Yes: default Walrus adapters (read + write) |
+| `@mysten/seal` | >=1.1.3 <1.2.0 | Yes: encryption |
 
 > **WARNING: Pin to the verified minor version**
 >
-> Mysten packages may ship breaking changes within the same major version. When a new version like `@mysten/walrus@1.2.0` is released, `morse-sdk` needs a coordinated bump and re-verification. Use `bun add @arcadiasystems/morse-sdk@~0.4.0` to lock to patch-level updates only.
+> Mysten packages may ship breaking changes within the same major version. When a new version like `@mysten/walrus@1.2.0` is released, `morse-sdk` needs a coordinated bump and re-verification. Use `bun add @arcadiasystems/morse-sdk@~0.8.0` to lock to patch-level updates only.
 
 The verified matrix is also exported programmatically as `TESTED_SUBSTRATE`, a frozen record of the tested `@mysten/sui`, `@mysten/seal`, and `@mysten/walrus` versions plus `verifiedOn` and `suiNetwork`. Log it during initialization or compare it against bundler-resolved versions in CI:
 
@@ -3969,7 +3968,7 @@ The SDK works in both Node and browser environments. It does not depend on Node-
 
 ## Installing
 
-`@mysten/sui` is a required peer dependency. `@mysten/walrus` is needed for the `DefaultWalrusWriteAdapter`. `@mysten/seal` is required at runtime even for non-encrypted workflows.
+`@mysten/sui`, `@mysten/walrus`, and `@mysten/seal` are all required peer dependencies. The SDK's main entry imports the default Walrus and Seal adapters, so both packages must be installed even for workflows that never upload or encrypt.
 
 ```bash
 bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @mysten/seal@1.1.3
@@ -3977,13 +3976,13 @@ bun add @arcadiasystems/morse-sdk @mysten/sui@2.16.2 @mysten/walrus@1.1.6 @myste
 
 ## morseConfig() shape
 
-`morseConfig({ network })` takes the target network (`"testnet"` or `"localnet"`) and returns a read-only object with the contract addresses and endpoints the SDK needs. Mainnet is not yet supported. All other fields have built-in defaults but can be overridden for custom deployments. Every SDK function takes this object as its `config` argument.
+`morseConfig({ network })` takes the target network (`"mainnet"`, `"testnet"`, or `"localnet"`) and returns a read-only object with the contract addresses and endpoints the SDK needs. All other fields have built-in defaults but can be overridden for custom deployments. Every SDK function takes this object as its `config` argument.
 
 The returned object contains the following fields:
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `network` | `"testnet" \| "localnet"` | Sui network the config targets. Mainnet is not yet supported. |
+| `network` | `"mainnet" \| "testnet" \| "localnet"` | Sui network the config targets. |
 | `rpcUrl` | `string` | Sui JSON-RPC / gRPC endpoint. Defaults to the public fullnode for the chosen network; override for a custom node. |
 | `packageId` | `PackageId` | Current `published-at` address of the Morse Move package. Used as the target for all transaction calls. |
 | `originalPackageId` | `PackageId \| undefined` | Genesis publish address (`original-id`). Sui uses this in `objectType` strings and type filters. Defaults to `packageId` when the package has never been upgraded. |
