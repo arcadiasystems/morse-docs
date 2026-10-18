@@ -17,7 +17,7 @@ Morse has been live on Walrus Mainnet since 2026-09-09. The CLI and SDK ship wit
 | --- | --- |
 | [`@arcadiasystems/morse-sdk`](https://docs.morsecms.xyz/sdk-overview.html) | 0.9.0 |
 | [`@arcadiasystems/morse-cli`](https://docs.morsecms.xyz/cli-overview.html) | 0.11.0 |
-| [`@arcadiasystems/morse-uploader`](https://docs.morsecms.xyz/uploader.html) | 0.2.0 |
+| [`@arcadiasystems/morse-uploader`](https://docs.morsecms.xyz/uploader.html) | 0.3.0 |
 
 The default storage-node read path for `morse entry read` and `morse entry decrypt` works from morse-cli 0.11.0 and morse-sdk 0.9.0. Upgrade if you are on an earlier release.
 

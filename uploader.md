@@ -11,7 +11,7 @@
 
 ## What it is
 
-The package wraps the [recipient file](https://docs.morsecms.xyz/recipient-files.html) flow of `morse-sdk` 0.8 for React. Each upload creates a `RecipientFile`: a Walrus blob plus an on-chain record that carries its own recipient set. Every step is a headless hook, and an optional set of styled components sits on top.
+The package wraps the [recipient file](https://docs.morsecms.xyz/recipient-files.html) flow of `morse-sdk` 0.9 for React. Each upload creates a `RecipientFile`: a Walrus blob plus an on-chain record that carries its own recipient set. Every step is a headless hook, and an optional set of styled components sits on top.
 
 - **Headless hooks**: One hook per step: setup, upload, download, decrypt, file metadata and storage cost.
 - **Drop-in components**: MorseFileUploader and MorseFileDownloader, themed with CSS variables.
@@ -30,20 +30,20 @@ The package is ESM only and has four entry points:
 
 ## Install
 
-The package is on npm as [`@arcadiasystems/morse-uploader`](https://www.npmjs.com/package/@arcadiasystems/morse-uploader). This page covers version 0.2.0. Install it with its peer dependencies:
+The package is on npm as [`@arcadiasystems/morse-uploader`](https://www.npmjs.com/package/@arcadiasystems/morse-uploader). This page covers version 0.3.0. Install it with its peer dependencies:
 
 ```bash
-npm install @arcadiasystems/morse-uploader @arcadiasystems/morse-sdk@~0.8.1 @mysten/sui@~2.16.2 @mysten/walrus@~1.1.6 @mysten/seal@~1.1.3
+npm install @arcadiasystems/morse-uploader @arcadiasystems/morse-sdk@~0.9.0 @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0
 ```
 
-Keep the peers inside the ranges below, so your app does not end up with two copies of the Sui, Walrus or Seal packages. A tilde range such as `~0.8.1` means `>=0.8.1 <0.9.0`, so the command above stays inside them. React and React DOM are assumed to be in your app already.
+Keep the peers inside the ranges below, so your app does not end up with two copies of the Sui, Walrus or Seal packages. A tilde range such as `~0.9.0` means `>=0.9.0 <0.10.0`, so the command above stays inside them. React and React DOM are assumed to be in your app already.
 
 | Peer dependency | Range |
 | --- | --- |
-| `@arcadiasystems/morse-sdk` | >=0.8.1 <0.9.0 |
-| `@mysten/sui` | >=2.16.2 <2.17.0 |
-| `@mysten/walrus` | >=1.1.6 <1.2.0 |
-| `@mysten/seal` | >=1.1.3 <1.2.0 |
+| `@arcadiasystems/morse-sdk` | >=0.9.0 <0.10.0 |
+| `@mysten/sui` | >=2.36.0 <2.37.0 |
+| `@mysten/walrus` | >=1.2.35 <1.3.0 |
+| `@mysten/seal` | >=1.5.0 <1.6.0 |
 | `react`, `react-dom` | >=18.0.0 |
 
 The package marks `@mysten/walrus` and `@mysten/seal` as optional peers, but `morse-sdk` requires all three Mysten packages. Install them all.
@@ -122,7 +122,7 @@ export function MorseFiles({
 
 > **WARNING: Point the wallet and the SDK at one RPC**
 >
-> The SDK builds and reads over gRPC, while dapp-kit 1.0.6 executes over its own JSON-RPC client. Mysten's public fullnodes have retired JSON-RPC, so dapp-kit fails with `TypeError: Failed to fetch` before the wallet opens unless its `SuiClientProvider` points at an endpoint that still serves it. When the two clients sit on different nodes, the certify step can also fail with an object-version conflict. For reliable uploads, point `SuiClientProvider` and the `suiClient` option at one dedicated node.
+> The SDK builds and reads over gRPC, while dapp-kit executes over its own JSON-RPC client. Its last release is 1.1.17: Mysten has [deprecated](https://sdk.mystenlabs.com/sui/migrations/sui-2.0/dapp-kit) the package because it supports JSON-RPC only. Mysten's public fullnodes have retired JSON-RPC, so dapp-kit fails with `TypeError: Failed to fetch` before the wallet opens unless its `SuiClientProvider` points at an endpoint that still serves it. When the two clients sit on different nodes, the certify step can also fail with an object-version conflict. For reliable uploads, point `SuiClientProvider` and the `suiClient` option at one dedicated node.
 
 ## Components
 
@@ -294,6 +294,8 @@ To skip the default adapter, pass a prebuilt `walrusWrite` adapter instead. It m
 ## Encrypted files and Seal on Walrus Mainnet
 
 An encrypted upload encrypts the file under Seal before it leaves the browser, then creates the file and binds its Seal identity in one transaction. The connected wallet is always a recipient, so the owner can always decrypt. At decrypt time, Seal key servers check the file's recipient set on-chain, and a wallet outside it gets no key. Decrypting takes one wallet popup to create a Seal `SessionKey`, which is reused across files until it expires (10 minutes by default; set it with `ttlMin`).
+
+Before it creates that session, `useFileDecrypt` checks that the handles' `signer` belongs to their `address`, because `@mysten/seal` 1.5 no longer does. On a mismatch it rejects with Seal's `UserError`, without opening the wallet or caching a session. `useFileDownload` and `MorseFileDownloader` decrypt through it too. Handles built by `useMorseFiles` always match, so only hand-built handles can fail the check. A signer whose key is an alias of the address is not supported.
 
 Testnet pins an open set of key servers, so encryption works there with no setup. Walrus Mainnet pins none, because every Seal operator there is commercial. To encrypt on Walrus Mainnet, pass `sealKeyServers`. Start from the SDK's `MAINNET_SEAL_COMMITTEE` and add the `apiKeyName` and `apiKey` your operator issues:
 
