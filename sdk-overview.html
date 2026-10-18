@@ -153,7 +153,6 @@
 
         <h2 id="known-limitations">Known limitations</h2>
         <ul>
-          <li><strong>Unaudited contracts.</strong> <code>morseConfig({ network: "mainnet" })</code> returns the mainnet deployment, but the Move contracts have not been audited and mainnet spends real SUI and WAL. Test on testnet first.</li>
           <li><strong>gRPC client only.</strong> Reader and adapter interfaces are typed against <code>SuiGrpcClient</code> from <code>@mysten/sui/grpc</code>. JSON-RPC fallback is planned.</li>
           <li><strong>No encrypted publish path.</strong> The Move contract hardcodes <code>encrypted=false</code> on <code>publish_from_draft</code> and <code>publish_direct</code>. Encrypted content stays as drafts. See <a href="sdk-workflows.html#encrypted-content">SDK Cookbooks → Encrypted content</a> for the full lifecycle.</li>
           <li><strong>Only the <code>Publisher</code> access policy is enforced.</strong> The <code>Subscription</code> policy is not yet active.</li>
