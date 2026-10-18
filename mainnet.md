@@ -7,7 +7,7 @@
 
 > **WARNING: Read this before you switch**
 >
-> The contracts are **unaudited**. Gas and Walrus storage cost **real SUI and WAL**, and there is **no faucet**. **Deletions can't be undone.** Test every flow on testnet first, then repeat it on Walrus Mainnet.
+> Gas and Walrus storage cost **real SUI and WAL**, and there is **no faucet**. **Deletions can't be undone.** Test every flow on testnet first, then repeat it on Walrus Mainnet.
 
 ## Status
 

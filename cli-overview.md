@@ -7,7 +7,7 @@
 
 > **INFO: Published on npm · testnet and mainnet**
 >
-> Install `@arcadiasystems/morse-cli` from npm. It targets testnet unless you choose mainnet with `--network`, `MORSE_NETWORK` or a profile. The contracts are unaudited and mainnet spends real SUI and WAL, so test on testnet first.
+> Install `@arcadiasystems/morse-cli` from npm. It targets testnet unless you choose mainnet with `--network`, `MORSE_NETWORK` or a profile. Mainnet spends real SUI and WAL, so test on testnet first.
 
 ## Installing
 
