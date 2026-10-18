@@ -260,9 +260,9 @@ Selected as the active collection. <span class="m">(tx: DWkD...)</span></pre>
             <span class="code-lang">bash</span>
             <button class="code-copy" type="button">Copy</button>
           </div>
-          <pre>morse entry read 0 --via-aggregator</pre>
+          <pre>morse entry read 0</pre>
         </div>
-        <p>The <code>--via-aggregator</code> flag routes reads through the Walrus aggregator, and for now you need it. In morse-cli 0.10.1 and morse-sdk 0.8.2 the verified read fails for every entry in a blob collection (the default mode) with <code>No valid blob metadata could be retrieved from any storage node</code>: the SDK passes the blob id to Walrus in the wrong format. It is a bug, not storage nodes catching up, so waiting does not help. See <a href="cli-workflows.html#reading-it-back">CLI Cookbooks &rarr; Reading it back</a>.</p>
+        <p><code>entry read</code> fetches the content from the Walrus storage nodes and checks it against the blob id recorded on Sui. See <a href="cli-workflows.html#reading-it-back">CLI Cookbooks &rarr; Reading it back</a>.</p>
 
         <div class="code-block code-block-output">
           <div class="code-header">

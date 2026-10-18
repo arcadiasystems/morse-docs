@@ -42,16 +42,12 @@ $ cmp a.md b.md && echo "bytes match"
 
 Without the flag, the CLI fetches slivers from Walrus storage nodes and checks them against the blob's metadata before writing a byte. If it succeeds, the file matches the blob id on chain. If the bytes had been swapped anywhere, this step fails rather than returning something else.
 
-> **WARNING: The direct read is broken in morse-cli 0.10.1**
->
-> In morse-cli 0.10.1 and morse-sdk 0.8.2 the verified read fails for every entry in a blob collection (the default mode) with `No valid blob metadata could be retrieved from any storage node`: the SDK passes the blob id to Walrus in the wrong format. It is a bug, not storage nodes catching up, so waiting does not help. It exits with code 3. Until a fixed release, the CLI cannot complete the byte check on this page, and the script below exits 5 at the direct read. The record checks (`entry get`, the revision walk and the author) work.
-
 ## Walk the revisions
 
 Every earlier revision is still there. Read the first one and diff it against the current public head:
 
 ```bash
-$ morse entry read 0 0 -P 0x69d4...f327 -C posts --via-aggregator --out v0.md
+$ morse entry read 0 0 -P 0x69d4...f327 -C posts --out v0.md
 $ diff v0.md b.md
 ```
 

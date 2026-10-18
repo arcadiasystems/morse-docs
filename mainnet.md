@@ -3,7 +3,7 @@
 
 # Walrus Mainnet
 
-> Morse runs on Walrus Mainnet. This page covers what changes when you move from testnet: the deployment, the risks, setup, uploads, encrypted content and one known issue.
+> Morse runs on Walrus Mainnet. This page covers what changes when you move from testnet: the deployment, the risks, setup, uploads and encrypted content.
 
 > **WARNING: Read this before you switch**
 >
@@ -15,9 +15,11 @@ Morse has been live on Walrus Mainnet since 2026-09-09. The CLI and SDK ship wit
 
 | Package | Current release |
 | --- | --- |
-| [`@arcadiasystems/morse-sdk`](https://docs.morsecms.xyz/sdk-overview.html) | 0.8.2 |
-| [`@arcadiasystems/morse-cli`](https://docs.morsecms.xyz/cli-overview.html) | 0.10.1 |
+| [`@arcadiasystems/morse-sdk`](https://docs.morsecms.xyz/sdk-overview.html) | 0.9.0 |
+| [`@arcadiasystems/morse-cli`](https://docs.morsecms.xyz/cli-overview.html) | 0.11.0 |
 | [`@arcadiasystems/morse-uploader`](https://docs.morsecms.xyz/uploader.html) | 0.2.0 |
+
+The default storage-node read path for `morse entry read` and `morse entry decrypt` works from morse-cli 0.11.0 and morse-sdk 0.9.0. Upgrade if you are on an earlier release.
 
 Public publications, collections, entries and files work on both networks. Encrypted content needs your own Seal credentials on mainnet. See [Encrypted content](#encrypted-content).
 
@@ -115,17 +117,6 @@ They are environment variables, not flags, so the credential stays out of `ps` a
 In the SDK, `DefaultSealAdapter.fromMorseConfig` throws `ConfigurationError` on mainnet until you supply key servers. `MAINNET_SEAL_COMMITTEE` is Mysten's committee in the right shape. Add the `apiKeyName` and `apiKey` that Mysten issues you, and pass the result to `morseConfig` as `sealKeyServers`. For browser apps, see [React Uploader → Encrypted files and Seal on Walrus Mainnet](https://docs.morsecms.xyz/uploader.html#seal-on-walrus-mainnet).
 
 Encryption has not been verified end to end on Walrus Mainnet, because that needs a commercial credential. The CLI README covers the setup in [Seal on mainnet](https://github.com/arcadiasystems/morse-dcms/blob/main/morse-cli/README.md#seal-on-mainnet).
-
-## Known issue in morse-cli 0.10.1
-
-`morse entry read` and `morse entry decrypt` fail on the default storage-node read path with `No valid blob metadata could be retrieved from any storage node`. Pass `--via-aggregator` until a fixed morse-sdk release ships:
-
-```bash
-morse entry read 0 --via-aggregator
-morse entry decrypt 0 --via-aggregator
-```
-
-This was reproduced on testnet on 2026-10-17, and mainnet runs the same code path. The aggregator path skips client-side blob verification, so you trust the aggregator's bytes. See [CLI Cookbooks → Reading it back](https://docs.morsecms.xyz/cli-workflows.html#reading-it-back).
 
 ## Next steps
 

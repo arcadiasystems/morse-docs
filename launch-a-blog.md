@@ -109,10 +109,10 @@ Added entry #0 "hello". (tx: D9YfjkA3...9vB)
 ## Read it back
 
 ```bash
-$ morse entry read 0 --via-aggregator
+$ morse entry read 0
 ```
 
-The command goes through the public aggregator because the verified path does not work yet. In morse-cli 0.10.1 and morse-sdk 0.8.2 the verified read fails for every entry in a blob collection (the default mode) with `No valid blob metadata could be retrieved from any storage node`: the SDK passes the blob id to Walrus in the wrong format. It is a bug, not storage nodes catching up, so waiting does not help. Without the flag the CLI would verify the bytes client side; with it you trust the aggregator operator. Fine for a blog, worth knowing.
+The CLI reads the post from the Walrus storage nodes and checks the bytes against the blob id recorded on Sui.
 
 ## Share the record
 
@@ -135,7 +135,7 @@ The output includes the public head and the revision list, and for each revision
 | `exit 2` and "No account selected" on `publication create` | No active account, or wrong profile | `morse status`, then `morse account use <address>` |
 | Insufficient gas / balance | No SUI or no WAL on the address | Faucet for SUI, swap for WAL, check the address matches `morse status` |
 | `ESlugAlreadyExists` | Someone used that slug | Add a suffix, the `$(date +%s)` trick above does this |
-| `entry read` says no valid blob metadata | A bug in the verified read in morse-cli 0.10.1, not a timing issue | Use `--via-aggregator`; waiting does not help |
+| `entry read` says no valid blob metadata | A bug in the verified read in morse-cli 0.10.1, not a timing issue | Upgrade to morse-cli 0.11.0; waiting does not help |
 | Post disappeared after a while | Blob epochs expired or testnet reset | Republish with a larger `--epochs`; the entry record on Sui is unaffected |
 
 ## Next

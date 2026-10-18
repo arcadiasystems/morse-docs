@@ -127,16 +127,8 @@ morse entry add hello --file post.md</pre>
             <button class="code-copy" type="button">Copy</button>
           </div>
           <pre>morse entry get 0
-morse entry read 0 --via-aggregator
-morse entry read 0 --via-aggregator --out got.md</pre>
-        </div>
-
-        <div class="callout callout-warning">
-          <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
-          <div class="callout-body">
-            <div class="callout-title">Use <code>--via-aggregator</code> for reads</div>
-            <div class="callout-text">In morse-cli 0.10.1 and morse-sdk 0.8.2 the verified read fails for every entry in a blob collection (the default mode) with <code>No valid blob metadata could be retrieved from any storage node</code>: the SDK passes the blob id to Walrus in the wrong format. It is a bug, not storage nodes catching up, so waiting does not help. This affects plain reads and encrypted decrypts alike. Add <code>--via-aggregator</code> to <code>entry read</code> and <code>entry decrypt</code> to route through the Walrus aggregator, which succeeds against the same blobs. The tradeoff: the aggregator path skips client-side blob verification, so you trust the operator's bytes.</div>
-          </div>
+morse entry read 0
+morse entry read 0 --out got.md</pre>
         </div>
 
         <p class="see-also">See also: <a href="sdk-workflows.html#reading-it-back">SDK Cookbooks &rarr; Reading it back</a></p>
@@ -208,7 +200,7 @@ morse revision publish-from-draft 0 1</pre>
           </div>
           <pre>echo "members only" &gt; secret.txt
 morse entry add-encrypted members --file secret.txt
-morse entry decrypt 1 --via-aggregator --out recovered.txt</pre>
+morse entry decrypt 1 --out recovered.txt</pre>
         </div>
 
         <div class="callout callout-warning">
@@ -356,7 +348,7 @@ morse publication get 0x00 || echo "exit $?"</pre>
               <tr><td><code>5</code></td><td>Too many failures while writing blob to nodes</td><td>Walrus storage nodes are degraded. Retry; check WAL balance.</td></tr>
               <tr><td><code>5</code></td><td>InsufficientGas / out of SUI gas</td><td>The active account does not have enough SUI for gas fees. Run <code>sui client faucet</code> to request testnet SUI.</td></tr>
               <tr><td><code>5</code></td><td>Insufficient WAL balance</td><td>Walrus storage requires WAL tokens. Get WAL from the <a href="https://stake-wal.wal.app/?network=testnet" target="_blank" rel="noopener">Walrus testnet faucet</a>.</td></tr>
-              <tr><td><code>3</code></td><td>No valid blob metadata could be retrieved from any storage node</td><td>The default direct-node read path fails for every blob collection entry in morse-cli 0.10.1, because of a bug in how the SDK passes the blob id. Re-run with <code>--via-aggregator</code>. See <a href="#reading-it-back">Reading It Back</a>.</td></tr>
+              <tr><td><code>3</code></td><td>No valid blob metadata could be retrieved from any storage node</td><td>The default direct-node read path fails for every blob collection entry in morse-cli 0.10.1, because of a bug in how the SDK passes the blob id. Upgrade to morse-cli 0.11.0.</td></tr>
               <tr><td><code>3</code></td><td>Walrus blob not retrievable / blob expired</td><td>The blob's storage epoch has ended and it is no longer available on Walrus storage nodes. Re-upload the content and create a new revision with a longer <code>--epochs</code> value.</td></tr>
             </tbody>
           </table>

@@ -49,13 +49,9 @@ See also: [SDK Cookbooks → Creating a publication](https://docs.morsecms.xyz/s
 
 ```bash
 morse entry get 0
-morse entry read 0 --via-aggregator
-morse entry read 0 --via-aggregator --out got.md
+morse entry read 0
+morse entry read 0 --out got.md
 ```
-
-> **WARNING: Use `--via-aggregator` for reads**
->
-> In morse-cli 0.10.1 and morse-sdk 0.8.2 the verified read fails for every entry in a blob collection (the default mode) with `No valid blob metadata could be retrieved from any storage node`: the SDK passes the blob id to Walrus in the wrong format. It is a bug, not storage nodes catching up, so waiting does not help. This affects plain reads and encrypted decrypts alike. Add `--via-aggregator` to `entry read` and `entry decrypt` to route through the Walrus aggregator, which succeeds against the same blobs. The tradeoff: the aggregator path skips client-side blob verification, so you trust the operator's bytes.
 
 See also: [SDK Cookbooks → Reading it back](https://docs.morsecms.xyz/sdk-workflows.html#reading-it-back)
 
@@ -102,7 +98,7 @@ Morse uses [Seal](https://docs.morsecms.xyz/access-control.html#seal-integration
 ```bash
 echo "members only" > secret.txt
 morse entry add-encrypted members --file secret.txt
-morse entry decrypt 1 --via-aggregator --out recovered.txt
+morse entry decrypt 1 --out recovered.txt
 ```
 
 > **WARNING: Encrypted entries are always drafts**
@@ -187,7 +183,7 @@ morse publication get 0x00 || echo "exit $?"
 | `5` | Too many failures while writing blob to nodes | Walrus storage nodes are degraded. Retry; check WAL balance. |
 | `5` | InsufficientGas / out of SUI gas | The active account does not have enough SUI for gas fees. Run `sui client faucet` to request testnet SUI. |
 | `5` | Insufficient WAL balance | Walrus storage requires WAL tokens. Get WAL from the [Walrus testnet faucet](https://stake-wal.wal.app/?network=testnet). |
-| `3` | No valid blob metadata could be retrieved from any storage node | The default direct-node read path fails for every blob collection entry in morse-cli 0.10.1, because of a bug in how the SDK passes the blob id. Re-run with `--via-aggregator`. See [Reading It Back](#reading-it-back). |
+| `3` | No valid blob metadata could be retrieved from any storage node | The default direct-node read path fails for every blob collection entry in morse-cli 0.10.1, because of a bug in how the SDK passes the blob id. Upgrade to morse-cli 0.11.0. |
 | `3` | Walrus blob not retrievable / blob expired | The blob's storage epoch has ended and it is no longer available on Walrus storage nodes. Re-upload the content and create a new revision with a longer `--epochs` value. |
 
 ## Next steps

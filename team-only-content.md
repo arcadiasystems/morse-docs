@@ -49,7 +49,7 @@ Three things happened: the CLI generated a fresh Seal identity scoped to your pu
 Reading is `entry decrypt`, not `entry read`. The CLI signs a short-lived session key with your account, asks the key servers for shares, and decrypts locally.
 
 ```bash
-$ morse entry decrypt 5 --via-aggregator --out q4-plan.recovered.md
+$ morse entry decrypt 5 --out q4-plan.recovered.md
 $ diff q4-plan.md q4-plan.recovered.md && echo identical
 ```
 

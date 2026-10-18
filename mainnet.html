@@ -12,10 +12,10 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <meta name="description" content="Move from testnet to Walrus Mainnet: the deployment, the risks, CLI and SDK setup, the upload relay, Seal credentials and a known read issue.">
+  <meta name="description" content="Move from testnet to Walrus Mainnet: the deployment, the risks, CLI and SDK setup, the upload relay and Seal credentials.">
   <link rel="canonical" href="https://docs.morsecms.xyz/mainnet.html">
   <meta property="og:title" content="Walrus Mainnet · Morse Docs">
-  <meta property="og:description" content="Move from testnet to Walrus Mainnet: the deployment, the risks, CLI and SDK setup, the upload relay, Seal credentials and a known read issue.">
+  <meta property="og:description" content="Move from testnet to Walrus Mainnet: the deployment, the risks, CLI and SDK setup, the upload relay and Seal credentials.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://docs.morsecms.xyz/mainnet.html">
   <meta property="og:site_name" content="Morse Docs">
@@ -56,7 +56,7 @@
     <article class="article">
         <h1>Walrus Mainnet</h1>
         <p class="article-lead">
-          Morse runs on Walrus Mainnet. This page covers what changes when you move from testnet: the deployment, the risks, setup, uploads, encrypted content and one known issue.
+          Morse runs on Walrus Mainnet. This page covers what changes when you move from testnet: the deployment, the risks, setup, uploads and encrypted content.
         </p>
         <div class="page-actions">
           <div class="copybtn-group">
@@ -85,12 +85,13 @@
           <table>
             <thead><tr><th>Package</th><th>Current release</th></tr></thead>
             <tbody>
-              <tr><td><a href="sdk-overview.html"><code>@arcadiasystems/morse-sdk</code></a></td><td>0.8.2</td></tr>
-              <tr><td><a href="cli-overview.html"><code>@arcadiasystems/morse-cli</code></a></td><td>0.10.1</td></tr>
+              <tr><td><a href="sdk-overview.html"><code>@arcadiasystems/morse-sdk</code></a></td><td>0.9.0</td></tr>
+              <tr><td><a href="cli-overview.html"><code>@arcadiasystems/morse-cli</code></a></td><td>0.11.0</td></tr>
               <tr><td><a href="uploader.html"><code>@arcadiasystems/morse-uploader</code></a></td><td>0.2.0</td></tr>
             </tbody>
           </table>
         </div>
+        <p>The default storage-node read path for <code>morse entry read</code> and <code>morse entry decrypt</code> works from morse-cli 0.11.0 and morse-sdk 0.9.0. Upgrade if you are on an earlier release.</p>
         <p>Public publications, collections, entries and files work on both networks. Encrypted content needs your own Seal credentials on mainnet. See <a href="#encrypted-content">Encrypted content</a>.</p>
 
         <h2 id="deployment">The deployment</h2>
@@ -189,18 +190,6 @@ morse status</pre>
         <p>They are environment variables, not flags, so the credential stays out of <code>ps</code> and shell history. Before it encrypts anything, the CLI checks the credential and refuses if the operator answers <code>401</code> or <code>403</code>. Without that check, a bad credential would let encryption succeed and decryption fail, and you would pay to store content nobody can read.</p>
         <p>In the SDK, <code>DefaultSealAdapter.fromMorseConfig</code> throws <code>ConfigurationError</code> on mainnet until you supply key servers. <code>MAINNET_SEAL_COMMITTEE</code> is Mysten's committee in the right shape. Add the <code>apiKeyName</code> and <code>apiKey</code> that Mysten issues you, and pass the result to <code>morseConfig</code> as <code>sealKeyServers</code>. For browser apps, see <a href="uploader.html#seal-on-walrus-mainnet">React Uploader &rarr; Encrypted files and Seal on Walrus Mainnet</a>.</p>
         <p>Encryption has not been verified end to end on Walrus Mainnet, because that needs a commercial credential. The CLI README covers the setup in <a href="https://github.com/arcadiasystems/morse-dcms/blob/main/morse-cli/README.md#seal-on-mainnet" target="_blank" rel="noopener">Seal on mainnet</a>.</p>
-
-        <h2 id="known-issue">Known issue in morse-cli 0.10.1</h2>
-        <p><code>morse entry read</code> and <code>morse entry decrypt</code> fail on the default storage-node read path with <code>No valid blob metadata could be retrieved from any storage node</code>. Pass <code>--via-aggregator</code> until a fixed morse-sdk release ships:</p>
-        <div class="code-block">
-          <div class="code-header">
-            <span class="code-lang">bash</span>
-            <button class="code-copy" type="button">Copy</button>
-          </div>
-          <pre>morse entry read 0 --via-aggregator
-morse entry decrypt 0 --via-aggregator</pre>
-        </div>
-        <p>This was reproduced on testnet on 2026-10-17, and mainnet runs the same code path. The aggregator path skips client-side blob verification, so you trust the aggregator's bytes. See <a href="cli-workflows.html#reading-it-back">CLI Cookbooks &rarr; Reading it back</a>.</p>
 
         <h2 id="next-steps">Next steps</h2>
         <div class="card-grid">
