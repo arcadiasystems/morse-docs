@@ -80,7 +80,7 @@
         </div>
 
         <h2 id="what-it-is">What it is</h2>
-        <p>The package wraps the <a href="recipient-files.html">recipient file</a> flow of <code>morse-sdk</code> 0.8 for React. Each upload creates a <code>RecipientFile</code>: a Walrus blob plus an on-chain record that carries its own recipient set. Every step is a headless hook, and an optional set of styled components sits on top.</p>
+        <p>The package wraps the <a href="recipient-files.html">recipient file</a> flow of <code>morse-sdk</code> 0.9 for React. Each upload creates a <code>RecipientFile</code>: a Walrus blob plus an on-chain record that carries its own recipient set. Every step is a headless hook, and an optional set of styled components sits on top.</p>
 
         <div class="feature-grid">
           <div class="feature-item">
@@ -119,24 +119,24 @@
         </div>
 
         <h2 id="install">Install</h2>
-        <p>The package is on npm as <a href="https://www.npmjs.com/package/@arcadiasystems/morse-uploader" target="_blank" rel="noopener"><code>@arcadiasystems/morse-uploader</code></a>. This page covers version 0.2.0. Install it with its peer dependencies:</p>
+        <p>The package is on npm as <a href="https://www.npmjs.com/package/@arcadiasystems/morse-uploader" target="_blank" rel="noopener"><code>@arcadiasystems/morse-uploader</code></a>. This page covers version 0.3.0. Install it with its peer dependencies:</p>
         <div class="code-block">
           <div class="code-header">
             <span class="code-lang">bash</span><span class="code-note">npm</span>
             <button class="code-copy" type="button">Copy</button>
           </div>
-          <pre>npm install @arcadiasystems/morse-uploader @arcadiasystems/morse-sdk@~0.8.1 @mysten/sui@~2.16.2 @mysten/walrus@~1.1.6 @mysten/seal@~1.1.3</pre>
+          <pre>npm install @arcadiasystems/morse-uploader @arcadiasystems/morse-sdk@~0.9.0 @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0</pre>
         </div>
 
-        <p>Keep the peers inside the ranges below, so your app does not end up with two copies of the Sui, Walrus or Seal packages. A tilde range such as <code>~0.8.1</code> means <code>&gt;=0.8.1 &lt;0.9.0</code>, so the command above stays inside them. React and React DOM are assumed to be in your app already.</p>
+        <p>Keep the peers inside the ranges below, so your app does not end up with two copies of the Sui, Walrus or Seal packages. A tilde range such as <code>~0.9.0</code> means <code>&gt;=0.9.0 &lt;0.10.0</code>, so the command above stays inside them. React and React DOM are assumed to be in your app already.</p>
         <div class="table-wrap">
           <table>
             <thead><tr><th>Peer dependency</th><th>Range</th></tr></thead>
             <tbody>
-              <tr><td><code>@arcadiasystems/morse-sdk</code></td><td>&gt;=0.8.1 &lt;0.9.0</td></tr>
-              <tr><td><code>@mysten/sui</code></td><td>&gt;=2.16.2 &lt;2.17.0</td></tr>
-              <tr><td><code>@mysten/walrus</code></td><td>&gt;=1.1.6 &lt;1.2.0</td></tr>
-              <tr><td><code>@mysten/seal</code></td><td>&gt;=1.1.3 &lt;1.2.0</td></tr>
+              <tr><td><code>@arcadiasystems/morse-sdk</code></td><td>&gt;=0.9.0 &lt;0.10.0</td></tr>
+              <tr><td><code>@mysten/sui</code></td><td>&gt;=2.36.0 &lt;2.37.0</td></tr>
+              <tr><td><code>@mysten/walrus</code></td><td>&gt;=1.2.35 &lt;1.3.0</td></tr>
+              <tr><td><code>@mysten/seal</code></td><td>&gt;=1.5.0 &lt;1.6.0</td></tr>
               <tr><td><code>react</code>, <code>react-dom</code></td><td>&gt;=18.0.0</td></tr>
             </tbody>
           </table>
@@ -227,7 +227,7 @@
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">Point the wallet and the SDK at one RPC</div>
-            <div class="callout-text">The SDK builds and reads over gRPC, while dapp-kit 1.0.6 executes over its own JSON-RPC client. Mysten's public fullnodes have retired JSON-RPC, so dapp-kit fails with <code>TypeError: Failed to fetch</code> before the wallet opens unless its <code>SuiClientProvider</code> points at an endpoint that still serves it. When the two clients sit on different nodes, the certify step can also fail with an object-version conflict. For reliable uploads, point <code>SuiClientProvider</code> and the <code>suiClient</code> option at one dedicated node.</div>
+            <div class="callout-text">The SDK builds and reads over gRPC, while dapp-kit executes over its own JSON-RPC client. Its last release is 1.1.17: Mysten has <a href="https://sdk.mystenlabs.com/sui/migrations/sui-2.0/dapp-kit" target="_blank" rel="noopener">deprecated</a> the package because it supports JSON-RPC only. Mysten's public fullnodes have retired JSON-RPC, so dapp-kit fails with <code>TypeError: Failed to fetch</code> before the wallet opens unless its <code>SuiClientProvider</code> points at an endpoint that still serves it. When the two clients sit on different nodes, the certify step can also fail with an object-version conflict. For reliable uploads, point <code>SuiClientProvider</code> and the <code>suiClient</code> option at one dedicated node.</div>
           </div>
         </div>
 
@@ -428,6 +428,7 @@
 
         <h2 id="seal-on-walrus-mainnet">Encrypted files and Seal on Walrus Mainnet</h2>
         <p>An encrypted upload encrypts the file under Seal before it leaves the browser, then creates the file and binds its Seal identity in one transaction. The connected wallet is always a recipient, so the owner can always decrypt. At decrypt time, Seal key servers check the file's recipient set on-chain, and a wallet outside it gets no key. Decrypting takes one wallet popup to create a Seal <code>SessionKey</code>, which is reused across files until it expires (10 minutes by default; set it with <code>ttlMin</code>).</p>
+        <p>Before it creates that session, <code>useFileDecrypt</code> checks that the handles' <code>signer</code> belongs to their <code>address</code>, because <code>@mysten/seal</code> 1.5 no longer does. On a mismatch it rejects with Seal's <code>UserError</code>, without opening the wallet or caching a session. <code>useFileDownload</code> and <code>MorseFileDownloader</code> decrypt through it too. Handles built by <code>useMorseFiles</code> always match, so only hand-built handles can fail the check. A signer whose key is an alias of the address is not supported.</p>
         <p>Testnet pins an open set of key servers, so encryption works there with no setup. Walrus Mainnet pins none, because every Seal operator there is commercial. To encrypt on Walrus Mainnet, pass <code>sealKeyServers</code>. Start from the SDK's <code>MAINNET_SEAL_COMMITTEE</code> and add the <code>apiKeyName</code> and <code>apiKey</code> your operator issues:</p>
 
         <div class="code-block">
@@ -496,7 +497,7 @@
     <div class="feedback">
       <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
       <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20uploader.html" target="_blank" rel="noopener">Report an issue</a>
-      <span class="feedback__upd">Updated 2026-10-17</span>
+      <span class="feedback__upd">Updated 2026-10-18</span>
     </div>
     <nav class="pager" aria-label="Previous and next">
       <a href="sdk-workflows.html" rel="prev"><small>Previous</small><b>← SDK: Cookbooks</b></a>

@@ -312,7 +312,7 @@
     "pageTitle": "Walrus Mainnet",
     "section": "Getting Started",
     "heading": "Status",
-    "text": "Morse has been live on Walrus Mainnet since 2026-09-09. The CLI and SDK ship with the mainnet addresses built in, so there are no addresses to supply. These are the current releases: PackageCurrent release @arcadiasystems/morse-sdk0.9.0 @arcadiasystems/morse-cli0.11.0 @arcadiasystems/morse-uploader0.2.0 The default storage-node read path for morse entry read and morse entry decrypt works from morse-cli 0.11.0 and morse-sdk 0.9.0. Upgrade if you are on an earlier release. Public publications, collections, entries and files work on both networks. Encrypted content needs your own Seal credentials"
+    "text": "Morse has been live on Walrus Mainnet since 2026-09-09. The CLI and SDK ship with the mainnet addresses built in, so there are no addresses to supply. These are the current releases: PackageCurrent release @arcadiasystems/morse-sdk0.9.0 @arcadiasystems/morse-cli0.11.0 @arcadiasystems/morse-uploader0.3.0 The default storage-node read path for morse entry read and morse entry decrypt works from morse-cli 0.11.0 and morse-sdk 0.9.0. Upgrade if you are on an earlier release. Public publications, collections, entries and files work on both networks. Encrypted content needs your own Seal credentials"
   },
   {
     "url": "mainnet.html#deployment",
@@ -1985,14 +1985,14 @@
     "pageTitle": "React Uploader",
     "section": "SDK",
     "heading": "What it is",
-    "text": "The package wraps the recipient file flow of morse-sdk 0.8 for React. Each upload creates a RecipientFile: a Walrus blob plus an on-chain record that carries its own recipient set. Every step is a headless hook, and an optional set of styled components sits on top. Headless hooks One hook per step: setup, upload, download, decrypt, file metadata and storage cost. Drop-in components MorseFileUploader and MorseFileDownloader, themed with CSS variables. Two wallet popups Any upload, public or encrypted, takes two wallet popups, whatever the number of recipients. Share links A link carries the fil"
+    "text": "The package wraps the recipient file flow of morse-sdk 0.9 for React. Each upload creates a RecipientFile: a Walrus blob plus an on-chain record that carries its own recipient set. Every step is a headless hook, and an optional set of styled components sits on top. Headless hooks One hook per step: setup, upload, download, decrypt, file metadata and storage cost. Drop-in components MorseFileUploader and MorseFileDownloader, themed with CSS variables. Two wallet popups Any upload, public or encrypted, takes two wallet popups, whatever the number of recipients. Share links A link carries the fil"
   },
   {
     "url": "uploader.html#install",
     "pageTitle": "React Uploader",
     "section": "SDK",
     "heading": "Install",
-    "text": "The package is on npm as @arcadiasystems/morse-uploader. This page covers version 0.2.0. Install it with its peer dependencies: bashnpm Copy npm install @arcadiasystems/morse-uploader @arcadiasystems/morse-sdk@~0.8.1 @mysten/sui@~2.16.2 @mysten/walrus@~1.1.6 @mysten/seal@~1.1.3 Keep the peers inside the ranges below, so your app does not end up with two copies of the Sui, Walrus or Seal packages. A tilde range such as ~0.8.1 means >=0.8.1 <0.9.0, so the command above stays inside them. React and React DOM are assumed to be in your app already. Peer dependencyRange @arcadiasystems/morse-sdk>=0."
+    "text": "The package is on npm as @arcadiasystems/morse-uploader. This page covers version 0.3.0. Install it with its peer dependencies: bashnpm Copy npm install @arcadiasystems/morse-uploader @arcadiasystems/morse-sdk@~0.9.0 @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0 Keep the peers inside the ranges below, so your app does not end up with two copies of the Sui, Walrus or Seal packages. A tilde range such as ~0.9.0 means >=0.9.0 <0.10.0, so the command above stays inside them. React and React DOM are assumed to be in your app already. Peer dependencyRange @arcadiasystems/morse-sdk>="
   },
   {
     "url": "uploader.html#setup",
@@ -2048,7 +2048,7 @@
     "pageTitle": "React Uploader",
     "section": "SDK",
     "heading": "Encrypted files and Seal on Walrus Mainnet",
-    "text": "An encrypted upload encrypts the file under Seal before it leaves the browser, then creates the file and binds its Seal identity in one transaction. The connected wallet is always a recipient, so the owner can always decrypt. At decrypt time, Seal key servers check the file's recipient set on-chain, and a wallet outside it gets no key. Decrypting takes one wallet popup to create a Seal SessionKey, which is reused across files until it expires (10 minutes by default; set it with ttlMin). Testnet pins an open set of key servers, so encryption works there with no setup. Walrus Mainnet pins none, "
+    "text": "An encrypted upload encrypts the file under Seal before it leaves the browser, then creates the file and binds its Seal identity in one transaction. The connected wallet is always a recipient, so the owner can always decrypt. At decrypt time, Seal key servers check the file's recipient set on-chain, and a wallet outside it gets no key. Decrypting takes one wallet popup to create a Seal SessionKey, which is reused across files until it expires (10 minutes by default; set it with ttlMin). Before it creates that session, useFileDecrypt checks that the handles' signer belongs to their address, bec"
   },
   {
     "url": "uploader.html#limitations",
