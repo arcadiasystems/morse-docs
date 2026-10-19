@@ -1,5 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build && rm -rf scripts .gitignore vercel.json assets/_shared.html",
   "outputDirectory": ".",
   "headers": [
     {
