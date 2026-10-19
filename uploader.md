@@ -7,7 +7,7 @@
 
 > **WARNING: Network status**
 >
-> Morse runs on **Walrus Mainnet and testnet**, and the contracts are **unaudited**. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first, and read [Walrus Mainnet](https://docs.morsecms.xyz/mainnet.html) before you switch. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.
+> Morse runs on **Walrus Mainnet and testnet**. On mainnet, gas and Walrus storage cost real SUI and WAL, and there is no faucet. Test on testnet first, and read [Walrus Mainnet](https://docs.morsecms.xyz/mainnet.html) before you switch. Sui and Walrus testnets reset periodically (Walrus wipes every few months), so stored content and object IDs are lost on reset. Do not publish anything you cannot afford to lose.
 
 ## What it is
 
