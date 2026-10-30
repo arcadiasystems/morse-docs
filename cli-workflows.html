@@ -349,7 +349,9 @@ morse publication get 0x00 || echo "exit $?"</pre>
               <tr><td><code>5</code></td><td>InsufficientGas / out of SUI gas</td><td>The active account does not have enough SUI for gas fees. Run <code>sui client faucet</code> to request testnet SUI.</td></tr>
               <tr><td><code>5</code></td><td>Insufficient WAL balance</td><td>Walrus storage requires WAL tokens. Get WAL from the <a href="https://stake-wal.wal.app/?network=testnet" target="_blank" rel="noopener">Walrus testnet faucet</a>.</td></tr>
               <tr><td><code>3</code></td><td>No valid blob metadata could be retrieved from any storage node</td><td>The default direct-node read path fails for every blob collection entry in morse-cli 0.10.1, because of a bug in how the SDK passes the blob id. Upgrade to morse-cli 0.11.0.</td></tr>
-              <tr><td><code>3</code></td><td>Walrus blob not retrievable / blob expired</td><td>The blob's storage epoch has ended and it is no longer available on Walrus storage nodes. Re-upload the content and create a new revision with a longer <code>--epochs</code> value.</td></tr>
+              <tr><td><code>3</code></td><td>The Walrus storage for this content ended at epoch …</td><td>The blob-mode entry's storage has ended, so storage nodes no longer serve it. The message gives the end epoch and the current epoch. Re-upload the content and create a new revision with a longer <code>--epochs</code> value.</td></tr>
+              <tr><td><code>3</code></td><td>Walrus has no stored copy of this content.</td><td>Walrus does not hold the content: it may have expired, been deleted or never been certified. The message gives the id that was read.</td></tr>
+              <tr><td><code>5</code></td><td>… Retry, or pass --via-aggregator to read through a Walrus aggregator.</td><td>The storage nodes did not return the content, which can happen to a healthy blob. Retry, or add <code>--via-aggregator</code>. For a blob-mode entry the message also gives the epoch the blob is stored until.</td></tr>
             </tbody>
           </table>
         </div>

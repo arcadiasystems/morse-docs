@@ -84,7 +84,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td><code>@arcadiasystems/morse-sdk</code></td><td>0.9.x</td><td>(this package)</td></tr>
+              <tr><td><code>@arcadiasystems/morse-sdk</code></td><td>0.10.x</td><td>(this package)</td></tr>
               <tr><td><code>@mysten/sui</code></td><td>&gt;=2.36.0 &lt;2.37.0</td><td>Yes: types, gRPC client, keypairs</td></tr>
               <tr><td><code>@mysten/walrus</code></td><td>&gt;=1.2.35 &lt;1.3.0</td><td>Yes: default Walrus adapters (read + write)</td></tr>
               <tr><td><code>@mysten/seal</code></td><td>&gt;=1.5.0 &lt;1.6.0</td><td>Yes: encryption</td></tr>
@@ -96,7 +96,7 @@
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">Pin to the verified minor version</div>
-            <div class="callout-text">Mysten packages may ship breaking changes within the same major version. When a new version like <code>@mysten/walrus@1.3.0</code> is released, <code>morse-sdk</code> needs a coordinated bump and re-verification. Use <code>bun add @arcadiasystems/morse-sdk@~0.9.0</code> to lock to patch-level updates only.</div>
+            <div class="callout-text">Mysten packages may ship breaking changes within the same major version. When a new version like <code>@mysten/walrus@1.3.0</code> is released, <code>morse-sdk</code> needs a coordinated bump and re-verification. Use <code>@arcadiasystems/morse-sdk@~0.10.0</code>, as in the <a href="#installing">install command</a> below, to lock to patch-level updates only.</div>
           </div>
         </div>
 
@@ -131,14 +131,14 @@ console.<span class="fn">log</span>(TESTED_SUBSTRATE[<span class="st">"@mysten/w
         <p>The SDK works in both Node and browser environments. It does not depend on Node-specific APIs like <code>fs</code>, <code>path</code>, <code>process</code>, or <code>node:crypto</code>. Some <code>@mysten/*</code> packages may need polyfills in the browser. Check their docs if needed, though modern bundlers usually handle this automatically.</p>
 
         <h2 id="installing">Installing</h2>
-        <p><code>@mysten/sui</code>, <code>@mysten/walrus</code>, and <code>@mysten/seal</code> are all required peer dependencies. The SDK's main entry imports the default Walrus and Seal adapters, so both packages must be installed even for workflows that never upload or encrypt.</p>
+        <p><code>@mysten/sui</code>, <code>@mysten/walrus</code>, and <code>@mysten/seal</code> are all required peer dependencies. The SDK's main entry imports the default Walrus and Seal adapters, so both packages must be installed even for workflows that never upload or encrypt. The <code>@mysten/*</code> peers are pinned to exact versions because newer <code>@mysten/seal</code> and <code>@mysten/walrus</code> patch releases need a newer <code>@mysten/sui</code> than the SDK supports.</p>
 
         <div class="code-block">
           <div class="code-header">
             <span class="code-lang">bash</span>
             <button class="code-copy" type="button">Copy</button>
           </div>
-          <pre>bun add @arcadiasystems/morse-sdk @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0</pre>
+          <pre>bun add @arcadiasystems/morse-sdk@~0.10.0 @mysten/sui@2.36.0 @mysten/walrus@1.2.35 @mysten/seal@1.5.0</pre>
         </div>
 
         <h2 id="morse-config">morseConfig() shape</h2>
@@ -231,7 +231,7 @@ console.<span class="fn">log</span>(TESTED_SUBSTRATE[<span class="st">"@mysten/w
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">gRPC transport required</div>
-            <div class="callout-text">The SDK is typed against <code>SuiGrpcClient</code> from <code>@mysten/sui/grpc</code>, not the JSON-RPC <code>SuiClient</code> used by most Sui browser apps. <code>SuiGrpcClient</code> works in modern evergreen browsers without a proxy. JSON-RPC fallback is planned but has not shipped yet; environments that block gRPC must proxy through a gRPC-compatible RPC endpoint until then.</div>
+            <div class="callout-text">The SDK is typed against <code>SuiGrpcClient</code> from <code>@mysten/sui/grpc</code>, not the JSON-RPC <code>SuiClient</code> used by most Sui browser apps. <code>SuiGrpcClient</code> works in modern evergreen browsers without a proxy. The SDK makes no JSON-RPC calls, so environments that block gRPC must proxy it or use a gRPC endpoint they can reach.</div>
           </div>
         </div>
 
@@ -563,7 +563,7 @@ console.<span class="fn">log</span>(<span class="st">`Connected! Found </span>${
               <tr><td><code>ContractAbortError</code></td><td><code>module</code>, <code>abortCode</code>, <code>reason</code></td><td>Move VM aborted (e.g. <code>ESlugAlreadyExists</code>, <code>EPublisherCapRevoked</code>).</td></tr>
               <tr><td><code>TransportError</code></td><td><code>operation?</code></td><td>RPC, network, or response-parsing failure. Usually retryable.</td></tr>
               <tr><td><code>UncertifiedBlobError</code></td><td><code>blobObjectId</code>, <code>blobId</code></td><td><code>addEntryFromBytes</code> upload succeeded but the second transaction failed; blob is on Walrus but unattached.</td></tr>
-              <tr><td><code>NotFoundError</code></td><td><code>resource</code>, <code>identifier</code></td><td>Object does not exist on-chain.</td></tr>
+              <tr><td><code>NotFoundError</code></td><td><code>resource</code>, <code>identifier</code></td><td>Object does not exist on-chain. For <code>resource: "blob"</code>, Walrus has no stored copy of the content, and the subclass <code>BlobExpiredError</code> means its storage lease has ended.</td></tr>
               <tr><td><code>UnauthorizedError</code></td><td></td><td>Client-side auth check failed before submitting the transaction.</td></tr>
               <tr><td><code>SealError</code></td><td><code>code</code></td><td>Seal authorization or decryption failed. Codes: <code>no-access</code>, <code>decrypt-failed</code>, <code>session-expired</code>, <code>rate-limited</code>.</td></tr>
               <tr><td><code>ConfigurationError</code></td><td></td><td>SDK config issue, e.g. unsupported network.</td></tr>
