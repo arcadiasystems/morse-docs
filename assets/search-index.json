@@ -235,14 +235,14 @@
     "pageTitle": "Quick Start: SDK",
     "section": "Getting Started",
     "heading": "Installing",
-    "text": "Install the SDK and its peer dependencies using your preferred package manager. See SDK Client Setup → Compatibility for compatible dependency versions. bashbun Copy bun add @arcadiasystems/morse-sdk @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0 bashnpm Copy npm install @arcadiasystems/morse-sdk @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0 bashyarn Copy yarn add @arcadiasystems/morse-sdk @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0 @mysten/sui is a required peer dependency. @mysten/walrus is needed for the DefaultWalrusWriteAdapter used belo"
+    "text": "Install the SDK and its peer dependencies using your preferred package manager. See SDK Client Setup → Compatibility for compatible dependency versions. The @mysten/* peers are pinned to exact versions because newer @mysten/seal and @mysten/walrus patch releases need a newer @mysten/sui than the SDK supports. bashbun Copy bun add @arcadiasystems/morse-sdk@~0.10.0 @mysten/sui@2.36.0 @mysten/walrus@1.2.35 @mysten/seal@1.5.0 bashnpm Copy npm install @arcadiasystems/morse-sdk@~0.10.0 @mysten/sui@2.36.0 @mysten/walrus@1.2.35 @mysten/seal@1.5.0 bashyarn Copy yarn add @arcadiasystems/morse-sdk@~0.10."
   },
   {
     "url": "quick-start-sdk.html#writing-the-script",
     "pageTitle": "Quick Start: SDK",
     "section": "Getting Started",
     "heading": "Writing the script",
-    "text": "Save this as quickstart.ts. It creates a publication, adds a collection, uploads an entry, and reads it back. Transport: gRPC This guide uses SuiGrpcClient from @mysten/sui/grpc; the SDK's client interfaces are typed against it. The JSON-RPC SuiClient from @mysten/sui/client is not supported; a JSON-RPC fallback is planned but has not shipped yet. See SDK Client Setup for details. typescript Copy import { SuiGrpcClient } from \"@mysten/sui/grpc\"; import { Ed25519Keypair } from \"@mysten/sui/keypairs/ed25519\"; import { KeypairAdapter, morseConfig, RpcPublicationReader, createPublication, createCo"
+    "text": "Save this as quickstart.ts. It creates a publication, adds a collection, uploads an entry, and reads it back. Transport: gRPC This guide uses SuiGrpcClient from @mysten/sui/grpc; the SDK's client interfaces are typed against it. The JSON-RPC SuiClient from @mysten/sui/client is not supported, and the SDK makes no JSON-RPC calls. See SDK Client Setup for details. typescript Copy import { SuiGrpcClient } from \"@mysten/sui/grpc\"; import { Ed25519Keypair } from \"@mysten/sui/keypairs/ed25519\"; import { KeypairAdapter, morseConfig, RpcPublicationReader, createPublication, createCollection, addEntryF"
   },
   {
     "url": "quick-start-sdk.html#running-it",
@@ -277,14 +277,14 @@
     "pageTitle": "Quick Start: Smart Contracts",
     "section": "Getting Started",
     "heading": "Installing",
-    "text": "Install the Morse SDK (for network configuration and Walrus uploads) and the Sui SDK (for transaction construction and signing). bashbun Copy bun add @arcadiasystems/morse-sdk@~0.9.0 @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0 bashnpm Copy npm install @arcadiasystems/morse-sdk@~0.9.0 @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0 Why the SDK if we are using raw PTBs? This guide uses raw tx.moveCall. No SDK wrappers for contract calls. The SDK packages provide three things: morseConfig: resolves the deployed package ID, registry ID, and RPC URL so you do not h"
+    "text": "Install the Morse SDK (for network configuration and Walrus uploads) and the Sui SDK (for transaction construction and signing). The @mysten/* peers are pinned to exact versions because newer @mysten/seal and @mysten/walrus patch releases need a newer @mysten/sui than the SDK supports. bashbun Copy bun add @arcadiasystems/morse-sdk@~0.10.0 @mysten/sui@2.36.0 @mysten/walrus@1.2.35 @mysten/seal@1.5.0 bashnpm Copy npm install @arcadiasystems/morse-sdk@~0.10.0 @mysten/sui@2.36.0 @mysten/walrus@1.2.35 @mysten/seal@1.5.0 Why the SDK if we are using raw PTBs? This guide uses raw tx.moveCall. No SDK w"
   },
   {
     "url": "quick-start-contracts.html#writing-the-script",
     "pageTitle": "Quick Start: Smart Contracts",
     "section": "Getting Started",
     "heading": "Writing the script",
-    "text": "Save this as quickstart-contracts.ts. It creates a publication, adds a collection, uploads content to Walrus, and registers an on-chain entry, all using raw PTBs. Transport: gRPC This guide uses SuiGrpcClient for its typed interface and lower latency. The Morse SDK is gRPC-only: its readers and adapters are typed against SuiGrpcClient from @mysten/sui/grpc, and a JSON-RPC fallback is planned but has not shipped. Environments that block gRPC must proxy through a gRPC-compatible RPC endpoint. See SDK Client Setup for details. typescript Copy import { SuiGrpcClient } from \"@mysten/sui/grpc\"; impo"
+    "text": "Save this as quickstart-contracts.ts. It creates a publication, adds a collection, uploads content to Walrus, and registers an on-chain entry, all using raw PTBs. Transport: gRPC This guide uses SuiGrpcClient for its typed interface and lower latency. The Morse SDK is gRPC-only: its readers and adapters are typed against SuiGrpcClient from @mysten/sui/grpc, and it makes no JSON-RPC calls. Environments that block gRPC must proxy through a gRPC-compatible RPC endpoint. See SDK Client Setup for details. typescript Copy import { SuiGrpcClient } from \"@mysten/sui/grpc\"; import { Transaction } from "
   },
   {
     "url": "quick-start-contracts.html#running-it",
@@ -312,7 +312,7 @@
     "pageTitle": "Walrus Mainnet",
     "section": "Getting Started",
     "heading": "Status",
-    "text": "Morse has been live on Walrus Mainnet since 2026-09-09. The CLI and SDK ship with the mainnet addresses built in, so there are no addresses to supply. These are the current releases: PackageCurrent release @arcadiasystems/morse-sdk0.9.0 @arcadiasystems/morse-cli0.11.0 @arcadiasystems/morse-uploader0.3.0 The default storage-node read path for morse entry read and morse entry decrypt works from morse-cli 0.11.0 and morse-sdk 0.9.0. Upgrade if you are on an earlier release. Public publications, collections, entries and files work on both networks. Encrypted content needs your own Seal credentials"
+    "text": "Morse has been live on Walrus Mainnet since 2026-09-09. The CLI and SDK ship with the mainnet addresses built in, so there are no addresses to supply. These are the current releases: PackageCurrent release @arcadiasystems/morse-sdk0.10.0 @arcadiasystems/morse-cli0.12.0 @arcadiasystems/morse-uploader0.4.1 The default storage-node read path for morse entry read and morse entry decrypt works from morse-cli 0.11.0 and morse-sdk 0.9.0. Upgrade if you are on an earlier release. Public publications, collections, entries and files work on both networks. Encrypted content needs your own Seal credential"
   },
   {
     "url": "mainnet.html#deployment",
@@ -473,7 +473,7 @@
     "pageTitle": "Launch a blog in 10 minutes",
     "section": "Cookbooks",
     "heading": "If something fails",
-    "text": "SymptomLikely causeFixexit 2 and \"No account selected\" on publication createNo active account, or wrong profilemorse status, then morse account use <address>Insufficient gas / balanceNo SUI or no WAL on the addressFaucet for SUI, swap for WAL, check the address matches morse statusESlugAlreadyExistsSomeone used that slugAdd a suffix, the $(date +%s) trick above does thisentry read says no valid blob metadataA bug in the verified read in morse-cli 0.10.1, not a timing issueUpgrade to morse-cli 0.11.0; waiting does not helpPost disappeared after a whileBlob epochs expired or testnet resetRepubli"
+    "text": "SymptomLikely causeFixexit 2 and \"No account selected\" on publication createNo active account, or wrong profilemorse status, then morse account use <address>Insufficient gas / balanceNo SUI or no WAL on the addressFaucet for SUI, swap for WAL, check the address matches morse statusESlugAlreadyExistsSomeone used that slugAdd a suffix, the $(date +%s) trick above does thisentry read exits 3 and says no valid blob metadataA bug in the verified read in morse-cli 0.10.1, not a timing issueUpgrade to morse-cli 0.11.0; waiting does not helpentry read exits 5 and says to retry or pass --via-aggregator"
   },
   {
     "url": "launch-a-blog.html#next",
@@ -627,7 +627,7 @@
     "pageTitle": "Add a co-author",
     "section": "Cookbooks",
     "heading": "Owner: see who can write",
-    "text": "bash Copy $ morse cap list 0xCOAUTHOR_ADDRESS There is no team page, and anyone can run this query on chain. It lists every PublisherCap the address holds, revoked ones included, with no revoked marker: a cap in the list is not proof that it still works. To know for sure, keep the cap ids you issue and revoke, or watch for the publication's PublisherCapIssued and PublisherCapRevoked events."
+    "text": "bash Copy $ morse cap list 0xCOAUTHOR_ADDRESS There is no team page, and anyone can run this query on chain. It lists every PublisherCap the address holds, revoked ones included. Since morse-cli 0.12.0, a cap that can no longer write is marked [revoked], or [publication deleted] when its publication is gone, and --json gives each cap a status of active, revoked or publication-deleted."
   },
   {
     "url": "co-author.html#revoke-and-what-the-co-author-sees",
@@ -858,7 +858,7 @@
     "pageTitle": "Prove a post has not changed",
     "section": "Cookbooks",
     "heading": "Check who published it",
-    "text": "The record names the wallet that wrote each revision, so no explorer is needed: jq -r '.revisions[.publicHead].author' on the entry get output prints it. To see the transactions themselves, open the publication id on a Sui explorer, for example suiscan.xyz/testnet/object/<PUBLICATION_ID>. Then check that the author held a cap for the publication: bash Copy $ morse cap list 0xAUTHOR_ADDRESS The list includes revoked caps and does not mark them, so it shows which caps the author was issued, not which still work. That is enough here: the chain rejects any write made with a revoked cap, so a revis"
+    "text": "The record names the wallet that wrote each revision, so no explorer is needed: jq -r '.revisions[.publicHead].author' on the entry get output prints it. To see the transactions themselves, open the publication id on a Sui explorer, for example suiscan.xyz/testnet/object/<PUBLICATION_ID>. Then check that the author held a cap for the publication: bash Copy $ morse cap list 0xAUTHOR_ADDRESS The list includes revoked caps, marked [revoked], so it shows every cap the author was issued, not only the ones that still work. A cap revoked since then is still enough here: the chain rejects any write ma"
   },
   {
     "url": "verify-a-post.html#do-it-from-a-script",
@@ -1712,7 +1712,7 @@
     "pageTitle": "SDK Overview",
     "section": "SDK",
     "heading": "Known limitations",
-    "text": "gRPC client only. Reader and adapter interfaces are typed against SuiGrpcClient from @mysten/sui/grpc. JSON-RPC fallback is planned. No encrypted publish path. The Move contract hardcodes encrypted=false on publish_from_draft and publish_direct. Encrypted content stays as drafts. See SDK Cookbooks → Encrypted content for the full lifecycle. Only the Publisher access policy is enforced. The Subscription policy is not yet active. listEntries is not sorted chronologically. Results follow on-chain storage order. Sort by entry.id for insertion order. zkLogin support is untested. The decoder is incl"
+    "text": "gRPC client only. Reader and adapter interfaces are typed against SuiGrpcClient from @mysten/sui/grpc. The SDK makes no JSON-RPC calls. No encrypted publish path. The Move contract hardcodes encrypted=false on publish_from_draft and publish_direct. Encrypted content stays as drafts. See SDK Cookbooks → Encrypted content for the full lifecycle. Only the Publisher access policy is enforced. The Subscription policy is not yet active. listEntries is not sorted chronologically. Results follow on-chain storage order. Sort by entry.id for insertion order. zkLogin support is untested. The decoder is i"
   },
   {
     "url": "sdk-overview.html#next-steps",
@@ -1733,7 +1733,7 @@
     "pageTitle": "SDK Setup",
     "section": "SDK",
     "heading": "Compatibility",
-    "text": "@arcadiasystems/morse-sdk is built and tested against specific minor versions of its Mysten substrate. Newer or older versions are not validated and may produce runtime errors. The peer-dependency ranges in package.json enforce these bounds. Version 0.9.0 moved all three ranges, so upgrading from 0.8.x means upgrading the three Mysten packages with it. Package Version Required @arcadiasystems/morse-sdk0.9.x(this package) @mysten/sui>=2.36.0 <2.37.0Yes: types, gRPC client, keypairs @mysten/walrus>=1.2.35 <1.3.0Yes: default Walrus adapters (read + write) @mysten/seal>=1.5.0 <1.6.0Yes: encryption"
+    "text": "@arcadiasystems/morse-sdk is built and tested against specific minor versions of its Mysten substrate. Newer or older versions are not validated and may produce runtime errors. The peer-dependency ranges in package.json enforce these bounds. Version 0.9.0 moved all three ranges, so upgrading from 0.8.x means upgrading the three Mysten packages with it. Package Version Required @arcadiasystems/morse-sdk0.10.x(this package) @mysten/sui>=2.36.0 <2.37.0Yes: types, gRPC client, keypairs @mysten/walrus>=1.2.35 <1.3.0Yes: default Walrus adapters (read + write) @mysten/seal>=1.5.0 <1.6.0Yes: encryptio"
   },
   {
     "url": "sdk-client-setup.html#runtime",
@@ -1747,7 +1747,7 @@
     "pageTitle": "SDK Setup",
     "section": "SDK",
     "heading": "Installing",
-    "text": "@mysten/sui, @mysten/walrus, and @mysten/seal are all required peer dependencies. The SDK's main entry imports the default Walrus and Seal adapters, so both packages must be installed even for workflows that never upload or encrypt. bash Copy bun add @arcadiasystems/morse-sdk @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0"
+    "text": "@mysten/sui, @mysten/walrus, and @mysten/seal are all required peer dependencies. The SDK's main entry imports the default Walrus and Seal adapters, so both packages must be installed even for workflows that never upload or encrypt. The @mysten/* peers are pinned to exact versions because newer @mysten/seal and @mysten/walrus patch releases need a newer @mysten/sui than the SDK supports. bash Copy bun add @arcadiasystems/morse-sdk@~0.10.0 @mysten/sui@2.36.0 @mysten/walrus@1.2.35 @mysten/seal@1.5.0"
   },
   {
     "url": "sdk-client-setup.html#morse-config",
@@ -1782,7 +1782,7 @@
     "pageTitle": "SDK Setup",
     "section": "SDK",
     "heading": "useMorse hook",
-    "text": "Build the SDK context once per connected account. WalletStandardSigner.fromAccount wraps the account's public key and sign callbacks into a Sui Signer, so libraries like @mysten/walrus and @mysten/seal work without the SDK ever touching the user's key. gRPC transport required The SDK is typed against SuiGrpcClient from @mysten/sui/grpc, not the JSON-RPC SuiClient used by most Sui browser apps. SuiGrpcClient works in modern evergreen browsers without a proxy. JSON-RPC fallback is planned but has not shipped yet; environments that block gRPC must proxy through a gRPC-compatible RPC endpoint unti"
+    "text": "Build the SDK context once per connected account. WalletStandardSigner.fromAccount wraps the account's public key and sign callbacks into a Sui Signer, so libraries like @mysten/walrus and @mysten/seal work without the SDK ever touching the user's key. gRPC transport required The SDK is typed against SuiGrpcClient from @mysten/sui/grpc, not the JSON-RPC SuiClient used by most Sui browser apps. SuiGrpcClient works in modern evergreen browsers without a proxy. The SDK makes no JSON-RPC calls, so environments that block gRPC must proxy it or use a gRPC endpoint they can reach. typescript Copy imp"
   },
   {
     "url": "sdk-client-setup.html#picking-a-walrus-adapter",
@@ -1985,14 +1985,14 @@
     "pageTitle": "React Uploader",
     "section": "SDK",
     "heading": "What it is",
-    "text": "The package wraps the recipient file flow of morse-sdk 0.9 for React. Each upload creates a RecipientFile: a Walrus blob plus an on-chain record that carries its own recipient set. Every step is a headless hook, and an optional set of styled components sits on top. Headless hooks One hook per step: setup, upload, download, decrypt, file metadata and storage cost. Drop-in components MorseFileUploader and MorseFileDownloader, themed with CSS variables. Two wallet popups Any upload, public or encrypted, takes two wallet popups, whatever the number of recipients. Share links A link carries the fil"
+    "text": "The package wraps the recipient file flow of morse-sdk 0.9 or 0.10 for React. Each upload creates a RecipientFile: a Walrus blob plus an on-chain record that carries its own recipient set. Every step is a headless hook, and an optional set of styled components sits on top. Headless hooks One hook per step: setup, upload, download, decrypt, file metadata and storage cost. Drop-in components MorseFileUploader and MorseFileDownloader, themed with CSS variables. Two wallet popups Any upload, public or encrypted, takes two wallet popups, whatever the number of recipients. Share links A link carries"
   },
   {
     "url": "uploader.html#install",
     "pageTitle": "React Uploader",
     "section": "SDK",
     "heading": "Install",
-    "text": "The package is on npm as @arcadiasystems/morse-uploader. This page covers version 0.3.0. Install it with its peer dependencies: bashnpm Copy npm install @arcadiasystems/morse-uploader @arcadiasystems/morse-sdk@~0.9.0 @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0 Keep the peers inside the ranges below, so your app does not end up with two copies of the Sui, Walrus or Seal packages. A tilde range such as ~0.9.0 means >=0.9.0 <0.10.0, so the command above stays inside them. React and React DOM are assumed to be in your app already. Peer dependencyRange @arcadiasystems/morse-sdk>="
+    "text": "The package is on npm as @arcadiasystems/morse-uploader. This page covers version 0.4.1. Install it with its peer dependencies: bashnpm Copy npm install @arcadiasystems/morse-uploader@~0.4.1 @arcadiasystems/morse-sdk@~0.10.0 @mysten/sui@2.36.0 @mysten/walrus@1.2.35 @mysten/seal@1.5.0 The @mysten/* peers are pinned to exact versions because newer @mysten/seal and @mysten/walrus patch releases need a newer @mysten/sui than the SDK supports. Keep the peers inside the ranges below, so your app does not end up with two copies of the Sui, Walrus or Seal packages. A tilde range such as ~0.10.0 means "
   },
   {
     "url": "uploader.html#setup",
@@ -2412,7 +2412,7 @@
     "pageTitle": "Glossary",
     "section": "Reference",
     "heading": "G",
-    "text": "gRPC A high-performance RPC framework used by SuiGrpcClient from @mysten/sui/grpc. The Morse SDK requires gRPC transport for all Sui interactions. Works in modern browsers without a proxy. See SDK Overview → Known limitations for JSON-RPC fallback status."
+    "text": "gRPC A high-performance RPC framework used by SuiGrpcClient from @mysten/sui/grpc. The Morse SDK requires gRPC transport for all Sui interactions. Works in modern browsers without a proxy. See SDK Overview → Known limitations."
   },
   {
     "url": "glossary.html#h",

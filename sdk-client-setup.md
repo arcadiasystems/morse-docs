@@ -11,14 +11,14 @@
 
 | Package | Version | Required |
 | --- | --- | --- |
-| `@arcadiasystems/morse-sdk` | 0.9.x | (this package) |
+| `@arcadiasystems/morse-sdk` | 0.10.x | (this package) |
 | `@mysten/sui` | >=2.36.0 <2.37.0 | Yes: types, gRPC client, keypairs |
 | `@mysten/walrus` | >=1.2.35 <1.3.0 | Yes: default Walrus adapters (read + write) |
 | `@mysten/seal` | >=1.5.0 <1.6.0 | Yes: encryption |
 
 > **WARNING: Pin to the verified minor version**
 >
-> Mysten packages may ship breaking changes within the same major version. When a new version like `@mysten/walrus@1.3.0` is released, `morse-sdk` needs a coordinated bump and re-verification. Use `bun add @arcadiasystems/morse-sdk@~0.9.0` to lock to patch-level updates only.
+> Mysten packages may ship breaking changes within the same major version. When a new version like `@mysten/walrus@1.3.0` is released, `morse-sdk` needs a coordinated bump and re-verification. Use `@arcadiasystems/morse-sdk@~0.10.0`, as in the [install command](#installing) below, to lock to patch-level updates only.
 
 The verified matrix is also exported programmatically as `TESTED_SUBSTRATE`, a frozen record of the tested `@mysten/sui`, `@mysten/seal`, and `@mysten/walrus` versions plus `verifiedOn` and `suiNetwork`. Log it during initialization or compare it against bundler-resolved versions in CI:
 
@@ -42,10 +42,10 @@ The SDK works in both Node and browser environments. It does not depend on Node-
 
 ## Installing
 
-`@mysten/sui`, `@mysten/walrus`, and `@mysten/seal` are all required peer dependencies. The SDK's main entry imports the default Walrus and Seal adapters, so both packages must be installed even for workflows that never upload or encrypt.
+`@mysten/sui`, `@mysten/walrus`, and `@mysten/seal` are all required peer dependencies. The SDK's main entry imports the default Walrus and Seal adapters, so both packages must be installed even for workflows that never upload or encrypt. The `@mysten/*` peers are pinned to exact versions because newer `@mysten/seal` and `@mysten/walrus` patch releases need a newer `@mysten/sui` than the SDK supports.
 
 ```bash
-bun add @arcadiasystems/morse-sdk @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0
+bun add @arcadiasystems/morse-sdk@~0.10.0 @mysten/sui@2.36.0 @mysten/walrus@1.2.35 @mysten/seal@1.5.0
 ```
 
 ## morseConfig() shape
@@ -131,7 +131,7 @@ Build the SDK context once per connected account. `WalletStandardSigner.fromAcco
 
 > **WARNING: gRPC transport required**
 >
-> The SDK is typed against `SuiGrpcClient` from `@mysten/sui/grpc`, not the JSON-RPC `SuiClient` used by most Sui browser apps. `SuiGrpcClient` works in modern evergreen browsers without a proxy. JSON-RPC fallback is planned but has not shipped yet; environments that block gRPC must proxy through a gRPC-compatible RPC endpoint until then.
+> The SDK is typed against `SuiGrpcClient` from `@mysten/sui/grpc`, not the JSON-RPC `SuiClient` used by most Sui browser apps. `SuiGrpcClient` works in modern evergreen browsers without a proxy. The SDK makes no JSON-RPC calls, so environments that block gRPC must proxy it or use a gRPC endpoint they can reach.
 
 ```typescript
 import {
@@ -414,7 +414,7 @@ Every error thrown by the SDK extends `MorseError`. Each error class carries str
 | `ContractAbortError` | `module`, `abortCode`, `reason` | Move VM aborted (e.g. `ESlugAlreadyExists`, `EPublisherCapRevoked`). |
 | `TransportError` | `operation?` | RPC, network, or response-parsing failure. Usually retryable. |
 | `UncertifiedBlobError` | `blobObjectId`, `blobId` | `addEntryFromBytes` upload succeeded but the second transaction failed; blob is on Walrus but unattached. |
-| `NotFoundError` | `resource`, `identifier` | Object does not exist on-chain. |
+| `NotFoundError` | `resource`, `identifier` | Object does not exist on-chain. For `resource: "blob"`, Walrus has no stored copy of the content, and the subclass `BlobExpiredError` means its storage lease has ended. |
 | `UnauthorizedError` |  | Client-side auth check failed before submitting the transaction. |
 | `SealError` | `code` | Seal authorization or decryption failed. Codes: `no-access`, `decrypt-failed`, `session-expired`, `rate-limited`. |
 | `ConfigurationError` |  | SDK config issue, e.g. unsupported network. |

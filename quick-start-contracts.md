@@ -19,14 +19,14 @@
 
 ## Installing
 
-Install the Morse SDK (for network configuration and Walrus uploads) and the Sui SDK (for transaction construction and signing).
+Install the Morse SDK (for network configuration and Walrus uploads) and the Sui SDK (for transaction construction and signing). The `@mysten/*` peers are pinned to exact versions because newer `@mysten/seal` and `@mysten/walrus` patch releases need a newer `@mysten/sui` than the SDK supports.
 
 ```bash
-bun add @arcadiasystems/morse-sdk@~0.9.0 @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0
+bun add @arcadiasystems/morse-sdk@~0.10.0 @mysten/sui@2.36.0 @mysten/walrus@1.2.35 @mysten/seal@1.5.0
 ```
 
 ```bash
-npm install @arcadiasystems/morse-sdk@~0.9.0 @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0
+npm install @arcadiasystems/morse-sdk@~0.10.0 @mysten/sui@2.36.0 @mysten/walrus@1.2.35 @mysten/seal@1.5.0
 ```
 
 > **INFO: Why the SDK if we are using raw PTBs?**
@@ -39,7 +39,7 @@ Save this as `quickstart-contracts.ts`. It creates a publication, adds a collect
 
 > **INFO: Transport: gRPC**
 >
-> This guide uses `SuiGrpcClient` for its typed interface and lower latency. The Morse SDK is gRPC-only: its readers and adapters are typed against `SuiGrpcClient` from `@mysten/sui/grpc`, and a JSON-RPC fallback is planned but has not shipped. Environments that block gRPC must proxy through a gRPC-compatible RPC endpoint. See [SDK Client Setup](https://docs.morsecms.xyz/sdk-client-setup.html) for details.
+> This guide uses `SuiGrpcClient` for its typed interface and lower latency. The Morse SDK is gRPC-only: its readers and adapters are typed against `SuiGrpcClient` from `@mysten/sui/grpc`, and it makes no JSON-RPC calls. Environments that block gRPC must proxy through a gRPC-compatible RPC endpoint. See [SDK Client Setup](https://docs.morsecms.xyz/sdk-client-setup.html) for details.
 
 ```typescript
 import { SuiGrpcClient } from "@mysten/sui/grpc";

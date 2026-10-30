@@ -49,7 +49,7 @@
 
 ## G
 
-**gRPC**: A high-performance RPC framework used by `SuiGrpcClient` from `@mysten/sui/grpc`. The Morse SDK requires gRPC transport for all Sui interactions. Works in modern browsers without a proxy. See [SDK Overview → Known limitations](https://docs.morsecms.xyz/sdk-overview.html#known-limitations) for JSON-RPC fallback status.
+**gRPC**: A high-performance RPC framework used by `SuiGrpcClient` from `@mysten/sui/grpc`. The Morse SDK requires gRPC transport for all Sui interactions. Works in modern browsers without a proxy. See [SDK Overview → Known limitations](https://docs.morsecms.xyz/sdk-overview.html#known-limitations).
 
 ## H
 
