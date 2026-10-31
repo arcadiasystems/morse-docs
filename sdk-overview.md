@@ -35,7 +35,7 @@ The rest of the SDK (functions like `createPublication`, `addEntryFromBytes`, th
 
 ## Known limitations
 
-- **gRPC client only.** Reader and adapter interfaces are typed against `SuiGrpcClient` from `@mysten/sui/grpc`. JSON-RPC fallback is planned.
+- **gRPC client only.** Reader and adapter interfaces are typed against `SuiGrpcClient` from `@mysten/sui/grpc`. The SDK makes no JSON-RPC calls.
 - **No encrypted publish path.** The Move contract hardcodes `encrypted=false` on `publish_from_draft` and `publish_direct`. Encrypted content stays as drafts. See [SDK Cookbooks → Encrypted content](https://docs.morsecms.xyz/sdk-workflows.html#encrypted-content) for the full lifecycle.
 - **Only the `Publisher` access policy is enforced.** The `Subscription` policy is not yet active.
 - **`listEntries` is not sorted chronologically.** Results follow on-chain storage order. Sort by `entry.id` for insertion order.

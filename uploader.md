@@ -11,7 +11,7 @@
 
 ## What it is
 
-The package wraps the [recipient file](https://docs.morsecms.xyz/recipient-files.html) flow of `morse-sdk` 0.9 for React. Each upload creates a `RecipientFile`: a Walrus blob plus an on-chain record that carries its own recipient set. Every step is a headless hook, and an optional set of styled components sits on top.
+The package wraps the [recipient file](https://docs.morsecms.xyz/recipient-files.html) flow of `morse-sdk` 0.9 or 0.10 for React. Each upload creates a `RecipientFile`: a Walrus blob plus an on-chain record that carries its own recipient set. Every step is a headless hook, and an optional set of styled components sits on top.
 
 - **Headless hooks**: One hook per step: setup, upload, download, decrypt, file metadata and storage cost.
 - **Drop-in components**: MorseFileUploader and MorseFileDownloader, themed with CSS variables.
@@ -30,17 +30,17 @@ The package is ESM only and has four entry points:
 
 ## Install
 
-The package is on npm as [`@arcadiasystems/morse-uploader`](https://www.npmjs.com/package/@arcadiasystems/morse-uploader). This page covers version 0.3.0. Install it with its peer dependencies:
+The package is on npm as [`@arcadiasystems/morse-uploader`](https://www.npmjs.com/package/@arcadiasystems/morse-uploader). This page covers version 0.4.1. Install it with its peer dependencies:
 
 ```bash
-npm install @arcadiasystems/morse-uploader @arcadiasystems/morse-sdk@~0.9.0 @mysten/sui@~2.36.0 @mysten/walrus@~1.2.35 @mysten/seal@~1.5.0
+npm install @arcadiasystems/morse-uploader@~0.4.1 @arcadiasystems/morse-sdk@~0.10.0 @mysten/sui@2.36.0 @mysten/walrus@1.2.35 @mysten/seal@1.5.0
 ```
 
-Keep the peers inside the ranges below, so your app does not end up with two copies of the Sui, Walrus or Seal packages. A tilde range such as `~0.9.0` means `>=0.9.0 <0.10.0`, so the command above stays inside them. React and React DOM are assumed to be in your app already.
+The `@mysten/*` peers are pinned to exact versions because newer `@mysten/seal` and `@mysten/walrus` patch releases need a newer `@mysten/sui` than the SDK supports. Keep the peers inside the ranges below, so your app does not end up with two copies of the Sui, Walrus or Seal packages. A tilde range such as `~0.10.0` means `>=0.10.0 <0.11.0`, so the command above stays inside them. React and React DOM are assumed to be in your app already.
 
 | Peer dependency | Range |
 | --- | --- |
-| `@arcadiasystems/morse-sdk` | >=0.9.0 <0.10.0 |
+| `@arcadiasystems/morse-sdk` | >=0.9.0 <0.11.0 |
 | `@mysten/sui` | >=2.36.0 <2.37.0 |
 | `@mysten/walrus` | >=1.2.35 <1.3.0 |
 | `@mysten/seal` | >=1.5.0 <1.6.0 |

@@ -184,7 +184,9 @@ morse publication get 0x00 || echo "exit $?"
 | `5` | InsufficientGas / out of SUI gas | The active account does not have enough SUI for gas fees. Run `sui client faucet` to request testnet SUI. |
 | `5` | Insufficient WAL balance | Walrus storage requires WAL tokens. Get WAL from the [Walrus testnet faucet](https://stake-wal.wal.app/?network=testnet). |
 | `3` | No valid blob metadata could be retrieved from any storage node | The default direct-node read path fails for every blob collection entry in morse-cli 0.10.1, because of a bug in how the SDK passes the blob id. Upgrade to morse-cli 0.11.0. |
-| `3` | Walrus blob not retrievable / blob expired | The blob's storage epoch has ended and it is no longer available on Walrus storage nodes. Re-upload the content and create a new revision with a longer `--epochs` value. |
+| `3` | The Walrus storage for this content ended at epoch … | The blob-mode entry's storage has ended, so storage nodes no longer serve it. The message gives the end epoch and the current epoch. Re-upload the content and create a new revision with a longer `--epochs` value. |
+| `3` | Walrus has no stored copy of this content. | Walrus does not hold the content: it may have expired, been deleted or never been certified. The message gives the id that was read. |
+| `5` | … Retry, or pass --via-aggregator to read through a Walrus aggregator. | The storage nodes did not return the content, which can happen to a healthy blob. Retry, or add `--via-aggregator`. For a blob-mode entry the message also gives the epoch the blob is stored until. |
 
 ## Next steps
 

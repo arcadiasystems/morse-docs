@@ -135,7 +135,8 @@ The output includes the public head and the revision list, and for each revision
 | `exit 2` and "No account selected" on `publication create` | No active account, or wrong profile | `morse status`, then `morse account use <address>` |
 | Insufficient gas / balance | No SUI or no WAL on the address | Faucet for SUI, swap for WAL, check the address matches `morse status` |
 | `ESlugAlreadyExists` | Someone used that slug | Add a suffix, the `$(date +%s)` trick above does this |
-| `entry read` says no valid blob metadata | A bug in the verified read in morse-cli 0.10.1, not a timing issue | Upgrade to morse-cli 0.11.0; waiting does not help |
+| `entry read` exits 3 and says no valid blob metadata | A bug in the verified read in morse-cli 0.10.1, not a timing issue | Upgrade to morse-cli 0.11.0; waiting does not help |
+| `entry read` exits 5 and says to retry or pass `--via-aggregator` | The storage nodes did not return the content; the blob may be healthy | Retry, or add `--via-aggregator` to read through a Walrus aggregator |
 | Post disappeared after a while | Blob epochs expired or testnet reset | Republish with a larger `--epochs`; the entry record on Sui is unaffected |
 
 ## Next

@@ -61,7 +61,7 @@ The record names the wallet that wrote each revision, so no explorer is needed: 
 $ morse cap list 0xAUTHOR_ADDRESS
 ```
 
-The list includes revoked caps and does not mark them, so it shows which caps the author was issued, not which still work. That is enough here: the chain rejects any write made with a revoked cap, so a revision that exists was authorised by the owner when it was written.
+The list includes revoked caps, marked `[revoked]`, so it shows every cap the author was issued, not only the ones that still work. A cap revoked since then is still enough here: the chain rejects any write made with a revoked cap, so a revision that exists was authorised by the owner when it was written.
 
 ## Do it from a script
 

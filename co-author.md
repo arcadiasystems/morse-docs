@@ -62,7 +62,7 @@ The CLI finds the right `PublisherCap` automatically from the active account. If
 $ morse cap list 0xCOAUTHOR_ADDRESS
 ```
 
-There is no team page, and anyone can run this query on chain. It lists every PublisherCap the address holds, revoked ones included, with no revoked marker: a cap in the list is not proof that it still works. To know for sure, keep the cap ids you issue and revoke, or watch for the publication's `PublisherCapIssued` and `PublisherCapRevoked` events.
+There is no team page, and anyone can run this query on chain. It lists every PublisherCap the address holds, revoked ones included. Since morse-cli 0.12.0, a cap that can no longer write is marked `[revoked]`, or `[publication deleted]` when its publication is gone, and `--json` gives each cap a `status` of `active`, `revoked` or `publication-deleted`.
 
 ## Revoke, and what the co-author sees
 
