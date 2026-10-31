@@ -2020,7 +2020,7 @@
     "pageTitle": "React Uploader",
     "section": "SDK",
     "heading": "Hooks",
-    "text": "Build your own UI from the same hooks the components use. The file hooks read their handles from MorseFilesProvider, so call them inside it. HookWhat it does useMorseFiles(options)Builds the handles from a connected wallet. Call it once, above the provider. useMorseFilesContext()Returns the handles. Throws outside the provider. useFileUpload()Uploads one file. upload({ file, epochs, recipients?, encrypt?, deletable? }) resolves to { fileId, blobId, encrypted, sealIdPrefix, sealNonce, shareLink }. phase tracks progress. useFileDownload(fileId, seal)Drives a download page. Loads the on-chain rec"
+    "text": "Build your own UI from the same hooks the components use. The file hooks read their handles from MorseFilesProvider, so call them inside it. HookWhat it does useMorseFiles(options)Builds the handles from a connected wallet. Call it once, above the provider. useMorseFilesContext()Returns the handles. Throws outside the provider. useFileUpload()Uploads one file. upload({ file, epochs, recipients?, encrypt?, deletable? }) resolves to { fileId, blobId, encrypted, sealIdPrefix, sealNonce, shareLink }. phase tracks progress. A file too large for the relay's tip cap fails with FileTooLargeError befor"
   },
   {
     "url": "uploader.html#upload-from-a-hook",
@@ -2037,11 +2037,25 @@
     "text": "buildShareLink({ fileId, network, sealIdPrefix, sealNonce }) builds a link of the form <origin>/#/f/<fileId>?net=<network>&p=<hex>&n=<hex> on the current origin. useFileUpload already returns one as shareLink. The baseUrl and pattern options change the origin and the path. Everything after # stays in the browser, so none of it reaches a server log. The Seal material in the link is not a secret: decryption is still gated by the file's recipient set. parseShareLink(href) reads a link back into { fileId, network, sealIdPrefix, sealNonce }. The Seal fields are null for a public file. It returns nu"
   },
   {
+    "url": "uploader.html#download-errors",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "Download errors",
+    "text": "Before load() or download() reads any bytes or asks the wallet to sign, useFileDownload checks the share link against the file's on-chain record. When the record has a Seal prefix and the link cannot open the file, the hook sets status to \"error\" and error to a ShareLinkSealError. Its reason says what is wrong with the link: reasonThe linkMorseFileDownloader shows \"missing\"Carries no Seal material, for example because the end of the link was cut off or the link was rebuilt from the file ID.\"Link is incomplete\" \"mismatch\"Carries a Seal prefix that is not the file's, so it is damaged or belongs "
+  },
+  {
     "url": "uploader.html#upload-relay",
     "pageTitle": "React Uploader",
     "section": "SDK",
     "heading": "Walrus upload relay",
-    "text": "A direct Walrus write sends slivers to every storage node at once, a burst that many networks cannot sustain. In a browser, write through the upload relay instead: it does that fan-out for you over one connection. The default write adapter uses it when you set walrusWriteConfig.uploadRelay, which the uploader hands unchanged to @mysten/walrus. NetworkRelay host Testnethttps://upload-relay.testnet.walrus.space Walrus Mainnethttps://upload-relay.mainnet.walrus.space tsx Copy const UPLOAD_RELAY_HOSTS = { testnet: \"https://upload-relay.testnet.walrus.space\", mainnet: \"https://upload-relay.mainnet."
+    "text": "A direct Walrus write sends slivers to every storage node at once, a burst that many networks cannot sustain. In a browser, write through the upload relay instead: it does that fan-out for you over one connection. The default write adapter uses it when you set walrusWriteConfig.uploadRelay, which the uploader hands unchanged to @mysten/walrus. Its type is exported as UploadRelayOptions: a host and an optional sendTip, typed as @mysten/walrus's UploadRelayConfig[\"sendTip\"], so a value @mysten/walrus would not accept does not type-check. NetworkRelay host Testnethttps://upload-relay.testnet.walr"
+  },
+  {
+    "url": "uploader.html#file-size-limit",
+    "pageTitle": "React Uploader",
+    "section": "SDK",
+    "heading": "File size limit",
+    "text": "Before it reads a file, useFileUpload reads the relay's /v1/tip-config, works out the largest file sendTip.max allows, and refuses a larger one with a FileTooLargeError. Nothing has been read, encrypted, encoded or signed at that point. MorseFileUploader shows \"File too large\", with the file's size, the limit and the cap. Raise sendTip.max to allow larger files. An encrypted file can fit and still go over once Seal's envelope is added, and the envelope's size depends on the key servers. That file is refused after encryption and before Walrus encodes it, with afterEncryption set to true. ClassC"
   },
   {
     "url": "uploader.html#seal-on-walrus-mainnet",

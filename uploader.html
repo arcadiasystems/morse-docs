@@ -271,9 +271,9 @@
           </table>
         </div>
 
-        <p>The uploader shows a USD storage-cost estimate before upload, a progress stepper during it, and a share link with a copy button after it. It renders failures with <code>uploadErrorMessage</code>.</p>
+        <p>The uploader shows a USD storage-cost estimate before upload, a progress stepper during it, and a share link with a copy button after it. It renders failures with <code>uploadErrorMessage</code>, so a file too large for the relay's tip cap shows "File too large". See <a href="#file-size-limit">File size limit</a>.</p>
 
-        <p><code>MorseFileDownloader</code> opens one file from a share link. It reads the on-chain record, then downloads a public file or decrypts an encrypted one, with the original file name and type. Images get a preview.</p>
+        <p><code>MorseFileDownloader</code> opens one file from a share link. It reads the on-chain record, then downloads a public file or decrypts an encrypted one, with the original file name and type. Images get a preview. It renders failures with <code>downloadErrorMessage</code>, so a link that cannot open an encrypted file shows "Link is incomplete" or "Link does not match this file". See <a href="#download-errors">Download errors</a>.</p>
 
         <div class="code-block">
           <div class="code-header">
@@ -322,8 +322,8 @@
             <tbody>
               <tr><td><code>useMorseFiles(options)</code></td><td>Builds the handles from a connected wallet. Call it once, above the provider.</td></tr>
               <tr><td><code>useMorseFilesContext()</code></td><td>Returns the handles. Throws outside the provider.</td></tr>
-              <tr><td><code>useFileUpload()</code></td><td>Uploads one file. <code>upload({ file, epochs, recipients?, encrypt?, deletable? })</code> resolves to <code>{ fileId, blobId, encrypted, sealIdPrefix, sealNonce, shareLink }</code>. <code>phase</code> tracks progress.</td></tr>
-              <tr><td><code>useFileDownload(fileId, seal)</code></td><td>Drives a download page. Loads the on-chain record, then <code>load()</code>, <code>save()</code> and <code>download()</code> read a public file or decrypt an encrypted one. Pass <code>seal</code> as <code>{ sealIdPrefix, sealNonce }</code> for an encrypted file, or <code>null</code>.</td></tr>
+              <tr><td><code>useFileUpload()</code></td><td>Uploads one file. <code>upload({ file, epochs, recipients?, encrypt?, deletable? })</code> resolves to <code>{ fileId, blobId, encrypted, sealIdPrefix, sealNonce, shareLink }</code>. <code>phase</code> tracks progress. A file too large for the relay's tip cap fails with <code>FileTooLargeError</code> before it is read.</td></tr>
+              <tr><td><code>useFileDownload(fileId, seal)</code></td><td>Drives a download page. Loads the on-chain record, then <code>load()</code>, <code>save()</code> and <code>download()</code> read a public file or decrypt an encrypted one. Pass <code>seal</code> as <code>{ sealIdPrefix, sealNonce }</code> for an encrypted file, or <code>null</code>. A link that cannot open an encrypted file fails with <code>ShareLinkSealError</code>.</td></tr>
               <tr><td><code>useFileDecrypt()</code></td><td>Lower-level decrypt. <code>decrypt({ file, sealIdPrefix, sealNonce, ttlMin? })</code> resolves to the plaintext bytes.</td></tr>
               <tr><td><code>useRecipientFile(fileId)</code></td><td>Loads a file's on-chain record: name, content type, size, members and blob ID.</td></tr>
               <tr><td><code>useStorageCostEstimate({ sizeBytes, epochs, encrypt?, usdPerGbPerMonth? })</code></td><td>Estimates storage cost in USD from the Walrus price of $0.023 per GB per month and the network's nominal epoch length.</td></tr>
@@ -372,15 +372,69 @@
         </div>
 
         <p>An upload moves through the phases <code>encrypting</code>, <code>uploading</code>, <code>submitting</code> and <code>complete</code>. Public uploads skip <code>encrypting</code>. <code>uploadPhases(encrypted)</code> returns the ordered list for a progress stepper, and <code>uploadPhaseLabel(phase)</code> returns a readable label. Blobs are created deletable unless you pass <code>deletable: false</code>.</p>
-        <p><code>uploadErrorMessage(error, network)</code> returns the SDK's <code>{ title, description, cause }</code> for any failure. It rewrites an insufficient-balance error as "Not enough WAL" or "Not enough SUI", with the amounts in whole coins and how to top up on that network.</p>
+        <p><code>uploadErrorMessage(error, network)</code> returns the SDK's <code>{ title, description, cause }</code> for any failure. It titles a <code>FileTooLargeError</code> "File too large", with the file's size, the limit and the tip cap. It rewrites an insufficient-balance error as "Not enough WAL" or "Not enough SUI", with the amounts in whole coins and how to top up on that network. Everything else goes to the SDK's <code>formatUserMessage</code>, so the wording follows the <code>morse-sdk</code> version your app installs.</p>
 
         <h3 id="share-links">Share links</h3>
         <p><code>buildShareLink({ fileId, network, sealIdPrefix, sealNonce })</code> builds a link of the form <code>&lt;origin&gt;/#/f/&lt;fileId&gt;?net=&lt;network&gt;&amp;p=&lt;hex&gt;&amp;n=&lt;hex&gt;</code> on the current origin. <code>useFileUpload</code> already returns one as <code>shareLink</code>. The <code>baseUrl</code> and <code>pattern</code> options change the origin and the path.</p>
         <p>Everything after <code>#</code> stays in the browser, so none of it reaches a server log. The Seal material in the link is not a secret: decryption is still gated by the file's recipient set.</p>
         <p><code>parseShareLink(href)</code> reads a link back into <code>{ fileId, network, sealIdPrefix, sealNonce }</code>. The Seal fields are <code>null</code> for a public file. It returns <code>null</code> for a damaged link, including one that carries only one of <code>p</code> and <code>n</code>. A file ID exists on one network only, so check <code>network</code> before you look the file up.</p>
 
+        <h3 id="download-errors">Download errors</h3>
+        <p>Before <code>load()</code> or <code>download()</code> reads any bytes or asks the wallet to sign, <code>useFileDownload</code> checks the share link against the file's on-chain record. When the record has a Seal prefix and the link cannot open the file, the hook sets <code>status</code> to <code>"error"</code> and <code>error</code> to a <code>ShareLinkSealError</code>. Its <code>reason</code> says what is wrong with the link:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th><code>reason</code></th><th>The link</th><th><code>MorseFileDownloader</code> shows</th></tr></thead>
+            <tbody>
+              <tr><td><code>"missing"</code></td><td>Carries no Seal material, for example because the end of the link was cut off or the link was rebuilt from the file ID.</td><td>"Link is incomplete"</td></tr>
+              <tr><td><code>"mismatch"</code></td><td>Carries a Seal prefix that is not the file's, so it is damaged or belongs to another file.</td><td>"Link does not match this file"</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Both descriptions ask the reader to get the full link from the sender. A file whose record has no Seal prefix, such as one encrypted before the prefix was stored on chain, is not checked: as before, the hook decrypts it when the link carries Seal material and reads it as a public file when the link does not. The check runs only when the bytes are fetched, so a page that shows just the file's details makes no extra request.</p>
+        <p>For your own UI, <code>downloadErrorMessage(error)</code> turns the hook's <code>error</code> into <code>{ title, description, cause }</code>, as <code>MorseFileDownloader</code> does. It titles a <code>ShareLinkSealError</code> by its <code>reason</code> and hands everything else to the SDK's <code>formatUserMessage</code>, so that wording follows the <code>morse-sdk</code> version your app installs. On 0.10, for example, a blob Walrus has no copy of is titled "Content unavailable" and reads "Walrus has no stored copy of this content." with its ID.</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">tsx</span>
+            <button class="code-copy" type="button">Copy</button>
+          </div>
+          <pre><span class="kw">import type</span> { RecipientFileId } <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-sdk"</span>;
+<span class="kw">import</span> {
+  downloadErrorMessage,
+  <span class="kw">type</span> SealMaterial,
+  useFileDownload,
+} <span class="kw">from</span> <span class="st">"@arcadiasystems/morse-uploader"</span>;
+
+<span class="kw">export function</span> <span class="fn">DownloadButton</span>({
+  fileId,
+  seal,
+}: {
+  fileId: <span class="ty">RecipientFileId</span>;
+  seal: <span class="ty">SealMaterial</span> | <span class="kw">null</span>;
+}) {
+  <span class="kw">const</span> { file, status, error, download } = <span class="fn">useFileDownload</span>(fileId, seal);
+  <span class="kw">const</span> message = error === <span class="kw">null</span> ? <span class="kw">null</span> : <span class="fn">downloadErrorMessage</span>(error);
+
+  <span class="kw">return</span> (
+    &lt;<span class="ty">div</span>&gt;
+      &lt;<span class="ty">button</span>
+        type=<span class="st">"button"</span>
+        disabled={file === <span class="kw">null</span> || status === <span class="st">"loading"</span>}
+        onClick={() =&gt; {
+          <span class="cm">// download() does not reject; a failure lands in `error`.</span>
+          <span class="kw">void</span> <span class="fn">download</span>();
+        }}
+      &gt;
+        Download
+      &lt;/<span class="ty">button</span>&gt;
+      {message !== <span class="kw">null</span> &amp;&amp; &lt;<span class="ty">p</span>&gt;{message.title}: {message.description}&lt;/<span class="ty">p</span>&gt;}
+    &lt;/<span class="ty">div</span>&gt;
+  );
+}</pre>
+        </div>
+
         <h2 id="upload-relay">Walrus upload relay</h2>
-        <p>A direct Walrus write sends slivers to every storage node at once, a burst that many networks cannot sustain. In a browser, write through the upload relay instead: it does that fan-out for you over one connection. The default write adapter uses it when you set <code>walrusWriteConfig.uploadRelay</code>, which the uploader hands unchanged to <code>@mysten/walrus</code>.</p>
+        <p>A direct Walrus write sends slivers to every storage node at once, a burst that many networks cannot sustain. In a browser, write through the upload relay instead: it does that fan-out for you over one connection. The default write adapter uses it when you set <code>walrusWriteConfig.uploadRelay</code>, which the uploader hands unchanged to <code>@mysten/walrus</code>. Its type is exported as <code>UploadRelayOptions</code>: a <code>host</code> and an optional <code>sendTip</code>, typed as <code>@mysten/walrus</code>'s <code>UploadRelayConfig["sendTip"]</code>, so a value <code>@mysten/walrus</code> would not accept does not type-check.</p>
 
         <div class="table-wrap">
           <table>
@@ -419,12 +473,28 @@
         <p>The relay charges a tip on every upload, paid in SUI on top of WAL storage and gas. Set <code>sendTip: { max }</code>, with <code>max</code> in MIST. <code>@mysten/walrus</code> then reads the relay's live tip from <code>/v1/tip-config</code> and pays it, up to <code>max</code>.</p>
         <ul>
           <li><strong>Always set <code>sendTip</code>.</strong> Without it, no tip is sent and the relay refuses the upload.</li>
-          <li><strong>Leave room in <code>max</code>.</strong> If the tip is higher, <code>@mysten/walrus</code> throws <code>Tip amount (N) exceeds the maximum allowed tip (M)</code> before it uploads anything. On Walrus Mainnet the tip grows with the file's encoded size, and even a small file costs more than 1,000,000 MIST, so a cap sized for testnet rejects every Walrus Mainnet upload. The example app uses 10,000,000 MIST.</li>
+          <li><strong>Leave room in <code>max</code>.</strong> On Walrus Mainnet the tip grows with the file's encoded size, so <code>max</code> also caps the file size. At 10,000,000 MIST, the cap the example app uses, the largest file is 42,327,820 bytes (40.37 MiB). Even a small file costs more than 1,000,000 MIST, so a cap sized for testnet rejects every Walrus Mainnet upload. Testnet's relay charges a flat 105 MIST, so there the cap sets no size limit. See <a href="#file-size-limit">File size limit</a>.</li>
           <li><strong>The relay sees your bytes.</strong> Encrypt the file if that matters.</li>
         </ul>
 
         <p>In a browser, the Walrus client also needs the URL of its wasm file. It comes from <code>@mysten/walrus-wasm</code>, a dependency of <code>@mysten/walrus</code>. The example app installs it directly and imports the URL with Vite's <code>?url</code> suffix. Without an explicit URL, Vite serves <code>index.html</code> in place of the wasm file and the Walrus client fails to start.</p>
         <p>To skip the default adapter, pass a prebuilt <code>walrusWrite</code> adapter instead. It must implement <code>WalrusFlowCapable</code>, which the two-popup upload needs.</p>
+
+        <h3 id="file-size-limit">File size limit</h3>
+        <p>Before it reads a file, <code>useFileUpload</code> reads the relay's <code>/v1/tip-config</code>, works out the largest file <code>sendTip.max</code> allows, and refuses a larger one with a <code>FileTooLargeError</code>. Nothing has been read, encrypted, encoded or signed at that point. <code>MorseFileUploader</code> shows "File too large", with the file's size, the limit and the cap. Raise <code>sendTip.max</code> to allow larger files.</p>
+        <p>An encrypted file can fit and still go over once Seal's envelope is added, and the envelope's size depends on the key servers. That file is refused after encryption and before Walrus encodes it, with <code>afterEncryption</code> set to <code>true</code>.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Class</th><th>Carries</th><th>Thrown when</th></tr></thead>
+            <tbody>
+              <tr><td><code>FileTooLargeError</code></td><td><code>sizeBytes</code>, <code>afterEncryption</code>, <code>limit</code></td><td>The file, or the file once encrypted, is larger than <code>limit.maxBytes</code>. <code>sizeBytes</code> is the size Walrus would have stored.</td></tr>
+              <tr><td><code>ConfigurationError</code></td><td></td><td><code>sendTip.max</code> is below the relay's tip for even the smallest file, so the relay would refuse every upload. The message says to raise <code>sendTip.max</code>.</td></tr>
+              <tr><td><code>TransportError</code></td><td><code>operation</code></td><td>The relay's tip config could not be read. <code>operation</code> is <code>"walrus.relay.tipConfig"</code>.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><code>FileTooLargeError</code> is exported by this package, and <code>ConfigurationError</code> and <code>TransportError</code> by <code>morse-sdk</code>. <code>limit</code> is an <code>UploadSizeLimit</code>: <code>maxBytes</code>, the largest file in bytes, and <code>maxTipMist</code>, the cap it comes from, in MIST as a <code>bigint</code>.</p>
+        <p>The check needs to know the relay. <code>useMorseFiles</code> sets <code>uploadRelay</code> on the <code>MorseFilesHandles</code> from <code>walrusWriteConfig.uploadRelay</code>. With a prebuilt <code>walrusWrite</code> it stays unset, because the package cannot see that adapter's relay, so the check is skipped. <code>@mysten/walrus</code> then still throws <code>Tip amount (N) exceeds the maximum allowed tip (M)</code> before anything is signed, but only after encoding the whole file. Hand-built handles can set <code>uploadRelay</code> to get the check. Each upload through a relay with a <code>sendTip.max</code> costs one extra request, for the tip config.</p>
 
         <h2 id="seal-on-walrus-mainnet">Encrypted files and Seal on Walrus Mainnet</h2>
         <p>An encrypted upload encrypts the file under Seal before it leaves the browser, then creates the file and binds its Seal identity in one transaction. The connected wallet is always a recipient, so the owner can always decrypt. At decrypt time, Seal key servers check the file's recipient set on-chain, and a wallet outside it gets no key. Decrypting takes one wallet popup to create a Seal <code>SessionKey</code>, which is reused across files until it expires (10 minutes by default; set it with <code>ttlMin</code>).</p>
@@ -497,7 +567,7 @@
     <div class="feedback">
       <div class="feedback__ask" id="feedback" aria-live="polite">Was this helpful? <button type="button" data-feedback="yes">Yes</button><button type="button" data-feedback="no">No</button></div>
       <a class="feedback__report" href="https://github.com/arcadiasystems/morse-dcms/issues/new?labels=docs&title=docs%3A%20uploader.html" target="_blank" rel="noopener">Report an issue</a>
-      <span class="feedback__upd">Updated 2026-10-18</span>
+      <span class="feedback__upd">Updated 2026-10-31</span>
     </div>
     <nav class="pager" aria-label="Previous and next">
       <a href="sdk-workflows.html" rel="prev"><small>Previous</small><b>← SDK: Cookbooks</b></a>
