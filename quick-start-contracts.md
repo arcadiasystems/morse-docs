@@ -19,14 +19,14 @@
 
 ## Installing
 
-Install the Morse SDK (for network configuration and Walrus uploads) and the Sui SDK (for transaction construction and signing). The `@mysten/*` peers are pinned to exact versions because newer `@mysten/seal` and `@mysten/walrus` patch releases need a newer `@mysten/sui` than the SDK supports.
+Install the Morse SDK (for network configuration and Walrus uploads) and the Sui SDK (for transaction construction and signing). The `@mysten/*` peers are pinned to the exact versions the SDK accepts: it takes one `@mysten/walrus` and one `@mysten/seal` release, because a later patch of either can need a newer `@mysten/sui` than the SDK supports.
 
 ```bash
-bun add @arcadiasystems/morse-sdk@~0.10.0 @mysten/sui@2.36.0 @mysten/walrus@1.2.35 @mysten/seal@1.5.0
+bun add @arcadiasystems/morse-sdk@~0.11.0 @mysten/sui@2.38.0 @mysten/walrus@1.2.37 @mysten/seal@1.5.2
 ```
 
 ```bash
-npm install @arcadiasystems/morse-sdk@~0.10.0 @mysten/sui@2.36.0 @mysten/walrus@1.2.35 @mysten/seal@1.5.0
+npm install @arcadiasystems/morse-sdk@~0.11.0 @mysten/sui@2.38.0 @mysten/walrus@1.2.37 @mysten/seal@1.5.2
 ```
 
 > **INFO: Why the SDK if we are using raw PTBs?**

@@ -7,25 +7,25 @@
 
 ## Compatibility
 
-`@arcadiasystems/morse-sdk` is built and tested against specific minor versions of its Mysten substrate. Newer or older versions are not validated and may produce runtime errors. The peer-dependency ranges in `package.json` enforce these bounds. Version 0.9.0 moved all three ranges, so upgrading from 0.8.x means upgrading the three Mysten packages with it.
+`@arcadiasystems/morse-sdk` is built and tested against specific versions of its Mysten substrate. Newer or older versions are not validated and may produce runtime errors. The peer-dependency ranges in `package.json` enforce these bounds. Version 0.11.0 moved all three ranges, so upgrading from 0.10.x means upgrading the three Mysten packages with it.
 
 | Package | Version | Required |
 | --- | --- | --- |
-| `@arcadiasystems/morse-sdk` | 0.10.x | (this package) |
-| `@mysten/sui` | >=2.36.0 <2.37.0 | Yes: types, gRPC client, keypairs |
-| `@mysten/walrus` | >=1.2.35 <1.3.0 | Yes: default Walrus adapters (read + write) |
-| `@mysten/seal` | >=1.5.0 <1.6.0 | Yes: encryption |
+| `@arcadiasystems/morse-sdk` | 0.11.x | (this package) |
+| `@mysten/sui` | >=2.38.0 <2.39.0 | Yes: types, gRPC client, keypairs |
+| `@mysten/walrus` | >=1.2.37 <1.2.38 | Yes: default Walrus adapters (read + write) |
+| `@mysten/seal` | >=1.5.2 <1.5.3 | Yes: encryption |
 
 > **WARNING: Pin to the verified minor version**
 >
-> Mysten packages may ship breaking changes within the same major version. When a new version like `@mysten/walrus@1.3.0` is released, `morse-sdk` needs a coordinated bump and re-verification. Use `@arcadiasystems/morse-sdk@~0.10.0`, as in the [install command](#installing) below, to lock to patch-level updates only.
+> Mysten packages may ship breaking changes within the same major version. When a new version like `@mysten/walrus@1.3.0` is released, `morse-sdk` needs a coordinated bump and re-verification. Use `@arcadiasystems/morse-sdk@~0.11.0`, as in the [install command](#installing) below, to lock to patch-level updates only.
 
 The verified matrix is also exported programmatically as `TESTED_SUBSTRATE`, a frozen record of the tested `@mysten/sui`, `@mysten/seal`, and `@mysten/walrus` versions plus `verifiedOn` and `suiNetwork`. Log it during initialization or compare it against bundler-resolved versions in CI:
 
 ```typescript
 import { TESTED_SUBSTRATE } from "@arcadiasystems/morse-sdk";
 
-console.log(TESTED_SUBSTRATE["@mysten/walrus"]);  // "1.2.35"
+console.log(TESTED_SUBSTRATE["@mysten/walrus"]);  // "1.2.37"
 ```
 
 ## Runtime requirements
@@ -42,10 +42,10 @@ The SDK works in both Node and browser environments. It does not depend on Node-
 
 ## Installing
 
-`@mysten/sui`, `@mysten/walrus`, and `@mysten/seal` are all required peer dependencies. The SDK's main entry imports the default Walrus and Seal adapters, so both packages must be installed even for workflows that never upload or encrypt. The `@mysten/*` peers are pinned to exact versions because newer `@mysten/seal` and `@mysten/walrus` patch releases need a newer `@mysten/sui` than the SDK supports.
+`@mysten/sui`, `@mysten/walrus`, and `@mysten/seal` are all required peer dependencies. The SDK's main entry imports the default Walrus and Seal adapters, so both packages must be installed even for workflows that never upload or encrypt. The `@mysten/*` peers are pinned to the exact versions the SDK accepts: it takes one `@mysten/walrus` and one `@mysten/seal` release, because a later patch of either can need a newer `@mysten/sui` than the SDK supports.
 
 ```bash
-bun add @arcadiasystems/morse-sdk@~0.10.0 @mysten/sui@2.36.0 @mysten/walrus@1.2.35 @mysten/seal@1.5.0
+bun add @arcadiasystems/morse-sdk@~0.11.0 @mysten/sui@2.38.0 @mysten/walrus@1.2.37 @mysten/seal@1.5.2
 ```
 
 ## morseConfig() shape

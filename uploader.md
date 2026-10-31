@@ -30,20 +30,20 @@ The package is ESM only and has four entry points:
 
 ## Install
 
-The package is on npm as [`@arcadiasystems/morse-uploader`](https://www.npmjs.com/package/@arcadiasystems/morse-uploader). This page covers version 0.4.1. Install it with its peer dependencies:
+The package is on npm as [`@arcadiasystems/morse-uploader`](https://www.npmjs.com/package/@arcadiasystems/morse-uploader). This page covers version 0.4.2. Install it with its peer dependencies:
 
 ```bash
-npm install @arcadiasystems/morse-uploader@~0.4.1 @arcadiasystems/morse-sdk@~0.10.0 @mysten/sui@2.36.0 @mysten/walrus@1.2.35 @mysten/seal@1.5.0
+npm install @arcadiasystems/morse-uploader@~0.4.2 @arcadiasystems/morse-sdk@~0.10.1 @mysten/sui@2.36.0 @mysten/walrus@1.2.35 @mysten/seal@1.5.0
 ```
 
-The `@mysten/*` peers are pinned to exact versions because newer `@mysten/seal` and `@mysten/walrus` patch releases need a newer `@mysten/sui` than the SDK supports. Keep the peers inside the ranges below, so your app does not end up with two copies of the Sui, Walrus or Seal packages. A tilde range such as `~0.10.0` means `>=0.10.0 <0.11.0`, so the command above stays inside them. React and React DOM are assumed to be in your app already.
+The `@mysten/*` peers are pinned to exact versions because newer `@mysten/seal` and `@mysten/walrus` patch releases need a newer `@mysten/sui` than the SDK supports. Uploader apps stay on morse-sdk 0.10.1 and the Mysten versions above until morse-uploader 0.5.0, because 0.4.2 does not accept morse-sdk 0.11. Keep the peers inside the ranges below, so your app does not end up with two copies of the Sui, Walrus or Seal packages. A tilde range such as `~0.10.1` means `>=0.10.1 <0.11.0`, so the command above stays inside them. React and React DOM are assumed to be in your app already.
 
 | Peer dependency | Range |
 | --- | --- |
 | `@arcadiasystems/morse-sdk` | >=0.9.0 <0.11.0 |
 | `@mysten/sui` | >=2.36.0 <2.37.0 |
-| `@mysten/walrus` | >=1.2.35 <1.3.0 |
-| `@mysten/seal` | >=1.5.0 <1.6.0 |
+| `@mysten/walrus` | >=1.2.35 <1.2.36 |
+| `@mysten/seal` | >=1.5.0 <1.5.1 |
 | `react`, `react-dom` | >=18.0.0 |
 
 The package marks `@mysten/walrus` and `@mysten/seal` as optional peers, but `morse-sdk` requires all three Mysten packages. Install them all.
