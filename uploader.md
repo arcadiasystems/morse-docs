@@ -30,20 +30,20 @@ The package is ESM only and has four entry points:
 
 ## Install
 
-The package is on npm as [`@arcadiasystems/morse-uploader`](https://www.npmjs.com/package/@arcadiasystems/morse-uploader). This page covers version 0.4.1. Install it with its peer dependencies:
+The package is on npm as [`@arcadiasystems/morse-uploader`](https://www.npmjs.com/package/@arcadiasystems/morse-uploader). This page covers version 0.4.2. Install it with its peer dependencies:
 
 ```bash
-npm install @arcadiasystems/morse-uploader@~0.4.1 @arcadiasystems/morse-sdk@~0.10.0 @mysten/sui@2.36.0 @mysten/walrus@1.2.35 @mysten/seal@1.5.0
+npm install @arcadiasystems/morse-uploader@~0.4.2 @arcadiasystems/morse-sdk@~0.10.1 @mysten/sui@2.36.0 @mysten/walrus@1.2.35 @mysten/seal@1.5.0
 ```
 
-The `@mysten/*` peers are pinned to exact versions because newer `@mysten/seal` and `@mysten/walrus` patch releases need a newer `@mysten/sui` than the SDK supports. Keep the peers inside the ranges below, so your app does not end up with two copies of the Sui, Walrus or Seal packages. A tilde range such as `~0.10.0` means `>=0.10.0 <0.11.0`, so the command above stays inside them. React and React DOM are assumed to be in your app already.
+The `@mysten/*` peers are pinned to exact versions because newer `@mysten/seal` and `@mysten/walrus` patch releases need a newer `@mysten/sui` than the SDK supports. Uploader apps stay on morse-sdk 0.10.1 and the Mysten versions above until morse-uploader 0.5.0, because 0.4.2 does not accept morse-sdk 0.11. Keep the peers inside the ranges below, so your app does not end up with two copies of the Sui, Walrus or Seal packages. A tilde range such as `~0.10.1` means `>=0.10.1 <0.11.0`, so the command above stays inside them. React and React DOM are assumed to be in your app already.
 
 | Peer dependency | Range |
 | --- | --- |
 | `@arcadiasystems/morse-sdk` | >=0.9.0 <0.11.0 |
 | `@mysten/sui` | >=2.36.0 <2.37.0 |
-| `@mysten/walrus` | >=1.2.35 <1.3.0 |
-| `@mysten/seal` | >=1.5.0 <1.6.0 |
+| `@mysten/walrus` | >=1.2.35 <1.2.36 |
+| `@mysten/seal` | >=1.5.0 <1.5.1 |
 | `react`, `react-dom` | >=18.0.0 |
 
 The package marks `@mysten/walrus` and `@mysten/seal` as optional peers, but `morse-sdk` requires all three Mysten packages. Install them all.
@@ -156,9 +156,9 @@ const recipients = ["0x71a3...9f2b", "0x88c2...41de"].map((address) => toSuiAddr
 | `onUploaded` | `(result: CompletedFileUpload) => void` | None | Called when an upload completes, with the file ID, the Seal material and the share link. |
 | `className` | `string` | None | Extra class on the root element. |
 
-The uploader shows a USD storage-cost estimate before upload, a progress stepper during it, and a share link with a copy button after it. It renders failures with `uploadErrorMessage`.
+The uploader shows a USD storage-cost estimate before upload, a progress stepper during it, and a share link with a copy button after it. It renders failures with `uploadErrorMessage`, so a file too large for the relay's tip cap shows "File too large". See [File size limit](#file-size-limit).
 
-`MorseFileDownloader` opens one file from a share link. It reads the on-chain record, then downloads a public file or decrypts an encrypted one, with the original file name and type. Images get a preview.
+`MorseFileDownloader` opens one file from a share link. It reads the on-chain record, then downloads a public file or decrypts an encrypted one, with the original file name and type. Images get a preview. It renders failures with `downloadErrorMessage`, so a link that cannot open an encrypted file shows "Link is incomplete" or "Link does not match this file". See [Download errors](#download-errors).
 
 ```tsx
 import type { RecipientFileId } from "@arcadiasystems/morse-sdk";
@@ -197,8 +197,8 @@ Build your own UI from the same hooks the components use. The file hooks read th
 | --- | --- |
 | `useMorseFiles(options)` | Builds the handles from a connected wallet. Call it once, above the provider. |
 | `useMorseFilesContext()` | Returns the handles. Throws outside the provider. |
-| `useFileUpload()` | Uploads one file. `upload({ file, epochs, recipients?, encrypt?, deletable? })` resolves to `{ fileId, blobId, encrypted, sealIdPrefix, sealNonce, shareLink }`. `phase` tracks progress. |
-| `useFileDownload(fileId, seal)` | Drives a download page. Loads the on-chain record, then `load()`, `save()` and `download()` read a public file or decrypt an encrypted one. Pass `seal` as `{ sealIdPrefix, sealNonce }` for an encrypted file, or `null`. |
+| `useFileUpload()` | Uploads one file. `upload({ file, epochs, recipients?, encrypt?, deletable? })` resolves to `{ fileId, blobId, encrypted, sealIdPrefix, sealNonce, shareLink }`. `phase` tracks progress. A file too large for the relay's tip cap fails with `FileTooLargeError` before it is read. |
+| `useFileDownload(fileId, seal)` | Drives a download page. Loads the on-chain record, then `load()`, `save()` and `download()` read a public file or decrypt an encrypted one. Pass `seal` as `{ sealIdPrefix, sealNonce }` for an encrypted file, or `null`. A link that cannot open an encrypted file fails with `ShareLinkSealError`. |
 | `useFileDecrypt()` | Lower-level decrypt. `decrypt({ file, sealIdPrefix, sealNonce, ttlMin? })` resolves to the plaintext bytes. |
 | `useRecipientFile(fileId)` | Loads a file's on-chain record: name, content type, size, members and blob ID. |
 | `useStorageCostEstimate({ sizeBytes, epochs, encrypt?, usdPerGbPerMonth? })` | Estimates storage cost in USD from the Walrus price of $0.023 per GB per month and the network's nominal epoch length. |
@@ -242,7 +242,7 @@ export function UploadButton({ file }: { file: File }) {
 
 An upload moves through the phases `encrypting`, `uploading`, `submitting` and `complete`. Public uploads skip `encrypting`. `uploadPhases(encrypted)` returns the ordered list for a progress stepper, and `uploadPhaseLabel(phase)` returns a readable label. Blobs are created deletable unless you pass `deletable: false`.
 
-`uploadErrorMessage(error, network)` returns the SDK's `{ title, description, cause }` for any failure. It rewrites an insufficient-balance error as "Not enough WAL" or "Not enough SUI", with the amounts in whole coins and how to top up on that network.
+`uploadErrorMessage(error, network)` returns the SDK's `{ title, description, cause }` for any failure. It titles a `FileTooLargeError` "File too large", with the file's size, the limit and the tip cap. It rewrites an insufficient-balance error as "Not enough WAL" or "Not enough SUI", with the amounts in whole coins and how to top up on that network. Everything else goes to the SDK's `formatUserMessage`, so the wording follows the `morse-sdk` version your app installs.
 
 ### Share links
 
@@ -252,9 +252,58 @@ Everything after `#` stays in the browser, so none of it reaches a server log. T
 
 `parseShareLink(href)` reads a link back into `{ fileId, network, sealIdPrefix, sealNonce }`. The Seal fields are `null` for a public file. It returns `null` for a damaged link, including one that carries only one of `p` and `n`. A file ID exists on one network only, so check `network` before you look the file up.
 
+### Download errors
+
+Before `load()` or `download()` reads any bytes or asks the wallet to sign, `useFileDownload` checks the share link against the file's on-chain record. When the record has a Seal prefix and the link cannot open the file, the hook sets `status` to `"error"` and `error` to a `ShareLinkSealError`. Its `reason` says what is wrong with the link:
+
+| `reason` | The link | `MorseFileDownloader` shows |
+| --- | --- | --- |
+| `"missing"` | Carries no Seal material, for example because the end of the link was cut off or the link was rebuilt from the file ID. | "Link is incomplete" |
+| `"mismatch"` | Carries a Seal prefix that is not the file's, so it is damaged or belongs to another file. | "Link does not match this file" |
+
+Both descriptions ask the reader to get the full link from the sender. A file whose record has no Seal prefix, such as one encrypted before the prefix was stored on chain, is not checked: as before, the hook decrypts it when the link carries Seal material and reads it as a public file when the link does not. The check runs only when the bytes are fetched, so a page that shows just the file's details makes no extra request.
+
+For your own UI, `downloadErrorMessage(error)` turns the hook's `error` into `{ title, description, cause }`, as `MorseFileDownloader` does. It titles a `ShareLinkSealError` by its `reason` and hands everything else to the SDK's `formatUserMessage`, so that wording follows the `morse-sdk` version your app installs. On 0.10, for example, a blob Walrus has no copy of is titled "Content unavailable" and reads "Walrus has no stored copy of this content." with its ID.
+
+```tsx
+import type { RecipientFileId } from "@arcadiasystems/morse-sdk";
+import {
+  downloadErrorMessage,
+  type SealMaterial,
+  useFileDownload,
+} from "@arcadiasystems/morse-uploader";
+
+export function DownloadButton({
+  fileId,
+  seal,
+}: {
+  fileId: RecipientFileId;
+  seal: SealMaterial | null;
+}) {
+  const { file, status, error, download } = useFileDownload(fileId, seal);
+  const message = error === null ? null : downloadErrorMessage(error);
+
+  return (
+    <div>
+      <button
+        type="button"
+        disabled={file === null || status === "loading"}
+        onClick={() => {
+          // download() does not reject; a failure lands in `error`.
+          void download();
+        }}
+      >
+        Download
+      </button>
+      {message !== null && <p>{message.title}: {message.description}</p>}
+    </div>
+  );
+}
+```
+
 ## Walrus upload relay
 
-A direct Walrus write sends slivers to every storage node at once, a burst that many networks cannot sustain. In a browser, write through the upload relay instead: it does that fan-out for you over one connection. The default write adapter uses it when you set `walrusWriteConfig.uploadRelay`, which the uploader hands unchanged to `@mysten/walrus`.
+A direct Walrus write sends slivers to every storage node at once, a burst that many networks cannot sustain. In a browser, write through the upload relay instead: it does that fan-out for you over one connection. The default write adapter uses it when you set `walrusWriteConfig.uploadRelay`, which the uploader hands unchanged to `@mysten/walrus`. Its type is exported as `UploadRelayOptions`: a `host` and an optional `sendTip`, typed as `@mysten/walrus`'s `UploadRelayConfig["sendTip"]`, so a value `@mysten/walrus` would not accept does not type-check.
 
 | Network | Relay host |
 | --- | --- |
@@ -284,12 +333,28 @@ const setup = useMorseFiles({
 The relay charges a tip on every upload, paid in SUI on top of WAL storage and gas. Set `sendTip: { max }`, with `max` in MIST. `@mysten/walrus` then reads the relay's live tip from `/v1/tip-config` and pays it, up to `max`.
 
 - **Always set `sendTip`.** Without it, no tip is sent and the relay refuses the upload.
-- **Leave room in `max`.** If the tip is higher, `@mysten/walrus` throws `Tip amount (N) exceeds the maximum allowed tip (M)` before it uploads anything. On Walrus Mainnet the tip grows with the file's encoded size, and even a small file costs more than 1,000,000 MIST, so a cap sized for testnet rejects every Walrus Mainnet upload. The example app uses 10,000,000 MIST.
+- **Leave room in `max`.** On Walrus Mainnet the tip grows with the file's encoded size, so `max` also caps the file size. At 10,000,000 MIST, the cap the example app uses, the largest file is 42,327,820 bytes (40.37 MiB). Even a small file costs more than 1,000,000 MIST, so a cap sized for testnet rejects every Walrus Mainnet upload. Testnet's relay charges a flat 105 MIST, so there the cap sets no size limit. See [File size limit](#file-size-limit).
 - **The relay sees your bytes.** Encrypt the file if that matters.
 
 In a browser, the Walrus client also needs the URL of its wasm file. It comes from `@mysten/walrus-wasm`, a dependency of `@mysten/walrus`. The example app installs it directly and imports the URL with Vite's `?url` suffix. Without an explicit URL, Vite serves `index.html` in place of the wasm file and the Walrus client fails to start.
 
 To skip the default adapter, pass a prebuilt `walrusWrite` adapter instead. It must implement `WalrusFlowCapable`, which the two-popup upload needs.
+
+### File size limit
+
+Before it reads a file, `useFileUpload` reads the relay's `/v1/tip-config`, works out the largest file `sendTip.max` allows, and refuses a larger one with a `FileTooLargeError`. Nothing has been read, encrypted, encoded or signed at that point. `MorseFileUploader` shows "File too large", with the file's size, the limit and the cap. Raise `sendTip.max` to allow larger files.
+
+An encrypted file can fit and still go over once Seal's envelope is added, and the envelope's size depends on the key servers. That file is refused after encryption and before Walrus encodes it, with `afterEncryption` set to `true`.
+
+| Class | Carries | Thrown when |
+| --- | --- | --- |
+| `FileTooLargeError` | `sizeBytes`, `afterEncryption`, `limit` | The file, or the file once encrypted, is larger than `limit.maxBytes`. `sizeBytes` is the size Walrus would have stored. |
+| `ConfigurationError` |  | `sendTip.max` is below the relay's tip for even the smallest file, so the relay would refuse every upload. The message says to raise `sendTip.max`. |
+| `TransportError` | `operation` | The relay's tip config could not be read. `operation` is `"walrus.relay.tipConfig"`. |
+
+`FileTooLargeError` is exported by this package, and `ConfigurationError` and `TransportError` by `morse-sdk`. `limit` is an `UploadSizeLimit`: `maxBytes`, the largest file in bytes, and `maxTipMist`, the cap it comes from, in MIST as a `bigint`.
+
+The check needs to know the relay. `useMorseFiles` sets `uploadRelay` on the `MorseFilesHandles` from `walrusWriteConfig.uploadRelay`. With a prebuilt `walrusWrite` it stays unset, because the package cannot see that adapter's relay, so the check is skipped. `@mysten/walrus` then still throws `Tip amount (N) exceeds the maximum allowed tip (M)` before anything is signed, but only after encoding the whole file. Hand-built handles can set `uploadRelay` to get the check. Each upload through a relay with a `sendTip.max` costs one extra request, for the tip config.
 
 ## Encrypted files and Seal on Walrus Mainnet
 
