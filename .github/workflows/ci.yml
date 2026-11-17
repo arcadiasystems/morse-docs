@@ -1,0 +1,57 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Node is pinned because package.json declares no engines.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - name: Install
+        run: npm ci
+      # Same script the Vercel buildCommand runs. It regenerates the Markdown
+      # twins, llms.txt, llms-full.txt and assets/search-index.* from the HTML.
+      - name: Build
+        run: npm run build
+      # Those generated files are committed, so a build that changes or adds
+      # anything means a page was edited without rebuilding.
+      - name: Generated files match their sources
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::error::npm run build changed the tree. Run it locally and commit the result."
+            git status --short
+            git diff
+            exit 1
+          fi
+
+  # The one check the ruleset on main requires. It runs on every pull request,
+  # even when a job above fails or is cancelled, so the required status always
+  # reports instead of sitting at "expected".
+  ci-ok:
+    name: ci-ok
+    if: always()
+    needs: [checks]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail unless every needed job succeeded
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          echo "needed job results: $RESULTS"
+          for result in $RESULTS; do
+            if [ "$result" != "success" ]; then
+              exit 1
+            fi
+          done
