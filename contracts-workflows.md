@@ -9,7 +9,7 @@
 
 | Requirement | Details | Purpose |
 | --- | --- | --- |
-| Bun or Node | v1.2+ / ≥ 18 | JavaScript runtime |
+| Bun or Node | v1.2+ / ≥ 22 | JavaScript runtime |
 | SUI + WAL tokens | [SUI faucet](https://faucet.sui.io/) · [Swap SUI for WAL](https://stake-wal.wal.app/?network=testnet) | Gas fees (SUI) and Walrus storage fees (WAL) |
 | Bech32 private key | A `suiprivkey1...` string | Transaction signing. Export from your wallet's settings |
 | Morse SDK | `@arcadiasystems/morse-sdk` | Provides `morseConfig()` for package ID, registry ID, and RPC URL |

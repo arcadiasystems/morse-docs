@@ -13,7 +13,7 @@
 
 | Requirement | Details | Purpose |
 | --- | --- | --- |
-| Bun or Node | v1.2+ / ≥ 18 | JavaScript runtime |
+| Bun or Node | v1.2+ / ≥ 22 | JavaScript runtime |
 | SUI + WAL tokens | [SUI faucet](https://faucet.sui.io/) · [Swap SUI for WAL](https://stake-wal.wal.app/?network=testnet) | Gas fees (SUI) and Walrus storage fees (WAL) |
 | Bech32 private key | A `suiprivkey1...` string | Transaction signing. Export from your wallet's settings |
 
@@ -22,11 +22,11 @@
 Install the Morse SDK (for network configuration and Walrus uploads) and the Sui SDK (for transaction construction and signing). The `@mysten/*` peers are pinned to the exact versions the SDK accepts: it takes one `@mysten/walrus` and one `@mysten/seal` release, because a later patch of either can need a newer `@mysten/sui` than the SDK supports.
 
 ```bash
-bun add @arcadiasystems/morse-sdk@~0.11.0 @mysten/sui@2.38.0 @mysten/walrus@1.2.37 @mysten/seal@1.5.2
+bun add @arcadiasystems/morse-sdk@~0.12.0 @mysten/sui@2.39.1 @mysten/walrus@1.2.39 @mysten/seal@1.5.4
 ```
 
 ```bash
-npm install @arcadiasystems/morse-sdk@~0.11.0 @mysten/sui@2.38.0 @mysten/walrus@1.2.37 @mysten/seal@1.5.2
+npm install @arcadiasystems/morse-sdk@~0.12.0 @mysten/sui@2.39.1 @mysten/walrus@1.2.39 @mysten/seal@1.5.4
 ```
 
 > **INFO: Why the SDK if we are using raw PTBs?**
@@ -105,6 +105,9 @@ const pubResult = await client.signAndExecuteTransaction({
   signer: keypair,
   include: { effects: true, objectTypes: true },
 });
+if (pubResult.$kind === "FailedTransaction") {
+  throw new Error("The publication transaction failed on-chain");
+}
 
 // Extract created object IDs from transaction effects.
 const { effects, objectTypes } = pubResult.Transaction;
@@ -140,6 +143,9 @@ colTx.moveCall({
 });
 
 const colResult = await client.signAndExecuteTransaction({ transaction: colTx, signer: keypair });
+if (colResult.$kind === "FailedTransaction") {
+  throw new Error("The collection transaction failed on-chain");
+}
 console.log("Collection created: posts");
 
 // Wait for the collection transaction to be indexed before modifying the publication again.
@@ -180,7 +186,10 @@ entryTx.moveCall({
   ],
 });
 
-await client.signAndExecuteTransaction({ transaction: entryTx, signer: keypair });
+const entryResult = await client.signAndExecuteTransaction({ transaction: entryTx, signer: keypair });
+if (entryResult.$kind === "FailedTransaction") {
+  throw new Error("The entry transaction failed on-chain");
+}
 console.log("Entry added: hello-world (ID 0)");
 ```
 

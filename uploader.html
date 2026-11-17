@@ -80,7 +80,7 @@
         </div>
 
         <h2 id="what-it-is">What it is</h2>
-        <p>The package wraps the <a href="recipient-files.html">recipient file</a> flow of <code>morse-sdk</code> 0.9 or 0.10 for React. Each upload creates a <code>RecipientFile</code>: a Walrus blob plus an on-chain record that carries its own recipient set. Every step is a headless hook, and an optional set of styled components sits on top.</p>
+        <p>The package wraps the <a href="recipient-files.html">recipient file</a> flow of <code>morse-sdk</code> 0.11 for React. Each upload creates a <code>RecipientFile</code>: a Walrus blob plus an on-chain record that carries its own recipient set. Every step is a headless hook, and an optional set of styled components sits on top.</p>
 
         <div class="feature-grid">
           <div class="feature-item">
@@ -119,24 +119,24 @@
         </div>
 
         <h2 id="install">Install</h2>
-        <p>The package is on npm as <a href="https://www.npmjs.com/package/@arcadiasystems/morse-uploader" target="_blank" rel="noopener"><code>@arcadiasystems/morse-uploader</code></a>. This page covers version 0.4.2. Install it with its peer dependencies:</p>
+        <p>The package is on npm as <a href="https://www.npmjs.com/package/@arcadiasystems/morse-uploader" target="_blank" rel="noopener"><code>@arcadiasystems/morse-uploader</code></a>. This page covers version 0.5.0. Install it with its peer dependencies:</p>
         <div class="code-block">
           <div class="code-header">
             <span class="code-lang">bash</span><span class="code-note">npm</span>
             <button class="code-copy" type="button">Copy</button>
           </div>
-          <pre>npm install @arcadiasystems/morse-uploader@~0.4.2 @arcadiasystems/morse-sdk@~0.10.1 @mysten/sui@2.36.0 @mysten/walrus@1.2.35 @mysten/seal@1.5.0</pre>
+          <pre>npm install @arcadiasystems/morse-uploader@~0.5.0 @arcadiasystems/morse-sdk@~0.11.0 @mysten/sui@2.38.0 @mysten/walrus@1.2.37 @mysten/seal@1.5.2</pre>
         </div>
 
-        <p>The <code>@mysten/*</code> peers are pinned to exact versions because newer <code>@mysten/seal</code> and <code>@mysten/walrus</code> patch releases need a newer <code>@mysten/sui</code> than the SDK supports. Uploader apps stay on morse-sdk 0.10.1 and the Mysten versions above until morse-uploader 0.5.0, because 0.4.2 does not accept morse-sdk 0.11. Keep the peers inside the ranges below, so your app does not end up with two copies of the Sui, Walrus or Seal packages. A tilde range such as <code>~0.10.1</code> means <code>&gt;=0.10.1 &lt;0.11.0</code>, so the command above stays inside them. React and React DOM are assumed to be in your app already.</p>
+        <p>The <code>@mysten/*</code> peers are pinned to exact versions because newer <code>@mysten/seal</code> and <code>@mysten/walrus</code> patch releases need a newer <code>@mysten/sui</code> than the SDK supports. Uploader apps stay on morse-sdk 0.11 and the Mysten versions above, because morse-uploader 0.5.0 does not accept morse-sdk 0.12. An app still on morse-sdk 0.9 or 0.10 stays on morse-uploader 0.4.x. Keep the peers inside the ranges below, so your app does not end up with two copies of the Sui, Walrus or Seal packages. A tilde range such as <code>~0.11.0</code> means <code>&gt;=0.11.0 &lt;0.12.0</code>, so the command above stays inside them. React and React DOM are assumed to be in your app already.</p>
         <div class="table-wrap">
           <table>
             <thead><tr><th>Peer dependency</th><th>Range</th></tr></thead>
             <tbody>
-              <tr><td><code>@arcadiasystems/morse-sdk</code></td><td>&gt;=0.9.0 &lt;0.11.0</td></tr>
-              <tr><td><code>@mysten/sui</code></td><td>&gt;=2.36.0 &lt;2.37.0</td></tr>
-              <tr><td><code>@mysten/walrus</code></td><td>&gt;=1.2.35 &lt;1.2.36</td></tr>
-              <tr><td><code>@mysten/seal</code></td><td>&gt;=1.5.0 &lt;1.5.1</td></tr>
+              <tr><td><code>@arcadiasystems/morse-sdk</code></td><td>&gt;=0.11.0 &lt;0.12.0</td></tr>
+              <tr><td><code>@mysten/sui</code></td><td>&gt;=2.38.0 &lt;2.39.0</td></tr>
+              <tr><td><code>@mysten/walrus</code></td><td>&gt;=1.2.37 &lt;1.2.38</td></tr>
+              <tr><td><code>@mysten/seal</code></td><td>&gt;=1.5.2 &lt;1.5.3</td></tr>
               <tr><td><code>react</code>, <code>react-dom</code></td><td>&gt;=18.0.0</td></tr>
             </tbody>
           </table>
@@ -391,7 +391,7 @@
           </table>
         </div>
         <p>Both descriptions ask the reader to get the full link from the sender. A file whose record has no Seal prefix, such as one encrypted before the prefix was stored on chain, is not checked: as before, the hook decrypts it when the link carries Seal material and reads it as a public file when the link does not. The check runs only when the bytes are fetched, so a page that shows just the file's details makes no extra request.</p>
-        <p>For your own UI, <code>downloadErrorMessage(error)</code> turns the hook's <code>error</code> into <code>{ title, description, cause }</code>, as <code>MorseFileDownloader</code> does. It titles a <code>ShareLinkSealError</code> by its <code>reason</code> and hands everything else to the SDK's <code>formatUserMessage</code>, so that wording follows the <code>morse-sdk</code> version your app installs. On 0.10, for example, a blob Walrus has no copy of is titled "Content unavailable" and reads "Walrus has no stored copy of this content." with its ID.</p>
+        <p>For your own UI, <code>downloadErrorMessage(error)</code> turns the hook's <code>error</code> into <code>{ title, description, cause }</code>, as <code>MorseFileDownloader</code> does. It titles a <code>ShareLinkSealError</code> by its <code>reason</code> and hands everything else to the SDK's <code>formatUserMessage</code>, so that wording follows the <code>morse-sdk</code> version your app installs. On 0.11, for example, a blob Walrus has no copy of is titled "Content unavailable" and reads "Walrus has no stored copy of this content." with its ID.</p>
 
         <div class="code-block">
           <div class="code-header">

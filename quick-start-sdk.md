@@ -13,7 +13,7 @@
 
 | Requirement | Details | Purpose |
 | --- | --- | --- |
-| Bun or Node | v1.2+ / ≥ 18 | JavaScript runtime |
+| Bun or Node | v1.2+ / ≥ 22 | JavaScript runtime |
 | SUI + WAL tokens | [SUI faucet](https://faucet.sui.io/) · [Swap SUI for WAL](https://stake-wal.wal.app/?network=testnet) | Gas fees (SUI) and Walrus storage fees (WAL) |
 | Bech32 private key | A `suiprivkey1...` string | SDK authentication. Export from your wallet's settings |
 
@@ -22,15 +22,15 @@
 Install the SDK and its peer dependencies using your preferred package manager. See [SDK Client Setup → Compatibility](https://docs.morsecms.xyz/sdk-client-setup.html#compatibility) for compatible dependency versions. The `@mysten/*` peers are pinned to the exact versions the SDK accepts: it takes one `@mysten/walrus` and one `@mysten/seal` release, because a later patch of either can need a newer `@mysten/sui` than the SDK supports.
 
 ```bash
-bun add @arcadiasystems/morse-sdk@~0.11.0 @mysten/sui@2.38.0 @mysten/walrus@1.2.37 @mysten/seal@1.5.2
+bun add @arcadiasystems/morse-sdk@~0.12.0 @mysten/sui@2.39.1 @mysten/walrus@1.2.39 @mysten/seal@1.5.4
 ```
 
 ```bash
-npm install @arcadiasystems/morse-sdk@~0.11.0 @mysten/sui@2.38.0 @mysten/walrus@1.2.37 @mysten/seal@1.5.2
+npm install @arcadiasystems/morse-sdk@~0.12.0 @mysten/sui@2.39.1 @mysten/walrus@1.2.39 @mysten/seal@1.5.4
 ```
 
 ```bash
-yarn add @arcadiasystems/morse-sdk@~0.11.0 @mysten/sui@2.38.0 @mysten/walrus@1.2.37 @mysten/seal@1.5.2
+yarn add @arcadiasystems/morse-sdk@~0.12.0 @mysten/sui@2.39.1 @mysten/walrus@1.2.39 @mysten/seal@1.5.4
 ```
 
 `@mysten/sui` is a required peer dependency. `@mysten/walrus` is needed for the `DefaultWalrusWriteAdapter` used below. `@mysten/seal` is required at runtime even for non-encrypted workflows.

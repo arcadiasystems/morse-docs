@@ -61,14 +61,15 @@ Set the active publication and collection so subsequent commands use them automa
 
 ```example
 $ morse use my-blog posts
-Switched to publication "my-blog", collection "posts".
+Resolving slug "my-blog" among owned publications...
+Active publication set to 0x1a2b...3c4d, collection "posts" (profile "testnet").
 
 $ morse status
-  profile:     testnet
-  network:     testnet
-  account:     0x71a3...9f2b
-  publication: my-blog (0x1a2b...)
-  collection:  posts
+profile:     testnet
+network:     testnet
+account:     0x71a3...9f2b
+publication: 0x1a2b...3c4d
+collection:  posts
 ```
 
 ## Config
@@ -85,7 +86,7 @@ Configure CLI profiles, each pointing to a different network and account.
 
 ```example
 $ morse config add testnet --network testnet
-Profile "testnet" created and set as default.
+Saved profile "testnet" (testnet).
 ```
 
 ## Account
@@ -122,10 +123,13 @@ Create and manage publications, the top-level content containers.
 
 ```example
 $ morse publication create --name "My Blog" --slug my-blog
-Created publication "My Blog".
-  slug:          my-blog
-  publicationId: 0x1a2b...3c4d
-  ownerCapId:    0x5e6f...7a8b
+Creating "My Blog"...
+Created "My Blog" (0x1a2b...3c4d)
+  network:      testnet
+  ownerCap:     0x5e6f...7a8b
+  publisherCap: 0x9c0d...1e2f
+  tx:           AbCdEf...
+Selected as the active publication.
 ```
 
 ## Collection
@@ -165,7 +169,8 @@ Add, read, and delete entries within a collection.
 ```example
 $ morse entry add welcome-post --file ./welcome.json
 Added entry #0 "welcome-post". (tx: AbCdEf...)
-  https://aggregator.walrus-testnet.walrus.space/v1/blobs/...
+  network:      testnet
+  view: https://aggregator.walrus-testnet.walrus.space/v1/blobs/...
 ```
 
 ## Revision

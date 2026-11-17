@@ -82,6 +82,7 @@ morse publication create --name "My Blog" --slug "my-blog-$(date +%s)"
 ```output
 Creating "My Blog"...
 Created "My Blog" (0x23d2...)
+  network:      testnet
   ownerCap:     0xa40a...
   publisherCap: 0x6141...
   tx:           7nF2n...
@@ -102,8 +103,8 @@ morse collection create posts
 
 ```output
 Creating collection "posts" (blob)...
-Created collection "posts".
-Selected as the active collection. (tx: DWkD...)
+Created collection "posts". Selected as the active collection. (tx: DWkD...)
+  network:      testnet
 ```
 
 ## Publishing an entry
@@ -125,8 +126,9 @@ morse entry add hello --file post.json
 ```
 
 ```output
-Uploading 65 bytes to Walrus...
-✔ Added entry #0 "hello" (tx: D9Yfjk...)
+Uploading 60 bytes to Walrus...
+Added entry #0 "hello". (tx: D9Yfjk...)
+  network:      testnet
   view: https://aggregator.walrus-testnet.walrus.space/v1/blobs/0iKeii...
 ```
 

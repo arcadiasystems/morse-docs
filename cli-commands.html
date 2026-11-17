@@ -140,14 +140,15 @@
         <div class="code-block code-block-output">
           <div class="code-header"><span class="code-lang">example</span></div>
           <pre><span class="p" aria-hidden="true">$ </span>morse use my-blog posts
-<span class="ok">Switched to publication "my-blog", collection "posts".</span>
+Resolving slug "my-blog" among owned publications...
+<span class="ok">Active publication set to 0x1a2b...3c4d, collection "posts" (profile "testnet").</span>
 
 <span class="p" aria-hidden="true">$ </span>morse status
-  profile:     testnet
-  network:     testnet
-  account:     0x71a3...9f2b
-  publication: my-blog (0x1a2b...)
-  collection:  posts</pre>
+profile:     testnet
+network:     testnet
+account:     0x71a3...9f2b
+publication: 0x1a2b...3c4d
+collection:  posts</pre>
         </div>
 
         <h2 id="config">Config</h2>
@@ -167,7 +168,7 @@
         <div class="code-block code-block-output">
           <div class="code-header"><span class="code-lang">example</span></div>
           <pre><span class="p" aria-hidden="true">$ </span>morse config add testnet --network testnet
-<span class="ok">Profile "testnet" created and set as default.</span></pre>
+<span class="ok">Saved profile "testnet" (testnet).</span></pre>
         </div>
 
         <h2 id="account">Account</h2>
@@ -209,10 +210,13 @@
         <div class="code-block code-block-output">
           <div class="code-header"><span class="code-lang">example</span></div>
           <pre><span class="p" aria-hidden="true">$ </span>morse publication create --name "My Blog" --slug my-blog
-<span class="ok">Created publication "My Blog".</span>
-  <span class="m">slug:          my-blog
-  publicationId: 0x1a2b...3c4d
-  ownerCapId:    0x5e6f...7a8b</span></pre>
+Creating "My Blog"...
+<span class="ok">Created "My Blog" (0x1a2b...3c4d)</span>
+  <span class="m">network:      testnet
+  ownerCap:     0x5e6f...7a8b
+  publisherCap: 0x9c0d...1e2f
+  tx:           AbCdEf...</span>
+Selected as the active publication.</pre>
         </div>
 
         <h2 id="collection">Collection</h2>
@@ -261,7 +265,8 @@
           <div class="code-header"><span class="code-lang">example</span></div>
           <pre><span class="p" aria-hidden="true">$ </span>morse entry add welcome-post --file ./welcome.json
 <span class="ok">Added entry #0 "welcome-post".</span> <span class="m">(tx: AbCdEf...)</span>
-  <span class="m">https://aggregator.walrus-testnet.walrus.space/v1/blobs/...</span></pre>
+  <span class="m">network:      testnet
+  view: https://aggregator.walrus-testnet.walrus.space/v1/blobs/...</span></pre>
         </div>
 
         <h2 id="revision">Revision</h2>
