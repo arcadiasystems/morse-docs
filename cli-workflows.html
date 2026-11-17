@@ -207,7 +207,7 @@ morse entry decrypt 1 --out recovered.txt</pre>
           <div class="callout-icon"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <div class="callout-body">
             <div class="callout-title">Encrypted entries are always drafts</div>
-            <div class="callout-text">Encrypted entries are always created as drafts. You must explicitly publish them with a separate transaction after adding. Retrieve encrypted content with <code>entry decrypt</code> plus a PublisherCap, not <code>entry read</code>. See <a href="entries.html#adding-an-entry">Entries</a> for why encrypted entries bypass the public head.</div>
+            <div class="callout-text">Encrypted entries are always created as drafts. The CLI does not add a public revision to an encrypted entry: <code>revision publish-direct</code> and <code>revision publish-from-draft</code> exit with code 2. To release the text, add it as a new entry; see <a href="team-only-content.html#release-it-to-everyone">Share team-only content &rarr; Release it to everyone</a>. Retrieve encrypted content with <code>entry decrypt</code> plus a PublisherCap, not <code>entry read</code>. See <a href="entries.html#adding-an-entry">Entries</a> for why encrypted entries bypass the public head.</div>
           </div>
         </div>
 <!-- <div class="ai-prompt">

@@ -186,14 +186,14 @@
     "pageTitle": "Quick Start: CLI",
     "section": "Getting Started",
     "heading": "Creating a publication",
-    "text": "This creates a publication with a globally unique slug and auto-selects it as the active context. bash Copy morse publication create --name \"My Blog\" --slug \"my-blog-$(date +%s)\" Slugs are globally unique Like usernames, a slug can only be registered once on the whole network. The timestamp suffix keeps this command collision-free for everyone following this guide. For a real project, pick any unused slug. If a slug is taken, the transaction aborts with ESlugAlreadyExists. output Creating \"My Blog\"... Created \"My Blog\" (0x23d2...) ownerCap: 0xa40a... publisherCap: 0x6141... tx: 7nF2n... Select"
+    "text": "This creates a publication with a globally unique slug and auto-selects it as the active context. bash Copy morse publication create --name \"My Blog\" --slug \"my-blog-$(date +%s)\" Slugs are globally unique Like usernames, a slug can only be registered once on the whole network. The timestamp suffix keeps this command collision-free for everyone following this guide. For a real project, pick any unused slug. If a slug is taken, the transaction aborts with ESlugAlreadyExists. output Creating \"My Blog\"... Created \"My Blog\" (0x23d2...) network: testnet ownerCap: 0xa40a... publisherCap: 0x6141... tx"
   },
   {
     "url": "quick-start-cli.html#creating-a-collection",
     "pageTitle": "Quick Start: CLI",
     "section": "Getting Started",
     "heading": "Creating a collection",
-    "text": "Collections group entries within a publication. The CLI auto-selects the new collection as your active context, so subsequent entry commands target it automatically. bash Copy morse collection create posts output Creating collection \"posts\" (blob)... Created collection \"posts\". Selected as the active collection. (tx: DWkD...)"
+    "text": "Collections group entries within a publication. The CLI auto-selects the new collection as your active context, so subsequent entry commands target it automatically. bash Copy morse collection create posts output Creating collection \"posts\" (blob)... Created collection \"posts\". Selected as the active collection. (tx: DWkD...) network: testnet"
   },
   {
     "url": "quick-start-cli.html#publishing-an-entry",
@@ -228,14 +228,14 @@
     "pageTitle": "Quick Start: SDK",
     "section": "Getting Started",
     "heading": "Prerequisites",
-    "text": "RequirementDetailsPurpose Bun or Nodev1.2+ / ≥ 18JavaScript runtime SUI + WAL tokensSUI faucet · Swap SUI for WALGas fees (SUI) and Walrus storage fees (WAL) Bech32 private keyA suiprivkey1... stringSDK authentication. Export from your wallet's settings"
+    "text": "RequirementDetailsPurpose Bun or Nodev1.2+ / ≥ 22JavaScript runtime SUI + WAL tokensSUI faucet · Swap SUI for WALGas fees (SUI) and Walrus storage fees (WAL) Bech32 private keyA suiprivkey1... stringSDK authentication. Export from your wallet's settings"
   },
   {
     "url": "quick-start-sdk.html#installing",
     "pageTitle": "Quick Start: SDK",
     "section": "Getting Started",
     "heading": "Installing",
-    "text": "Install the SDK and its peer dependencies using your preferred package manager. See SDK Client Setup → Compatibility for compatible dependency versions. The @mysten/* peers are pinned to the exact versions the SDK accepts: it takes one @mysten/walrus and one @mysten/seal release, because a later patch of either can need a newer @mysten/sui than the SDK supports. bashbun Copy bun add @arcadiasystems/morse-sdk@~0.11.0 @mysten/sui@2.38.0 @mysten/walrus@1.2.37 @mysten/seal@1.5.2 bashnpm Copy npm install @arcadiasystems/morse-sdk@~0.11.0 @mysten/sui@2.38.0 @mysten/walrus@1.2.37 @mysten/seal@1.5.2 b"
+    "text": "Install the SDK and its peer dependencies using your preferred package manager. See SDK Client Setup → Compatibility for compatible dependency versions. The @mysten/* peers are pinned to the exact versions the SDK accepts: it takes one @mysten/walrus and one @mysten/seal release, because a later patch of either can need a newer @mysten/sui than the SDK supports. bashbun Copy bun add @arcadiasystems/morse-sdk@~0.12.0 @mysten/sui@2.39.1 @mysten/walrus@1.2.39 @mysten/seal@1.5.4 bashnpm Copy npm install @arcadiasystems/morse-sdk@~0.12.0 @mysten/sui@2.39.1 @mysten/walrus@1.2.39 @mysten/seal@1.5.4 b"
   },
   {
     "url": "quick-start-sdk.html#writing-the-script",
@@ -270,14 +270,14 @@
     "pageTitle": "Quick Start: Smart Contracts",
     "section": "Getting Started",
     "heading": "Prerequisites",
-    "text": "RequirementDetailsPurpose Bun or Nodev1.2+ / ≥ 18JavaScript runtime SUI + WAL tokensSUI faucet · Swap SUI for WALGas fees (SUI) and Walrus storage fees (WAL) Bech32 private keyA suiprivkey1... stringTransaction signing. Export from your wallet's settings"
+    "text": "RequirementDetailsPurpose Bun or Nodev1.2+ / ≥ 22JavaScript runtime SUI + WAL tokensSUI faucet · Swap SUI for WALGas fees (SUI) and Walrus storage fees (WAL) Bech32 private keyA suiprivkey1... stringTransaction signing. Export from your wallet's settings"
   },
   {
     "url": "quick-start-contracts.html#installing",
     "pageTitle": "Quick Start: Smart Contracts",
     "section": "Getting Started",
     "heading": "Installing",
-    "text": "Install the Morse SDK (for network configuration and Walrus uploads) and the Sui SDK (for transaction construction and signing). The @mysten/* peers are pinned to the exact versions the SDK accepts: it takes one @mysten/walrus and one @mysten/seal release, because a later patch of either can need a newer @mysten/sui than the SDK supports. bashbun Copy bun add @arcadiasystems/morse-sdk@~0.11.0 @mysten/sui@2.38.0 @mysten/walrus@1.2.37 @mysten/seal@1.5.2 bashnpm Copy npm install @arcadiasystems/morse-sdk@~0.11.0 @mysten/sui@2.38.0 @mysten/walrus@1.2.37 @mysten/seal@1.5.2 Why the SDK if we are usi"
+    "text": "Install the Morse SDK (for network configuration and Walrus uploads) and the Sui SDK (for transaction construction and signing). The @mysten/* peers are pinned to the exact versions the SDK accepts: it takes one @mysten/walrus and one @mysten/seal release, because a later patch of either can need a newer @mysten/sui than the SDK supports. bashbun Copy bun add @arcadiasystems/morse-sdk@~0.12.0 @mysten/sui@2.39.1 @mysten/walrus@1.2.39 @mysten/seal@1.5.4 bashnpm Copy npm install @arcadiasystems/morse-sdk@~0.12.0 @mysten/sui@2.39.1 @mysten/walrus@1.2.39 @mysten/seal@1.5.4 Why the SDK if we are usi"
   },
   {
     "url": "quick-start-contracts.html#writing-the-script",
@@ -312,7 +312,7 @@
     "pageTitle": "Walrus Mainnet",
     "section": "Getting Started",
     "heading": "Status",
-    "text": "Morse has been live on Walrus Mainnet since 2026-09-09. The CLI and SDK ship with the mainnet addresses built in, so there are no addresses to supply. These are the current releases: PackageCurrent release @arcadiasystems/morse-sdk0.11.0 @arcadiasystems/morse-cli0.13.0 @arcadiasystems/morse-uploader0.4.2 An app that uses morse-uploader 0.4.2 stays on morse-sdk 0.10.1, because the uploader does not accept morse-sdk 0.11. See React Uploader → Install. The default storage-node read path for morse entry read and morse entry decrypt works from morse-cli 0.11.0 and morse-sdk 0.9.0. Upgrade if you ar"
+    "text": "Morse has been live on Walrus Mainnet since 2026-09-09. The CLI and SDK ship with the mainnet addresses built in, so there are no addresses to supply. These are the current releases: PackageCurrent release @arcadiasystems/morse-sdk0.12.0 @arcadiasystems/morse-cli0.14.0 @arcadiasystems/morse-uploader0.5.0 An app that uses morse-uploader 0.5.0 stays on morse-sdk 0.11.0, because the uploader does not accept morse-sdk 0.12. See React Uploader → Install. The default storage-node read path for morse entry read and morse entry decrypt works from morse-cli 0.11.0 and morse-sdk 0.9.0. Upgrade if you ar"
   },
   {
     "url": "mainnet.html#deployment",
@@ -1502,14 +1502,14 @@
     "pageTitle": "CLI Command Reference",
     "section": "CLI",
     "heading": "Context",
-    "text": "Set the active publication and collection so subsequent commands use them automatically. CommandPurpose use <publication> [collection]Set the active publication (slug or id) and collection (optional). Omitting the collection clears it. use --clearClear the active context. statusShow the active profile, network, account, publication, and collection. example $ morse use my-blog posts Switched to publication \"my-blog\", collection \"posts\". $ morse status profile: testnet network: testnet account: 0x71a3...9f2b publication: my-blog (0x1a2b...) collection: posts"
+    "text": "Set the active publication and collection so subsequent commands use them automatically. CommandPurpose use <publication> [collection]Set the active publication (slug or id) and collection (optional). Omitting the collection clears it. use --clearClear the active context. statusShow the active profile, network, account, publication, and collection. example $ morse use my-blog posts Resolving slug \"my-blog\" among owned publications... Active publication set to 0x1a2b...3c4d, collection \"posts\" (profile \"testnet\"). $ morse status profile: testnet network: testnet account: 0x71a3...9f2b publicati"
   },
   {
     "url": "cli-commands.html#config",
     "pageTitle": "CLI Command Reference",
     "section": "CLI",
     "heading": "Config",
-    "text": "Configure CLI profiles, each pointing to a different network and account. CommandPurpose config add <name> --network <net> [--rpc <url>] [--upload-relay <url|auto>]Create or update a profile. --upload-relay saves a Walrus upload relay on the profile. config listList profiles; * marks the active. config use <name>Set the active profile. config remove <name>Delete a profile. config pathPrint the config file path. example $ morse config add testnet --network testnet Profile \"testnet\" created and set as default."
+    "text": "Configure CLI profiles, each pointing to a different network and account. CommandPurpose config add <name> --network <net> [--rpc <url>] [--upload-relay <url|auto>]Create or update a profile. --upload-relay saves a Walrus upload relay on the profile. config listList profiles; * marks the active. config use <name>Set the active profile. config remove <name>Delete a profile. config pathPrint the config file path. example $ morse config add testnet --network testnet Saved profile \"testnet\" (testnet)."
   },
   {
     "url": "cli-commands.html#account",
@@ -1635,7 +1635,7 @@
     "pageTitle": "CLI Cookbooks",
     "section": "CLI",
     "heading": "Encrypted content",
-    "text": "Morse uses Seal for on-chain access control over encrypted content. When you add an encrypted entry, the CLI handles Seal key negotiation automatically. bash Copy echo \"members only\" > secret.txt morse entry add-encrypted members --file secret.txt morse entry decrypt 1 --out recovered.txt Encrypted entries are always drafts Encrypted entries are always created as drafts. You must explicitly publish them with a separate transaction after adding. Retrieve encrypted content with entry decrypt plus a PublisherCap, not entry read. See Entries for why encrypted entries bypass the public head. See al"
+    "text": "Morse uses Seal for on-chain access control over encrypted content. When you add an encrypted entry, the CLI handles Seal key negotiation automatically. bash Copy echo \"members only\" > secret.txt morse entry add-encrypted members --file secret.txt morse entry decrypt 1 --out recovered.txt Encrypted entries are always drafts Encrypted entries are always created as drafts. The CLI does not add a public revision to an encrypted entry: revision publish-direct and revision publish-from-draft exit with code 2. To release the text, add it as a new entry; see Share team-only content → Release it to ev"
   },
   {
     "url": "cli-workflows.html#delegating-write-access",
@@ -1733,21 +1733,21 @@
     "pageTitle": "SDK Setup",
     "section": "SDK",
     "heading": "Compatibility",
-    "text": "@arcadiasystems/morse-sdk is built and tested against specific versions of its Mysten substrate. Newer or older versions are not validated and may produce runtime errors. The peer-dependency ranges in package.json enforce these bounds. Version 0.11.0 moved all three ranges, so upgrading from 0.10.x means upgrading the three Mysten packages with it. Package Version Required @arcadiasystems/morse-sdk0.11.x(this package) @mysten/sui>=2.38.0 <2.39.0Yes: types, gRPC client, keypairs @mysten/walrus>=1.2.37 <1.2.38Yes: default Walrus adapters (read + write) @mysten/seal>=1.5.2 <1.5.3Yes: encryption P"
+    "text": "@arcadiasystems/morse-sdk is built and tested against specific versions of its Mysten substrate. Newer or older versions are not validated and may produce runtime errors. The peer-dependency ranges in package.json enforce these bounds. Version 0.12.0 moved all three ranges, so upgrading from 0.11.x means upgrading the three Mysten packages with it. Its public API is the same as 0.11.0's. Package Version Required @arcadiasystems/morse-sdk0.12.x(this package) @mysten/sui>=2.39.1 <2.40.0Yes: types, gRPC client, keypairs @mysten/walrus>=1.2.39 <1.2.40Yes: default Walrus adapters (read + write) @my"
   },
   {
     "url": "sdk-client-setup.html#runtime",
     "pageTitle": "SDK Setup",
     "section": "SDK",
     "heading": "Runtime requirements",
-    "text": "ESM-only (\"type\": \"module\"). CommonJS require is not supported. RuntimeSupportedNotes Bun≥ 1.2.0Primary development runtime. End-to-end test scripts use Bun. Node≥ 18.0Uses ES2022 (private fields, Error.cause), TextEncoder, crypto.getRandomValues, BigInt. BrowserEvergreenChrome / Edge / Firefox / Safari recent stable. Vite, Webpack, esbuild bundlers all handle the SDK with zero polyfills. The SDK works in both Node and browser environments. It does not depend on Node-specific APIs like fs, path, process, or node:crypto. Some @mysten/* packages may need polyfills in the browser. Check their doc"
+    "text": "ESM-only (\"type\": \"module\"). CommonJS require is not supported. RuntimeSupportedNotes Bun≥ 1.2.0Primary development runtime. End-to-end test scripts use Bun. Node≥ 22The required @mysten/sui peer needs Node 22 or later. The SDK itself uses ES2022 (private fields, Error.cause), TextEncoder, crypto.getRandomValues, BigInt. BrowserEvergreenChrome / Edge / Firefox / Safari recent stable. Vite, Webpack, esbuild bundlers all handle the SDK with zero polyfills. The SDK works in both Node and browser environments. It does not depend on Node-specific APIs like fs, path, process, or node:crypto. Some @m"
   },
   {
     "url": "sdk-client-setup.html#installing",
     "pageTitle": "SDK Setup",
     "section": "SDK",
     "heading": "Installing",
-    "text": "@mysten/sui, @mysten/walrus, and @mysten/seal are all required peer dependencies. The SDK's main entry imports the default Walrus and Seal adapters, so both packages must be installed even for workflows that never upload or encrypt. The @mysten/* peers are pinned to the exact versions the SDK accepts: it takes one @mysten/walrus and one @mysten/seal release, because a later patch of either can need a newer @mysten/sui than the SDK supports. bash Copy bun add @arcadiasystems/morse-sdk@~0.11.0 @mysten/sui@2.38.0 @mysten/walrus@1.2.37 @mysten/seal@1.5.2"
+    "text": "@mysten/sui, @mysten/walrus, and @mysten/seal are all required peer dependencies. The SDK's main entry imports the default Walrus and Seal adapters, so both packages must be installed even for workflows that never upload or encrypt. The @mysten/* peers are pinned to the exact versions the SDK accepts: it takes one @mysten/walrus and one @mysten/seal release, because a later patch of either can need a newer @mysten/sui than the SDK supports. bash Copy bun add @arcadiasystems/morse-sdk@~0.12.0 @mysten/sui@2.39.1 @mysten/walrus@1.2.39 @mysten/seal@1.5.4"
   },
   {
     "url": "sdk-client-setup.html#morse-config",
@@ -1845,7 +1845,7 @@
     "pageTitle": "SDK Cookbooks",
     "section": "SDK",
     "heading": "Prerequisites",
-    "text": "RequirementDetailsPurpose Bun or Nodev1.2+ / ≥ 18JavaScript runtime SUI + WAL tokensSUI faucet · Swap SUI for WALGas fees (SUI) and Walrus storage fees (WAL) Bech32 private keyA suiprivkey1... stringSDK authentication. Export from your wallet's settings Make sure the SDK is installed and configured before continuing. See SDK Setup for details."
+    "text": "RequirementDetailsPurpose Bun or Nodev1.2+ / ≥ 22JavaScript runtime SUI + WAL tokensSUI faucet · Swap SUI for WALGas fees (SUI) and Walrus storage fees (WAL) Bech32 private keyA suiprivkey1... stringSDK authentication. Export from your wallet's settings Make sure the SDK is installed and configured before continuing. See SDK Setup for details."
   },
   {
     "url": "sdk-workflows.html#lifecycle",
@@ -1985,14 +1985,14 @@
     "pageTitle": "React Uploader",
     "section": "SDK",
     "heading": "What it is",
-    "text": "The package wraps the recipient file flow of morse-sdk 0.9 or 0.10 for React. Each upload creates a RecipientFile: a Walrus blob plus an on-chain record that carries its own recipient set. Every step is a headless hook, and an optional set of styled components sits on top. Headless hooks One hook per step: setup, upload, download, decrypt, file metadata and storage cost. Drop-in components MorseFileUploader and MorseFileDownloader, themed with CSS variables. Two wallet popups Any upload, public or encrypted, takes two wallet popups, whatever the number of recipients. Share links A link carries"
+    "text": "The package wraps the recipient file flow of morse-sdk 0.11 for React. Each upload creates a RecipientFile: a Walrus blob plus an on-chain record that carries its own recipient set. Every step is a headless hook, and an optional set of styled components sits on top. Headless hooks One hook per step: setup, upload, download, decrypt, file metadata and storage cost. Drop-in components MorseFileUploader and MorseFileDownloader, themed with CSS variables. Two wallet popups Any upload, public or encrypted, takes two wallet popups, whatever the number of recipients. Share links A link carries the fi"
   },
   {
     "url": "uploader.html#install",
     "pageTitle": "React Uploader",
     "section": "SDK",
     "heading": "Install",
-    "text": "The package is on npm as @arcadiasystems/morse-uploader. This page covers version 0.4.2. Install it with its peer dependencies: bashnpm Copy npm install @arcadiasystems/morse-uploader@~0.4.2 @arcadiasystems/morse-sdk@~0.10.1 @mysten/sui@2.36.0 @mysten/walrus@1.2.35 @mysten/seal@1.5.0 The @mysten/* peers are pinned to exact versions because newer @mysten/seal and @mysten/walrus patch releases need a newer @mysten/sui than the SDK supports. Uploader apps stay on morse-sdk 0.10.1 and the Mysten versions above until morse-uploader 0.5.0, because 0.4.2 does not accept morse-sdk 0.11. Keep the peers"
+    "text": "The package is on npm as @arcadiasystems/morse-uploader. This page covers version 0.5.0. Install it with its peer dependencies: bashnpm Copy npm install @arcadiasystems/morse-uploader@~0.5.0 @arcadiasystems/morse-sdk@~0.11.0 @mysten/sui@2.38.0 @mysten/walrus@1.2.37 @mysten/seal@1.5.2 The @mysten/* peers are pinned to exact versions because newer @mysten/seal and @mysten/walrus patch releases need a newer @mysten/sui than the SDK supports. Uploader apps stay on morse-sdk 0.11 and the Mysten versions above, because morse-uploader 0.5.0 does not accept morse-sdk 0.12. An app still on morse-sdk 0."
   },
   {
     "url": "uploader.html#setup",
@@ -2244,7 +2244,7 @@
     "pageTitle": "Contract Cookbooks",
     "section": "Smart Contracts",
     "heading": "Prerequisites",
-    "text": "RequirementDetailsPurpose Bun or Nodev1.2+ / ≥ 18JavaScript runtime SUI + WAL tokensSUI faucet · Swap SUI for WALGas fees (SUI) and Walrus storage fees (WAL) Bech32 private keyA suiprivkey1... stringTransaction signing. Export from your wallet's settings Morse SDK@arcadiasystems/morse-sdkProvides morseConfig() for package ID, registry ID, and RPC URL Make sure the SDK and its peer dependencies are installed before continuing. See SDK Setup for the install command."
+    "text": "RequirementDetailsPurpose Bun or Nodev1.2+ / ≥ 22JavaScript runtime SUI + WAL tokensSUI faucet · Swap SUI for WALGas fees (SUI) and Walrus storage fees (WAL) Bech32 private keyA suiprivkey1... stringTransaction signing. Export from your wallet's settings Morse SDK@arcadiasystems/morse-sdkProvides morseConfig() for package ID, registry ID, and RPC URL Make sure the SDK and its peer dependencies are installed before continuing. See SDK Setup for the install command."
   },
   {
     "url": "contracts-workflows.html#setup",

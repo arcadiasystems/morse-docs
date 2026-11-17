@@ -103,7 +103,7 @@ morse entry decrypt 1 --out recovered.txt
 
 > **WARNING: Encrypted entries are always drafts**
 >
-> Encrypted entries are always created as drafts. You must explicitly publish them with a separate transaction after adding. Retrieve encrypted content with `entry decrypt` plus a PublisherCap, not `entry read`. See [Entries](https://docs.morsecms.xyz/entries.html#adding-an-entry) for why encrypted entries bypass the public head.
+> Encrypted entries are always created as drafts. The CLI does not add a public revision to an encrypted entry: `revision publish-direct` and `revision publish-from-draft` exit with code 2. To release the text, add it as a new entry; see [Share team-only content → Release it to everyone](https://docs.morsecms.xyz/team-only-content.html#release-it-to-everyone). Retrieve encrypted content with `entry decrypt` plus a PublisherCap, not `entry read`. See [Entries](https://docs.morsecms.xyz/entries.html#adding-an-entry) for why encrypted entries bypass the public head.
 
 See also: [SDK Cookbooks → Encrypted content](https://docs.morsecms.xyz/sdk-workflows.html#encrypted-content)
 

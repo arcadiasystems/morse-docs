@@ -11,7 +11,7 @@
 
 ## What it is
 
-The package wraps the [recipient file](https://docs.morsecms.xyz/recipient-files.html) flow of `morse-sdk` 0.9 or 0.10 for React. Each upload creates a `RecipientFile`: a Walrus blob plus an on-chain record that carries its own recipient set. Every step is a headless hook, and an optional set of styled components sits on top.
+The package wraps the [recipient file](https://docs.morsecms.xyz/recipient-files.html) flow of `morse-sdk` 0.11 for React. Each upload creates a `RecipientFile`: a Walrus blob plus an on-chain record that carries its own recipient set. Every step is a headless hook, and an optional set of styled components sits on top.
 
 - **Headless hooks**: One hook per step: setup, upload, download, decrypt, file metadata and storage cost.
 - **Drop-in components**: MorseFileUploader and MorseFileDownloader, themed with CSS variables.
@@ -30,20 +30,20 @@ The package is ESM only and has four entry points:
 
 ## Install
 
-The package is on npm as [`@arcadiasystems/morse-uploader`](https://www.npmjs.com/package/@arcadiasystems/morse-uploader). This page covers version 0.4.2. Install it with its peer dependencies:
+The package is on npm as [`@arcadiasystems/morse-uploader`](https://www.npmjs.com/package/@arcadiasystems/morse-uploader). This page covers version 0.5.0. Install it with its peer dependencies:
 
 ```bash
-npm install @arcadiasystems/morse-uploader@~0.4.2 @arcadiasystems/morse-sdk@~0.10.1 @mysten/sui@2.36.0 @mysten/walrus@1.2.35 @mysten/seal@1.5.0
+npm install @arcadiasystems/morse-uploader@~0.5.0 @arcadiasystems/morse-sdk@~0.11.0 @mysten/sui@2.38.0 @mysten/walrus@1.2.37 @mysten/seal@1.5.2
 ```
 
-The `@mysten/*` peers are pinned to exact versions because newer `@mysten/seal` and `@mysten/walrus` patch releases need a newer `@mysten/sui` than the SDK supports. Uploader apps stay on morse-sdk 0.10.1 and the Mysten versions above until morse-uploader 0.5.0, because 0.4.2 does not accept morse-sdk 0.11. Keep the peers inside the ranges below, so your app does not end up with two copies of the Sui, Walrus or Seal packages. A tilde range such as `~0.10.1` means `>=0.10.1 <0.11.0`, so the command above stays inside them. React and React DOM are assumed to be in your app already.
+The `@mysten/*` peers are pinned to exact versions because newer `@mysten/seal` and `@mysten/walrus` patch releases need a newer `@mysten/sui` than the SDK supports. Uploader apps stay on morse-sdk 0.11 and the Mysten versions above, because morse-uploader 0.5.0 does not accept morse-sdk 0.12. An app still on morse-sdk 0.9 or 0.10 stays on morse-uploader 0.4.x. Keep the peers inside the ranges below, so your app does not end up with two copies of the Sui, Walrus or Seal packages. A tilde range such as `~0.11.0` means `>=0.11.0 <0.12.0`, so the command above stays inside them. React and React DOM are assumed to be in your app already.
 
 | Peer dependency | Range |
 | --- | --- |
-| `@arcadiasystems/morse-sdk` | >=0.9.0 <0.11.0 |
-| `@mysten/sui` | >=2.36.0 <2.37.0 |
-| `@mysten/walrus` | >=1.2.35 <1.2.36 |
-| `@mysten/seal` | >=1.5.0 <1.5.1 |
+| `@arcadiasystems/morse-sdk` | >=0.11.0 <0.12.0 |
+| `@mysten/sui` | >=2.38.0 <2.39.0 |
+| `@mysten/walrus` | >=1.2.37 <1.2.38 |
+| `@mysten/seal` | >=1.5.2 <1.5.3 |
 | `react`, `react-dom` | >=18.0.0 |
 
 The package marks `@mysten/walrus` and `@mysten/seal` as optional peers, but `morse-sdk` requires all three Mysten packages. Install them all.
@@ -263,7 +263,7 @@ Before `load()` or `download()` reads any bytes or asks the wallet to sign, `use
 
 Both descriptions ask the reader to get the full link from the sender. A file whose record has no Seal prefix, such as one encrypted before the prefix was stored on chain, is not checked: as before, the hook decrypts it when the link carries Seal material and reads it as a public file when the link does not. The check runs only when the bytes are fetched, so a page that shows just the file's details makes no extra request.
 
-For your own UI, `downloadErrorMessage(error)` turns the hook's `error` into `{ title, description, cause }`, as `MorseFileDownloader` does. It titles a `ShareLinkSealError` by its `reason` and hands everything else to the SDK's `formatUserMessage`, so that wording follows the `morse-sdk` version your app installs. On 0.10, for example, a blob Walrus has no copy of is titled "Content unavailable" and reads "Walrus has no stored copy of this content." with its ID.
+For your own UI, `downloadErrorMessage(error)` turns the hook's `error` into `{ title, description, cause }`, as `MorseFileDownloader` does. It titles a `ShareLinkSealError` by its `reason` and hands everything else to the SDK's `formatUserMessage`, so that wording follows the `morse-sdk` version your app installs. On 0.11, for example, a blob Walrus has no copy of is titled "Content unavailable" and reads "Walrus has no stored copy of this content." with its ID.
 
 ```tsx
 import type { RecipientFileId } from "@arcadiasystems/morse-sdk";
