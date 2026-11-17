@@ -4,6 +4,9 @@
   "private": true,
   "description": "Morse documentation site — static HTML with generated AI/agent artifacts (llms.txt, Markdown twins, search index).",
   "type": "module",
+  "engines": {
+    "node": "26.x"
+  },
   "scripts": {
     "build": "node scripts/build.mjs"
   },
